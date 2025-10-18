@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+﻿import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import '@/lib/auth/bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {
   getAuth,
@@ -11,6 +12,7 @@ import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
 import { db, auth } from '@/lib/firebase';
 import { bindActiveDevice } from '@/lib/sessionBinding';
+import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
 import {
   CASTE_OPTIONS,
   GENDER_OPTIONS,
@@ -63,6 +65,27 @@ const Register: React.FC = () => {
       recaptchaRef.current?.clear();
     } catch {}
     recaptchaRef.current = null;
+  }, []);
+
+  // Robust token refresh: try immediate refresh, then reload+retry with small backoff
+  const refreshUserToken = useCallback(async () => {
+    const u = auth.currentUser;
+    if (!u) return;
+    try {
+      await u.getIdToken(true);
+      return;
+    } catch (e: any) {
+      if (e?.code === 'auth/user-token-expired' || e?.code === 'auth/id-token-expired') {
+        try {
+          await u.reload();
+          await new Promise(r => setTimeout(r, 250));
+          await u.getIdToken(true);
+          return;
+        } catch (e2) {
+          // swallow to keep UX flowing; subsequent calls will retry
+        }
+      }
+    }
   }, []);
 
   // Form state
@@ -232,9 +255,7 @@ const Register: React.FC = () => {
     try {
       await confirmationResultRef.current.confirm(otp);
       // Ensure fresh token for subsequent Firestore writes
-      try {
-        await auth.currentUser?.getIdToken(true);
-      } catch {}
+      await refreshUserToken();
       setOtpVerified(true);
       setSuccess('Phone verified successfully!');
     } catch (err: any) {
@@ -262,9 +283,7 @@ const Register: React.FC = () => {
       const user = cred?.user;
       if (!user) throw new Error('No user after OTP confirmation');
 
-      try {
-        await user.getIdToken(true);
-      } catch {}
+      await refreshUserToken();
 
       await setDoc(
         doc(db, 'users', user.uid),
@@ -286,7 +305,7 @@ const Register: React.FC = () => {
         { merge: true }
       );
 
-      await bindActiveDevice().catch(() => {});
+      await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired }).catch(() => {});
 
       try {
         localStorage.removeItem('auth_intent');
@@ -335,8 +354,10 @@ const Register: React.FC = () => {
         const digits = `+91${phone}`.replace(/\D/g, '');
         const synthEmail = `ph-${digits}@testyourself.app`;
         try {
+          await refreshUserToken();
           const cred = EmailAuthProvider.credential(synthEmail, password);
           await linkWithCredential(user, cred);
+          await refreshUserToken();
           await setDoc(
             doc(db, 'users', user.uid),
             { credentials: { hasPassword: true }, updatedAt: serverTimestamp() },
@@ -352,7 +373,14 @@ const Register: React.FC = () => {
         }
       }
 
-      await bindActiveDevice();
+      // Ensure a fresh token before bind; phone OTP/linking can rotate tokens
+      await refreshUserToken();
+      // Bind device, but donâ€™t block registration if it hiccups
+      try {
+        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
+      } catch {
+        // best-effort only
+      }
       // release the lock and proceed
       try {
         localStorage.removeItem('auth_intent');
@@ -653,7 +681,7 @@ const Register: React.FC = () => {
               <div className="mt-3">
                 {resendTimer > 0 ? (
                   <p className="text-sm text-gray-600">
-                    Didn’t receive? Resend OTP in{' '}
+                    Didnâ€™t receive? Resend OTP in{' '}
                     <span className="font-semibold text-indigo-600">{resendTimer}s</span>
                   </p>
                 ) : (
@@ -663,7 +691,7 @@ const Register: React.FC = () => {
                     disabled={!isResendActive || sendingOtp}
                     className="text-sm underline text-indigo-600 hover:text-indigo-700 disabled:text-gray-400"
                   >
-                    {sendingOtp ? 'Resending…' : 'Resend OTP'}
+                    {sendingOtp ? 'Resendingâ€¦' : 'Resend OTP'}
                   </button>
                 )}
               </div>
@@ -724,7 +752,7 @@ const Register: React.FC = () => {
               {otpVerified && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
                   <p className="text-green-700 text-sm font-medium">
-                    ✓ Phone verified successfully!
+                    âœ“ Phone verified successfully!
                   </p>
                 </div>
               )}
@@ -740,3 +768,6 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
+
+
