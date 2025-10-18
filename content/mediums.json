@@ -1,0 +1,4 @@
+[
+  { "id": "english", "name": "English", "code": "EN", "enabled": true, "order": 1 },
+  { "id": "hindi", "name": "Hindi", "code": "HN", "enabled": true, "order": 2 }
+]

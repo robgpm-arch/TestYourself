@@ -1,0 +1,10 @@
+{
+  "id": "trigonometry",
+  "name": "Trigonometry",
+  "description": "Study of relationships between angles and sides of triangles",
+  "courseId": "maths",
+  "icon": "📏",
+  "color": "#f59e0b",
+  "active": true,
+  "order": 3
+}

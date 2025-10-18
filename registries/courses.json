@@ -1,0 +1,18 @@
+[
+  {
+    "id": "maths",
+    "title": "Mathematics",
+    "subtitle": "Class 8–10",
+    "imageUrl": "",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "science",
+    "title": "Science",
+    "subtitle": "Class 8–10",
+    "imageUrl": "",
+    "active": true,
+    "order": 2
+  }
+]

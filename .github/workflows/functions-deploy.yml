@@ -1,0 +1,38 @@
+name: Deploy Firebase Functions
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "functions/**"
+      - "firebase.json"
+  schedule:
+    - cron: "0 3 * * 0"  # Sundays 03:00 UTC
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Firebase CLI
+        run: npm i -g firebase-tools
+
+      - name: Functions install & build
+        run: |
+          npm --prefix functions ci
+          npm --prefix functions run build
+
+      # Requires FIREBASE_TOKEN secret (from `firebase login:ci`)
+      - name: Deploy functions
+        run: firebase deploy --only functions --force
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

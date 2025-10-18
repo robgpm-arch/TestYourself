@@ -1,0 +1,2882 @@
+[
+  {
+    "id": "english-iit-foundation-class-3-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-3",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-3",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-3-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-3",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-3",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-4-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-4",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-4",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-4-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-4",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-4",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-5-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-5",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-5",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-5-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-5",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-5",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-6-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-6",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-6",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-6-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-6",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-6",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-7-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-7",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-7",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-7-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-7",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-7",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-8-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-8",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-8",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-8-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-8",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-8",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-9-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-9",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-9",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-9-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-9",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-9",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-10-mathematics",
+    "name": "Mathematics",
+    "courseId": "english-iit-foundation-class-10",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-iit-foundation-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-iit-foundation-class-10",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-10-biology",
+    "name": "Biology",
+    "courseId": "english-iit-foundation-class-10",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-iit-foundation-class-10",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-cbse-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-3-english",
+    "name": "English",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-3-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-3",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-4-english",
+    "name": "English",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-4-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-4",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-5-english",
+    "name": "English",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-5-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-5",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-6-english",
+    "name": "English",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-6-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-6",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-7-english",
+    "name": "English",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-7-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-7",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-8-english",
+    "name": "English",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-8-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-8",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-9-english",
+    "name": "English",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-9-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-9",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-cbse-class-10-english",
+    "name": "English",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-10-biology",
+    "name": "Biology",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-cbse-class-10",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-3-english",
+    "name": "English",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-3-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-3",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-4-english",
+    "name": "English",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-4-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-4",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-5-english",
+    "name": "English",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-5-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-5",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-6-english",
+    "name": "English",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-6-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-6",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-7-english",
+    "name": "English",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-7-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-7",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-8-english",
+    "name": "English",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-8-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-8",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-9-english",
+    "name": "English",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-9-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-9",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ts-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts-class-10-english",
+    "name": "English",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-10-biology",
+    "name": "Biology",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ts-class-10",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-3-english",
+    "name": "English",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-3-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-3",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-4-english",
+    "name": "English",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-4-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-4",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-5-english",
+    "name": "English",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-5-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-5",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-6-english",
+    "name": "English",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-6-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-6",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-7-english",
+    "name": "English",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-7-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-7",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-8-english",
+    "name": "English",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-8-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-8",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-9-english",
+    "name": "English",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-9-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-9",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-ap-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ap-class-10-english",
+    "name": "English",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-10-biology",
+    "name": "Biology",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "english-ap-class-10",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-3-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-3-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-4-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-4-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-5-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-5-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-6-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-6-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-7-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-7-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-8-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-8-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-9-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-9-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ts-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ts-class-10-english",
+    "name": "English",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-10-biology",
+    "name": "Biology",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ts-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-3-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-3-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-3",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-4-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-4-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-4",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-5-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-5-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-5",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-6-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-6-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-6",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-7-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-7-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-7",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-8-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-8-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-8",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-9-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-9-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-9",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "telugu-ap-class-10-english",
+    "name": "English",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-10-biology",
+    "name": "Biology",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "telugu-ap-class-10",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-3-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-3-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-3-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-3-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-3-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-3-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-3",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-4-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-4-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-4-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-4-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-4-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-4-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-4",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-5-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-5-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-5-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-5-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-5-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-5-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-5",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-6-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-6-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-6-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-6-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-6-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-6-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-6",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-7-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-7-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-7-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-7-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-7-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-7-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-7",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-8-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-8-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-8-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-8-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-8-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-8-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-8",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-9-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-9-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-9-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-9-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-9-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-9-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-9",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-10-telugu",
+    "name": "Telugu",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "hindi-cbse-class-10-hindi",
+    "name": "Hindi",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse-class-10-english",
+    "name": "English",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-10-physical-science",
+    "name": "Physical Science",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-10-biology",
+    "name": "Biology",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-10-social-studies",
+    "name": "Social Studies",
+    "courseId": "hindi-cbse-class-10",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  }
+]

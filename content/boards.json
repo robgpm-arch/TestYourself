@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cbse",
+    "name": "CBSE",
+    "description": "Central Board of Secondary Education",
+    "region": "India",
+    "code": "CBSE",
+    "mediumId": "english",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "icse",
+    "name": "ICSE",
+    "description": "Indian Certificate of Secondary Education",
+    "region": "India",
+    "code": "ICSE",
+    "mediumId": "english",
+    "active": true,
+    "order": 2
+  },
+  {
+    "id": "state-board",
+    "name": "State Board",
+    "description": "State Education Board",
+    "region": "India",
+    "code": "STATE",
+    "mediumId": "english",
+    "active": true,
+    "order": 3
+  },
+  {
+    "id": "cbse-hindi",
+    "name": "CBSE (Hindi Medium)",
+    "description": "Central Board of Secondary Education - Hindi Medium",
+    "region": "India",
+    "code": "CBSE-HN",
+    "mediumId": "hindi",
+    "active": true,
+    "order": 4
+  }
+]

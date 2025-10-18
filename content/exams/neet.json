@@ -1,0 +1,8 @@
+{
+  "code": "NEET",
+  "name": "National Eligibility cum Entrance Test",
+  "title": "NEET UG",
+  "description": "Medical entrance examination for admission to MBBS/BDS courses in India",
+  "active": true,
+  "order": 2
+}

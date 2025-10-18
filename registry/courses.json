@@ -1,0 +1,450 @@
+[
+  {
+    "id": "english-iit-foundation-class-3",
+    "name": "Class III",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-iit-foundation-class-4",
+    "name": "Class IV",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-iit-foundation-class-5",
+    "name": "Class V",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-iit-foundation-class-6",
+    "name": "Class VI",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-iit-foundation-class-7",
+    "name": "Class VII",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-iit-foundation-class-8",
+    "name": "Class VIII",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "english-iit-foundation-class-9",
+    "name": "Class IX",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "english-iit-foundation-class-10",
+    "name": "Class X",
+    "mediumId": "english",
+    "boardId": "english-iit-foundation",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "english-cbse-class-3",
+    "name": "Class III",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-cbse-class-4",
+    "name": "Class IV",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-cbse-class-5",
+    "name": "Class V",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-cbse-class-6",
+    "name": "Class VI",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-cbse-class-7",
+    "name": "Class VII",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-cbse-class-8",
+    "name": "Class VIII",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "english-cbse-class-9",
+    "name": "Class IX",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "english-cbse-class-10",
+    "name": "Class X",
+    "mediumId": "english",
+    "boardId": "english-cbse",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "english-ts-class-3",
+    "name": "Class III",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ts-class-4",
+    "name": "Class IV",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ts-class-5",
+    "name": "Class V",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ts-class-6",
+    "name": "Class VI",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ts-class-7",
+    "name": "Class VII",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-ts-class-8",
+    "name": "Class VIII",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "english-ts-class-9",
+    "name": "Class IX",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "english-ts-class-10",
+    "name": "Class X",
+    "mediumId": "english",
+    "boardId": "english-ts",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "english-ap-class-3",
+    "name": "Class III",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap-class-4",
+    "name": "Class IV",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "english-ap-class-5",
+    "name": "Class V",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "english-ap-class-6",
+    "name": "Class VI",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "english-ap-class-7",
+    "name": "Class VII",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "english-ap-class-8",
+    "name": "Class VIII",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "english-ap-class-9",
+    "name": "Class IX",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "english-ap-class-10",
+    "name": "Class X",
+    "mediumId": "english",
+    "boardId": "english-ap",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "telugu-ts-class-3",
+    "name": "Class III",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ts-class-4",
+    "name": "Class IV",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts-class-5",
+    "name": "Class V",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ts-class-6",
+    "name": "Class VI",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ts-class-7",
+    "name": "Class VII",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "telugu-ts-class-8",
+    "name": "Class VIII",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "telugu-ts-class-9",
+    "name": "Class IX",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "telugu-ts-class-10",
+    "name": "Class X",
+    "mediumId": "telugu",
+    "boardId": "telugu-ts",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "telugu-ap-class-3",
+    "name": "Class III",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "telugu-ap-class-4",
+    "name": "Class IV",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ap-class-5",
+    "name": "Class V",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "telugu-ap-class-6",
+    "name": "Class VI",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "telugu-ap-class-7",
+    "name": "Class VII",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "telugu-ap-class-8",
+    "name": "Class VIII",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "telugu-ap-class-9",
+    "name": "Class IX",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "telugu-ap-class-10",
+    "name": "Class X",
+    "mediumId": "telugu",
+    "boardId": "telugu-ap",
+    "enabled": true,
+    "order": 10
+  },
+  {
+    "id": "hindi-cbse-class-3",
+    "name": "Class III",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "hindi-cbse-class-4",
+    "name": "Class IV",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "hindi-cbse-class-5",
+    "name": "Class V",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 5
+  },
+  {
+    "id": "hindi-cbse-class-6",
+    "name": "Class VI",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 6
+  },
+  {
+    "id": "hindi-cbse-class-7",
+    "name": "Class VII",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 7
+  },
+  {
+    "id": "hindi-cbse-class-8",
+    "name": "Class VIII",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 8
+  },
+  {
+    "id": "hindi-cbse-class-9",
+    "name": "Class IX",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 9
+  },
+  {
+    "id": "hindi-cbse-class-10",
+    "name": "Class X",
+    "mediumId": "hindi",
+    "boardId": "hindi-cbse",
+    "enabled": true,
+    "order": 10
+  }
+]

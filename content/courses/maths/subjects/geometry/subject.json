@@ -1,0 +1,10 @@
+{
+  "id": "geometry",
+  "name": "Geometry",
+  "description": "Study of shapes, sizes, and properties of space",
+  "courseId": "maths",
+  "icon": "📐",
+  "color": "#10b981",
+  "active": true,
+  "order": 2
+}

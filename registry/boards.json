@@ -1,0 +1,51 @@
+[
+  {
+    "id": "english-iit-foundation",
+    "name": "IIT Foundation",
+    "mediumId": "english",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "english-cbse",
+    "name": "CBSE",
+    "mediumId": "english",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "english-ts",
+    "name": "Telangana (TS)",
+    "mediumId": "english",
+    "enabled": true,
+    "order": 3
+  },
+  {
+    "id": "english-ap",
+    "name": "Andhra Pradesh",
+    "mediumId": "english",
+    "enabled": true,
+    "order": 4
+  },
+  {
+    "id": "telugu-ts",
+    "name": "Telangana (TS)",
+    "mediumId": "telugu",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu-ap",
+    "name": "Andhra Pradesh",
+    "mediumId": "telugu",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi-cbse",
+    "name": "CBSE",
+    "mediumId": "hindi",
+    "enabled": true,
+    "order": 1
+  }
+]

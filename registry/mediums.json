@@ -1,0 +1,20 @@
+[
+  {
+    "id": "english",
+    "name": "English",
+    "enabled": true,
+    "order": 1
+  },
+  {
+    "id": "telugu",
+    "name": "Telugu",
+    "enabled": true,
+    "order": 2
+  },
+  {
+    "id": "hindi",
+    "name": "Hindi",
+    "enabled": true,
+    "order": 3
+  }
+]

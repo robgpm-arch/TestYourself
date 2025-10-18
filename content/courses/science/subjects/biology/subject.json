@@ -1,0 +1,10 @@
+{
+  "id": "biology",
+  "name": "Biology",
+  "description": "Study of living organisms and life processes",
+  "courseId": "science",
+  "icon": "🧬",
+  "color": "#22c55e",
+  "active": true,
+  "order": 3
+}

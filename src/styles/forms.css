@@ -1,0 +1,2 @@
+.form-section-title { @apply text-sm font-semibold text-gray-700 tracking-wide; }
+.helper { @apply text-xs text-gray-500; }

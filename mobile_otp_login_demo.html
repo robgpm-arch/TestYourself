@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile & OTP Login Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 2s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(20, 184, 166, 0.2)' },
+                            '100%': { boxShadow: '0 0 20px rgba(20, 184, 166, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-teal-400 via-blue-500 to-indigo-700">
+        <!-- Background with phone and shield icons -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 left-20 text-6xl">📱</div>
+            <div class="absolute top-40 right-32 text-5xl">🔒</div>
+            <div class="absolute bottom-60 left-32 text-7xl">📱</div>
+            <div class="absolute top-80 left-1/2 text-4xl">🔒</div>
+            <div class="absolute bottom-40 right-20 text-6xl">📱</div>
+            <div class="absolute top-32 left-1/3 text-5xl">🔒</div>
+            <div class="absolute bottom-20 left-1/4 text-4xl">📱</div>
+            <div class="absolute top-60 right-1/4 text-6xl">🔒</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-8">
+            
+            <!-- Login Card -->
+            <div class="w-full max-w-md mx-auto">
+                <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white border-opacity-30">
+                    
+                    <!-- Form Header -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+                        <p class="text-blue-100 opacity-90" id="subtitle">Login with your mobile number</p>
+                    </div>
+
+                    <!-- Mobile Step -->
+                    <div id="mobile-step" class="space-y-6">
+                        <div class="space-y-4">
+                            <!-- Country Code and Mobile Number -->
+                            <div class="flex space-x-3">
+                                <!-- Country Code Dropdown -->
+                                <div class="relative">
+                                    <select class="appearance-none bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent min-w-[100px] focus:animate-glow">
+                                        <option value="+91">🇮🇳 +91</option>
+                                        <option value="+1">🇺🇸 +1</option>
+                                        <option value="+44">🇬🇧 +44</option>
+                                        <option value="+86">🇨🇳 +86</option>
+                                        <option value="+81">🇯🇵 +81</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-400">▼</span>
+                                    </div>
+                                </div>
+
+                                <!-- Mobile Number Input -->
+                                <div class="flex-1 relative">
+                                    <input
+                                        type="tel"
+                                        id="mobile-input"
+                                        placeholder="Enter Mobile Number"
+                                        class="w-full px-4 py-3 bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-gray-500 text-gray-800 focus:animate-glow transition-all duration-300"
+                                        maxlength="10"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, ''); checkMobile();"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Send OTP Button -->
+                            <button
+                                id="send-otp-btn"
+                                onclick="sendOtp()"
+                                disabled
+                                class="w-full bg-gradient-to-r from-gray-400 to-gray-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105"
+                            >
+                                <span class="flex items-center justify-center">
+                                    📱 Send OTP
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- OTP Step (Hidden initially) -->
+                    <div id="otp-step" class="space-y-6 hidden">
+                        <div class="space-y-6">
+                            <!-- Mobile Number Display -->
+                            <div class="text-center">
+                                <p class="text-blue-100 text-sm mb-4" id="otp-sent-text">
+                                    OTP sent to +91 1234567890
+                                </p>
+                                <button onclick="showMobileStep()" class="text-teal-200 hover:text-teal-100 text-sm underline">
+                                    Change number
+                                </button>
+                            </div>
+
+                            <!-- 6-digit OTP Input -->
+                            <div class="flex justify-center space-x-3">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 0)">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 1)">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 2)">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 3)">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 4)">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 5)">
+                            </div>
+
+                            <!-- Resend Timer -->
+                            <div class="text-center">
+                                <p class="text-blue-100 text-sm" id="resend-timer">
+                                    Resend OTP in <span class="font-bold text-teal-200" id="timer-count">28</span>s
+                                </p>
+                                <button id="resend-btn" onclick="resendOtp()" class="text-teal-200 hover:text-teal-100 font-semibold text-sm underline hidden">
+                                    Resend OTP
+                                </button>
+                            </div>
+
+                            <!-- Verify Button -->
+                            <button
+                                id="verify-btn"
+                                onclick="verifyOtp()"
+                                disabled
+                                class="w-full bg-gradient-to-r from-gray-400 to-gray-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105"
+                            >
+                                <span class="flex items-center justify-center">
+                                    🔒 Verify & Continue
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Footer Links -->
+                    <div class="text-center space-y-3 mt-8">
+                        <p class="text-blue-100 text-xs">
+                            By continuing, you agree to 
+                            <button class="text-teal-200 hover:text-teal-100 underline">
+                                Terms & Privacy Policy
+                            </button>
+                        </p>
+                        
+                        <p class="text-blue-100 text-sm">
+                            <button class="text-teal-200 hover:text-teal-100 transition-colors duration-200 underline">
+                                Need help?
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="fixed top-4 left-4 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-4 text-white">
+            <p class="text-sm font-bold mb-2">Demo Controls:</p>
+            <button onclick="showMobileStep()" class="text-xs bg-teal-500 px-2 py-1 rounded mr-2">Mobile Step</button>
+            <button onclick="showOtpDemo()" class="text-xs bg-indigo-500 px-2 py-1 rounded">OTP Step</button>
+        </div>
+    </div>
+
+    <script>
+        let timer = 28;
+        let timerInterval = null;
+
+        function checkMobile() {
+            const input = document.getElementById('mobile-input');
+            const btn = document.getElementById('send-otp-btn');
+            
+            if (input.value.length >= 10) {
+                btn.disabled = false;
+                btn.className = "w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105 cursor-pointer";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full bg-gradient-to-r from-gray-400 to-gray-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300";
+            }
+        }
+
+        function sendOtp() {
+            const mobile = document.getElementById('mobile-input').value;
+            if (mobile.length >= 10) {
+                document.getElementById('otp-sent-text').textContent = `OTP sent to +91 ${mobile}`;
+                showOtpStep();
+            }
+        }
+
+        function showMobileStep() {
+            document.getElementById('mobile-step').classList.remove('hidden');
+            document.getElementById('otp-step').classList.add('hidden');
+            document.getElementById('subtitle').textContent = 'Login with your mobile number';
+            clearInterval(timerInterval);
+        }
+
+        function showOtpStep() {
+            document.getElementById('mobile-step').classList.add('hidden');
+            document.getElementById('otp-step').classList.remove('hidden');
+            document.getElementById('subtitle').textContent = 'Enter the OTP sent to your mobile';
+            startTimer();
+        }
+
+        function showOtpDemo() {
+            document.getElementById('mobile-input').value = '9876543210';
+            checkMobile();
+            setTimeout(() => {
+                sendOtp();
+            }, 500);
+        }
+
+        function startTimer() {
+            timer = 28;
+            document.getElementById('timer-count').textContent = timer;
+            document.getElementById('resend-timer').classList.remove('hidden');
+            document.getElementById('resend-btn').classList.add('hidden');
+            
+            timerInterval = setInterval(() => {
+                timer--;
+                document.getElementById('timer-count').textContent = timer;
+                
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('resend-timer').classList.add('hidden');
+                    document.getElementById('resend-btn').classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function handleOtpInput(input, index) {
+            // Allow only numbers
+            input.value = input.value.replace(/[^0-9]/g, '');
+            
+            // Auto advance to next input
+            if (input.value && index < 5) {
+                const nextInput = document.querySelectorAll('.otp-input')[index + 1];
+                nextInput.focus();
+            }
+            
+            // Add bounce animation
+            input.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                input.style.transform = 'scale(1)';
+            }, 150);
+            
+            checkOtpComplete();
+        }
+
+        function checkOtpComplete() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const isComplete = Array.from(otpInputs).every(input => input.value !== '');
+            const btn = document.getElementById('verify-btn');
+            
+            if (isComplete) {
+                btn.disabled = false;
+                btn.className = "w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105 cursor-pointer";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full bg-gradient-to-r from-gray-400 to-gray-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300";
+            }
+        }
+
+        function resendOtp() {
+            // Clear all OTP inputs
+            document.querySelectorAll('.otp-input').forEach(input => input.value = '');
+            checkOtpComplete();
+            startTimer();
+        }
+
+        function verifyOtp() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otp.length === 6) {
+                alert('Login Successful! 🎉\n\nYour mobile & OTP authentication is complete.');
+                // Reset demo
+                setTimeout(() => {
+                    showMobileStep();
+                    document.getElementById('mobile-input').value = '';
+                    document.querySelectorAll('.otp-input').forEach(input => input.value = '');
+                    checkMobile();
+                }, 2000);
+            }
+        }
+
+        // Add keyboard navigation for OTP inputs
+        document.addEventListener('keydown', (e) => {
+            const focusedElement = document.activeElement;
+            if (focusedElement.classList.contains('otp-input')) {
+                const otpInputs = Array.from(document.querySelectorAll('.otp-input'));
+                const currentIndex = otpInputs.indexOf(focusedElement);
+                
+                if (e.key === 'Backspace' && !focusedElement.value && currentIndex > 0) {
+                    otpInputs[currentIndex - 1].focus();
+                } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    otpInputs[currentIndex - 1].focus();
+                } else if (e.key === 'ArrowRight' && currentIndex < 5) {
+                    otpInputs[currentIndex + 1].focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

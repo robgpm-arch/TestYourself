@@ -1,0 +1,8 @@
+{
+  "code": "JEE",
+  "name": "Joint Entrance Examination",
+  "title": "JEE Main & Advanced",
+  "description": "National level engineering entrance examination for admission to NITs, IIITs, and IITs",
+  "active": true,
+  "order": 1
+}

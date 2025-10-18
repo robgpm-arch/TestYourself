@@ -1,0 +1,20 @@
+[
+  {
+    "id": "jee",
+    "code": "JEE",
+    "name": "Joint Entrance Examination",
+    "title": "JEE Main & Advanced",
+    "description": "National level engineering entrance examination for admission to NITs, IIITs, and IITs",
+    "active": true,
+    "order": 1
+  },
+  {
+    "id": "neet",
+    "code": "NEET",
+    "name": "National Eligibility cum Entrance Test",
+    "title": "NEET UG",
+    "description": "Medical entrance examination for admission to MBBS/BDS courses in India",
+    "active": true,
+    "order": 2
+  }
+]

@@ -1,0 +1,36 @@
+/* Quiz Theme CSS Variables */
+#quiz-root {
+  background: var(--bg-composed, var(--bg));
+  background-size: cover;
+  background-position: center;
+}
+
+.quiz-card {
+  background: var(--card\.bg);
+  border-radius: var(--card\.radius);
+  box-shadow: var(--card\.shadow);
+  color: var(--text);
+}
+
+.quiz-option {
+  background: var(--option\.bg);
+  border: 1px solid var(--option\.border);
+}
+
+.quiz-option.correct {
+  background: color-mix(in srgb, var(--correct) 12%, white);
+  border-color: var(--correct);
+}
+
+.quiz-option.wrong {
+  background: color-mix(in srgb, var(--wrong) 12%, white);
+  border-color: var(--wrong);
+}
+
+.quiz-timer .track {
+  background: var(--timer\.track);
+}
+
+.quiz-timer .bar {
+  background: var(--timer\.progress);
+}

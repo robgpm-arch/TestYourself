@@ -1,0 +1,13 @@
+[
+  {
+    "courseId": "math",
+    "subjectId": "algebra",
+    "chapterId": "linear-equations",
+    "setId": "set1",
+    "title": "Basics",
+    "paid": true,
+    "questions": [
+      { "id":"q1", "text":"2x=8 ⇒ x = ?", "options":["2","3","4","6"], "answerIndex":2, "explanation":"8/2=4", "difficulty":"L1" }
+    ]
+  }
+]

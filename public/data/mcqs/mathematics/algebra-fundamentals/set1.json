@@ -1,0 +1,274 @@
+{
+  "setInfo": {
+    "id": 1,
+    "name": "SET 1",
+    "subject": "Mathematics",
+    "chapter": "Algebra Fundamentals",
+    "description": "Basic concepts and fundamental problems",
+    "difficulty": "easy",
+    "totalQuestions": 20,
+    "timeEstimate": "15 min"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the value of x in the equation 2x + 5 = 13?",
+      "options": [
+        "x = 4",
+        "x = 6", 
+        "x = 8",
+        "x = 9"
+      ],
+      "correctAnswer": 0,
+      "explanation": "To solve 2x + 5 = 13, subtract 5 from both sides: 2x = 8, then divide by 2: x = 4",
+      "difficulty": "easy"
+    },
+    {
+      "id": 2,
+      "question": "Simplify: 3x + 2x - x",
+      "options": [
+        "4x",
+        "5x",
+        "6x", 
+        "2x"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Combine like terms: 3x + 2x - x = (3 + 2 - 1)x = 4x",
+      "difficulty": "easy"
+    },
+    {
+      "id": 3,
+      "question": "If y = 2x + 3 and x = 4, what is the value of y?",
+      "options": [
+        "y = 9",
+        "y = 11", 
+        "y = 13",
+        "y = 15"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Substitute x = 4 into y = 2x + 3: y = 2(4) + 3 = 8 + 3 = 11",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4,
+      "question": "What is the coefficient of x in the expression 7x + 2?",
+      "options": [
+        "2",
+        "7",
+        "9", 
+        "x"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The coefficient is the number multiplied by the variable. In 7x + 2, the coefficient of x is 7",
+      "difficulty": "easy"
+    },
+    {
+      "id": 5,
+      "question": "Solve for x: x - 8 = 12",
+      "options": [
+        "x = 4",
+        "x = 16",
+        "x = 20", 
+        "x = 24"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Add 8 to both sides: x - 8 + 8 = 12 + 8, so x = 20",
+      "difficulty": "easy"
+    },
+    {
+      "id": 6,
+      "question": "Which of the following is a linear equation?",
+      "options": [
+        "x² + 2x = 5",
+        "3x + 7 = 1",
+        "xy = 10", 
+        "x³ - 4 = 0"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A linear equation has variables with power 1 only. 3x + 7 = 1 is linear",
+      "difficulty": "easy"
+    },
+    {
+      "id": 7,
+      "question": "What is the value of 5x when x = 3?",
+      "options": [
+        "8",
+        "15",
+        "18", 
+        "53"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Substitute x = 3: 5x = 5(3) = 15",
+      "difficulty": "easy"
+    },
+    {
+      "id": 8,
+      "question": "Simplify: (2x + 3) + (4x - 1)",
+      "options": [
+        "6x + 2",
+        "6x + 4",
+        "2x + 2", 
+        "8x - 3"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Remove parentheses and combine like terms: 2x + 3 + 4x - 1 = 6x + 2",
+      "difficulty": "easy"
+    },
+    {
+      "id": 9,
+      "question": "If 3x = 21, then x = ?",
+      "options": [
+        "6",
+        "7",
+        "8", 
+        "9"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Divide both sides by 3: x = 21 ÷ 3 = 7",
+      "difficulty": "easy"
+    },
+    {
+      "id": 10,
+      "question": "What is the constant term in 4x² - 2x + 9?",
+      "options": [
+        "4",
+        "-2",
+        "9", 
+        "x"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The constant term is the term without any variable. In 4x² - 2x + 9, it's 9",
+      "difficulty": "easy"
+    },
+    {
+      "id": 11,
+      "question": "Solve: 2x + 6 = 16",
+      "options": [
+        "x = 4",
+        "x = 5",
+        "x = 6", 
+        "x = 8"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Subtract 6: 2x = 10, then divide by 2: x = 5",
+      "difficulty": "easy"
+    },
+    {
+      "id": 12,
+      "question": "Which expression is equivalent to 2(x + 4)?",
+      "options": [
+        "2x + 4",
+        "2x + 8",
+        "x + 8", 
+        "2x + 2"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Use distributive property: 2(x + 4) = 2·x + 2·4 = 2x + 8",
+      "difficulty": "easy"
+    },
+    {
+      "id": 13,
+      "question": "If x + 7 = 15, what is x - 3?",
+      "options": [
+        "4",
+        "5",
+        "11", 
+        "18"
+      ],
+      "correctAnswer": 1,
+      "explanation": "First find x: x = 15 - 7 = 8. Then x - 3 = 8 - 3 = 5",
+      "difficulty": "easy"
+    },
+    {
+      "id": 14,
+      "question": "Simplify: 5x - 2x + 3x",
+      "options": [
+        "5x",
+        "6x",
+        "8x", 
+        "10x"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Combine like terms: 5x - 2x + 3x = (5 - 2 + 3)x = 6x",
+      "difficulty": "easy"
+    },
+    {
+      "id": 15,
+      "question": "What is the degree of the polynomial 3x + 2?",
+      "options": [
+        "0",
+        "1",
+        "2", 
+        "3"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The degree is the highest power of the variable. In 3x + 2, the highest power is 1",
+      "difficulty": "easy"
+    },
+    {
+      "id": 16,
+      "question": "Solve for y: y/4 = 6",
+      "options": [
+        "y = 2",
+        "y = 10",
+        "y = 18", 
+        "y = 24"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Multiply both sides by 4: y = 6 × 4 = 24",
+      "difficulty": "easy"
+    },
+    {
+      "id": 17,
+      "question": "Which is the like term of 7x?",
+      "options": [
+        "7y",
+        "x",
+        "-3x", 
+        "7"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Like terms have the same variable with the same power. -3x is like 7x",
+      "difficulty": "easy"
+    },
+    {
+      "id": 18,
+      "question": "Evaluate 2x + 5 when x = 0",
+      "options": [
+        "0",
+        "2",
+        "5", 
+        "7"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Substitute x = 0: 2(0) + 5 = 0 + 5 = 5",
+      "difficulty": "easy"
+    },
+    {
+      "id": 19,
+      "question": "What is the sum of 3x + 2 and 4x - 1?",
+      "options": [
+        "7x + 1",
+        "7x - 1",
+        "x + 1", 
+        "12x + 2"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Add the expressions: (3x + 2) + (4x - 1) = 7x + 1",
+      "difficulty": "easy"
+    },
+    {
+      "id": 20,
+      "question": "If 4x - 3 = 13, then 4x = ?",
+      "options": [
+        "10",
+        "13",
+        "16", 
+        "19"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Add 3 to both sides: 4x - 3 + 3 = 13 + 3, so 4x = 16",
+      "difficulty": "easy"
+    }
+  ]
+}

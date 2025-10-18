@@ -1,0 +1,77 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function deviceOK(uid) {
+      // User must be bound and token claim must match stored device
+      return isOwner(uid)
+        && exists(/databases/$(db)/documents/users/$(uid))
+        && get(/databases/$(db)/documents/users/$(uid)).data.session.current.deviceId
+           == request.auth.token.deviceId;
+    }
+
+    // Private user profile (owner only)
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      // Simplify: allow owner to create and update their own document
+      allow write: if isOwner(uid);
+      allow delete: if false;
+    }
+
+    // Public snapshot for leaderboards (read-only)
+    match /users_public/{uid} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Client writes quiz result once; no edits/deletes
+    match /quiz_results/{runId} {
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid;
+      allow read: if isOwner(resource.data.uid);
+      allow update, delete: if false;
+    }
+
+    // Leaderboards are server-maintained only
+    match /leaderboards/{bucket}/entries/{uid} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Public catalog collections used during onboarding/browsing
+    match /mediums/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /boards/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /exams/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /courses/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /subjects/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /chapters/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+    match /quiz_sets/{id} {
+      allow read: if resource.data.enabled == true;
+      allow write: if false;
+    }
+
+    // Public app settings that the client reads (e.g., SEO)
+    match /app_settings/{id} {
+      allow read: if id == 'seo';
+      allow write: if false;
+    }
+  }
+}

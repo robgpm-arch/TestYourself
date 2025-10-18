@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Step</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-slow': 'pulse 2s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(20, 184, 166, 0.2)' },
+                            '100%': { boxShadow: '0 0 20px rgba(20, 184, 166, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="min-h-screen relative overflow-hidden bg-gradient-to-br from-teal-400 via-blue-500 to-indigo-700">
+        <!-- Background with phone and shield icons -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 left-20 text-6xl">📱</div>
+            <div class="absolute top-40 right-32 text-5xl">🔒</div>
+            <div class="absolute bottom-60 left-32 text-7xl">📱</div>
+            <div class="absolute top-80 left-1/2 text-4xl">🔒</div>
+            <div class="absolute bottom-40 right-20 text-6xl">📱</div>
+            <div class="absolute top-32 left-1/3 text-5xl">🔒</div>
+            <div class="absolute bottom-20 left-1/4 text-4xl">📱</div>
+            <div class="absolute top-60 right-1/4 text-6xl">🔒</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-8">
+            
+            <!-- Login Card -->
+            <div class="w-full max-w-md mx-auto">
+                <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white border-opacity-30">
+                    
+                    <!-- Form Header -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+                        <p class="text-blue-100 opacity-90">Enter the OTP sent to your mobile</p>
+                    </div>
+
+                    <!-- OTP Step -->
+                    <div class="space-y-6">
+                        <div class="space-y-6">
+                            <!-- Mobile Number Display -->
+                            <div class="text-center">
+                                <p class="text-blue-100 text-sm mb-4">
+                                    OTP sent to +91 9876543210
+                                </p>
+                                <button class="text-teal-200 hover:text-teal-100 text-sm underline">
+                                    Change number
+                                </button>
+                            </div>
+
+                            <!-- 6-digit OTP Input with Animation -->
+                            <div class="flex justify-center space-x-3">
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="1" maxlength="1" readonly>
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="2" maxlength="1" readonly>
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="3" maxlength="1" readonly>
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="4" maxlength="1" readonly>
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="5" maxlength="1" readonly>
+                                <input type="text" class="otp-input w-12 h-14 text-center text-xl font-bold bg-white bg-opacity-90 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent text-gray-800 focus:scale-110 transition-all duration-200 animate-pulse" value="6" maxlength="1" readonly>
+                            </div>
+
+                            <!-- Resend Timer -->
+                            <div class="text-center">
+                                <p class="text-blue-100 text-sm">
+                                    Resend OTP in <span class="font-bold text-teal-200" id="timer-count">23</span>s
+                                </p>
+                            </div>
+
+                            <!-- Verify Button - Active state -->
+                            <button
+                                class="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl transform hover:scale-105 cursor-pointer animate-glow"
+                            >
+                                <span class="flex items-center justify-center">
+                                    🔒 Verify & Continue
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Footer Links -->
+                    <div class="text-center space-y-3 mt-8">
+                        <p class="text-blue-100 text-xs">
+                            By continuing, you agree to 
+                            <button class="text-teal-200 hover:text-teal-100 underline">
+                                Terms & Privacy Policy
+                            </button>
+                        </p>
+                        
+                        <p class="text-blue-100 text-sm">
+                            <button class="text-teal-200 hover:text-teal-100 transition-colors duration-200 underline">
+                                Need help?
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Info -->
+        <div class="fixed top-4 left-4 bg-white bg-opacity-20 backdrop-blur-lg rounded-xl p-4 text-white">
+            <p class="text-sm font-bold mb-2">🎯 OTP Verification Step</p>
+            <p class="text-xs">✅ 6-digit code entered</p>
+            <p class="text-xs">⏰ Timer countdown active</p>
+            <p class="text-xs">🔥 Button ready & glowing</p>
+        </div>
+    </div>
+
+    <script>
+        let timer = 23;
+        
+        // Countdown timer
+        setInterval(() => {
+            timer--;
+            document.getElementById('timer-count').textContent = timer;
+            
+            if (timer <= 0) {
+                timer = 28; // Reset timer
+            }
+        }, 1000);
+
+        // Add bouncing animation to OTP boxes
+        document.querySelectorAll('.otp-input').forEach((input, index) => {
+            setTimeout(() => {
+                input.style.animation = 'bounce 0.6s ease-in-out';
+                setTimeout(() => {
+                    input.style.animation = 'pulse 2s infinite';
+                }, 600);
+            }, index * 100);
+        });
+    </script>
+</body>
+</html>

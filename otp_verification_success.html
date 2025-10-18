@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification & Auth Success</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'bounce-gentle': 'bounceGentle 0.6s ease-in-out',
+                        'checkmark': 'checkmark 0.8s ease-in-out',
+                        'confetti': 'confetti 3s ease-out infinite',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        bounceGentle: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.15)' },
+                            '100%': { transform: 'scale(1)' }
+                        },
+                        checkmark: {
+                            '0%': { strokeDasharray: '0 50', transform: 'scale(0.8)', opacity: '0' },
+                            '50%': { strokeDasharray: '25 50', transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { strokeDasharray: '50 50', transform: 'scale(1)', opacity: '1' }
+                        },
+                        confetti: {
+                            '0%': { transform: 'translateY(-100vh) rotate(0deg)', opacity: '1' },
+                            '100%': { transform: 'translateY(100vh) rotate(720deg)', opacity: '0' }
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        glowPulse: {
+                            '0%': { boxShadow: '0 0 5px rgba(20, 184, 166, 0.3)' },
+                            '50%': { boxShadow: '0 0 25px rgba(20, 184, 166, 0.6)' },
+                            '100%': { boxShadow: '0 0 5px rgba(20, 184, 166, 0.3)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- OTP Verification Screen -->
+    <div id="otp-screen" class="min-h-screen relative overflow-hidden bg-gradient-to-br from-teal-400 via-teal-200 to-white">
+        <!-- Background with lock and SMS icons -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 left-20 text-6xl">🔒</div>
+            <div class="absolute top-40 right-32 text-5xl">✉️</div>
+            <div class="absolute bottom-60 left-32 text-7xl">🔒</div>
+            <div class="absolute top-80 left-1/2 text-4xl">✉️</div>
+            <div class="absolute bottom-40 right-20 text-6xl">🔒</div>
+            <div class="absolute top-32 left-1/3 text-5xl">✉️</div>
+            <div class="absolute bottom-20 left-1/4 text-4xl">🔒</div>
+            <div class="absolute top-60 right-1/4 text-6xl">✉️</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-8">
+            
+            <!-- Verification Card -->
+            <div class="w-full max-w-md mx-auto">
+                <div class="bg-white bg-opacity-95 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white border-opacity-50">
+                    
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Verify Your Mobile</h1>
+                        <p class="text-gray-600" id="subtitle">We've sent an OTP to +91 XXXXX1234</p>
+                    </div>
+
+                    <!-- OTP Input Section -->
+                    <div class="space-y-6">
+                        <!-- 6-digit OTP Input -->
+                        <div class="flex justify-center space-x-3 mb-6">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 0)">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 1)">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 2)">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 3)">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 4)">
+                            <input type="text" class="otp-input w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200" maxlength="1" oninput="handleOtpInput(this, 5)">
+                        </div>
+
+                        <!-- Resend/Change Options -->
+                        <div class="text-center space-y-3">
+                            <p class="text-gray-600 text-sm" id="resend-text">
+                                Didn't receive? Resend OTP in <span class="font-bold text-teal-600" id="timer-count">30</span>s
+                            </p>
+                            <button id="resend-btn" onclick="resendOtp()" class="text-teal-600 hover:text-teal-700 font-semibold text-sm underline hidden">
+                                Resend OTP
+                            </button>
+                            
+                            <div class="mt-2">
+                                <button onclick="changeNumber()" class="text-gray-500 hover:text-gray-700 text-sm underline">
+                                    Change Number
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Verify Button -->
+                        <button
+                            id="verify-btn"
+                            onclick="verifyOtp()"
+                            disabled
+                            class="w-full bg-gray-300 text-gray-500 font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 cursor-not-allowed"
+                        >
+                            Verify & Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Controls -->
+        <div class="fixed top-4 left-4 bg-white bg-opacity-95 backdrop-blur-lg rounded-xl p-4 text-gray-800 shadow-lg">
+            <p class="text-sm font-bold mb-2">Demo Controls:</p>
+            <button onclick="fillOtpDemo()" class="text-xs bg-teal-500 text-white px-3 py-1 rounded mr-2 hover:bg-teal-600">Fill OTP</button>
+            <button onclick="showSuccessDemo()" class="text-xs bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Show Success</button>
+        </div>
+    </div>
+
+    <!-- Success Celebration Screen -->
+    <div id="success-screen" class="min-h-screen relative overflow-hidden bg-gradient-to-br from-emerald-400 via-teal-300 to-white hidden">
+        <!-- Confetti Animation -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="confetti absolute top-0 left-1/4 w-2 h-2 bg-yellow-400 animate-confetti" style="animation-delay: 0s;"></div>
+            <div class="confetti absolute top-0 left-1/3 w-2 h-2 bg-pink-400 animate-confetti" style="animation-delay: 0.2s;"></div>
+            <div class="confetti absolute top-0 left-1/2 w-2 h-2 bg-blue-400 animate-confetti" style="animation-delay: 0.4s;"></div>
+            <div class="confetti absolute top-0 left-2/3 w-2 h-2 bg-green-400 animate-confetti" style="animation-delay: 0.6s;"></div>
+            <div class="confetti absolute top-0 left-3/4 w-2 h-2 bg-purple-400 animate-confetti" style="animation-delay: 0.8s;"></div>
+            <div class="confetti absolute top-0 left-1/5 w-2 h-2 bg-red-400 animate-confetti" style="animation-delay: 1s;"></div>
+            <div class="confetti absolute top-0 left-4/5 w-2 h-2 bg-orange-400 animate-confetti" style="animation-delay: 1.2s;"></div>
+        </div>
+
+        <!-- Success Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-8">
+            
+            <!-- Success Card -->
+            <div class="w-full max-w-md mx-auto text-center">
+                <!-- Checkmark Animation -->
+                <div class="mb-8 animate-scale-in">
+                    <div class="w-32 h-32 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                        <svg class="w-20 h-20" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none" stroke="#22C55E" stroke-width="2"/>
+                            <path class="checkmark-check animate-checkmark" fill="none" stroke="#22C55E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M14 27l7 7 16-16"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div class="space-y-4 animate-fade-in" style="animation-delay: 0.5s;">
+                    <h1 class="text-4xl font-bold text-gray-900">Mobile Verified Successfully!</h1>
+                    <p class="text-gray-600 text-lg">Your account is now secured and ready to use</p>
+                </div>
+
+                <!-- Success Emojis -->
+                <div class="mt-8 text-6xl animate-slide-up" style="animation-delay: 0.8s;">
+                    ✅ 🎉
+                </div>
+
+                <!-- Auto-redirect Message -->
+                <div class="mt-8 animate-fade-in" style="animation-delay: 1.2s;">
+                    <p class="text-gray-500 text-sm">
+                        Redirecting to Profile Setup in <span id="redirect-timer" class="font-bold text-teal-600">3</span>s...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let timer = 30;
+        let timerInterval = null;
+        let redirectTimer = 3;
+        let redirectInterval = null;
+
+        // Auto-focus first input
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.otp-input')[0].focus();
+        });
+
+        function handleOtpInput(input, index) {
+            // Allow only numbers
+            input.value = input.value.replace(/[^0-9]/g, '');
+            
+            // Bounce animation
+            input.classList.add('animate-bounce-gentle');
+            setTimeout(() => {
+                input.classList.remove('animate-bounce-gentle');
+            }, 600);
+            
+            // Auto advance to next input
+            if (input.value && index < 5) {
+                const nextInput = document.querySelectorAll('.otp-input')[index + 1];
+                nextInput.focus();
+            }
+            
+            checkOtpComplete();
+        }
+
+        function checkOtpComplete() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const isComplete = Array.from(otpInputs).every(input => input.value !== '');
+            const btn = document.getElementById('verify-btn');
+            
+            if (isComplete) {
+                btn.disabled = false;
+                btn.className = "w-full bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 animate-glow-pulse";
+            } else {
+                btn.disabled = true;
+                btn.className = "w-full bg-gray-300 text-gray-500 font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 cursor-not-allowed";
+            }
+        }
+
+        function startTimer() {
+            timer = 30;
+            document.getElementById('timer-count').textContent = timer;
+            document.getElementById('resend-text').classList.remove('hidden');
+            document.getElementById('resend-btn').classList.add('hidden');
+            
+            timerInterval = setInterval(() => {
+                timer--;
+                document.getElementById('timer-count').textContent = timer;
+                
+                if (timer <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('resend-text').classList.add('hidden');
+                    document.getElementById('resend-btn').classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function resendOtp() {
+            // Clear all OTP inputs
+            document.querySelectorAll('.otp-input').forEach(input => input.value = '');
+            checkOtpComplete();
+            startTimer();
+            
+            // Focus first input
+            document.querySelectorAll('.otp-input')[0].focus();
+        }
+
+        function changeNumber() {
+            // In a real app, this would navigate back to mobile entry
+            alert('Feature: Navigate back to mobile number entry');
+        }
+
+        function verifyOtp() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otp.length === 6) {
+                showSuccess();
+            }
+        }
+
+        function showSuccess() {
+            // Hide OTP screen
+            document.getElementById('otp-screen').classList.add('hidden');
+            
+            // Show success screen
+            document.getElementById('success-screen').classList.remove('hidden');
+            
+            // Start redirect timer
+            startRedirectTimer();
+        }
+
+        function startRedirectTimer() {
+            redirectTimer = 3;
+            document.getElementById('redirect-timer').textContent = redirectTimer;
+            
+            redirectInterval = setInterval(() => {
+                redirectTimer--;
+                document.getElementById('redirect-timer').textContent = redirectTimer;
+                
+                if (redirectTimer <= 0) {
+                    clearInterval(redirectInterval);
+                    // In a real app, navigate to next screen
+                    alert('🎉 Redirecting to Profile Setup / Language Selection!');
+                    
+                    // Reset demo after showing success
+                    setTimeout(() => {
+                        resetDemo();
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        function resetDemo() {
+            // Reset to OTP screen
+            document.getElementById('success-screen').classList.add('hidden');
+            document.getElementById('otp-screen').classList.remove('hidden');
+            
+            // Clear inputs and restart timer
+            document.querySelectorAll('.otp-input').forEach(input => input.value = '');
+            checkOtpComplete();
+            startTimer();
+            document.querySelectorAll('.otp-input')[0].focus();
+        }
+
+        // Demo functions
+        function fillOtpDemo() {
+            const inputs = document.querySelectorAll('.otp-input');
+            const otpValue = '123456';
+            
+            inputs.forEach((input, index) => {
+                setTimeout(() => {
+                    input.value = otpValue[index];
+                    input.classList.add('animate-bounce-gentle');
+                    setTimeout(() => {
+                        input.classList.remove('animate-bounce-gentle');
+                    }, 600);
+                    
+                    if (index === inputs.length - 1) {
+                        setTimeout(() => {
+                            checkOtpComplete();
+                        }, 300);
+                    }
+                }, index * 150);
+            });
+        }
+
+        function showSuccessDemo() {
+            showSuccess();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const focusedElement = document.activeElement;
+            if (focusedElement.classList.contains('otp-input')) {
+                const otpInputs = Array.from(document.querySelectorAll('.otp-input'));
+                const currentIndex = otpInputs.indexOf(focusedElement);
+                
+                if (e.key === 'Backspace' && !focusedElement.value && currentIndex > 0) {
+                    otpInputs[currentIndex - 1].focus();
+                } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                    otpInputs[currentIndex - 1].focus();
+                } else if (e.key === 'ArrowRight' && currentIndex < 5) {
+                    otpInputs[currentIndex + 1].focus();
+                }
+            }
+        });
+
+        // Start timer on load
+        startTimer();
+    </script>
+</body>
+</html>

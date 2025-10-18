@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "testyourself-80a10"
+  },
+  "targets": {
+    "testyourself-80a10": {
+      "storage": {
+        "storage": [
+          "testyourself-80a10.appspot.com"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

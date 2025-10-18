@@ -1,0 +1,40 @@
+{
+  "setInfo": {
+    "id": 2,
+    "name": "SET 2",
+    "subject": "Mathematics",
+    "chapter": "Algebra Fundamentals",
+    "description": "Intermediate level practice problems",
+    "difficulty": "medium",
+    "totalQuestions": 25,
+    "timeEstimate": "20 min"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "question": "Solve the system: 2x + y = 7 and x - y = 2",
+      "options": [
+        "x = 3, y = 1",
+        "x = 2, y = 3", 
+        "x = 4, y = -1",
+        "x = 1, y = 5"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Add equations: 3x = 9, so x = 3. Substitute: 2(3) + y = 7, so y = 1",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2,
+      "question": "Factor: x² - 5x + 6",
+      "options": [
+        "(x - 2)(x - 3)",
+        "(x - 1)(x - 6)",
+        "(x + 2)(x + 3)",
+        "(x - 2)(x + 3)"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Find two numbers that multiply to 6 and add to -5: -2 and -3. So x² - 5x + 6 = (x - 2)(x - 3)",
+      "difficulty": "medium"
+    }
+  ]
+}

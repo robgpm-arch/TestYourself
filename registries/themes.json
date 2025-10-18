@@ -1,0 +1,93 @@
+[
+  {
+    "id": "classic",
+    "name": "Classic Focus",
+    "description": "Teal gradient with clear contrast and calming accents",
+    "preview": {
+      "question": "What is the value of 3x when x = 7?",
+      "options": ["A) 10", "B) 14", "C) 18", "D) 21"],
+      "backgroundColor": "bg-gradient-to-br from-teal-500 via-sky-400 to-white",
+      "questionColor": "text-slate-900",
+      "optionStyle": "bg-white border border-teal-200 text-slate-800 shadow-sm",
+      "accentColor": "text-teal-700",
+      "pattern": "aurora",
+      "progressColor": "#0ea5e9",
+      "optionHover": "#0f766e"
+    },
+    "features": ["High legibility", "Adaptive contrast", "Guided focus"],
+    "quizStyles": {
+      "root": "bg-gradient-to-br from-teal-100 via-white to-slate-100",
+      "overlay": "pointer-events-none absolute inset-0 bg-[radial-gradient(circle,_rgba(13,148,136,0.12)_1px,_transparent_1px)] bg-[length:36px_36px]",
+      "topBar": "bg-white/90 backdrop-blur border-b border-teal-200 text-slate-900",
+      "topBarTitle": "text-slate-900",
+      "topBarMeta": "text-slate-600",
+      "footer": "bg-white/90 backdrop-blur border-t border-teal-200",
+      "questionCard": "bg-white/95 border border-teal-100 shadow-xl text-slate-800",
+      "questionText": "text-slate-900",
+      "optionCard": "cursor-pointer transition-all duration-200 hover:shadow-lg",
+      "optionCardHover": "hover:ring-2 hover:ring-teal-200/80",
+      "optionCardSelected": "ring-4 ring-offset-2 ring-white/70 shadow-[0_18px_44px_rgba(13,148,136,0.35)]",
+      "optionInnerBase": "flex items-center justify-between gap-3 p-4 rounded-xl transition-all duration-200 text-white shadow-sm",
+      "optionInnerSelected": "ring-1 ring-white/40 shadow-xl",
+      "optionText": "text-sm sm:text-base font-medium text-white",
+      "optionLetterBase": "w-9 h-9 flex items-center justify-center rounded-full font-semibold shrink-0 transition-colors duration-200",
+      "optionLetterSelectedBase": "ring-2 ring-white/70 ring-offset-2",
+      "optionSelectedIcon": "text-white",
+      "optionPalette": {
+        "A": {
+          "inner": "bg-teal-500/95 border border-teal-400/60 shadow-[0_6px_18px_rgba(13,148,136,0.25)]",
+          "innerSelected": "bg-gradient-to-r from-teal-500 to-sky-500 border border-transparent",
+          "letter": "bg-teal-500 text-white",
+          "letterSelected": "bg-white text-teal-600"
+        },
+        "B": {
+          "inner": "bg-emerald-500/95 border border-emerald-400/60 shadow-[0_6px_18px_rgba(16,185,129,0.25)]",
+          "innerSelected": "bg-gradient-to-r from-emerald-500 to-teal-500 border border-transparent",
+          "letter": "bg-emerald-500 text-white",
+          "letterSelected": "bg-white text-emerald-600"
+        },
+        "C": {
+          "inner": "bg-sky-500/95 border border-sky-400/60 shadow-[0_6px_18px_rgba(56,189,248,0.25)]",
+          "innerSelected": "bg-gradient-to-r from-sky-500 to-cyan-500 border border-transparent",
+          "letter": "bg-sky-500 text-white",
+          "letterSelected": "bg-white text-sky-600"
+        },
+        "D": {
+          "inner": "bg-indigo-500/95 border border-indigo-400/60 shadow-[0_6px_18px_rgba(99,102,241,0.25)]",
+          "innerSelected": "bg-gradient-to-r from-indigo-500 to-purple-500 border border-transparent",
+          "letter": "bg-indigo-500 text-white",
+          "letterSelected": "bg-white text-indigo-600"
+        }
+      },
+      "progress": {
+        "track": "bg-teal-200/60",
+        "fillClass": "bg-gradient-to-r from-teal-500 to-sky-500",
+        "text": "text-slate-700"
+      },
+      "timer": {
+        "track": "#ccfbf1",
+        "stroke": "#0f766e",
+        "text": "text-teal-700",
+        "icon": "text-teal-700"
+      },
+      "nav": {
+        "answered": "bg-teal-500 text-white",
+        "marked": "bg-amber-400 text-white",
+        "unanswered": "bg-slate-400 text-white",
+        "currentRing": "ring-teal-300 ring-offset-2"
+      },
+      "buttons": {
+        "previous": "border border-teal-400 text-teal-700 hover:bg-teal-50 disabled:opacity-50 disabled:cursor-not-allowed",
+        "next": "bg-gradient-to-r from-teal-500 to-sky-500 text-white hover:from-teal-600 hover:to-sky-600",
+        "mark": "bg-teal-100 text-teal-700 hover:bg-teal-200",
+        "markActive": "bg-amber-500 text-white hover:bg-amber-600",
+        "exit": "border border-teal-400 text-teal-700 hover:bg-teal-50"
+      },
+      "mobileNav": "bg-white/95",
+      "mobileNavText": "text-slate-800",
+      "modalCard": "bg-white text-slate-800",
+      "modalPrimaryButton": "bg-gradient-to-r from-teal-500 to-sky-500 text-white hover:from-teal-600 hover:to-sky-600",
+      "modalSecondaryButton": "bg-teal-100 text-teal-700 hover:bg-teal-200"
+    }
+  }
+]

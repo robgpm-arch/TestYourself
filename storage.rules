@@ -1,0 +1,141 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // User profile images
+    match /users/{userId}/profile/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                      request.auth.uid == userId &&
+                      isValidImageFile() &&
+                      request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+
+    // Quiz media files (images, videos, audio)
+    match /quizzes/{quizId}/{mediaType}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+                      isQuizOwner(quizId) &&
+                      isValidMediaFile(mediaType) &&
+                      request.resource.size < 50 * 1024 * 1024; // 50MB limit
+    }
+
+    // Study materials
+    match /study-materials/{materialId}/{fileType}/{fileName} {
+      allow read: if request.auth != null && 
+                     (isPublicMaterial(materialId) || 
+                      hasValidSubscription() ||
+                      isMaterialOwner(materialId));
+      allow write: if request.auth != null && 
+                      isMaterialOwner(materialId) &&
+                      isValidStudyFile(fileType) &&
+                      request.resource.size < 100 * 1024 * 1024; // 100MB limit
+    }
+
+    // App assets (public read, admin write)
+    match /assets/{assetType}/{fileName} {
+      allow read: if true; // Public read
+      allow write: if request.auth != null && 
+                      hasAdminRole() &&
+                      request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+
+    // User uploaded content (assignments, submissions)
+    match /uploads/{userId}/{uploadType}/{fileName} {
+      allow read: if request.auth != null && 
+                     request.auth.uid == userId;
+      allow write: if request.auth != null && 
+                      request.auth.uid == userId &&
+                      isValidUploadFile() &&
+                      request.resource.size < 20 * 1024 * 1024; // 20MB limit
+    }
+
+    // Temporary files (auto-cleanup after 24 hours)
+    match /temp/{userId}/{fileName} {
+      allow read, write: if request.auth != null && 
+                            request.auth.uid == userId &&
+                            request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+
+    // Helper functions
+    function isValidImageFile() {
+      return request.resource.contentType.matches('image/.*') &&
+             request.resource.contentType in ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    }
+
+    function isValidMediaFile(mediaType) {
+      return (mediaType == 'image' && isValidImageFile()) ||
+             (mediaType == 'video' && isValidVideoFile()) ||
+             (mediaType == 'audio' && isValidAudioFile());
+    }
+
+    function isValidVideoFile() {
+      return request.resource.contentType.matches('video/.*') &&
+             request.resource.contentType in ['video/mp4', 'video/webm', 'video/ogg'];
+    }
+
+    function isValidAudioFile() {
+      return request.resource.contentType.matches('audio/.*') &&
+             request.resource.contentType in ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'];
+    }
+
+    function isValidStudyFile(fileType) {
+      return (fileType == 'document' && isValidDocumentFile()) ||
+             (fileType == 'video' && isValidVideoFile()) ||
+             (fileType == 'audio' && isValidAudioFile()) ||
+             (fileType == 'image' && isValidImageFile());
+    }
+
+    function isValidDocumentFile() {
+      return request.resource.contentType in [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'text/plain'
+      ];
+    }
+
+    function isValidUploadFile() {
+      return isValidImageFile() || 
+             isValidVideoFile() || 
+             isValidAudioFile() || 
+             isValidDocumentFile();
+    }
+
+    function isQuizOwner(quizId) {
+      return request.auth != null &&
+             firestore.exists(/databases/(default)/documents/quizzes/$(quizId)) &&
+             firestore.get(/databases/(default)/documents/quizzes/$(quizId)).data.createdBy == request.auth.uid;
+    }
+
+    function isMaterialOwner(materialId) {
+      return request.auth != null &&
+             firestore.exists(/databases/(default)/documents/study_materials/$(materialId)) &&
+             firestore.get(/databases/(default)/documents/study_materials/$(materialId)).data.createdBy == request.auth.uid;
+    }
+
+    function isPublicMaterial(materialId) {
+      return firestore.exists(/databases/(default)/documents/study_materials/$(materialId)) &&
+             firestore.get(/databases/(default)/documents/study_materials/$(materialId)).data.isPublic == true;
+    }
+
+    function hasValidSubscription() {
+      return request.auth != null &&
+             firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.subscription.status == 'active';
+    }
+
+    function hasAdminRole() {
+      return request.auth != null &&
+             request.auth.token.admin == true;
+    }
+
+    // Deny all other paths
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

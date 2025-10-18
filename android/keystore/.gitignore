@@ -1,0 +1,6 @@
+# Never commit actual keystore files or credentials to version control
+*.keystore
+*.jks
+keystore.properties
+release-key.properties
+upload-keystore.properties

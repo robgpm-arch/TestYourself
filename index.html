@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://testyourself.app/">
+    <meta name="theme-color" content="#2563eb">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://apis.google.com https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://www.googleapis.com https://firebasestorage.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://*.cloudfunctions.net; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://apis.google.com https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://www.googletagmanager.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://www.googleapis.com https://firebasestorage.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://*.cloudfunctions.net https://www.google.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; frame-src 'self' https://accounts.google.com/ https://www.google.com/ https://*.firebaseapp.com;">
+
+    <title>TestYourself – Practice MCQs, Mock Exams & Analytics</title>
+    <meta name="description" content="Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://testyourself.app/">
+    <meta property="og:title" content="TestYourself – Practice MCQs, Mock Exams & Analytics">
+    <meta property="og:description" content="Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.">
+    <meta property="og:image" content="/og-image-1200x630.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TestYourself – Practice MCQs, Mock Exams & Analytics">
+    <meta name="twitter:description" content="Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.">
+    <meta name="twitter:image" content="/og-image-1200x630.png">
+
+    <!-- JSON-LD (Organization) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TestYourself",
+      "url": "https://testyourself.app/",
+      "logo": "https://testyourself.app/logo.svg"
+    }
+    </script>
+
+    <!-- JSON-LD (WebSite) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "TestYourself",
+      "url": "https://testyourself.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://testyourself.app/search?q={query}",
+        "query-input": "required name=query"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <h1>TestYourself – Practice MCQs, Mock Exams & Analytics</h1>
+      <p>Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.</p>
+    </div>
+
+    <noscript>
+      <p>TestYourself works best with JavaScript enabled. Practice MCQs and full mock exams with instant feedback and detailed analytics.</p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const previewStage = params.get('preview');
+
+      // Always reset authentication state
+      localStorage.removeItem('demo_authenticated');
+      localStorage.removeItem('test_show_login');
+
+      if (previewStage === 'medium') {
+        // Skip directly to medium picker
+        localStorage.setItem('onboarding_completed', 'true');
+        localStorage.removeItem('medium_selected');
+        localStorage.setItem('board_exam_selected', 'true');
+        localStorage.setItem('class_course_selected', 'true');
+        localStorage.setItem('subject_selected', 'true');
+      } else {
+        // Default to splash experience
+        localStorage.removeItem('onboarding_completed');
+        localStorage.removeItem('medium_selected');
+        localStorage.removeItem('board_exam_selected');
+        localStorage.removeItem('class_course_selected');
+        localStorage.removeItem('subject_selected');
+      }
+    </script>
+  </body>
+</html>

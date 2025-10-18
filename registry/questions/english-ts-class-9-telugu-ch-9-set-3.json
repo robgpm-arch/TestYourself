@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "Set 3 • english-ts-class-9-telugu-ch-9-set-3",
+    "timeLimitSec": 0
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "question": "Which option is correct?",
+      "options": [
+        "Option A",
+        "Option B",
+        "Option C",
+        "Option D"
+      ],
+      "correctAnswer": 0,
+      "explanation": "This is a model question. Replace with real content.",
+      "difficulty": "easy",
+      "tags": []
+    }
+  ]
+}

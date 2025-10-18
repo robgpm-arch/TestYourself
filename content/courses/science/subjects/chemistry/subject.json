@@ -1,0 +1,10 @@
+{
+  "id": "chemistry",
+  "name": "Chemistry",
+  "description": "Study of matter, its properties, and chemical reactions",
+  "courseId": "science",
+  "icon": "⚗️",
+  "color": "#ef4444",
+  "active": true,
+  "order": 2
+}
