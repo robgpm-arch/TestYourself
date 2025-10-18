@@ -1,0 +1,36 @@
+name: Secret Scan Alerts
+
+on:
+  workflow_run:
+    workflows: ["Secret Scan (detect-secrets)"]
+    types:
+      - completed
+
+jobs:
+  notify:
+    if: ${{ github.event.workflow_run.conclusion != 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.ALERT_EMAIL_USER }}
+          password: ${{ secrets.ALERT_EMAIL_PASS }}
+          subject: "🚨 Secret Scan Failed on ${{ github.repository }}"
+          body: "Secret scanning detected issues in commit ${{ github.sha }}. Check the Actions tab for details."
+          to: "robpgm@gmail.com"
+          from: "GitHub Actions Bot <${{ secrets.ALERT_EMAIL_USER }}>"
+
+      - name: Send Slack alert (optional)
+        if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "text": "🚨 Secret Scan failed on *${{ github.repository }}* for commit `${{ github.sha }}`. Check the Actions tab for details."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
