@@ -4,26 +4,26 @@ import { useAuth } from './contexts/AuthContext';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './lib/firebase';
-import SplashScreen from "./pages/SplashScreen";
-import OnboardingTutorial from "./pages/OnboardingTutorial";
-import Login from "./screens/Login";
-import Register from "./pages/auth/Register";
-import MediumPicker from "./pages/MediumPicker";
-import BoardExamSelector from "./pages/BoardExamSelector";
-import ClassCourseSelector from "./pages/ClassCourseSelector";
-import SubjectSelector from "./pages/SubjectSelector";
-import ChapterSelection, { ChapterSelectionItem } from "./pages/ChapterSelection";
-import ComingSoon, { ComingSoonState } from "./pages/ComingSoon";
-import LoginSignup from "./pages/LoginSignup";
-import Home from "./pages/Home";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
-import AdminPanel from "./pages/AdminPanel";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminFileManager from "./pages/AdminFileManager";
-import AdminLogin from "./pages/AdminLogin";
-import { RequireAdmin, Guarded } from "./routes/guards.tsx";
-import { getUserState, routeAfterLoginOrRegister } from "./routes/guards.ts";
+import SplashScreen from './pages/SplashScreen';
+import OnboardingTutorial from './pages/OnboardingTutorial';
+import Login from './screens/Login';
+import Register from './pages/auth/Register';
+import MediumPicker from './pages/MediumPicker';
+import BoardExamSelector from './pages/BoardExamSelector';
+import ClassCourseSelector from './pages/ClassCourseSelector';
+import SubjectSelector from './pages/SubjectSelector';
+import ChapterSelection, { ChapterSelectionItem } from './pages/ChapterSelection';
+import ComingSoon, { ComingSoonState } from './pages/ComingSoon';
+import LoginSignup from './pages/LoginSignup';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
+import AdminPanel from './pages/AdminPanel';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminFileManager from './pages/AdminFileManager';
+import AdminLogin from './pages/AdminLogin';
+import { RequireAdmin, Guarded } from './routes/guards.tsx';
+import { getUserState, routeAfterLoginOrRegister } from './routes/guards.ts';
 
 // put near the top of App.tsx
 async function routeAfterUserAuth(navigate: ReturnType<typeof useNavigate>) {
@@ -36,37 +36,36 @@ async function routeAfterUserAuth(navigate: ReturnType<typeof useNavigate>) {
 
   navigate(onboarded ? '/profile' : '/onboarding', { replace: true });
 }
-import QuizThemesList from "./pages/admin/QuizThemesList";
-import QuizThemeEditor from "./pages/admin/QuizThemeEditor";
-import ScreenThemesList from "./pages/admin/ScreenThemesList";
-import ScreenThemeEditor from "./pages/admin/ScreenThemeEditor";
-import SyllabusBrowser from "./pages/SyllabusBrowser";
-import QuizInstructions from "./pages/QuizInstructions";
-import QuizAutoRun from "./pages/QuizAutoRun";
-import ThemePicker from "./pages/ThemePicker";
-import MotivationalHub from "./pages/MotivationalHub";
-import DailyChallenges from "./pages/DailyChallenges";
-import FriendsSocial from "./pages/FriendsSocial";
-import QuizPlayer, { QuizCompletionResult } from "./pages/QuizPlayer";
-import ChatMessaging from "./pages/ChatMessaging";
-import MultiplayerLobby from "./pages/MultiplayerLobby";
-import MultiplayerBattle from "./pages/MultiplayerBattle";
-import ChallengeResult from "./pages/ChallengeResult";
-import InviteFriends from "./pages/InviteFriends";
-import QuizPlayerNumerical from "./pages/QuizPlayerNumerical";
-import QuizPlayerComprehension from "./pages/QuizPlayerComprehension";
-import ExamMode from "./pages/ExamMode";
-import ResultsCelebration from "./pages/ResultsCelebration";
-import DetailedAnalytics, { AnalyticsData } from "./pages/DetailedAnalytics";
-import Leaderboards from "./pages/Leaderboards";
-import ChapterSets, { ChapterInfo, QuizSet, MCQQuestion } from "./pages/ChapterSets";
-import AchievementCelebration from "./pages/AchievementCelebration";
-import ChangeCourse from "./pages/ChangeCourse";
-import SeoHead from "./components/SeoHead";
-import { watchDeviceClaim } from "./lib/sessionBinding";
+import QuizThemesList from './pages/admin/QuizThemesList';
+import QuizThemeEditor from './pages/admin/QuizThemeEditor';
+import ScreenThemesList from './pages/admin/ScreenThemesList';
+import ScreenThemeEditor from './pages/admin/ScreenThemeEditor';
+import SyllabusBrowser from './pages/SyllabusBrowser';
+import QuizInstructions from './pages/QuizInstructions';
+import QuizAutoRun from './pages/QuizAutoRun';
+import ThemePicker from './pages/ThemePicker';
+import MotivationalHub from './pages/MotivationalHub';
+import DailyChallenges from './pages/DailyChallenges';
+import FriendsSocial from './pages/FriendsSocial';
+import QuizPlayer, { QuizCompletionResult } from './pages/QuizPlayer';
+import ChatMessaging from './pages/ChatMessaging';
+import MultiplayerLobby from './pages/MultiplayerLobby';
+import MultiplayerBattle from './pages/MultiplayerBattle';
+import ChallengeResult from './pages/ChallengeResult';
+import InviteFriends from './pages/InviteFriends';
+import QuizPlayerNumerical from './pages/QuizPlayerNumerical';
+import QuizPlayerComprehension from './pages/QuizPlayerComprehension';
+import ExamMode from './pages/ExamMode';
+import ResultsCelebration from './pages/ResultsCelebration';
+import DetailedAnalytics, { AnalyticsData } from './pages/DetailedAnalytics';
+import Leaderboards from './pages/Leaderboards';
+import ChapterSets, { ChapterInfo, QuizSet, MCQQuestion } from './pages/ChapterSets';
+import AchievementCelebration from './pages/AchievementCelebration';
+import ChangeCourse from './pages/ChangeCourse';
+import SeoHead from './components/SeoHead';
+import { watchDeviceClaim } from './lib/sessionBinding';
 
 const DEFAULT_THEME = 'classic';
-
 
 interface AdminRedirectorProps {
   target: string | null;
@@ -95,9 +94,17 @@ const subjectChapterDefaults: Record<string, ChapterInfo> = {
   history: { subject: 'History', chapter: 'World History Overview', chapterNumber: 1 },
   geography: { subject: 'Geography', chapter: 'Earth Systems Basics', chapterNumber: 1 },
   english: { subject: 'English', chapter: 'Language Essentials', chapterNumber: 1 },
-  'general-knowledge': { subject: 'General Knowledge', chapter: 'Trivia Kickoff', chapterNumber: 1 },
+  'general-knowledge': {
+    subject: 'General Knowledge',
+    chapter: 'Trivia Kickoff',
+    chapterNumber: 1,
+  },
   reasoning: { subject: 'Reasoning', chapter: 'Logic Building Blocks', chapterNumber: 1 },
-  'current-affairs': { subject: 'Current Affairs', chapter: 'Recent Events Overview', chapterNumber: 1 },
+  'current-affairs': {
+    subject: 'Current Affairs',
+    chapter: 'Recent Events Overview',
+    chapterNumber: 1,
+  },
 };
 
 const COMING_SOON_SUBJECTS: Record<string, ComingSoonState> = {
@@ -145,7 +152,9 @@ const formatSelectionLabel = (value: string) => {
   return value
     .split(/[-_]/)
     .filter(Boolean)
-    .map(part => (part.length <= 3 ? part.toUpperCase() : part.charAt(0).toUpperCase() + part.slice(1)))
+    .map(part =>
+      part.length <= 3 ? part.toUpperCase() : part.charAt(0).toUpperCase() + part.slice(1)
+    )
     .join(' ');
 };
 
@@ -157,7 +166,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Linear equations, expressions and problem solving essentials.',
       duration: '20 min',
       difficulty: 'easy',
-      number: 1
+      number: 1,
     },
     {
       id: 'geometry-angles',
@@ -165,7 +174,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Triangles, similarity and angle chasing challenges.',
       duration: '25 min',
       difficulty: 'medium',
-      number: 2
+      number: 2,
     },
     {
       id: 'calculus-starters',
@@ -173,8 +182,8 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Limits, derivatives and interpreting graphs quickly.',
       duration: '30 min',
       difficulty: 'hard',
-      number: 3
-    }
+      number: 3,
+    },
   ],
   science: [
     {
@@ -183,7 +192,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Kinematics recap with real-world application questions.',
       duration: '18 min',
       difficulty: 'easy',
-      number: 1
+      number: 1,
     },
     {
       id: 'chemistry-reactions',
@@ -191,7 +200,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Balancing equations, rate of reaction and practical tips.',
       duration: '24 min',
       difficulty: 'medium',
-      number: 2
+      number: 2,
     },
     {
       id: 'biology-cell',
@@ -199,8 +208,8 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Cell organelles, genetics and diagrams practice.',
       duration: '26 min',
       difficulty: 'medium',
-      number: 3
-    }
+      number: 3,
+    },
   ],
   history: [
     {
@@ -209,7 +218,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Mesopotamia, Indus Valley and Egyptian highlights.',
       duration: '15 min',
       difficulty: 'easy',
-      number: 1
+      number: 1,
     },
     {
       id: 'medieval-india',
@@ -217,7 +226,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Important dynasties and cultural transformations.',
       duration: '22 min',
       difficulty: 'medium',
-      number: 2
+      number: 2,
     },
     {
       id: 'world-war',
@@ -225,8 +234,8 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Key events, timelines and consequences of WWI & WWII.',
       duration: '28 min',
       difficulty: 'hard',
-      number: 3
-    }
+      number: 3,
+    },
   ],
   geography: [
     {
@@ -235,7 +244,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Landforms, plate tectonics and earth processes.',
       duration: '20 min',
       difficulty: 'medium',
-      number: 1
+      number: 1,
     },
     {
       id: 'climate-zones',
@@ -243,7 +252,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Weather patterns, monsoons and climate graphs.',
       duration: '18 min',
       difficulty: 'easy',
-      number: 2
+      number: 2,
     },
     {
       id: 'maps-and-gis',
@@ -251,8 +260,8 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Topographic maps, GIS basics and coordinate practice.',
       duration: '25 min',
       difficulty: 'medium',
-      number: 3
-    }
+      number: 3,
+    },
   ],
   english: [
     {
@@ -261,7 +270,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Tenses, subject-verb agreement and sentence correction.',
       duration: '17 min',
       difficulty: 'easy',
-      number: 1
+      number: 1,
     },
     {
       id: 'reading-comprehension',
@@ -269,7 +278,7 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Passage analysis, inference and vocabulary in context.',
       duration: '23 min',
       difficulty: 'medium',
-      number: 2
+      number: 2,
     },
     {
       id: 'writing-skills',
@@ -277,9 +286,9 @@ const SUBJECT_CHAPTERS: Record<string, ChapterSelectionItem[]> = {
       description: 'Essay structure, creative prompts and summarising tips.',
       duration: '28 min',
       difficulty: 'medium',
-      number: 3
-    }
-  ]
+      number: 3,
+    },
+  ],
 };
 
 const fallbackChapters: ChapterSelectionItem[] = [
@@ -289,7 +298,7 @@ const fallbackChapters: ChapterSelectionItem[] = [
     description: 'Warm-up concepts to ease into the subject.',
     duration: '15 min',
     difficulty: 'easy',
-    number: 1
+    number: 1,
   },
   {
     id: 'chapter-2',
@@ -297,7 +306,7 @@ const fallbackChapters: ChapterSelectionItem[] = [
     description: 'Practice questions with increasing challenge.',
     duration: '20 min',
     difficulty: 'medium',
-    number: 2
+    number: 2,
   },
   {
     id: 'chapter-3',
@@ -305,8 +314,8 @@ const fallbackChapters: ChapterSelectionItem[] = [
     description: 'Advanced drills for mastery and speed.',
     duration: '25 min',
     difficulty: 'hard',
-    number: 3
-  }
+    number: 3,
+  },
 ];
 
 type FlowStage =
@@ -332,11 +341,17 @@ function App() {
   const location = useLocation();
 
   const determineInitialFlowStage = (): FlowStage => {
-    if (process.env.NODE_ENV !== 'production' && localStorage.getItem('demo_authenticated') === 'true') {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      localStorage.getItem('demo_authenticated') === 'true'
+    ) {
       return 'none';
     }
 
-    if (process.env.NODE_ENV !== 'production' && localStorage.getItem('test_show_login') === 'true') {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      localStorage.getItem('test_show_login') === 'true'
+    ) {
       return 'login';
     }
 
@@ -354,10 +369,9 @@ function App() {
   const navigate = useNavigate();
 
   // keep this; used by AdminRedirector
-  const [postAuthRedirect, setPostAuthRedirect] = useState<string | null>(
-    () => (localStorage.getItem('admin_authenticated') === 'true' ? '/admin/dashboard' : null)
+  const [postAuthRedirect, setPostAuthRedirect] = useState<string | null>(() =>
+    localStorage.getItem('admin_authenticated') === 'true' ? '/admin/dashboard' : null
   );
-
 
   // Control whether to show splash or app shell
   const showShell = flowStage !== 'splash';
@@ -374,12 +388,11 @@ function App() {
     return unsubscribe;
   }, []);
 
-
   useEffect(() => {
     if (!hasShownSplash || !userInteracted) return;
 
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async user => {
       if (!user) return; // don't auto-redirect when signed out
       if (flowStage === 'splash') return; // don't redirect while splash is visible
 
@@ -387,9 +400,11 @@ function App() {
       const path = location?.pathname || '';
       const intent = localStorage.getItem('auth_intent'); // 'register' | 'login' | null
       const inFlowMode = flowStage === 'register' || flowStage === 'login';
-      if (inFlowMode ||
-          (path === '/register' && intent === 'register') ||
-          (path === '/login' && intent === 'login')) {
+      if (
+        inFlowMode ||
+        (path === '/register' && intent === 'register') ||
+        (path === '/login' && intent === 'login')
+      ) {
         // stay on the page until the screen completes the flow
         return;
       }
@@ -439,7 +454,9 @@ function App() {
   const [quizResult, setQuizResult] = useState<QuizCompletionResult | null>(null);
   const [quizRunId, setQuizRunId] = useState(0);
   const { isAdmin } = useAuth();
-  const [resultsSubView, setResultsSubView] = useState<'results' | 'analytics' | 'leaderboard'>('results');
+  const [resultsSubView, setResultsSubView] = useState<'results' | 'analytics' | 'leaderboard'>(
+    'results'
+  );
 
   const analyticsData = useMemo<AnalyticsData | undefined>(() => {
     if (!quizResult) {
@@ -461,7 +478,7 @@ function App() {
         options: question.options ?? [],
         correctIndex: Number.isFinite(correctIndex) ? correctIndex : 0,
         explanation: question.explanation,
-        difficulty: question.difficulty ?? 'Overall'
+        difficulty: question.difficulty ?? 'Overall',
       };
     });
 
@@ -493,8 +510,10 @@ function App() {
 
     questionEntries.forEach(entry => {
       const answer = answerMap.get(entry.id);
-      const selectedIndex = answer && answer.selectedOption !== '' ? Number(answer.selectedOption) : undefined;
-      const hasSelection = selectedIndex !== undefined && !Number.isNaN(selectedIndex) && selectedIndex >= 0;
+      const selectedIndex =
+        answer && answer.selectedOption !== '' ? Number(answer.selectedOption) : undefined;
+      const hasSelection =
+        selectedIndex !== undefined && !Number.isNaN(selectedIndex) && selectedIndex >= 0;
       const isCorrect = hasSelection && selectedIndex === entry.correctIndex;
 
       const difficultyKey = entry.difficulty ?? 'Overall';
@@ -512,7 +531,7 @@ function App() {
           yourAnswer: formatOption(entry.options, selectedIndex, 'No answer selected'),
           correctAnswer: formatOption(entry.options, entry.correctIndex, 'Answer unavailable'),
           subject: sessionData?.chapterInfo?.subject ?? 'Quiz',
-          explanation: entry.explanation ?? 'Explanation not available.'
+          explanation: entry.explanation ?? 'Explanation not available.',
         });
       }
     });
@@ -526,8 +545,8 @@ function App() {
       {
         subject: subjectLabel,
         score: Math.round(quizResult.scorePercentage),
-        color: palette[0]
-      }
+        color: palette[0],
+      },
     ];
 
     let colorIndex = 1;
@@ -537,7 +556,7 @@ function App() {
       subjectBreakdown.push({
         subject: key.charAt(0).toUpperCase() + key.slice(1),
         score,
-        color: palette[colorIndex % palette.length]
+        color: palette[colorIndex % palette.length],
       });
       colorIndex += 1;
     });
@@ -548,7 +567,7 @@ function App() {
       const rawTime = answer && answer.timeSpent > 0 ? answer.timeSpent : fallbackTime;
       return {
         questionNumber: entry.index,
-        timeSpent: Math.max(0, Math.round(rawTime))
+        timeSpent: Math.max(0, Math.round(rawTime)),
       };
     });
 
@@ -570,7 +589,7 @@ function App() {
       performanceComparison: getPerformanceComparison(quizResult.scorePercentage),
       subjectBreakdown,
       timeAnalysis,
-      wrongQuestions
+      wrongQuestions,
     };
   }, [quizResult, activeQuizSession]);
 
@@ -602,7 +621,6 @@ function App() {
     setIsAuthenticated(false);
     setFlowStage('login');
   };
-
 
   const handleGetStarted = () => {
     setUserInteracted(true);
@@ -722,17 +740,13 @@ function App() {
             />
           )}
 
-          {flowStage === 'register' && (
-            <Register onSuccess={() => setFlowStage('onboarding')} />
-          )}
+          {flowStage === 'register' && <Register onSuccess={() => setFlowStage('onboarding')} />}
 
           {flowStage === 'onboarding' && (
             <OnboardingTutorial onComplete={handleOnboardingComplete} />
           )}
 
-          {flowStage === 'mediumPicker' && (
-            <MediumPicker onMediumSelect={handleMediumSelect} />
-          )}
+          {flowStage === 'mediumPicker' && <MediumPicker onMediumSelect={handleMediumSelect} />}
 
           {flowStage === 'boardExamSelector' && (
             <BoardExamSelector onSelection={handleBoardExamSelect} />
@@ -769,7 +783,7 @@ function App() {
               onSuggestTopics={() => {
                 window.location.href = '/settings?tab=feedback';
               }}
-              onNotify={() => new Promise<void>((resolve) => setTimeout(resolve, 500))}
+              onNotify={() => new Promise<void>(resolve => setTimeout(resolve, 500))}
             />
           )}
 
@@ -778,11 +792,11 @@ function App() {
               subjectId={selectedSubject}
               subjectName={formatSubjectName(selectedSubject)}
               chapters={SUBJECT_CHAPTERS[selectedSubject] ?? fallbackChapters}
-              onSelect={(chapter) => {
+              onSelect={chapter => {
                 const chapterInfo: ChapterInfo = {
                   subject: formatSubjectName(selectedSubject),
                   chapter: chapter.title,
-                  chapterNumber: chapter.number
+                  chapterNumber: chapter.number,
                 };
                 setSelectedChapterInfo(chapterInfo);
                 setFlowStage('chapterSets');
@@ -853,7 +867,7 @@ function App() {
                   setFlowStage('chapterSets');
                 }
               }}
-              onApply={(themeId) => {
+              onApply={themeId => {
                 setSelectedTheme(themeId);
                 localStorage.setItem('quiz_theme', themeId);
                 if (activeQuizSession) {
@@ -879,7 +893,7 @@ function App() {
                 setActiveQuizSession(null);
                 setFlowStage('chapterSets');
               }}
-              onComplete={(result) => {
+              onComplete={result => {
                 setQuizResult(result);
                 setResultsSubView('results');
                 setFlowStage('results');
@@ -939,12 +953,54 @@ function App() {
               <Route path="/onboarding" element={<OnboardingTutorial />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/change-course" element={<ChangeCourse />} />
-              <Route path="/home" element={<Guarded><Home /></Guarded>} />
-              <Route path="/syllabus" element={<Guarded><SyllabusBrowser /></Guarded>} />
-              <Route path="/chapters" element={<Guarded><div>Chapters - Coming Soon</div></Guarded>} />
-              <Route path="/sets" element={<Guarded><ChapterSets /></Guarded>} />
-              <Route path="/theme" element={<Guarded><ThemePicker /></Guarded>} />
-              <Route path="/quiz" element={<Guarded><div>Quiz - Coming Soon</div></Guarded>} />
+              <Route
+                path="/home"
+                element={
+                  <Guarded>
+                    <Home />
+                  </Guarded>
+                }
+              />
+              <Route
+                path="/syllabus"
+                element={
+                  <Guarded>
+                    <SyllabusBrowser />
+                  </Guarded>
+                }
+              />
+              <Route
+                path="/chapters"
+                element={
+                  <Guarded>
+                    <div>Chapters - Coming Soon</div>
+                  </Guarded>
+                }
+              />
+              <Route
+                path="/sets"
+                element={
+                  <Guarded>
+                    <ChapterSets />
+                  </Guarded>
+                }
+              />
+              <Route
+                path="/theme"
+                element={
+                  <Guarded>
+                    <ThemePicker />
+                  </Guarded>
+                }
+              />
+              <Route
+                path="/quiz"
+                element={
+                  <Guarded>
+                    <div>Quiz - Coming Soon</div>
+                  </Guarded>
+                }
+              />
               <Route path="/results" element={<ResultsCelebration />} />
               <Route path="/leaderboard" element={<Leaderboards />} />
               <Route path="/admin/login" element={<AdminLogin />} />

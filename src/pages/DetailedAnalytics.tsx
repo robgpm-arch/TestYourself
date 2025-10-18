@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Download, Share2, Eye, Clock, TrendingUp, Target, BookOpen, AlertCircle, CheckCircle, Minus, X } from 'lucide-react';
+import {
+  Download,
+  Share2,
+  Eye,
+  Clock,
+  TrendingUp,
+  Target,
+  BookOpen,
+  AlertCircle,
+  CheckCircle,
+  Minus,
+  X,
+} from 'lucide-react';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import Layout from '../components/Layout';
@@ -55,7 +67,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
   onShareReport,
   onViewWrongAnswers,
   onBack,
-  onContinue
+  onContinue,
 }) => {
   const navigate = useNavigate();
   // Mock data for demonstration
@@ -67,13 +79,13 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
     skippedQuestions: 1,
     totalTimeSpent: 1248, // seconds
     averageTimePerQuestion: 49.92,
-    performanceComparison: "Above Average",
+    performanceComparison: 'Above Average',
     subjectBreakdown: [
-      { subject: "Algebra", score: 85, color: "#3B82F6" },
-      { subject: "Physics", score: 78, color: "#10B981" },
-      { subject: "General Knowledge", score: 90, color: "#F59E0B" },
-      { subject: "History", score: 65, color: "#EF4444" },
-      { subject: "Geography", score: 88, color: "#8B5CF6" }
+      { subject: 'Algebra', score: 85, color: '#3B82F6' },
+      { subject: 'Physics', score: 78, color: '#10B981' },
+      { subject: 'General Knowledge', score: 90, color: '#F59E0B' },
+      { subject: 'History', score: 65, color: '#EF4444' },
+      { subject: 'Geography', score: 88, color: '#8B5CF6' },
     ],
     timeAnalysis: [
       { questionNumber: 1, timeSpent: 45 },
@@ -85,42 +97,42 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
       { questionNumber: 7, timeSpent: 72 },
       { questionNumber: 8, timeSpent: 29 },
       { questionNumber: 9, timeSpent: 58 },
-      { questionNumber: 10, timeSpent: 44 }
+      { questionNumber: 10, timeSpent: 44 },
     ],
     wrongQuestions: [
       {
         questionNumber: 3,
-        question: "What is the capital of Australia?",
-        yourAnswer: "Sydney",
-        correctAnswer: "Canberra",
-        subject: "Geography",
-        explanation: "While Sydney is the largest city, Canberra is the capital city of Australia."
+        question: 'What is the capital of Australia?',
+        yourAnswer: 'Sydney',
+        correctAnswer: 'Canberra',
+        subject: 'Geography',
+        explanation: 'While Sydney is the largest city, Canberra is the capital city of Australia.',
       },
       {
         questionNumber: 7,
         question: "Who wrote '1984'?",
-        yourAnswer: "Aldous Huxley",
-        correctAnswer: "George Orwell",
-        subject: "Literature",
-        explanation: "George Orwell wrote '1984', while Aldous Huxley wrote 'Brave New World'."
+        yourAnswer: 'Aldous Huxley',
+        correctAnswer: 'George Orwell',
+        subject: 'Literature',
+        explanation: "George Orwell wrote '1984', while Aldous Huxley wrote 'Brave New World'.",
       },
       {
         questionNumber: 12,
-        question: "What is the derivative of x²?",
-        yourAnswer: "x",
-        correctAnswer: "2x",
-        subject: "Mathematics",
-        explanation: "Using the power rule: d/dx(x²) = 2x¹ = 2x"
+        question: 'What is the derivative of x²?',
+        yourAnswer: 'x',
+        correctAnswer: '2x',
+        subject: 'Mathematics',
+        explanation: 'Using the power rule: d/dx(x²) = 2x¹ = 2x',
       },
       {
         questionNumber: 18,
-        question: "What year did World War II end?",
-        yourAnswer: "1944",
-        correctAnswer: "1945",
-        subject: "History",
-        explanation: "World War II ended in 1945 with the surrender of Japan in September."
-      }
-    ]
+        question: 'What year did World War II end?',
+        yourAnswer: '1944',
+        correctAnswer: '1945',
+        subject: 'History',
+        explanation: 'World War II ended in 1945 with the surrender of Japan in September.',
+      },
+    ],
   };
 
   const [animatedScore, setAnimatedScore] = useState(0);
@@ -155,7 +167,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
   useEffect(() => {
     progressControls.start({
       pathLength: data.overallScore / 100,
-      transition: { duration: 2, delay: 0.5 }
+      transition: { duration: 2, delay: 0.5 },
     });
   }, [data.overallScore, progressControls]);
 
@@ -168,11 +180,11 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
 
   // Get performance color
   const getPerformanceColor = (score: number): string => {
-    if (score >= 90) return "text-green-600";
-    if (score >= 80) return "text-blue-600";
-    if (score >= 70) return "text-yellow-600";
-    if (score >= 60) return "text-orange-600";
-    return "text-red-600";
+    if (score >= 90) return 'text-green-600';
+    if (score >= 80) return 'text-blue-600';
+    if (score >= 70) return 'text-yellow-600';
+    if (score >= 60) return 'text-orange-600';
+    return 'text-red-600';
   };
 
   return (
@@ -187,7 +199,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {(onBack) && (
+          {onBack && (
             <div className="mb-4">
               <Button
                 variant="outline"
@@ -248,7 +260,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                     <span className="text-3xl font-bold">{animatedScore}%</span>
                   </div>
                 </div>
-                
+
                 <h2 className="text-2xl font-bold mb-2">{data.performanceComparison}</h2>
                 <p className="text-white/90">
                   {data.correctAnswers} out of {data.totalQuestions} questions correct
@@ -288,14 +300,15 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
             {/* Time */}
             <Card className="p-6 text-center">
               <Clock className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-blue-600">{formatTime(data.totalTimeSpent)}</div>
+              <div className="text-2xl font-bold text-blue-600">
+                {formatTime(data.totalTimeSpent)}
+              </div>
               <div className="text-gray-600">Total Time</div>
             </Card>
           </motion.div>
 
           {/* Charts Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            
             {/* Accuracy Breakdown */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -307,7 +320,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                   <Target className="w-5 h-5 mr-2 text-teal-600" />
                   Accuracy Breakdown
                 </h3>
-                
+
                 {/* Pie Chart Visualization */}
                 <div className="flex items-center justify-center mb-6">
                   <div className="relative w-48 h-48">
@@ -395,7 +408,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                   <BookOpen className="w-5 h-5 mr-2 text-teal-600" />
                   Subject Analysis
                 </h3>
-                
+
                 <div className="space-y-4">
                   {data.subjectBreakdown.map((subject, index) => (
                     <motion.div
@@ -438,7 +451,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                 <TrendingUp className="w-5 h-5 mr-2 text-teal-600" />
                 Time Analysis
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Average Time */}
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -463,7 +476,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                   {data.timeAnalysis.slice(0, 10).map((question, index) => {
                     const maxTime = Math.max(...data.timeAnalysis.map(q => q.timeSpent));
                     const height = (question.timeSpent / maxTime) * 100;
-                    
+
                     return (
                       <motion.div
                         key={question.questionNumber}
@@ -477,7 +490,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                   })}
                 </div>
                 <div className="flex justify-between mt-2 text-xs text-gray-500">
-                  {data.timeAnalysis.slice(0, 10).map((question) => (
+                  {data.timeAnalysis.slice(0, 10).map(question => (
                     <span key={question.questionNumber}>Q{question.questionNumber}</span>
                   ))}
                 </div>
@@ -523,7 +536,7 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
                 const shareData = {
                   title: 'Quiz Performance Report',
                   text: 'Check out my quiz performance on TestYourself!',
-                  url: window.location.href
+                  url: window.location.href,
                 };
                 if (navigator.share) {
                   navigator.share(shareData).catch(() => {
@@ -560,9 +573,15 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
             transition={{ duration: 0.6, delay: 0.7 }}
             className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center"
           >
-            <Button variant="ghost" onClick={() => navigate('/')}>Home</Button>
-            <Button variant="ghost" onClick={() => navigate('/chapter-sets')}>Quizzes</Button>
-            <Button variant="ghost" onClick={() => navigate('/leaderboards')}>Leaderboard</Button>
+            <Button variant="ghost" onClick={() => navigate('/')}>
+              Home
+            </Button>
+            <Button variant="ghost" onClick={() => navigate('/chapter-sets')}>
+              Quizzes
+            </Button>
+            <Button variant="ghost" onClick={() => navigate('/leaderboards')}>
+              Leaderboard
+            </Button>
           </motion.div>
         </div>
 
@@ -612,12 +631,16 @@ const DetailedAnalytics: React.FC<DetailedAnalyticsProps> = ({
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div className="bg-red-100 border border-red-300 rounded p-3">
-                          <div className="text-sm font-semibold text-red-700 mb-1">Your Answer:</div>
+                          <div className="text-sm font-semibold text-red-700 mb-1">
+                            Your Answer:
+                          </div>
                           <div className="text-red-800">{question.yourAnswer}</div>
                         </div>
 
                         <div className="bg-green-100 border border-green-300 rounded p-3">
-                          <div className="text-sm font-semibold text-green-700 mb-1">Correct Answer:</div>
+                          <div className="text-sm font-semibold text-green-700 mb-1">
+                            Correct Answer:
+                          </div>
                           <div className="text-green-800">{question.correctAnswer}</div>
                         </div>
                       </div>

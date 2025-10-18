@@ -21,78 +21,81 @@ interface Message {
 const messageVariants = {
   initial: (align: string) => ({
     opacity: 0,
-    x: align === 'flex-row-reverse' ? 40 : -40
+    x: align === 'flex-row-reverse' ? 40 : -40,
   }),
   animate: {
     opacity: 1,
     x: 0,
     transition: {
       duration: 0.35,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  }
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 const ChatMessaging: React.FC = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const messages = useMemo<Message[]>(() => [
-    {
-      id: 'm1',
-      sender: 'friend',
-      username: 'Anika',
-      timestamp: '9:12 PM',
-      content: 'Hey! Ready to revise the Chemical Reactions chapter? 😄',
-      type: 'text'
-    },
-    {
-      id: 'm2',
-      sender: 'me',
-      username: 'You',
-      timestamp: '9:13 PM',
-      content: 'Absolutely! I just solved the practice quiz.',
-      type: 'text'
-    },
-    {
-      id: 'm3',
-      sender: 'friend',
-      username: 'Anika',
-      timestamp: '9:15 PM',
-      content: 'Try this Science Quiz',
-      type: 'link',
-      quizPreview: {
-        title: 'Science Lightning Round',
-        description: '10 quick-fire questions • Avg score 78%',
-        subject: 'Chemistry'
-      }
-    },
-    {
-      id: 'm3-reply',
-      sender: 'me',
-      username: 'You',
-      timestamp: '9:16 PM',
-      content: 'Oh that looks fun, let me bookmark it!',
-      type: 'text',
-      threadParentId: 'm3'
-    },
-    {
-      id: 'm4',
-      sender: 'friend',
-      username: 'Anika',
-      timestamp: '9:16 PM',
-      content: '🎉',
-      type: 'emoji'
-    },
-    {
-      id: 'm5',
-      sender: 'me',
-      username: 'You',
-      timestamp: '9:18 PM',
-      content: '',
-      type: 'gif',
-      stickerUrl: 'https://media.tenor.com/8mTJ06P88xQAAAAC/excited-minions.gif'
-    }
-  ], []);
+  const messages = useMemo<Message[]>(
+    () => [
+      {
+        id: 'm1',
+        sender: 'friend',
+        username: 'Anika',
+        timestamp: '9:12 PM',
+        content: 'Hey! Ready to revise the Chemical Reactions chapter? 😄',
+        type: 'text',
+      },
+      {
+        id: 'm2',
+        sender: 'me',
+        username: 'You',
+        timestamp: '9:13 PM',
+        content: 'Absolutely! I just solved the practice quiz.',
+        type: 'text',
+      },
+      {
+        id: 'm3',
+        sender: 'friend',
+        username: 'Anika',
+        timestamp: '9:15 PM',
+        content: 'Try this Science Quiz',
+        type: 'link',
+        quizPreview: {
+          title: 'Science Lightning Round',
+          description: '10 quick-fire questions • Avg score 78%',
+          subject: 'Chemistry',
+        },
+      },
+      {
+        id: 'm3-reply',
+        sender: 'me',
+        username: 'You',
+        timestamp: '9:16 PM',
+        content: 'Oh that looks fun, let me bookmark it!',
+        type: 'text',
+        threadParentId: 'm3',
+      },
+      {
+        id: 'm4',
+        sender: 'friend',
+        username: 'Anika',
+        timestamp: '9:16 PM',
+        content: '🎉',
+        type: 'emoji',
+      },
+      {
+        id: 'm5',
+        sender: 'me',
+        username: 'You',
+        timestamp: '9:18 PM',
+        content: '',
+        type: 'gif',
+        stickerUrl: 'https://media.tenor.com/8mTJ06P88xQAAAAC/excited-minions.gif',
+      },
+    ],
+    []
+  );
 
   return (
     <Layout variant="fullscreen" showFooter={false} className="relative overflow-hidden">
@@ -123,11 +126,12 @@ const ChatMessaging: React.FC = () => {
         <div className="flex-1 overflow-hidden">
           <div className="chat-scroll" role="log" aria-live="polite">
             <div className="space-y-6">
-              {messages.map((message) => {
+              {messages.map(message => {
                 const align = message.sender === 'me' ? 'flex-row-reverse' : 'flex-row';
-                const bubbleTone = message.sender === 'me'
-                  ? 'bg-gradient-to-br from-blue-500/80 via-indigo-500/80 to-purple-500/80'
-                  : 'bg-slate-800/70 backdrop-blur';
+                const bubbleTone =
+                  message.sender === 'me'
+                    ? 'bg-gradient-to-br from-blue-500/80 via-indigo-500/80 to-purple-500/80'
+                    : 'bg-slate-800/70 backdrop-blur';
 
                 return (
                   <motion.div
@@ -138,9 +142,15 @@ const ChatMessaging: React.FC = () => {
                     animate="animate"
                     variants={messageVariants}
                   >
-                    <div className={`max-w-xl w-full ${message.threadParentId ? 'pl-10 relative thread-line' : ''}`}>
-                      <div className={`${align === 'flex-row-reverse' ? 'text-right' : 'text-left'} mb-1`}> 
-                        <span className="text-xs font-semibold text-white/70 mr-2">{message.username}</span>
+                    <div
+                      className={`max-w-xl w-full ${message.threadParentId ? 'pl-10 relative thread-line' : ''}`}
+                    >
+                      <div
+                        className={`${align === 'flex-row-reverse' ? 'text-right' : 'text-left'} mb-1`}
+                      >
+                        <span className="text-xs font-semibold text-white/70 mr-2">
+                          {message.username}
+                        </span>
                         <span className="text-[11px] text-white/50">{message.timestamp}</span>
                       </div>
                       <div className={`chat-bubble ${bubbleTone}`}>
@@ -166,12 +176,20 @@ const ChatMessaging: React.FC = () => {
                             transition={{ type: 'spring', stiffness: 220, damping: 18 }}
                           >
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-xs uppercase tracking-[0.3em] text-teal-200">Quiz Link</span>
+                              <span className="text-xs uppercase tracking-[0.3em] text-teal-200">
+                                Quiz Link
+                              </span>
                               <span className="text-[10px] text-white/50">Tap to open</span>
                             </div>
-                            <h3 className="text-sm font-semibold text-white">{message.quizPreview.title}</h3>
-                            <p className="text-xs text-white/70 mt-1">{message.quizPreview.description}</p>
-                            <div className="mt-3 text-xs font-medium text-teal-200/90">Subject • {message.quizPreview.subject}</div>
+                            <h3 className="text-sm font-semibold text-white">
+                              {message.quizPreview.title}
+                            </h3>
+                            <p className="text-xs text-white/70 mt-1">
+                              {message.quizPreview.description}
+                            </p>
+                            <div className="mt-3 text-xs font-medium text-teal-200/90">
+                              Subject • {message.quizPreview.subject}
+                            </div>
                           </motion.div>
                         )}
                       </div>
@@ -188,7 +206,7 @@ const ChatMessaging: React.FC = () => {
             <button
               className="chat-icon"
               type="button"
-              onClick={() => setShowEmojiPicker((prev) => !prev)}
+              onClick={() => setShowEmojiPicker(prev => !prev)}
               aria-label="Toggle emoji picker"
             >
               😊
@@ -201,11 +219,7 @@ const ChatMessaging: React.FC = () => {
             </button>
           </div>
           <div className="flex-1">
-            <input
-              type="text"
-              className="chat-text-input"
-              placeholder="Message Anika…"
-            />
+            <input type="text" className="chat-text-input" placeholder="Message Anika…" />
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -227,7 +241,24 @@ const ChatMessaging: React.FC = () => {
               className="emoji-picker"
             >
               <div className="grid grid-cols-8 gap-3 text-2xl">
-                {['😀', '😂', '🔥', '🤓', '💪', '🧠', '🎯', '🏆', '📚', '⚡', '🚀', '🥳', '🙌', '😴', '🤩', '🧪'].map((emoji) => (
+                {[
+                  '😀',
+                  '😂',
+                  '🔥',
+                  '🤓',
+                  '💪',
+                  '🧠',
+                  '🎯',
+                  '🏆',
+                  '📚',
+                  '⚡',
+                  '🚀',
+                  '🥳',
+                  '🙌',
+                  '😴',
+                  '🤩',
+                  '🧪',
+                ].map(emoji => (
                   <button key={emoji} className="emoji-button">
                     {emoji}
                   </button>

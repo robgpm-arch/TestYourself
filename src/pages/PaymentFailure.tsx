@@ -7,10 +7,10 @@ const PaymentFailure: React.FC = () => {
 
   // Mock error details
   const errorDetails = {
-    code: "PAYMENT_DECLINED",
-    message: "Your card was declined by the issuing bank.",
-    transactionId: "TXN_" + Math.random().toString(36).substr(2, 9).toUpperCase(),
-    timestamp: new Date().toLocaleString()
+    code: 'PAYMENT_DECLINED',
+    message: 'Your card was declined by the issuing bank.',
+    transactionId: 'TXN_' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+    timestamp: new Date().toLocaleString(),
   };
 
   const handleRetry = () => {
@@ -19,34 +19,34 @@ const PaymentFailure: React.FC = () => {
     setTimeout(() => {
       setIsRetrying(false);
       // Here you would typically navigate back to payment gateway
-      console.log("Redirecting to payment gateway...");
+      console.log('Redirecting to payment gateway...');
     }, 2000);
   };
 
   const handleChangePaymentMethod = () => {
     // Navigate to payment gateway with different method selection
-    console.log("Changing payment method...");
+    console.log('Changing payment method...');
   };
 
   const backgroundFloatingElements = Array.from({ length: 15 }, (_, i) => (
     <motion.div
       key={i}
       className="absolute text-red-200/10 text-2xl md:text-3xl"
-      initial={{ 
-        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200), 
+      initial={{
+        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
         y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-        rotate: Math.random() * 360 
+        rotate: Math.random() * 360,
       }}
       animate={{
         x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1200),
         y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-        rotate: 360
+        rotate: 360,
       }}
       transition={{
         duration: Math.random() * 10 + 15,
         repeat: Infinity,
-        repeatType: "reverse",
-        ease: "linear"
+        repeatType: 'reverse',
+        ease: 'linear',
       }}
     >
       {i % 3 === 0 ? '💳' : i % 3 === 1 ? '⚠️' : '❌'}
@@ -63,28 +63,27 @@ const PaymentFailure: React.FC = () => {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          
           {/* Main Failure Card */}
           <motion.div
             className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-[0_0_40px_rgba(239,68,68,0.3)] border border-red-200"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
-            animate={{ 
-              scale: 1, 
-              opacity: 1, 
+            animate={{
+              scale: 1,
+              opacity: 1,
               y: 0,
               boxShadow: [
-                "0 0 40px rgba(239,68,68,0.3)",
-                "0 0 60px rgba(239,68,68,0.5)",
-                "0 0 40px rgba(239,68,68,0.3)"
-              ]
+                '0 0 40px rgba(239,68,68,0.3)',
+                '0 0 60px rgba(239,68,68,0.5)',
+                '0 0 40px rgba(239,68,68,0.3)',
+              ],
             }}
-            transition={{ 
+            transition={{
               duration: 0.6,
               boxShadow: {
                 duration: 2,
                 repeat: Infinity,
-                repeatType: "reverse"
-              }
+                repeatType: 'reverse',
+              },
             }}
           >
             {/* Animated Cross Mark */}
@@ -92,25 +91,25 @@ const PaymentFailure: React.FC = () => {
               <motion.div
                 className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-500 mb-4 relative"
                 initial={{ scale: 0, rotate: -180 }}
-                animate={{ 
-                  scale: 1, 
+                animate={{
+                  scale: 1,
                   rotate: 0,
-                  x: [0, -10, 10, -5, 5, 0]
+                  x: [0, -10, 10, -5, 5, 0],
                 }}
                 transition={{
                   scale: { duration: 0.5, delay: 0.2 },
                   rotate: { duration: 0.5, delay: 0.2 },
-                  x: { 
-                    duration: 0.6, 
-                    delay: 0.8, 
+                  x: {
+                    duration: 0.6,
+                    delay: 0.8,
                     times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-                    ease: "easeInOut"
-                  }
+                    ease: 'easeInOut',
+                  },
                 }}
               >
                 {/* Glow Effect */}
                 <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-30"></div>
-                
+
                 {/* Cross Mark with Drawing Animation */}
                 <motion.svg
                   width="40"
@@ -174,28 +173,34 @@ const PaymentFailure: React.FC = () => {
                     animate={{ rotate: showErrorDetails ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <path
-                      fill="currentColor"
-                      d="M8 10.5L4 6.5h8L8 10.5z"
-                    />
+                    <path fill="currentColor" d="M8 10.5L4 6.5h8L8 10.5z" />
                   </motion.svg>
                 </div>
               </button>
 
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ 
+                animate={{
                   height: showErrorDetails ? 'auto' : 0,
-                  opacity: showErrorDetails ? 1 : 0
+                  opacity: showErrorDetails ? 1 : 0,
                 }}
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
                 <div className="pt-3 px-3 pb-1 text-sm text-red-600 space-y-1">
-                  <div><span className="font-medium">Error Code:</span> {errorDetails.code}</div>
-                  <div><span className="font-medium">Message:</span> {errorDetails.message}</div>
-                  <div><span className="font-medium">Transaction ID:</span> {errorDetails.transactionId}</div>
-                  <div><span className="font-medium">Time:</span> {errorDetails.timestamp}</div>
+                  <div>
+                    <span className="font-medium">Error Code:</span> {errorDetails.code}
+                  </div>
+                  <div>
+                    <span className="font-medium">Message:</span> {errorDetails.message}
+                  </div>
+                  <div>
+                    <span className="font-medium">Transaction ID:</span>{' '}
+                    {errorDetails.transactionId}
+                  </div>
+                  <div>
+                    <span className="font-medium">Time:</span> {errorDetails.timestamp}
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
@@ -218,12 +223,12 @@ const PaymentFailure: React.FC = () => {
                     <motion.div
                       className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                     />
                     <span>Retrying...</span>
                   </div>
                 ) : (
-                  "Try Again"
+                  'Try Again'
                 )}
               </button>
 
@@ -243,9 +248,7 @@ const PaymentFailure: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6 }}
             >
-              <p className="text-sm text-gray-500 mb-2">
-                Need help? Contact our support team
-              </p>
+              <p className="text-sm text-gray-500 mb-2">Need help? Contact our support team</p>
               <div className="flex justify-center space-x-4 text-sm">
                 <button className="text-teal-600 hover:text-teal-700 transition-colors">
                   💬 Chat Support

@@ -1,3 +1,3 @@
 # Types Directory
 
-This is a types reserved directory. 
+This is a types reserved directory.

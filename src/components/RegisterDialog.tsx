@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 import {
   getAuth,
   updateProfile,
@@ -8,34 +8,34 @@ import {
   ConfirmationResult,
   setPersistence,
   browserLocalPersistence,
-} from 'firebase/auth'
-import { ensureUserProfile } from '../lib/ensureUserProfile'
+} from 'firebase/auth';
+import { ensureUserProfile } from '../lib/ensureUserProfile';
 
-type Tab = 'email' | 'phone'
+type Tab = 'email' | 'phone';
 
 export default function RegisterDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [tab, setTab] = useState<Tab>('email')
-  const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [tab, setTab] = useState<Tab>('email');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // email
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
 
   // phone
-  const [phone, setPhone] = useState('+91')
-  const [code, setCode] = useState('')
-  const confirmation = useRef<ConfirmationResult | null>(null)
-  const recaptcha = useRef<RecaptchaVerifier | null>(null)
+  const [phone, setPhone] = useState('+91');
+  const [code, setCode] = useState('');
+  const confirmation = useRef<ConfirmationResult | null>(null);
+  const recaptcha = useRef<RecaptchaVerifier | null>(null);
 
-  const auth = getAuth()
+  const auth = getAuth();
 
   useEffect(() => {
     // Reset state when tab/dialog changes
-    setError(null)
-  }, [tab, open])
+    setError(null);
+  }, [tab, open]);
 
   async function ensureRecaptcha() {
     if (!recaptcha.current) {
@@ -45,77 +45,86 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
           // solved automatically in most cases
         },
         'expired-callback': () => {
-          recaptcha.current?.clear()
-          recaptcha.current = null
+          recaptcha.current?.clear();
+          recaptcha.current = null;
         },
-      })
+      });
     }
-    return recaptcha.current
+    return recaptcha.current;
   }
 
   async function onEmailRegister() {
     try {
-      setBusy(true); setError(null)
-      if (!fullName.trim()) throw new Error('Please enter your full name')
-      if (!email.trim()) throw new Error('Please enter your email')
-      if (password.length < 6) throw new Error('Password must be at least 6 characters')
-      if (password !== confirm) throw new Error('Passwords do not match')
+      setBusy(true);
+      setError(null);
+      if (!fullName.trim()) throw new Error('Please enter your full name');
+      if (!email.trim()) throw new Error('Please enter your email');
+      if (password.length < 6) throw new Error('Password must be at least 6 characters');
+      if (password !== confirm) throw new Error('Passwords do not match');
 
-      await setPersistence(auth, browserLocalPersistence)
-      const cred = await createUserWithEmailAndPassword(auth, email.trim(), password)
-      await updateProfile(cred.user, { displayName: fullName.trim() })
-      await ensureUserProfile()
+      await setPersistence(auth, browserLocalPersistence);
+      const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
+      await updateProfile(cred.user, { displayName: fullName.trim() });
+      await ensureUserProfile();
 
       // Go to onboarding to collect medium/board|exam/course/subjects
-      window.location.href = '/onboarding'
-      onClose()
+      window.location.href = '/onboarding';
+      onClose();
     } catch (e: any) {
-      setError(e?.message || 'Registration failed')
+      setError(e?.message || 'Registration failed');
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
   }
 
   async function onSendCode() {
     try {
-      setBusy(true); setError(null)
-      if (!phone.startsWith('+')) throw new Error('Use E.164 format, e.g. +919876543210')
-      const verifier = await ensureRecaptcha()
-      confirmation.current = await signInWithPhoneNumber(auth, phone.trim(), verifier)
-      alert('OTP sent. Check your phone.')
+      setBusy(true);
+      setError(null);
+      if (!phone.startsWith('+')) throw new Error('Use E.164 format, e.g. +919876543210');
+      const verifier = await ensureRecaptcha();
+      confirmation.current = await signInWithPhoneNumber(auth, phone.trim(), verifier);
+      alert('OTP sent. Check your phone.');
     } catch (e: any) {
-      setError(e?.message || 'Failed to send code')
+      setError(e?.message || 'Failed to send code');
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
   }
 
   async function onVerifyCode() {
     try {
-      setBusy(true); setError(null)
-      if (!confirmation.current) throw new Error('Send the code first')
-      const cred = await confirmation.current.confirm(code.trim() || '')
+      setBusy(true);
+      setError(null);
+      if (!confirmation.current) throw new Error('Send the code first');
+      const cred = await confirmation.current.confirm(code.trim() || '');
       // Refresh token to get custom claims
-      await cred.user.getIdToken(true)
+      await cred.user.getIdToken(true);
       // If you want to collect name after OTP, do it on onboarding; set displayName later.
-      await ensureUserProfile()
-      window.location.href = '/onboarding'
-      onClose()
+      await ensureUserProfile();
+      window.location.href = '/onboarding';
+      onClose();
     } catch (e: any) {
-      setError(e?.message || 'Invalid code')
+      setError(e?.message || 'Invalid code');
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
   }
 
-  if (!open) return null
+  if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">Create your account</h2>
-          <button className="rounded-full p-2 hover:bg-gray-100" onClick={onClose} aria-label="Close">✕</button>
+          <button
+            className="rounded-full p-2 hover:bg-gray-100"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            ✕
+          </button>
         </div>
 
         <div className="mb-4 flex gap-2">
@@ -139,14 +148,14 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
               className="w-full rounded-xl border p-3"
               placeholder="Full name"
               value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              onChange={e => setFullName(e.target.value)}
             />
             <input
               className="w-full rounded-xl border p-3"
               placeholder="Email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
             <div className="grid grid-cols-2 gap-3">
               <input
@@ -154,14 +163,14 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
                 placeholder="Password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
               <input
                 className="w-full rounded-xl border p-3"
                 placeholder="Confirm password"
                 type="password"
                 value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
+                onChange={e => setConfirm(e.target.value)}
               />
             </div>
 
@@ -181,7 +190,7 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
               className="w-full rounded-xl border p-3"
               placeholder="+91XXXXXXXXXX"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={e => setPhone(e.target.value)}
             />
             <div className="flex gap-3">
               <button
@@ -196,7 +205,7 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
                 className="w-40 rounded-xl border p-3"
                 placeholder="6-digit OTP"
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
+                onChange={e => setCode(e.target.value)}
               />
               <button
                 className="rounded-xl bg-green-600 px-4 py-3 font-medium text-white disabled:opacity-60"
@@ -216,5 +225,5 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
         </p>
       </div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,9 @@
-import React from "react";
-import { EMOJI_OPTIONS, EmojiOpt } from "./options";
+import React from 'react';
+import { EMOJI_OPTIONS, EmojiOpt } from './options';
 
 export function EmojiSelect({
-  value, onChange
+  value,
+  onChange,
 }: {
   value: EmojiOpt | null;
   onChange: (v: EmojiOpt | null) => void;
@@ -13,8 +14,8 @@ export function EmojiSelect({
       <div className="flex items-center gap-3">
         <select
           className="border rounded px-3 py-2"
-          value={value?.id || ""}
-          onChange={(e) => {
+          value={value?.id || ''}
+          onChange={e => {
             const opt = EMOJI_OPTIONS.find(o => o.id === e.target.value) || null;
             onChange(opt);
           }}
@@ -26,7 +27,7 @@ export function EmojiSelect({
             </option>
           ))}
         </select>
-        <div className="text-2xl">{value?.char || "—"}</div>
+        <div className="text-2xl">{value?.char || '—'}</div>
       </div>
       <p className="mt-1 text-xs text-slate-500">Pick one by name; saved as both name and emoji.</p>
     </div>

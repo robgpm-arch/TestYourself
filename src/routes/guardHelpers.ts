@@ -1,7 +1,7 @@
 // src/routes/guardHelpers.ts
-import { getAuth } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export type UserGate = {
   signedIn: boolean;
@@ -17,9 +17,9 @@ export async function getUserGate(): Promise<UserGate> {
   const token = await user.getIdTokenResult();
   const isAdmin = !!token.claims?.admin;
 
-  const uref = doc(db, "users", user.uid);
+  const uref = doc(db, 'users', user.uid);
   const snap = await getDoc(uref);
-  const data = snap.exists() ? snap.data() as any : {};
+  const data = snap.exists() ? (snap.data() as any) : {};
 
   return {
     signedIn: true,
@@ -31,6 +31,6 @@ export async function getUserGate(): Promise<UserGate> {
 
 /** Your app's pages that need a course picked */
 export function routeNeedsCourse(pathname: string): boolean {
-  const needs = ["/home", "/syllabus", "/chapters", "/sets", "/theme", "/quiz"];
+  const needs = ['/home', '/syllabus', '/chapters', '/sets', '/theme', '/quiz'];
   return needs.some(p => pathname.startsWith(p));
 }

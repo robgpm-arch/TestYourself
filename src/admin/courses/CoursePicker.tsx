@@ -1,8 +1,18 @@
-import React from "react";
-import { collection, onSnapshot, orderBy, query, getDocs, where, writeBatch, doc, serverTimestamp } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { db } from "@/lib/firebase";
-import { createCatalogCourse, ensureCourseInstance, contextValid } from "./api";
+import React from 'react';
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  getDocs,
+  where,
+  writeBatch,
+  doc,
+  serverTimestamp,
+} from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { db } from '@/lib/firebase';
+import { createCatalogCourse, ensureCourseInstance, contextValid } from './api';
 
 type Props = {
   ctx: { medium: string; board?: string | null; examId?: string | null };
@@ -13,24 +23,21 @@ type Props = {
 export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Props) {
   const [catalog, setCatalog] = React.useState<{ id: string; name: string }[]>([]);
   const [exams, setExams] = React.useState<{ id: string; name: string }[]>([]);
-  const [mode, setMode] = React.useState<"existing" | "create">("existing");
-  const [selectedCatalogId, setSelectedCatalogId] = React.useState<string>("");
-  const [newName, setNewName] = React.useState("");
-  const [selectedExamId, setSelectedExamId] = React.useState<string>(ctx.examId || "");
+  const [mode, setMode] = React.useState<'existing' | 'create'>('existing');
+  const [selectedCatalogId, setSelectedCatalogId] = React.useState<string>('');
+  const [newName, setNewName] = React.useState('');
+  const [selectedExamId, setSelectedExamId] = React.useState<string>(ctx.examId || '');
 
   React.useEffect(() => {
     (async () => {
       try {
         // Load all course catalog items (simple list without complex filtering)
         // The course_catalog collection only has name, slug, createdAt, updatedAt fields
-        const snap = await getDocs(query(
-          collection(db, "course_catalog"),
-          orderBy('name')
-        ));
+        const snap = await getDocs(query(collection(db, 'course_catalog'), orderBy('name')));
 
         const items = snap.docs.map(d => ({
           id: d.id,
-          name: (d.data() as any).name || d.id
+          name: (d.data() as any).name || d.id,
         }));
 
         setCatalog(items);
@@ -43,7 +50,7 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
 
   React.useEffect(() => {
     if (allowExamSelection) {
-      const stop = onSnapshot(query(collection(db, "exams"), orderBy("name")), snap => {
+      const stop = onSnapshot(query(collection(db, 'exams'), orderBy('name')), snap => {
         setExams(snap.docs.map(d => ({ id: d.id, name: (d.data() as any).name })));
       });
       return stop;
@@ -54,7 +61,10 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
     ? { ...ctx, examId: selectedExamId || null, board: selectedExamId ? null : ctx.board }
     : ctx;
 
-  const ready = contextValid(currentCtx) && ((mode === "existing" && selectedCatalogId) || (mode === "create" && newName.trim().length > 0));
+  const ready =
+    contextValid(currentCtx) &&
+    ((mode === 'existing' && selectedCatalogId) ||
+      (mode === 'create' && newName.trim().length > 0));
 
   async function handleAttach() {
     if (!ready) return;
@@ -63,15 +73,14 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
       // Ensure fresh claims for admin
       await getAuth().currentUser?.getIdToken(true);
 
-      const catalogId = mode === "existing"
-        ? selectedCatalogId
-        : await createCatalogCourse({ name: newName });
+      const catalogId =
+        mode === 'existing' ? selectedCatalogId : await createCatalogCourse({ name: newName });
 
       const instanceId = await ensureCourseInstance({
         catalogId,
         medium: currentCtx.medium,
         board: currentCtx.board ?? null,
-        examId: currentCtx.examId ?? null
+        examId: currentCtx.examId ?? null,
       });
       onAttached(instanceId);
     } catch (e) {
@@ -85,15 +94,15 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
       <div className="flex gap-3">
         <button
           type="button"
-          className={`px-3 py-2 rounded border ${mode === "existing" ? "bg-blue-50 border-blue-300" : ""}`}
-          onClick={() => setMode("existing")}
+          className={`px-3 py-2 rounded border ${mode === 'existing' ? 'bg-blue-50 border-blue-300' : ''}`}
+          onClick={() => setMode('existing')}
         >
           Use existing
         </button>
         <button
           type="button"
-          className={`px-3 py-2 rounded border ${mode === "create" ? "bg-blue-50 border-blue-300" : ""}`}
-          onClick={() => setMode("create")}
+          className={`px-3 py-2 rounded border ${mode === 'create' ? 'bg-blue-50 border-blue-300' : ''}`}
+          onClick={() => setMode('create')}
         >
           Create new
         </button>
@@ -110,7 +119,9 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
           >
             <option value="">— Select Exam —</option>
             {exams.map(exam => (
-              <option key={exam.id} value={exam.id}>{exam.name}</option>
+              <option key={exam.id} value={exam.id}>
+                {exam.name}
+              </option>
             ))}
           </select>
           <p className="mt-1 text-xs text-slate-500">
@@ -119,7 +130,7 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
         </div>
       )}
 
-      {mode === "existing" ? (
+      {mode === 'existing' ? (
         <div>
           <label className="block text-sm mb-1">Catalog course</label>
           <select
@@ -128,7 +139,11 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
             onChange={e => setSelectedCatalogId(e.target.value)}
           >
             <option value="">— Select from catalog —</option>
-            {catalog.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {catalog.map(c => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
           </select>
         </div>
       ) : (

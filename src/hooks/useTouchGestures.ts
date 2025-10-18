@@ -24,7 +24,7 @@ export const useTouchGestures = (config: TouchGestureConfig = {}) => {
     onDoubleTap,
     swipeThreshold = 50,
     pinchThreshold = 0.1,
-    doubleTapDelay = 300
+    doubleTapDelay = 300,
   } = config;
 
   const elementRef = useRef<HTMLElement>(null);
@@ -34,7 +34,7 @@ export const useTouchGestures = (config: TouchGestureConfig = {}) => {
 
   const getTouchPosition = (touch: Touch) => ({
     x: touch.clientX,
-    y: touch.clientY
+    y: touch.clientY,
   });
 
   const getDistance = (touch1: Touch, touch2: Touch) => {
@@ -55,7 +55,7 @@ export const useTouchGestures = (config: TouchGestureConfig = {}) => {
     if (e.touches.length === 2 && onPinch && initialDistance > 0) {
       const currentDistance = getDistance(e.touches[0], e.touches[1]);
       const scale = currentDistance / initialDistance;
-      
+
       if (Math.abs(scale - 1) > pinchThreshold) {
         onPinch(scale);
       }

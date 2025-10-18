@@ -33,50 +33,68 @@ const InviteFriends: React.FC = () => {
     }
   };
 
-  const shareOptions = useMemo<ShareOption[]>(() => [
-    {
-      id: 'whatsapp',
-      label: 'WhatsApp',
-      color: 'share-whatsapp',
-      emoji: '🟢',
-      action: () => window.open(`https://wa.me/?text=${encodeURIComponent(`Join me on TestYourself quizzes! ${inviteLink}`)}`, '_blank')
-    },
-    {
-      id: 'telegram',
-      label: 'Telegram',
-      color: 'share-telegram',
-      emoji: '🔵',
-      action: () => window.open(`https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent('Join me on TestYourself quizzes!')}`, '_blank')
-    },
-    {
-      id: 'instagram',
-      label: 'Instagram',
-      color: 'share-instagram',
-      emoji: '💜',
-      action: () => triggerConfetti()
-    },
-    {
-      id: 'facebook',
-      label: 'Facebook',
-      color: 'share-facebook',
-      emoji: '📘',
-      action: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(inviteLink)}`, '_blank')
-    },
-    {
-      id: 'gmail',
-      label: 'Gmail',
-      color: 'share-gmail',
-      emoji: '✉️',
-      action: () => window.open(`mailto:?subject=Let’s play quizzes together!&body=Join me on TestYourself quizzes: ${inviteLink}`)
-    },
-    {
-      id: 'copy',
-      label: 'Copy Link',
-      color: 'share-copy',
-      emoji: '🔗',
-      action: () => copyToClipboard(inviteLink)
-    }
-  ], [inviteLink]);
+  const shareOptions = useMemo<ShareOption[]>(
+    () => [
+      {
+        id: 'whatsapp',
+        label: 'WhatsApp',
+        color: 'share-whatsapp',
+        emoji: '🟢',
+        action: () =>
+          window.open(
+            `https://wa.me/?text=${encodeURIComponent(`Join me on TestYourself quizzes! ${inviteLink}`)}`,
+            '_blank'
+          ),
+      },
+      {
+        id: 'telegram',
+        label: 'Telegram',
+        color: 'share-telegram',
+        emoji: '🔵',
+        action: () =>
+          window.open(
+            `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent('Join me on TestYourself quizzes!')}`,
+            '_blank'
+          ),
+      },
+      {
+        id: 'instagram',
+        label: 'Instagram',
+        color: 'share-instagram',
+        emoji: '💜',
+        action: () => triggerConfetti(),
+      },
+      {
+        id: 'facebook',
+        label: 'Facebook',
+        color: 'share-facebook',
+        emoji: '📘',
+        action: () =>
+          window.open(
+            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(inviteLink)}`,
+            '_blank'
+          ),
+      },
+      {
+        id: 'gmail',
+        label: 'Gmail',
+        color: 'share-gmail',
+        emoji: '✉️',
+        action: () =>
+          window.open(
+            `mailto:?subject=Let’s play quizzes together!&body=Join me on TestYourself quizzes: ${inviteLink}`
+          ),
+      },
+      {
+        id: 'copy',
+        label: 'Copy Link',
+        color: 'share-copy',
+        emoji: '🔗',
+        action: () => copyToClipboard(inviteLink),
+      },
+    ],
+    [inviteLink]
+  );
 
   return (
     <Layout showFooter={false} className="relative overflow-hidden">
@@ -86,12 +104,15 @@ const InviteFriends: React.FC = () => {
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col min-h-screen">
         <header className="invite-header">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-white/70">Invite &amp; earn rewards</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-white/70">
+              Invite &amp; earn rewards
+            </p>
             <h1 className="text-4xl md:text-5xl font-black text-white drop-shadow-[0_0_35px_rgba(59,130,246,0.45)]">
               Invite Friends to Play!
             </h1>
             <p className="mt-3 text-base md:text-lg text-white/80 max-w-2xl">
-              Challenge your friends and compare scores. Share the fun and rack up bonus coins together.
+              Challenge your friends and compare scores. Share the fun and rack up bonus coins
+              together.
             </p>
           </div>
         </header>
@@ -110,7 +131,9 @@ const InviteFriends: React.FC = () => {
                 whileTap={{ scale: 0.94 }}
                 transition={{ type: 'spring', stiffness: 260, damping: 15, delay: index * 0.02 }}
               >
-                <span className="share-emoji" aria-hidden>{option.emoji}</span>
+                <span className="share-emoji" aria-hidden>
+                  {option.emoji}
+                </span>
                 <span className="share-label">{option.label}</span>
               </motion.button>
             ))}
@@ -124,8 +147,12 @@ const InviteFriends: React.FC = () => {
           >
             <div>
               <p className="text-sm uppercase tracking-[0.4em] text-white/70">Referral Code</p>
-              <h2 className="text-3xl font-bold text-white drop-shadow-[0_0_25px_rgba(56,189,248,0.45)]">{inviteCode}</h2>
-              <p className="text-sm text-white/80 mt-2">Earn 50 coins when your friend joins with your code!</p>
+              <h2 className="text-3xl font-bold text-white drop-shadow-[0_0_25px_rgba(56,189,248,0.45)]">
+                {inviteCode}
+              </h2>
+              <p className="text-sm text-white/80 mt-2">
+                Earn 50 coins when your friend joins with your code!
+              </p>
             </div>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -144,7 +171,10 @@ const InviteFriends: React.FC = () => {
             whileTap={{ scale: 0.97 }}
             onClick={() => {
               triggerConfetti();
-              window.open(`https://wa.me/?text=${encodeURIComponent(`Join me on TestYourself quizzes! ${inviteLink}`)}`, '_blank');
+              window.open(
+                `https://wa.me/?text=${encodeURIComponent(`Join me on TestYourself quizzes! ${inviteLink}`)}`,
+                '_blank'
+              );
             }}
             className="invite-share-button"
           >

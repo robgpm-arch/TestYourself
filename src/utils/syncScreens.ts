@@ -1,10 +1,10 @@
-import { httpsCallable, getFunctions } from "firebase/functions";
-import app from "../config/firebase";
-import { SCREENS_REGISTRY } from "../config/screensRegistry";
-import { SUBJECTS_REGISTRY } from "../config/subjectsRegistry";
-import { CHAPTERS_REGISTRY } from "../config/chaptersRegistry";
-import { QUIZ_SETS_REGISTRY } from "../config/quizSetsRegistry";
-import { LEADERBOARDS_REGISTRY } from "../config/leaderboardsRegistry";
+import { httpsCallable, getFunctions } from 'firebase/functions';
+import app from '../config/firebase';
+import { SCREENS_REGISTRY } from '../config/screensRegistry';
+import { SUBJECTS_REGISTRY } from '../config/subjectsRegistry';
+import { CHAPTERS_REGISTRY } from '../config/chaptersRegistry';
+import { QUIZ_SETS_REGISTRY } from '../config/quizSetsRegistry';
+import { LEADERBOARDS_REGISTRY } from '../config/leaderboardsRegistry';
 const functions = getFunctions(app);
 
 const registrySyncCallable = httpsCallable(functions, 'registrySync');

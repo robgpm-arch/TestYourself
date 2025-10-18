@@ -18,7 +18,7 @@ const PaymentGateway: React.FC = () => {
     number: '',
     expiry: '',
     cvv: '',
-    name: ''
+    name: '',
   });
   const [selectedBank, setSelectedBank] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -34,8 +34,8 @@ const PaymentGateway: React.FC = () => {
       'Unlimited quizzes of a course',
       'Detailed analytics & insights',
       'Ad-free experience',
-      'Priority support'
-    ]
+      'Priority support',
+    ],
   };
 
   // Pay button pulse animation
@@ -53,7 +53,7 @@ const PaymentGateway: React.FC = () => {
       subtitle: 'Recommended',
       icon: '📱',
       logos: ['Google Pay', 'PhonePe', 'Paytm'],
-      recommended: true
+      recommended: true,
     },
     {
       id: 'card',
@@ -61,7 +61,7 @@ const PaymentGateway: React.FC = () => {
       subtitle: 'Visa, Mastercard, RuPay',
       icon: '💳',
       logos: ['Visa', 'Mastercard', 'RuPay'],
-      recommended: false
+      recommended: false,
     },
     {
       id: 'netbanking',
@@ -69,7 +69,7 @@ const PaymentGateway: React.FC = () => {
       subtitle: 'All major banks supported',
       icon: '🏦',
       logos: ['SBI', 'HDFC', 'ICICI'],
-      recommended: false
+      recommended: false,
     },
     {
       id: 'wallet',
@@ -77,22 +77,28 @@ const PaymentGateway: React.FC = () => {
       subtitle: 'Quick & secure',
       icon: '👛',
       logos: ['Amazon Pay', 'Paytm Wallet'],
-      recommended: false
-    }
+      recommended: false,
+    },
   ];
 
   const banks = [
-    'State Bank of India', 'HDFC Bank', 'ICICI Bank', 'Axis Bank',
-    'Punjab National Bank', 'Bank of Baroda', 'Canara Bank', 'Union Bank'
+    'State Bank of India',
+    'HDFC Bank',
+    'ICICI Bank',
+    'Axis Bank',
+    'Punjab National Bank',
+    'Bank of Baroda',
+    'Canara Bank',
+    'Union Bank',
   ];
 
   const handlePayment = () => {
     setIsProcessing(true);
-    
+
     // Simulate payment processing
     console.log('Processing payment with method:', selectedPaymentMethod);
     console.log('Plan:', planDetails.name, planDetails.offerPrice);
-    
+
     setTimeout(() => {
       setIsProcessing(false);
       // In real app, this would redirect to success page
@@ -103,7 +109,7 @@ const PaymentGateway: React.FC = () => {
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
     const matches = v.match(/\d{4,16}/g);
-    const match = matches && matches[0] || '';
+    const match = (matches && matches[0]) || '';
     const parts = [];
     for (let i = 0, len = match.length; i < len; i += 4) {
       parts.push(match.substring(i, i + 4));
@@ -136,10 +142,10 @@ const PaymentGateway: React.FC = () => {
           <div className="absolute top-60 left-1/3 text-4xl">₹</div>
           <div className="absolute bottom-60 right-1/3 text-4xl">💳</div>
         </div>
-        
+
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -148,9 +154,7 @@ const PaymentGateway: React.FC = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
               Complete Your Payment
             </h1>
-            <p className="text-lg text-gray-600">
-              Secure checkout for your subscription
-            </p>
+            <p className="text-lg text-gray-600">Secure checkout for your subscription</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -168,7 +172,7 @@ const PaymentGateway: React.FC = () => {
                     Change Plan
                   </button>
                 </div>
-                
+
                 <div className="mb-6">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-2xl font-bold text-gray-800">{planDetails.name}</span>
@@ -177,8 +181,12 @@ const PaymentGateway: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-lg line-through text-gray-400">{planDetails.originalPrice}</span>
-                    <span className="text-2xl font-bold text-teal-600">{planDetails.offerPrice}</span>
+                    <span className="text-lg line-through text-gray-400">
+                      {planDetails.originalPrice}
+                    </span>
+                    <span className="text-2xl font-bold text-teal-600">
+                      {planDetails.offerPrice}
+                    </span>
                     <span className="text-gray-600">{planDetails.period}</span>
                   </div>
                 </div>
@@ -188,8 +196,16 @@ const PaymentGateway: React.FC = () => {
                   <ul className="space-y-2">
                     {planDetails.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                        <svg className="w-4 h-4 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        <svg
+                          className="w-4 h-4 text-teal-500"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         {feature}
                       </li>
@@ -215,7 +231,7 @@ const PaymentGateway: React.FC = () => {
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <h3 className="text-xl font-bold text-gray-800 mb-6">Choose Payment Method</h3>
-                
+
                 <div className="space-y-4 mb-8">
                   {paymentMethods.map((method, index) => (
                     <motion.div
@@ -257,9 +273,9 @@ const PaymentGateway: React.FC = () => {
                           onChange={() => setSelectedPaymentMethod(method.id)}
                           className="w-5 h-5 text-teal-600"
                         />
-                        
+
                         <div className="text-3xl">{method.icon}</div>
-                        
+
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
                             <h4 className="font-semibold text-gray-800">{method.name}</h4>
@@ -272,7 +288,10 @@ const PaymentGateway: React.FC = () => {
                           <p className="text-sm text-gray-600">{method.subtitle}</p>
                           <div className="flex gap-2 mt-2">
                             {method.logos.map((logo, logoIndex) => (
-                              <span key={logoIndex} className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600">
+                              <span
+                                key={logoIndex}
+                                className="bg-gray-100 px-2 py-1 rounded text-xs text-gray-600"
+                              >
                                 {logo}
                               </span>
                             ))}
@@ -295,45 +314,68 @@ const PaymentGateway: React.FC = () => {
                       <h4 className="font-semibold text-gray-800 mb-4">Card Details</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="md:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Card Number
+                          </label>
                           <input
                             type="text"
                             placeholder="1234 5678 9012 3456"
                             value={cardDetails.number}
-                            onChange={(e) => setCardDetails({...cardDetails, number: formatCardNumber(e.target.value)})}
+                            onChange={e =>
+                              setCardDetails({
+                                ...cardDetails,
+                                number: formatCardNumber(e.target.value),
+                              })
+                            }
                             maxLength={19}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Expiry Date
+                          </label>
                           <input
                             type="text"
                             placeholder="MM/YY"
                             value={cardDetails.expiry}
-                            onChange={(e) => setCardDetails({...cardDetails, expiry: formatExpiry(e.target.value)})}
+                            onChange={e =>
+                              setCardDetails({
+                                ...cardDetails,
+                                expiry: formatExpiry(e.target.value),
+                              })
+                            }
                             maxLength={5}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            CVV
+                          </label>
                           <input
                             type="text"
                             placeholder="123"
                             value={cardDetails.cvv}
-                            onChange={(e) => setCardDetails({...cardDetails, cvv: e.target.value.replace(/\D/g, '')})}
+                            onChange={e =>
+                              setCardDetails({
+                                ...cardDetails,
+                                cvv: e.target.value.replace(/\D/g, ''),
+                              })
+                            }
                             maxLength={3}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                           />
                         </div>
                         <div className="md:col-span-2">
-                          <label className="block text-sm font-medium text-gray-700 mb-2">Cardholder Name</label>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Cardholder Name
+                          </label>
                           <input
                             type="text"
                             placeholder="John Doe"
                             value={cardDetails.name}
-                            onChange={(e) => setCardDetails({...cardDetails, name: e.target.value})}
+                            onChange={e => setCardDetails({ ...cardDetails, name: e.target.value })}
                             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                           />
                         </div>
@@ -351,12 +393,14 @@ const PaymentGateway: React.FC = () => {
                       <h4 className="font-semibold text-gray-800 mb-4">Select Your Bank</h4>
                       <select
                         value={selectedBank}
-                        onChange={(e) => setSelectedBank(e.target.value)}
+                        onChange={e => setSelectedBank(e.target.value)}
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
                       >
                         <option value="">Choose your bank</option>
-                        {banks.map((bank) => (
-                          <option key={bank} value={bank}>{bank}</option>
+                        {banks.map(bank => (
+                          <option key={bank} value={bank}>
+                            {bank}
+                          </option>
                         ))}
                       </select>
                     </motion.div>
@@ -376,9 +420,15 @@ const PaymentGateway: React.FC = () => {
                           You'll be redirected to your UPI app to complete the payment
                         </p>
                         <div className="flex justify-center gap-4">
-                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">Google Pay</div>
-                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">PhonePe</div>
-                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">Paytm</div>
+                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">
+                            Google Pay
+                          </div>
+                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">
+                            PhonePe
+                          </div>
+                          <div className="bg-gray-100 px-4 py-2 rounded-lg text-sm font-medium">
+                            Paytm
+                          </div>
                         </div>
                       </div>
                     </motion.div>
@@ -393,14 +443,18 @@ const PaymentGateway: React.FC = () => {
                   className="space-y-4"
                 >
                   <motion.div
-                    animate={payButtonPulse ? {
-                      boxShadow: [
-                        "0 4px 20px rgba(20, 184, 166, 0.3)",
-                        "0 8px 30px rgba(20, 184, 166, 0.5)",
-                        "0 4px 20px rgba(20, 184, 166, 0.3)"
-                      ]
-                    } : {}}
-                    transition={{ duration: 3, ease: "easeInOut" }}
+                    animate={
+                      payButtonPulse
+                        ? {
+                            boxShadow: [
+                              '0 4px 20px rgba(20, 184, 166, 0.3)',
+                              '0 8px 30px rgba(20, 184, 166, 0.5)',
+                              '0 4px 20px rgba(20, 184, 166, 0.3)',
+                            ],
+                          }
+                        : {}
+                    }
+                    transition={{ duration: 3, ease: 'easeInOut' }}
                   >
                     <Button
                       variant="default"
@@ -464,7 +518,7 @@ const PaymentGateway: React.FC = () => {
               >
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                   className="text-6xl mb-4"
                 >
                   💳

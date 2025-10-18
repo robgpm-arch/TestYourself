@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { useEffect, useState } from 'react';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-export function useCollection(path: string, order?: [string, "asc"|"desc"]) {
+export function useCollection(path: string, order?: [string, 'asc' | 'desc']) {
   const [docs, setDocs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

@@ -50,9 +50,10 @@ const AdminFileManager: React.FC = () => {
 
   const filteredFiles = useMemo(() => {
     if (!searchTerm) return files;
-    return files.filter((file) =>
-      file.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      file.fileKey.toLowerCase().includes(searchTerm.toLowerCase())
+    return files.filter(
+      file =>
+        file.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        file.fileKey.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [files, searchTerm]);
 
@@ -62,7 +63,7 @@ const AdminFileManager: React.FC = () => {
     try {
       const result = await listUploads(100);
       setFiles(
-        result.map((item) => ({
+        result.map(item => ({
           fileKey: String(item.fileKey ?? ''),
           fileName: String(item.fileName ?? item.fileKey ?? ''),
           contentType: item.contentType as string | undefined,
@@ -70,7 +71,7 @@ const AdminFileManager: React.FC = () => {
           status: String(item.status ?? 'unknown'),
           downloadCount: typeof item.downloadCount === 'number' ? item.downloadCount : 0,
           createdAt: String(item.createdAt ?? ''),
-          updatedAt: item.updatedAt as string | undefined
+          updatedAt: item.updatedAt as string | undefined,
         }))
       );
     } catch (err) {
@@ -95,38 +96,34 @@ const AdminFileManager: React.FC = () => {
     setProgressState({
       fileName: selectedFile.name,
       progress: 0,
-      status: 'uploading'
+      status: 'uploading',
     });
 
     try {
       await uploadFile(selectedFile, {
-        onProgress: (progress) => {
-          setProgressState((prev) =>
-            prev && prev.status === 'uploading'
-              ? { ...prev, progress }
-              : prev
+        onProgress: progress => {
+          setProgressState(prev =>
+            prev && prev.status === 'uploading' ? { ...prev, progress } : prev
           );
-        }
+        },
       });
 
-      setProgressState((prev) =>
-        prev ? { ...prev, progress: 100, status: 'complete' } : prev
-      );
+      setProgressState(prev => (prev ? { ...prev, progress: 100, status: 'complete' } : prev));
 
       setSelectedFile(null);
       setIsRefreshing(true);
       await loadFiles();
     } catch (err) {
       console.error(err);
-      setProgressState((prev) => (
+      setProgressState(prev =>
         prev
           ? {
               ...prev,
               status: 'error',
-              error: err instanceof Error ? err.message : 'Upload failed'
+              error: err instanceof Error ? err.message : 'Upload failed',
             }
           : prev
-      ));
+      );
     } finally {
       setIsRefreshing(false);
     }
@@ -156,20 +153,29 @@ const AdminFileManager: React.FC = () => {
             </span>
             <h1 className="text-3xl md:text-4xl font-semibold">File Management Workspace</h1>
             <p className="text-slate-200/80 max-w-3xl">
-              Upload JSON, videos, audio, text, and PDF resources securely via pre-signed URLs. Files are served from Youware storage with full audit trails in D1.
+              Upload JSON, videos, audio, text, and PDF resources securely via pre-signed URLs.
+              Files are served from Youware storage with full audit trails in D1.
             </p>
           </div>
 
           <Card variant="gradient" className="bg-white text-slate-900">
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-4">
-                <label className="block text-sm font-medium text-slate-700">Select a file to upload</label>
+                <label className="block text-sm font-medium text-slate-700">
+                  Select a file to upload
+                </label>
                 <Input type="file" onChange={handleFileChange} fullWidth />
                 {selectedFile && (
                   <div className="text-sm text-slate-600">
-                    <div><strong>Name:</strong> {selectedFile.name}</div>
-                    <div><strong>Type:</strong> {selectedFile.type || '—'}</div>
-                    <div><strong>Size:</strong> {formatSize(selectedFile.size)}</div>
+                    <div>
+                      <strong>Name:</strong> {selectedFile.name}
+                    </div>
+                    <div>
+                      <strong>Type:</strong> {selectedFile.type || '—'}
+                    </div>
+                    <div>
+                      <strong>Size:</strong> {formatSize(selectedFile.size)}
+                    </div>
                   </div>
                 )}
                 <Button
@@ -182,15 +188,17 @@ const AdminFileManager: React.FC = () => {
                 </Button>
                 {progressState && (
                   <div className="space-y-2">
-                    <div className="text-sm font-medium text-slate-700">{progressState.fileName}</div>
+                    <div className="text-sm font-medium text-slate-700">
+                      {progressState.fileName}
+                    </div>
                     <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                       <div
                         className={`h-2 rounded-full transition-all ${
                           progressState.status === 'error'
                             ? 'bg-red-500'
                             : progressState.status === 'complete'
-                            ? 'bg-green-500'
-                            : 'bg-blue-500'
+                              ? 'bg-green-500'
+                              : 'bg-blue-500'
                         }`}
                         style={{ width: `${Math.min(progressState.progress, 100)}%` }}
                       />
@@ -199,8 +207,8 @@ const AdminFileManager: React.FC = () => {
                       {progressState.status === 'error' && progressState.error
                         ? progressState.error
                         : progressState.status === 'complete'
-                        ? 'Upload complete'
-                        : `${progressState.progress.toFixed(0)}%`}
+                          ? 'Upload complete'
+                          : `${progressState.progress.toFixed(0)}%`}
                     </div>
                   </div>
                 )}
@@ -211,13 +219,18 @@ const AdminFileManager: React.FC = () => {
                 <Input
                   placeholder="Filter by name or key…"
                   value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
+                  onChange={event => setSearchTerm(event.target.value)}
                   fullWidth
                 />
                 <p className="text-sm text-slate-500">
-                  Filter results to quickly locate content before generating fresh download links. Every download increments usage metadata.
+                  Filter results to quickly locate content before generating fresh download links.
+                  Every download increments usage metadata.
                 </p>
-                <Button variant="outline" onClick={() => loadFiles()} disabled={isLoading || isRefreshing}>
+                <Button
+                  variant="outline"
+                  onClick={() => loadFiles()}
+                  disabled={isLoading || isRefreshing}
+                >
                   {isLoading || isRefreshing ? 'Refreshing…' : 'Refresh List'}
                 </Button>
                 {error && <p className="text-sm text-red-600">{error}</p>}
@@ -232,7 +245,9 @@ const AdminFileManager: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-semibold text-slate-900">Uploaded Files</h2>
-              <p className="text-sm text-slate-600">{filteredFiles.length} items • sorted by created date</p>
+              <p className="text-sm text-slate-600">
+                {filteredFiles.length} items • sorted by created date
+              </p>
             </div>
           </div>
 
@@ -240,14 +255,19 @@ const AdminFileManager: React.FC = () => {
             <div className="text-center text-slate-500 py-10">Loading uploads…</div>
           ) : filteredFiles.length === 0 ? (
             <Card className="text-center py-12">
-              <p className="text-slate-600">No files available yet. Upload a resource to begin building your library.</p>
+              <p className="text-slate-600">
+                No files available yet. Upload a resource to begin building your library.
+              </p>
             </Card>
           ) : (
             <ResponsiveGrid cols={{ default: 1, md: 2, xl: 3 }} gap={5}>
-              {filteredFiles.map((file) => (
+              {filteredFiles.map(file => (
                 <Card key={file.fileKey} variant="elevated" className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-slate-900 truncate" title={file.fileName}>
+                    <h3
+                      className="text-lg font-semibold text-slate-900 truncate"
+                      title={file.fileName}
+                    >
                       {file.fileName}
                     </h3>
                     <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
@@ -256,13 +276,24 @@ const AdminFileManager: React.FC = () => {
                   </div>
                   <div className="space-y-1 text-sm text-slate-600">
                     <div>
-                      <strong>Key:</strong> <span className="break-words text-slate-500">{file.fileKey}</span>
+                      <strong>Key:</strong>{' '}
+                      <span className="break-words text-slate-500">{file.fileKey}</span>
                     </div>
-                    <div><strong>Type:</strong> {file.contentType ?? '—'}</div>
-                    <div><strong>Size:</strong> {formatSize(file.size)}</div>
-                    <div><strong>Downloads:</strong> {file.downloadCount}</div>
-                    <div><strong>Created:</strong> {formatDate(file.createdAt)}</div>
-                    <div><strong>Updated:</strong> {formatDate(file.updatedAt)}</div>
+                    <div>
+                      <strong>Type:</strong> {file.contentType ?? '—'}
+                    </div>
+                    <div>
+                      <strong>Size:</strong> {formatSize(file.size)}
+                    </div>
+                    <div>
+                      <strong>Downloads:</strong> {file.downloadCount}
+                    </div>
+                    <div>
+                      <strong>Created:</strong> {formatDate(file.createdAt)}
+                    </div>
+                    <div>
+                      <strong>Updated:</strong> {formatDate(file.updatedAt)}
+                    </div>
                   </div>
                   <div className="flex gap-2 pt-2">
                     <Button variant="primary" onClick={() => downloadFile(file.fileKey)}>

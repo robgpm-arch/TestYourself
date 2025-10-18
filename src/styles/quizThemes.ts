@@ -105,7 +105,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       accentColor: 'text-teal-700',
       pattern: 'aurora',
       progressColor: '#0ea5e9',
-      optionHover: '#0f766e'
+      optionHover: '#0f766e',
     },
     features: ['High legibility', 'Adaptive contrast', 'Guided focus'],
     quizStyles: {
@@ -120,7 +120,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       questionText: 'text-slate-900',
       optionCard: 'cursor-pointer transition-all duration-200 hover:shadow-lg',
       optionCardHover: 'hover:ring-2 hover:ring-teal-200/80',
-      optionCardSelected: 'ring-4 ring-offset-2 ring-white/70 shadow-[0_18px_44px_rgba(13,148,136,0.35)]',
+      optionCardSelected:
+        'ring-4 ring-offset-2 ring-white/70 shadow-[0_18px_44px_rgba(13,148,136,0.35)]',
       optionInnerBase:
         'flex items-center justify-between gap-3 p-4 rounded-xl transition-all duration-200 text-white shadow-sm',
       optionInnerSelected: 'ring-1 ring-white/40 shadow-xl',
@@ -135,60 +136,61 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
             'bg-teal-500/95 border border-teal-400/60 shadow-[0_6px_18px_rgba(13,148,136,0.25)]',
           innerSelected: 'bg-gradient-to-r from-teal-500 to-sky-500 border border-transparent',
           letter: 'bg-teal-500 text-white',
-          letterSelected: 'bg-white text-teal-600'
+          letterSelected: 'bg-white text-teal-600',
         },
         B: {
           inner:
             'bg-emerald-500/95 border border-emerald-400/60 shadow-[0_6px_18px_rgba(16,185,129,0.25)]',
           innerSelected: 'bg-gradient-to-r from-emerald-500 to-teal-500 border border-transparent',
           letter: 'bg-emerald-500 text-white',
-          letterSelected: 'bg-white text-emerald-600'
+          letterSelected: 'bg-white text-emerald-600',
         },
         C: {
-          inner:
-            'bg-sky-500/95 border border-sky-400/60 shadow-[0_6px_18px_rgba(56,189,248,0.25)]',
+          inner: 'bg-sky-500/95 border border-sky-400/60 shadow-[0_6px_18px_rgba(56,189,248,0.25)]',
           innerSelected: 'bg-gradient-to-r from-sky-500 to-cyan-500 border border-transparent',
           letter: 'bg-sky-500 text-white',
-          letterSelected: 'bg-white text-sky-600'
+          letterSelected: 'bg-white text-sky-600',
         },
         D: {
           inner:
             'bg-indigo-500/95 border border-indigo-400/60 shadow-[0_6px_18px_rgba(99,102,241,0.25)]',
           innerSelected: 'bg-gradient-to-r from-indigo-500 to-purple-500 border border-transparent',
           letter: 'bg-indigo-500 text-white',
-          letterSelected: 'bg-white text-indigo-600'
-        }
+          letterSelected: 'bg-white text-indigo-600',
+        },
       },
       progress: {
         track: 'bg-teal-200/60',
         fillClass: 'bg-gradient-to-r from-teal-500 to-sky-500',
-        text: 'text-slate-700'
+        text: 'text-slate-700',
       },
       timer: {
         track: '#ccfbf1',
         stroke: '#0f766e',
         text: 'text-teal-700',
-        icon: 'text-teal-700'
+        icon: 'text-teal-700',
       },
       nav: {
         answered: 'bg-teal-500 text-white',
         marked: 'bg-amber-400 text-white',
         unanswered: 'bg-slate-400 text-white',
-        currentRing: 'ring-teal-300 ring-offset-2'
+        currentRing: 'ring-teal-300 ring-offset-2',
       },
       buttons: {
-        previous: 'border border-teal-400 text-teal-700 hover:bg-teal-50 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-teal-400 text-teal-700 hover:bg-teal-50 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-teal-500 to-sky-500 text-white hover:from-teal-600 hover:to-sky-600',
         mark: 'bg-teal-100 text-teal-700 hover:bg-teal-200',
         markActive: 'bg-amber-500 text-white hover:bg-amber-600',
-        exit: 'border border-teal-400 text-teal-700 hover:bg-teal-50'
+        exit: 'border border-teal-400 text-teal-700 hover:bg-teal-50',
       },
       mobileNav: 'bg-white/95',
       mobileNavText: 'text-slate-800',
       modalCard: 'bg-white text-slate-800',
-      modalPrimaryButton: 'bg-gradient-to-r from-teal-500 to-sky-500 text-white hover:from-teal-600 hover:to-sky-600',
-      modalSecondaryButton: 'bg-teal-100 text-teal-700 hover:bg-teal-200'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-teal-500 to-sky-500 text-white hover:from-teal-600 hover:to-sky-600',
+      modalSecondaryButton: 'bg-teal-100 text-teal-700 hover:bg-teal-200',
+    },
   },
   {
     id: 'neo-prism',
@@ -199,11 +201,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) Romanesque', 'B) Gothic', 'C) Renaissance', 'D) Baroque'],
       backgroundColor: 'bg-gradient-to-br from-slate-950 via-purple-950 to-rose-900',
       questionColor: 'text-violet-100',
-      optionStyle: 'bg-white/10 border border-purple-400/40 text-violet-100 backdrop-blur-lg shadow-lg shadow-purple-900/40',
+      optionStyle:
+        'bg-white/10 border border-purple-400/40 text-violet-100 backdrop-blur-lg shadow-lg shadow-purple-900/40',
       accentColor: 'text-fuchsia-200',
       pattern: 'prism',
       progressColor: '#f0abfc',
-      optionHover: '#5b21b6'
+      optionHover: '#5b21b6',
     },
     features: ['Prismatic glow', 'Glass layering', 'Editorial headings'],
     quizStyles: {
@@ -214,7 +217,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-violet-100',
       topBarMeta: 'text-violet-300',
       footer: 'bg-slate-950/75 backdrop-blur border-t border-purple-700/40',
-      questionCard: 'bg-white/10 border border-purple-500/40 shadow-2xl shadow-fuchsia-900/30 text-violet-100',
+      questionCard:
+        'bg-white/10 border border-purple-500/40 shadow-2xl shadow-fuchsia-900/30 text-violet-100',
       questionText: 'text-violet-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-purple-500/40 bg-white/10 text-violet-100 backdrop-blur shadow-lg shadow-purple-900/30',
@@ -227,7 +231,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       optionText: `${baseOptionText} text-violet-100`,
       optionLetterBase:
         'w-9 h-9 flex items-center justify-center rounded-full font-semibold shrink-0 transition-colors duration-200',
-      optionLetterSelectedBase: 'ring-2 ring-fuchsia-200/60 ring-offset-2 ring-offset-purple-900/60',
+      optionLetterSelectedBase:
+        'ring-2 ring-fuchsia-200/60 ring-offset-2 ring-offset-purple-900/60',
       optionSelectedIcon: 'text-fuchsia-100',
       optionPalette: {
         A: {
@@ -236,7 +241,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-purple-700/80 to-fuchsia-600/80 border border-fuchsia-400/70 text-violet-100',
           letter: 'bg-fuchsia-500 text-white',
-          letterSelected: 'bg-white/80 text-fuchsia-700'
+          letterSelected: 'bg-white/80 text-fuchsia-700',
         },
         B: {
           inner:
@@ -244,7 +249,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-indigo-700/80 to-purple-600/80 border border-indigo-400/70 text-violet-100',
           letter: 'bg-indigo-500 text-white',
-          letterSelected: 'bg-white/80 text-indigo-700'
+          letterSelected: 'bg-white/80 text-indigo-700',
         },
         C: {
           inner:
@@ -252,7 +257,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-rose-700/80 to-fuchsia-600/80 border border-rose-400/70 text-violet-100',
           letter: 'bg-rose-500 text-white',
-          letterSelected: 'bg-white/80 text-rose-700'
+          letterSelected: 'bg-white/80 text-rose-700',
         },
         D: {
           inner:
@@ -260,39 +265,41 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-sky-700/80 to-indigo-600/80 border border-sky-400/70 text-violet-100',
           letter: 'bg-sky-500 text-white',
-          letterSelected: 'bg-white/80 text-sky-700'
-        }
+          letterSelected: 'bg-white/80 text-sky-700',
+        },
       },
       progress: {
         track: 'bg-violet-900/35',
         fillClass: 'bg-gradient-to-r from-fuchsia-400 via-purple-500 to-indigo-500',
-        text: 'text-fuchsia-200'
+        text: 'text-fuchsia-200',
       },
       timer: {
         track: '#312e81',
         stroke: '#f472b6',
         text: 'text-pink-200',
-        icon: 'text-pink-200'
+        icon: 'text-pink-200',
       },
       nav: {
         answered: 'bg-emerald-400 text-slate-900',
         marked: 'bg-fuchsia-400 text-slate-900',
         unanswered: 'bg-white/20 text-white',
-        currentRing: 'ring-fuchsia-300 ring-offset-2 ring-offset-purple-900/60'
+        currentRing: 'ring-fuchsia-300 ring-offset-2 ring-offset-purple-900/60',
       },
       buttons: {
-        previous: 'border border-fuchsia-400/60 text-fuchsia-200 hover:bg-fuchsia-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-fuchsia-400/60 text-fuchsia-200 hover:bg-fuchsia-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white hover:from-fuchsia-600 hover:to-purple-700',
         mark: 'bg-fuchsia-900/40 text-fuchsia-200 hover:bg-fuchsia-900/50',
         markActive: 'bg-fuchsia-600 text-white hover:bg-fuchsia-700',
-        exit: 'border border-fuchsia-400/60 text-fuchsia-100 hover:bg-fuchsia-900/40'
+        exit: 'border border-fuchsia-400/60 text-fuchsia-100 hover:bg-fuchsia-900/40',
       },
       mobileNav: 'bg-slate-950/90',
       mobileNavText: 'text-violet-100',
       modalCard: 'bg-slate-900/90 text-violet-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white hover:from-fuchsia-600 hover:to-purple-700',
-      modalSecondaryButton: 'bg-fuchsia-900/40 text-fuchsia-200 hover:bg-fuchsia-900/50'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white hover:from-fuchsia-600 hover:to-purple-700',
+      modalSecondaryButton: 'bg-fuchsia-900/40 text-fuchsia-200 hover:bg-fuchsia-900/50',
+    },
   },
   {
     id: 'cyber-slate',
@@ -303,11 +310,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) HTTP', 'B) TCP', 'C) TLS', 'D) FTP'],
       backgroundColor: 'bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950',
       questionColor: 'text-emerald-100',
-      optionStyle: 'bg-slate-800/80 border border-emerald-500/50 text-emerald-100 shadow-inner shadow-black/50',
+      optionStyle:
+        'bg-slate-800/80 border border-emerald-500/50 text-emerald-100 shadow-inner shadow-black/50',
       accentColor: 'text-emerald-300',
       pattern: 'circuit',
       progressColor: '#34d399',
-      optionHover: '#064e3b'
+      optionHover: '#064e3b',
     },
     features: ['Circuit etching', 'Holographic indicators', 'Night-mode comfort'],
     quizStyles: {
@@ -318,7 +326,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-emerald-100',
       topBarMeta: 'text-emerald-300',
       footer: 'bg-slate-950/80 backdrop-blur border-t border-emerald-500/30',
-      questionCard: 'bg-slate-900/80 border border-emerald-500/30 shadow-xl shadow-emerald-900/40 text-emerald-100',
+      questionCard:
+        'bg-slate-900/80 border border-emerald-500/30 shadow-xl shadow-emerald-900/40 text-emerald-100',
       questionText: 'text-emerald-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-emerald-500/40 bg-slate-900/70 text-emerald-100 backdrop-blur',
@@ -340,7 +349,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-emerald-500 to-cyan-500 border border-transparent text-slate-900',
           letter: 'bg-emerald-500 text-slate-900',
-          letterSelected: 'bg-emerald-300 text-slate-900'
+          letterSelected: 'bg-emerald-300 text-slate-900',
         },
         B: {
           inner:
@@ -348,53 +357,55 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-cyan-500 to-emerald-500 border border-transparent text-slate-900',
           letter: 'bg-cyan-500 text-slate-900',
-          letterSelected: 'bg-cyan-300 text-slate-900'
+          letterSelected: 'bg-cyan-300 text-slate-900',
         },
         C: {
           inner:
             'bg-emerald-600/30 border border-emerald-500/40 shadow-[0_12px_28px_rgba(5,150,105,0.30)]',
           innerSelected: 'bg-emerald-600/80 border border-transparent text-emerald-50',
           letter: 'bg-emerald-600 text-emerald-50',
-          letterSelected: 'bg-emerald-400 text-slate-900'
+          letterSelected: 'bg-emerald-400 text-slate-900',
         },
         D: {
           inner:
             'bg-slate-800/40 border border-slate-700/50 shadow-[0_12px_28px_rgba(15,23,42,0.35)]',
           innerSelected: 'bg-slate-800/80 border border-transparent text-emerald-100',
           letter: 'bg-slate-700 text-emerald-200',
-          letterSelected: 'bg-slate-500 text-emerald-100'
-        }
+          letterSelected: 'bg-slate-500 text-emerald-100',
+        },
       },
       progress: {
         track: 'bg-emerald-900/35',
         fillClass: 'bg-gradient-to-r from-emerald-400 to-cyan-400',
-        text: 'text-emerald-200'
+        text: 'text-emerald-200',
       },
       timer: {
         track: '#064e3b',
         stroke: '#34d399',
         text: 'text-emerald-200',
-        icon: 'text-emerald-200'
+        icon: 'text-emerald-200',
       },
       nav: {
         answered: 'bg-emerald-400 text-slate-900',
         marked: 'bg-cyan-400 text-slate-900',
         unanswered: 'bg-slate-700 text-emerald-100',
-        currentRing: 'ring-emerald-300 ring-offset-2 ring-offset-slate-900/60'
+        currentRing: 'ring-emerald-300 ring-offset-2 ring-offset-slate-900/60',
       },
       buttons: {
-        previous: 'border border-emerald-400/60 text-emerald-200 hover:bg-emerald-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-emerald-400/60 text-emerald-200 hover:bg-emerald-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-emerald-400 to-cyan-500 text-slate-900 hover:from-emerald-300 hover:to-cyan-400',
         mark: 'bg-slate-800/70 text-emerald-200 hover:bg-slate-800/80',
         markActive: 'bg-emerald-500 text-slate-900 hover:bg-emerald-400',
-        exit: 'border border-emerald-400/60 text-emerald-200 hover:bg-emerald-900/40'
+        exit: 'border border-emerald-400/60 text-emerald-200 hover:bg-emerald-900/40',
       },
       mobileNav: 'bg-slate-950/90',
       mobileNavText: 'text-emerald-100',
       modalCard: 'bg-slate-900/90 text-emerald-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-emerald-400 to-cyan-500 text-slate-900 hover:from-emerald-300 hover:to-cyan-400',
-      modalSecondaryButton: 'bg-slate-800/80 text-emerald-200 hover:bg-slate-800/90'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-emerald-400 to-cyan-500 text-slate-900 hover:from-emerald-300 hover:to-cyan-400',
+      modalSecondaryButton: 'bg-slate-800/80 text-emerald-200 hover:bg-slate-800/90',
+    },
   },
   {
     id: 'velvet-muse',
@@ -405,11 +416,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) Fresco', 'B) Tenebrism', 'C) Sfumato', 'D) Impasto'],
       backgroundColor: 'bg-gradient-to-br from-rose-950 via-fuchsia-950 to-slate-950',
       questionColor: 'text-rose-100',
-      optionStyle: 'bg-rose-900/60 border border-fuchsia-500/40 text-rose-100 shadow-lg shadow-rose-900/40',
+      optionStyle:
+        'bg-rose-900/60 border border-fuchsia-500/40 text-rose-100 shadow-lg shadow-rose-900/40',
       accentColor: 'text-fuchsia-200',
       pattern: 'flora',
       progressColor: '#fb7185',
-      optionHover: '#7f1d1d'
+      optionHover: '#7f1d1d',
     },
     features: ['Botanical silhouettes', 'Velvet grain', 'Gallery mood'],
     quizStyles: {
@@ -420,7 +432,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-rose-100',
       topBarMeta: 'text-rose-300',
       footer: 'bg-rose-950/75 backdrop-blur border-t border-fuchsia-500/30',
-      questionCard: 'bg-rose-900/70 border border-fuchsia-500/30 shadow-xl shadow-rose-900/40 text-rose-100',
+      questionCard:
+        'bg-rose-900/70 border border-fuchsia-500/30 shadow-xl shadow-rose-900/40 text-rose-100',
       questionText: 'text-rose-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-fuchsia-500/40 bg-rose-900/60 text-rose-100',
@@ -441,60 +454,62 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
             'bg-rose-900/60 border border-rose-500/40 shadow-[0_12px_30px_rgba(225,30,72,0.30)]',
           innerSelected: 'bg-rose-700/80 border border-transparent text-rose-100',
           letter: 'bg-rose-500 text-white',
-          letterSelected: 'bg-rose-200 text-rose-800'
+          letterSelected: 'bg-rose-200 text-rose-800',
         },
         B: {
           inner:
             'bg-fuchsia-900/60 border border-fuchsia-500/40 shadow-[0_12px_30px_rgba(217,70,239,0.30)]',
           innerSelected: 'bg-fuchsia-700/80 border border-transparent text-rose-100',
           letter: 'bg-fuchsia-500 text-white',
-          letterSelected: 'bg-fuchsia-200 text-fuchsia-800'
+          letterSelected: 'bg-fuchsia-200 text-fuchsia-800',
         },
         C: {
           inner:
             'bg-purple-900/60 border border-purple-500/40 shadow-[0_12px_30px_rgba(168,85,247,0.30)]',
           innerSelected: 'bg-purple-700/80 border border-transparent text-rose-100',
           letter: 'bg-purple-500 text-white',
-          letterSelected: 'bg-purple-200 text-purple-800'
+          letterSelected: 'bg-purple-200 text-purple-800',
         },
         D: {
           inner:
             'bg-amber-900/60 border border-amber-600/40 shadow-[0_12px_30px_rgba(251,191,36,0.25)]',
           innerSelected: 'bg-amber-700/80 border border-transparent text-rose-100',
           letter: 'bg-amber-500 text-slate-900',
-          letterSelected: 'bg-amber-200 text-amber-900'
-        }
+          letterSelected: 'bg-amber-200 text-amber-900',
+        },
       },
       progress: {
         track: 'bg-rose-900/35',
         fillClass: 'bg-gradient-to-r from-rose-400 via-fuchsia-400 to-purple-500',
-        text: 'text-rose-200'
+        text: 'text-rose-200',
       },
       timer: {
         track: '#7f1d1d',
         stroke: '#fb7185',
         text: 'text-rose-200',
-        icon: 'text-rose-200'
+        icon: 'text-rose-200',
       },
       nav: {
         answered: 'bg-rose-400 text-white',
         marked: 'bg-fuchsia-400 text-white',
         unanswered: 'bg-rose-800 text-rose-200',
-        currentRing: 'ring-rose-300 ring-offset-2 ring-offset-rose-950/60'
+        currentRing: 'ring-rose-300 ring-offset-2 ring-offset-rose-950/60',
       },
       buttons: {
-        previous: 'border border-rose-400/60 text-rose-100 hover:bg-rose-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-rose-400/60 text-rose-100 hover:bg-rose-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white hover:from-rose-600 hover:to-fuchsia-700',
         mark: 'bg-rose-900/40 text-rose-100 hover:bg-rose-900/50',
         markActive: 'bg-rose-600 text-white hover:bg-rose-700',
-        exit: 'border border-rose-400/60 text-rose-100 hover:bg-rose-900/40'
+        exit: 'border border-rose-400/60 text-rose-100 hover:bg-rose-900/40',
       },
       mobileNav: 'bg-rose-950/90',
       mobileNavText: 'text-rose-100',
       modalCard: 'bg-rose-950/90 text-rose-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white hover:from-rose-600 hover:to-fuchsia-700',
-      modalSecondaryButton: 'bg-rose-900/50 text-rose-100 hover:bg-rose-900/60'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-rose-500 to-fuchsia-600 text-white hover:from-rose-600 hover:to-fuchsia-700',
+      modalSecondaryButton: 'bg-rose-900/50 text-rose-100 hover:bg-rose-900/60',
+    },
   },
   {
     id: 'cobalt-frost',
@@ -505,11 +520,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) Atlantic', 'B) Arctic', 'C) Indian', 'D) Pacific'],
       backgroundColor: 'bg-gradient-to-br from-sky-950 via-blue-900 to-slate-950',
       questionColor: 'text-sky-100',
-      optionStyle: 'bg-white/10 border border-sky-400/40 text-sky-100 backdrop-blur-lg shadow-lg shadow-sky-900/40',
+      optionStyle:
+        'bg-white/10 border border-sky-400/40 text-sky-100 backdrop-blur-lg shadow-lg shadow-sky-900/40',
       accentColor: 'text-sky-300',
       pattern: 'aurora',
       progressColor: '#38bdf8',
-      optionHover: '#1e293b'
+      optionHover: '#1e293b',
     },
     features: ['Dancing aurora', 'Icy reflections', 'High-latitude calm'],
     quizStyles: {
@@ -542,7 +558,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-sky-500 to-cyan-500 border border-transparent text-white',
           letter: 'bg-sky-500 text-white',
-          letterSelected: 'bg-white text-sky-700'
+          letterSelected: 'bg-white text-sky-700',
         },
         B: {
           inner:
@@ -550,7 +566,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-cyan-500 to-emerald-500 border border-transparent text-white',
           letter: 'bg-cyan-500 text-white',
-          letterSelected: 'bg-white text-cyan-700'
+          letterSelected: 'bg-white text-cyan-700',
         },
         C: {
           inner:
@@ -558,7 +574,7 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-indigo-500 to-blue-500 border border-transparent text-white',
           letter: 'bg-indigo-500 text-white',
-          letterSelected: 'bg-white text-indigo-700'
+          letterSelected: 'bg-white text-indigo-700',
         },
         D: {
           inner:
@@ -566,39 +582,41 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
           innerSelected:
             'bg-gradient-to-r from-blue-500 to-sky-500 border border-transparent text-white',
           letter: 'bg-blue-500 text-white',
-          letterSelected: 'bg-white text-blue-700'
-        }
+          letterSelected: 'bg-white text-blue-700',
+        },
       },
       progress: {
         track: 'bg-sky-900/35',
         fillClass: 'bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500',
-        text: 'text-sky-200'
+        text: 'text-sky-200',
       },
       timer: {
         track: '#1e3a8a',
         stroke: '#38bdf8',
         text: 'text-sky-200',
-        icon: 'text-sky-200'
+        icon: 'text-sky-200',
       },
       nav: {
         answered: 'bg-sky-400 text-white',
         marked: 'bg-cyan-400 text-white',
         unanswered: 'bg-blue-900 text-sky-100',
-        currentRing: 'ring-sky-300 ring-offset-2 ring-offset-slate-900/60'
+        currentRing: 'ring-sky-300 ring-offset-2 ring-offset-slate-900/60',
       },
       buttons: {
-        previous: 'border border-sky-400/60 text-sky-100 hover:bg-sky-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-sky-400/60 text-sky-100 hover:bg-sky-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-sky-500 to-cyan-500 text-white hover:from-sky-600 hover:to-cyan-600',
         mark: 'bg-sky-900/40 text-sky-100 hover:bg-sky-900/50',
         markActive: 'bg-sky-500 text-white hover:bg-sky-600',
-        exit: 'border border-sky-400/60 text-sky-100 hover:bg-sky-900/40'
+        exit: 'border border-sky-400/60 text-sky-100 hover:bg-sky-900/40',
       },
       mobileNav: 'bg-slate-950/90',
       mobileNavText: 'text-sky-100',
       modalCard: 'bg-slate-900/90 text-sky-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-sky-500 to-cyan-500 text-white hover:from-sky-600 hover:to-cyan-600',
-      modalSecondaryButton: 'bg-sky-900/40 text-sky-100 hover:bg-sky-900/50'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-sky-500 to-cyan-500 text-white hover:from-sky-600 hover:to-cyan-600',
+      modalSecondaryButton: 'bg-sky-900/40 text-sky-100 hover:bg-sky-900/50',
+    },
   },
   {
     id: 'starlit-story',
@@ -609,11 +627,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['🪐 Saturn', '🌍 Earth', '🔥 Venus', '🌑 Mercury'],
       backgroundColor: 'bg-gradient-to-br from-indigo-900 via-sky-900 to-purple-900',
       questionColor: 'text-amber-100',
-      optionStyle: 'bg-indigo-800/70 border border-yellow-300/60 text-yellow-100 shadow-lg shadow-indigo-900/40 rounded-xl',
+      optionStyle:
+        'bg-indigo-800/70 border border-yellow-300/60 text-yellow-100 shadow-lg shadow-indigo-900/40 rounded-xl',
       accentColor: 'text-amber-200',
       pattern: 'sparkle',
       progressColor: '#fde68a',
-      optionHover: '#312e81'
+      optionHover: '#312e81',
     },
     features: ['Storybook stars', 'Friendly icons', 'Bedtime palette'],
     quizStyles: {
@@ -624,7 +643,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-amber-100',
       topBarMeta: 'text-amber-200',
       footer: 'bg-indigo-950/75 backdrop-blur border-t border-amber-300/40',
-      questionCard: 'bg-indigo-900/70 border border-amber-300/40 shadow-xl shadow-indigo-900/40 text-amber-100',
+      questionCard:
+        'bg-indigo-900/70 border border-amber-300/40 shadow-xl shadow-indigo-900/40 text-amber-100',
       questionText: 'text-amber-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-amber-300/50 bg-indigo-900/60 text-amber-100 rounded-3xl',
@@ -643,62 +663,68 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
         A: {
           inner:
             'bg-indigo-900/60 border border-indigo-700/50 shadow-[0_12px_30px_rgba(79,70,229,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-indigo-700 to-purple-600 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-indigo-700 to-purple-600 border border-transparent text-amber-100',
           letter: 'bg-amber-300 text-indigo-900',
-          letterSelected: 'bg-amber-200 text-indigo-900'
+          letterSelected: 'bg-amber-200 text-indigo-900',
         },
         B: {
           inner:
             'bg-purple-900/60 border border-purple-700/50 shadow-[0_12px_30px_rgba(147,51,234,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-purple-700 to-indigo-600 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-purple-700 to-indigo-600 border border-transparent text-amber-100',
           letter: 'bg-amber-300 text-indigo-900',
-          letterSelected: 'bg-amber-200 text-indigo-900'
+          letterSelected: 'bg-amber-200 text-indigo-900',
         },
         C: {
           inner:
             'bg-blue-900/60 border border-blue-700/50 shadow-[0_12px_30px_rgba(37,99,235,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-blue-700 to-indigo-600 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-blue-700 to-indigo-600 border border-transparent text-amber-100',
           letter: 'bg-amber-300 text-indigo-900',
-          letterSelected: 'bg-amber-200 text-indigo-900'
+          letterSelected: 'bg-amber-200 text-indigo-900',
         },
         D: {
           inner:
             'bg-indigo-900/60 border border-indigo-700/50 shadow-[0_12px_30px_rgba(79,70,229,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-indigo-700 to-purple-600 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-indigo-700 to-purple-600 border border-transparent text-amber-100',
           letter: 'bg-amber-300 text-indigo-900',
-          letterSelected: 'bg-amber-200 text-indigo-900'
-        }
+          letterSelected: 'bg-amber-200 text-indigo-900',
+        },
       },
       progress: {
         track: 'bg-indigo-900/35',
         fillClass: 'bg-gradient-to-r from-amber-300 to-rose-300',
-        text: 'text-amber-200'
+        text: 'text-amber-200',
       },
       timer: {
         track: '#312e81',
         stroke: '#fde68a',
         text: 'text-amber-200',
-        icon: 'text-amber-200'
+        icon: 'text-amber-200',
       },
       nav: {
         answered: 'bg-amber-300 text-indigo-900',
         marked: 'bg-purple-400 text-indigo-900',
         unanswered: 'bg-indigo-800 text-amber-100',
-        currentRing: 'ring-amber-200 ring-offset-2 ring-offset-indigo-950/60'
+        currentRing: 'ring-amber-200 ring-offset-2 ring-offset-indigo-950/60',
       },
       buttons: {
-        previous: 'border border-amber-300/60 text-amber-100 hover:bg-indigo-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-amber-300/60 text-amber-100 hover:bg-indigo-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-amber-300 to-rose-300 text-indigo-900 hover:from-amber-200 hover:to-rose-200',
         mark: 'bg-indigo-900/40 text-amber-100 hover:bg-indigo-900/50',
         markActive: 'bg-amber-300 text-indigo-900 hover:bg-amber-200',
-        exit: 'border border-amber-300/60 text-amber-100 hover:bg-indigo-900/40'
+        exit: 'border border-amber-300/60 text-amber-100 hover:bg-indigo-900/40',
       },
       mobileNav: 'bg-indigo-950/90',
       mobileNavText: 'text-amber-100',
       modalCard: 'bg-indigo-950/90 text-amber-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-amber-300 to-rose-300 text-indigo-900 hover:from-amber-200 hover:to-rose-200',
-      modalSecondaryButton: 'bg-indigo-900/40 text-amber-100 hover:bg-indigo-900/50'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-amber-300 to-rose-300 text-indigo-900 hover:from-amber-200 hover:to-rose-200',
+      modalSecondaryButton: 'bg-indigo-900/40 text-amber-100 hover:bg-indigo-900/50',
+    },
   },
   {
     id: 'bubble-pop',
@@ -709,11 +735,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['🐧 Penguin', '🦊 Fox', '🦅 Eagle', '🐫 Camel'],
       backgroundColor: 'bg-gradient-to-br from-sky-200 via-cyan-200 to-emerald-200',
       questionColor: 'text-sky-900',
-      optionStyle: 'bg-white/80 border border-sky-300 text-sky-700 shadow-lg shadow-cyan-200/40 rounded-full',
+      optionStyle:
+        'bg-white/80 border border-sky-300 text-sky-700 shadow-lg shadow-cyan-200/40 rounded-full',
       accentColor: 'text-teal-600',
       pattern: 'bubbles',
       progressColor: '#2dd4bf',
-      optionHover: '#bae6fd'
+      optionHover: '#bae6fd',
     },
     features: ['Squishy bubbles', 'Rounded typography', 'Optimistic pastels'],
     quizStyles: {
@@ -741,68 +768,66 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       optionSelectedIcon: 'text-sky-700',
       optionPalette: {
         A: {
-          inner:
-            'bg-white/95 border border-sky-200 shadow-[0_10px_26px_rgba(125,211,252,0.40)]',
+          inner: 'bg-white/95 border border-sky-200 shadow-[0_10px_26px_rgba(125,211,252,0.40)]',
           innerSelected:
             'bg-gradient-to-r from-sky-300 to-cyan-300 border border-transparent text-white',
           letter: 'bg-cyan-400 text-white',
-          letterSelected: 'bg-white text-cyan-600'
+          letterSelected: 'bg-white text-cyan-600',
         },
         B: {
-          inner:
-            'bg-white/95 border border-teal-200 shadow-[0_10px_26px_rgba(94,234,212,0.35)]',
+          inner: 'bg-white/95 border border-teal-200 shadow-[0_10px_26px_rgba(94,234,212,0.35)]',
           innerSelected:
             'bg-gradient-to-r from-teal-300 to-emerald-300 border border-transparent text-white',
           letter: 'bg-emerald-400 text-white',
-          letterSelected: 'bg-white text-emerald-600'
+          letterSelected: 'bg-white text-emerald-600',
         },
         C: {
-          inner:
-            'bg-white/95 border border-amber-200 shadow-[0_10px_26px_rgba(253,230,138,0.35)]',
+          inner: 'bg-white/95 border border-amber-200 shadow-[0_10px_26px_rgba(253,230,138,0.35)]',
           innerSelected:
             'bg-gradient-to-r from-amber-300 to-orange-300 border border-transparent text-white',
           letter: 'bg-amber-400 text-white',
-          letterSelected: 'bg-white text-amber-600'
+          letterSelected: 'bg-white text-amber-600',
         },
         D: {
-          inner:
-            'bg-white/95 border border-pink-200 shadow-[0_10px_26px_rgba(248,187,208,0.35)]',
+          inner: 'bg-white/95 border border-pink-200 shadow-[0_10px_26px_rgba(248,187,208,0.35)]',
           innerSelected:
             'bg-gradient-to-r from-pink-300 to-rose-300 border border-transparent text-white',
           letter: 'bg-pink-400 text-white',
-          letterSelected: 'bg-white text-pink-600'
-        }
+          letterSelected: 'bg-white text-pink-600',
+        },
       },
       progress: {
         track: 'bg-cyan-100',
         fillClass: 'bg-gradient-to-r from-sky-400 to-cyan-400',
-        text: 'text-sky-700'
+        text: 'text-sky-700',
       },
       timer: {
         track: '#bae6fd',
         stroke: '#0891b2',
         text: 'text-sky-700',
-        icon: 'text-sky-700'
+        icon: 'text-sky-700',
       },
       nav: {
         answered: 'bg-cyan-400 text-white',
         marked: 'bg-amber-400 text-white',
         unanswered: 'bg-sky-200 text-sky-700',
-        currentRing: 'ring-cyan-200 ring-offset-2 ring-offset-white'
+        currentRing: 'ring-cyan-200 ring-offset-2 ring-offset-white',
       },
       buttons: {
-        previous: 'border border-cyan-300 text-sky-700 hover:bg-cyan-100 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-cyan-300 text-sky-700 hover:bg-cyan-100 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-sky-400 to-cyan-400 text-white hover:from-sky-500 hover:to-cyan-500',
         mark: 'bg-cyan-100 text-sky-700 hover:bg-cyan-200',
         markActive: 'bg-amber-400 text-white hover:bg-amber-500',
-        exit: 'border border-cyan-300 text-sky-700 hover:bg-cyan-100'
+        exit: 'border border-cyan-300 text-sky-700 hover:bg-cyan-100',
       },
       mobileNav: 'bg-white/90',
       mobileNavText: 'text-sky-800',
       modalCard: 'bg-white text-sky-900',
-      modalPrimaryButton: 'bg-gradient-to-r from-sky-400 to-cyan-400 text-white hover:from-sky-500 hover:to-cyan-500',
-      modalSecondaryButton: 'bg-cyan-100 text-sky-700 hover:bg-cyan-200'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-sky-400 to-cyan-400 text-white hover:from-sky-500 hover:to-cyan-500',
+      modalSecondaryButton: 'bg-cyan-100 text-sky-700 hover:bg-cyan-200',
+    },
   },
   {
     id: 'solstice-glow',
@@ -813,11 +838,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) Maya', 'B) Inca', 'C) Aztec', 'D) Olmec'],
       backgroundColor: 'bg-gradient-to-br from-amber-900 via-rose-900 to-stone-900',
       questionColor: 'text-amber-100',
-      optionStyle: 'bg-amber-900/60 border border-yellow-400/40 text-amber-100 shadow-lg shadow-amber-900/40',
+      optionStyle:
+        'bg-amber-900/60 border border-yellow-400/40 text-amber-100 shadow-lg shadow-amber-900/40',
       accentColor: 'text-yellow-200',
       pattern: 'sunburst',
       progressColor: '#fcd34d',
-      optionHover: '#7c2d12'
+      optionHover: '#7c2d12',
     },
     features: ['Radiant arcs', 'Deco geometry', 'Warm minimal luxe'],
     quizStyles: {
@@ -828,7 +854,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-amber-100',
       topBarMeta: 'text-amber-200',
       footer: 'bg-amber-950/75 backdrop-blur border-t border-yellow-400/30',
-      questionCard: 'bg-amber-900/70 border border-yellow-400/30 shadow-xl shadow-amber-900/40 text-amber-100',
+      questionCard:
+        'bg-amber-900/70 border border-yellow-400/30 shadow-xl shadow-amber-900/40 text-amber-100',
       questionText: 'text-amber-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-yellow-400/40 bg-amber-900/60 text-amber-100',
@@ -847,62 +874,68 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
         A: {
           inner:
             'bg-amber-900/60 border border-amber-700/50 shadow-[0_12px_30px_rgba(252,211,77,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-amber-500 to-yellow-400 border border-transparent text-amber-900',
+          innerSelected:
+            'bg-gradient-to-r from-amber-500 to-yellow-400 border border-transparent text-amber-900',
           letter: 'bg-yellow-400 text-amber-900',
-          letterSelected: 'bg-amber-200 text-amber-900'
+          letterSelected: 'bg-amber-200 text-amber-900',
         },
         B: {
           inner:
             'bg-rose-900/60 border border-rose-700/50 shadow-[0_12px_30px_rgba(244,63,94,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-rose-500 to-amber-400 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-rose-500 to-amber-400 border border-transparent text-amber-100',
           letter: 'bg-rose-400 text-amber-900',
-          letterSelected: 'bg-amber-100 text-amber-900'
+          letterSelected: 'bg-amber-100 text-amber-900',
         },
         C: {
           inner:
             'bg-stone-900/60 border border-stone-700/50 shadow-[0_12px_30px_rgba(120,113,108,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-stone-700 to-amber-500 border border-transparent text-amber-100',
+          innerSelected:
+            'bg-gradient-to-r from-stone-700 to-amber-500 border border-transparent text-amber-100',
           letter: 'bg-stone-500 text-amber-100',
-          letterSelected: 'bg-amber-100 text-amber-900'
+          letterSelected: 'bg-amber-100 text-amber-900',
         },
         D: {
           inner:
             'bg-amber-900/60 border border-amber-700/50 shadow-[0_12px_30px_rgба(252,211,77,0.28)]',
-          innerSelected: 'bg-gradient-to-r from-amber-500 to-yellow-400 border border-transparent text-amber-900',
+          innerSelected:
+            'bg-gradient-to-r from-amber-500 to-yellow-400 border border-transparent text-amber-900',
           letter: 'bg-yellow-400 text-amber-900',
-          letterSelected: 'bg-amber-200 text-amber-900'
-        }
+          letterSelected: 'bg-amber-200 text-amber-900',
+        },
       },
       progress: {
         track: 'bg-amber-900/35',
         fillClass: 'bg-gradient-to-r from-amber-400 via-yellow-400 to-rose-400',
-        text: 'text-amber-200'
+        text: 'text-amber-200',
       },
       timer: {
         track: '#78350f',
         stroke: '#fbbf24',
         text: 'text-amber-200',
-        icon: 'text-amber-200'
+        icon: 'text-amber-200',
       },
       nav: {
         answered: 'bg-amber-400 text-amber-900',
         marked: 'bg-rose-400 text-amber-900',
         unanswered: 'bg-stone-600 text-amber-100',
-        currentRing: 'ring-amber-200 ring-offset-2 ring-offset-amber-950/60'
+        currentRing: 'ring-amber-200 ring-offset-2 ring-offset-amber-950/60',
       },
       buttons: {
-        previous: 'border border-amber-400/60 text-amber-100 hover:bg-amber-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-amber-400/60 text-amber-100 hover:bg-amber-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-900 hover:from-amber-300 hover:to-yellow-300',
         mark: 'bg-amber-900/40 text-amber-100 hover:bg-amber-900/50',
         markActive: 'bg-amber-500 text-amber-900 hover:bg-amber-400',
-        exit: 'border border-amber-400/60 text-amber-100 hover:bg-amber-900/40'
+        exit: 'border border-amber-400/60 text-amber-100 hover:bg-amber-900/40',
       },
       mobileNav: 'bg-amber-950/85',
       mobileNavText: 'text-amber-100',
       modalCard: 'bg-amber-950/85 text-amber-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-900 hover:from-amber-300 hover:to-yellow-300',
-      modalSecondaryButton: 'bg-amber-900/40 text-amber-100 hover:bg-amber-900/50'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-amber-400 to-yellow-400 text-amber-900 hover:from-amber-300 hover:to-yellow-300',
+      modalSecondaryButton: 'bg-amber-900/40 text-amber-100 hover:bg-amber-900/50',
+    },
   },
   {
     id: 'urban-ink',
@@ -913,11 +946,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['A) Paul Rand', 'B) Josef Müller-Brockmann', 'C) Massimo Vignelli', 'D) Saul Bass'],
       backgroundColor: 'bg-gradient-to-br from-neutral-950 via-zinc-900 to-neutral-800',
       questionColor: 'text-zinc-100',
-      optionStyle: 'bg-neutral-800/80 border border-zinc-600/40 text-zinc-100 shadow-inner shadow-black/50',
+      optionStyle:
+        'bg-neutral-800/80 border border-zinc-600/40 text-zinc-100 shadow-inner shadow-black/50',
       accentColor: 'text-orange-200',
       pattern: 'mono-grid',
       progressColor: '#fb923c',
-      optionHover: '#3f3f46'
+      optionHover: '#3f3f46',
     },
     features: ['Swiss grid', 'Ink overlays', 'High-contrast focus'],
     quizStyles: {
@@ -928,7 +962,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-zinc-100',
       topBarMeta: 'text-zinc-400',
       footer: 'bg-neutral-950/80 backdrop-blur border-t border-zinc-700/40',
-      questionCard: 'bg-neutral-900/80 border border-zinc-700/40 shadow-xl shadow-black/30 text-zinc-100',
+      questionCard:
+        'bg-neutral-900/80 border border-zinc-700/40 shadow-xl shadow-black/30 text-zinc-100',
       questionText: 'text-zinc-100',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-zinc-600/40 bg-neutral-900/70 text-zinc-100',
@@ -941,68 +976,75 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       optionText: `${baseOptionText} text-zinc-100`,
       optionLetterBase:
         'w-9 h-9 flex items-center justify-center rounded-full font-semibold shrink-0 transition-colors duration-200',
-      optionLetterSelectedBase: 'ring-2 ring-orange-200/60 ring-offset-2 ring-offset-neutral-900/70',
+      optionLetterSelectedBase:
+        'ring-2 ring-orange-200/60 ring-offset-2 ring-offset-neutral-900/70',
       optionSelectedIcon: 'text-neutral-900',
       optionPalette: {
         A: {
           inner:
             'bg-neutral-900/70 border border-neutral-700/60 shadow-[0_12px_30px_rgba(249,115,22,0.24)]',
-          innerSelected: 'bg-gradient-to-r from-orange-500 to-amber-400 border border-transparent text-neutral-900',
+          innerSelected:
+            'bg-gradient-to-r from-orange-500 to-amber-400 border border-transparent text-neutral-900',
           letter: 'bg-orange-300 text-neutral-900',
-          letterSelected: 'bg-orange-200 text-neutral-900'
+          letterSelected: 'bg-orange-200 text-neutral-900',
         },
         B: {
           inner:
             'bg-neutral-900/70 border border-neutral-700/60 shadow-[0_12px_30px_rgba(20,184,166,0.24)]',
-          innerSelected: 'bg-gradient-to-r from-teal-500 to-emerald-400 border border-transparent text-neutral-900',
+          innerSelected:
+            'bg-gradient-to-r from-teal-500 to-emerald-400 border border-transparent text-neutral-900',
           letter: 'bg-teal-300 text-neutral-900',
-          letterSelected: 'bg-teal-200 text-neutral-900'
+          letterSelected: 'bg-teal-200 text-neutral-900',
         },
         C: {
           inner:
             'bg-neutral-900/70 border border-neutral-700/60 shadow-[0_12px_30px_rgба(96,165,250,0.24)]',
-          innerSelected: 'bg-gradient-to-r from-sky-500 to-blue-500 border border-transparent text-neutral-900',
+          innerSelected:
+            'bg-gradient-to-r from-sky-500 to-blue-500 border border-transparent text-neutral-900',
           letter: 'bg-sky-300 text-neutral-900',
-          letterSelected: 'bg-sky-200 text-neutral-900'
+          letterSelected: 'bg-sky-200 text-neutral-900',
         },
         D: {
           inner:
             'bg-neutral-900/70 border border-neutral-700/60 shadow-[0_12px_30px_rgba(244,114,182,0.24)]',
-          innerSelected: 'bg-gradient-to-r from-fuchsia-500 to-rose-500 border border-transparent text-neutral-900',
+          innerSelected:
+            'bg-gradient-to-r from-fuchsia-500 to-rose-500 border border-transparent text-neutral-900',
           letter: 'bg-fuchsia-300 text-neutral-900',
-          letterSelected: 'bg-fuchsia-200 text-neutral-900'
-        }
+          letterSelected: 'bg-fuchsia-200 text-neutral-900',
+        },
       },
       progress: {
         track: 'bg-neutral-800/40',
         fillClass: 'bg-gradient-to-r from-orange-400 to-fuchsia-400',
-        text: 'text-orange-200'
+        text: 'text-orange-200',
       },
       timer: {
         track: '#3f3f46',
         stroke: '#fb923c',
         text: 'text-orange-200',
-        icon: 'text-orange-200'
+        icon: 'text-orange-200',
       },
       nav: {
         answered: 'bg-orange-400 text-neutral-900',
         marked: 'bg-fuchsia-400 text-neutral-900',
         unanswered: 'bg-neutral-600 text-zinc-100',
-        currentRing: 'ring-orange-300 ring-offset-2 ring-offset-neutral-900/60'
+        currentRing: 'ring-orange-300 ring-offset-2 ring-offset-neutral-900/60',
       },
       buttons: {
-        previous: 'border border-zinc-600/50 text-zinc-100 hover:bg-neutral-900/70 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-zinc-600/50 text-zinc-100 hover:bg-neutral-900/70 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-orange-500 to-amber-400 text-neutral-900 hover:from-orange-400 hover:to-amber-300',
         mark: 'bg-neutral-800/70 text-zinc-100 hover:bg-neutral-800',
         markActive: 'bg-orange-400 text-neutral-900 hover:bg-orange-300',
-        exit: 'border border-zinc-600/50 text-zinc-100 hover:bg-neutral-900/70'
+        exit: 'border border-zinc-600/50 text-zinc-100 hover:bg-neutral-900/70',
       },
       mobileNav: 'bg-neutral-950/85',
       mobileNavText: 'text-zinc-100',
       modalCard: 'bg-neutral-950/85 text-zinc-100',
-      modalPrimaryButton: 'bg-gradient-to-r from-orange-500 to-amber-400 text-neutral-900 hover:from-orange-400 hover:to-amber-300',
-      modalSecondaryButton: 'bg-neutral-800/70 text-zinc-100 hover:bg-neutral-800'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-orange-500 to-amber-400 text-neutral-900 hover:from-orange-400 hover:to-amber-300',
+      modalSecondaryButton: 'bg-neutral-800/70 text-zinc-100 hover:bg-neutral-800',
+    },
   },
   {
     id: 'galaxy-arcade',
@@ -1013,11 +1055,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['🌌 Milky Way', '🌀 Whirlpool', '🎮 Andromeda', '✨ Sombrero'],
       backgroundColor: 'bg-gradient-to-br from-slate-950 via-purple-950 to-blue-950',
       questionColor: 'text-purple-100',
-      optionStyle: 'bg-purple-900/70 border border-pink-500/50 text-pink-200 shadow-lg shadow-purple-900/50 rounded-xl',
+      optionStyle:
+        'bg-purple-900/70 border border-pink-500/50 text-pink-200 shadow-lg shadow-purple-900/50 rounded-xl',
       accentColor: 'text-pink-300',
       pattern: 'pixel-stars',
       progressColor: '#f472b6',
-      optionHover: '#581c87'
+      optionHover: '#581c87',
     },
     features: ['Pixel constellations', 'Arcade glow', 'Fun galaxy icons'],
     quizStyles: {
@@ -1028,7 +1071,8 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       topBarTitle: 'text-pink-200',
       topBarMeta: 'text-pink-300',
       footer: 'bg-slate-950/75 backdrop-blur border-t border-pink-500/40',
-      questionCard: 'bg-purple-900/70 border border-pink-500/40 shadow-xl shadow-purple-900/40 text-pink-200',
+      questionCard:
+        'bg-purple-900/70 border border-pink-500/40 shadow-xl shadow-purple-900/40 text-pink-200',
       questionText: 'text-pink-200',
       optionCard:
         'cursor-pointer transition-all duration-200 border border-pink-500/50 bg-purple-900/60 text-pink-200 rounded-2xl',
@@ -1047,62 +1091,68 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
         A: {
           inner:
             'bg-purple-900/60 border border-purple-600/50 shadow-[0_12px_30px_rgba(139,92,246,0.35)]',
-          innerSelected: 'bg-gradient-to-r from-purple-600 to-pink-500 border border-transparent text-pink-100',
+          innerSelected:
+            'bg-gradient-to-r from-purple-600 to-pink-500 border border-transparent text-pink-100',
           letter: 'bg-pink-500 text-purple-950',
-          letterSelected: 'bg-pink-300 text-purple-950'
+          letterSelected: 'bg-pink-300 text-purple-950',
         },
         B: {
           inner:
             'bg-indigo-900/60 border border-indigo-600/50 shadow-[0_12px_30px_rgba(99,102,241,0.35)]',
-          innerSelected: 'bg-gradient-to-r from-indigo-600 to-blue-500 border border-transparent text-pink-100',
+          innerSelected:
+            'bg-gradient-to-r from-indigo-600 to-blue-500 border border-transparent text-pink-100',
           letter: 'bg-sky-400 text-purple-950',
-          letterSelected: 'bg-sky-200 text-purple-950'
+          letterSelected: 'bg-sky-200 text-purple-950',
         },
         C: {
           inner:
             'bg-blue-900/60 border border-blue-600/50 shadow-[0_12px_30px_rgба(37,99,235,0.35)]',
-          innerSelected: 'bg-gradient-to-r from-blue-600 to-cyan-500 border border-transparent text-pink-100',
+          innerSelected:
+            'bg-gradient-to-r from-blue-600 to-cyan-500 border border-transparent text-pink-100',
           letter: 'bg-cyan-400 text-purple-950',
-          letterSelected: 'bg-cyan-200 text-purple-950'
+          letterSelected: 'bg-cyan-200 text-purple-950',
         },
         D: {
           inner:
             'bg-purple-900/60 border border-purple-600/50 shadow-[0_12px_30px_rgба(168,85,247,0.35)]',
-          innerSelected: 'bg-gradient-to-r from-purple-600 to-indigo-500 border border-transparent text-pink-100',
+          innerSelected:
+            'bg-gradient-to-r from-purple-600 to-indigo-500 border border-transparent text-pink-100',
           letter: 'bg-violet-400 text-purple-950',
-          letterSelected: 'bg-violet-200 text-purple-950'
-        }
+          letterSelected: 'bg-violet-200 text-purple-950',
+        },
       },
       progress: {
         track: 'bg-purple-900/35',
         fillClass: 'bg-gradient-to-r from-pink-400 via-purple-400 to-blue-500',
-        text: 'text-pink-200'
+        text: 'text-pink-200',
       },
       timer: {
         track: '#581c87',
         stroke: '#f472b6',
         text: 'text-pink-200',
-        icon: 'text-pink-200'
+        icon: 'text-pink-200',
       },
       nav: {
         answered: 'bg-pink-400 text-purple-950',
         marked: 'bg-sky-400 text-purple-950',
         unanswered: 'bg-purple-800 text-pink-200',
-        currentRing: 'ring-pink-300 ring-offset-2 ring-offset-purple-950/60'
+        currentRing: 'ring-pink-300 ring-offset-2 ring-offset-purple-950/60',
       },
       buttons: {
-        previous: 'border border-pink-400/60 text-pink-200 hover:bg-purple-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-pink-400/60 text-pink-200 hover:bg-purple-900/40 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-pink-600 hover:to-purple-700',
         mark: 'bg-purple-900/50 text-pink-200 hover:bg-purple-900/60',
         markActive: 'bg-pink-500 text-white hover:bg-pink-600',
-        exit: 'border border-pink-400/60 text-pink-200 hover:bg-purple-900/40'
+        exit: 'border border-pink-400/60 text-pink-200 hover:bg-purple-900/40',
       },
       mobileNav: 'bg-slate-950/90',
       mobileNavText: 'text-pink-200',
       modalCard: 'bg-slate-950/90 text-pink-200',
-      modalPrimaryButton: 'bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-pink-600 hover:to-purple-700',
-      modalSecondaryButton: 'bg-purple-900/50 text-pink-200 hover:bg-purple-900/60'
-    }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-pink-500 to-purple-600 text-white hover:from-pink-600 hover:to-purple-700',
+      modalSecondaryButton: 'bg-purple-900/50 text-pink-200 hover:bg-purple-900/60',
+    },
   },
   {
     id: 'candy-circuit',
@@ -1113,11 +1163,12 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       options: ['🍭 Lollipop', '🍫 Chocolate', '🍪 Cookie', '🧁 Cupcake'],
       backgroundColor: 'bg-gradient-to-br from-rose-200 via-pink-200 to-sky-200',
       questionColor: 'text-rose-900',
-      optionStyle: 'bg-white/85 border border-rose-300 text-rose-600 shadow-lg shadow-rose-200/40 rounded-2xl',
+      optionStyle:
+        'bg-white/85 border border-rose-300 text-rose-600 shadow-lg shadow-rose-200/40 rounded-2xl',
       accentColor: 'text-rose-500',
       pattern: 'candy',
       progressColor: '#fb7185',
-      optionHover: '#fecdd3'
+      optionHover: '#fecdd3',
     },
     features: ['Candy wires', 'Soft pastels', 'Energetic badges'],
     quizStyles: {
@@ -1145,65 +1196,67 @@ export const QUIZ_THEMES: QuizThemeDefinition[] = [
       optionSelectedIcon: 'text-rose-500',
       optionPalette: {
         A: {
-          inner:
-            'bg-white/95 border border-rose-200 shadow-[0_10px_26px_rgба(248,187,208,0.32)]',
-          innerSelected: 'bg-gradient-to-r from-rose-300 to-pink-300 border border-transparent text-white',
+          inner: 'bg-white/95 border border-rose-200 shadow-[0_10px_26px_rgба(248,187,208,0.32)]',
+          innerSelected:
+            'bg-gradient-to-r from-rose-300 to-pink-300 border border-transparent text-white',
           letter: 'bg-rose-400 text-white',
-          letterSelected: 'bg-white text-rose-600'
+          letterSelected: 'bg-white text-rose-600',
         },
         B: {
-          inner:
-            'bg-white/95 border border-sky-200 shadow-[0_10px_26px_rgба(125,211,252,0.30)]',
-          innerSelected: 'bg-gradient-to-r from-sky-300 to-teal-300 border border-transparent text-white',
+          inner: 'bg-white/95 border border-sky-200 shadow-[0_10px_26px_rgба(125,211,252,0.30)]',
+          innerSelected:
+            'bg-gradient-to-r from-sky-300 to-teal-300 border border-transparent text-white',
           letter: 'bg-sky-400 text-white',
-          letterSelected: 'bg-white text-sky-600'
+          letterSelected: 'bg-white text-sky-600',
         },
         C: {
-          inner:
-            'bg-white/95 border border-amber-200 shadow-[0_10px_26px_rgба(253,230,138,0.30)]',
-          innerSelected: 'bg-gradient-to-r from-amber-300 to-orange-300 border border-transparent text-white',
+          inner: 'bg-white/95 border border-amber-200 shadow-[0_10px_26px_rgба(253,230,138,0.30)]',
+          innerSelected:
+            'bg-gradient-to-r from-amber-300 to-orange-300 border border-transparent text-white',
           letter: 'bg-amber-400 text-white',
-          letterSelected: 'bg-white text-amber-600'
+          letterSelected: 'bg-white text-amber-600',
         },
         D: {
-          inner:
-            'bg-white/95 border border-lime-200 shadow-[0_10px_26px_rgба(190,242,100,0.30)]',
-          innerSelected: 'bg-gradient-to-r from-lime-300 to-teal-300 border border-transparent text-white',
+          inner: 'bg-white/95 border border-lime-200 shadow-[0_10px_26px_rgба(190,242,100,0.30)]',
+          innerSelected:
+            'bg-gradient-to-r from-lime-300 to-teal-300 border border-transparent text-white',
           letter: 'bg-lime-400 text-white',
-          letterSelected: 'bg-white text-lime-600'
-        }
+          letterSelected: 'bg-white text-lime-600',
+        },
       },
       progress: {
         track: 'bg-rose-100',
         fillClass: 'bg-gradient-to-r from-rose-400 to-sky-400',
-        text: 'text-rose-600'
+        text: 'text-rose-600',
       },
       timer: {
         track: '#fecdd3',
         stroke: '#fb7185',
         text: 'text-rose-600',
-        icon: 'text-rose-600'
+        icon: 'text-rose-600',
       },
       nav: {
         answered: 'bg-rose-400 text-white',
         marked: 'bg-sky-400 text-white',
         unanswered: 'bg-rose-200 text-rose-700',
-        currentRing: 'ring-rose-200 ring-offset-2 ring-offset-white'
+        currentRing: 'ring-rose-200 ring-offset-2 ring-offset-white',
       },
       buttons: {
-        previous: 'border border-rose-200 text-rose-700 hover:bg-rose-100 disabled:opacity-50 disabled:cursor-not-allowed',
+        previous:
+          'border border-rose-200 text-rose-700 hover:bg-rose-100 disabled:opacity-50 disabled:cursor-not-allowed',
         next: 'bg-gradient-to-r from-rose-400 to-sky-400 text-white hover:from-rose-500 hover:to-sky-500',
         mark: 'bg-rose-100 text-rose-700 hover:bg-rose-200',
         markActive: 'bg-rose-400 text-white hover:bg-rose-500',
-        exit: 'border border-rose-200 text-rose-700 hover:bg-rose-100'
+        exit: 'border border-rose-200 text-rose-700 hover:bg-rose-100',
       },
       mobileNav: 'bg-white/85',
       mobileNavText: 'text-rose-700',
       modalCard: 'bg-white text-rose-700',
-      modalPrimaryButton: 'bg-gradient-to-r from-rose-400 to-sky-400 text-white hover:from-rose-500 hover:to-sky-500',
-      modalSecondaryButton: 'bg-rose-100 text-rose-700 hover:bg-rose-200'
-    }
-  }
+      modalPrimaryButton:
+        'bg-gradient-to-r from-rose-400 to-sky-400 text-white hover:from-rose-500 hover:to-sky-500',
+      modalSecondaryButton: 'bg-rose-100 text-rose-700 hover:bg-rose-200',
+    },
+  },
 ];
 
 const THEME_LOOKUP: Record<string, QuizThemeDefinition> = QUIZ_THEMES.reduce(

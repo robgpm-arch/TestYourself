@@ -1,7 +1,14 @@
 // Admin routing utilities for hierarchical catalog navigation
 // Routing contract: /admin/dashboard?tab=<level>&<parent_param>=<parent_id>
 
-export type CatalogLevel = 'mediums' | 'boards' | 'exams' | 'courses' | 'subjects' | 'chapters' | 'quizsets';
+export type CatalogLevel =
+  | 'mediums'
+  | 'boards'
+  | 'exams'
+  | 'courses'
+  | 'subjects'
+  | 'chapters'
+  | 'quizsets';
 
 export interface CatalogRouteParams {
   tab: CatalogLevel;
@@ -16,7 +23,7 @@ export interface CatalogRouteParams {
 // Filter state for admin catalog (mutually exclusive Board vs Exam)
 export interface CatalogFilters {
   mediumId: string;
-  boardId?: string | null;   // exactly one of boardId/examId set
+  boardId?: string | null; // exactly one of boardId/examId set
   examId?: string | null;
   courseId?: string | null;
   subjectId?: string | null;
@@ -67,7 +74,7 @@ export function navigateToCourses(mediumId: string, boardId?: string, examId?: s
     tab: 'courses',
     medium: mediumId,
     board: boardId,
-    exam: examId
+    exam: examId,
   });
 }
 
@@ -90,9 +97,7 @@ export interface BreadcrumbItem {
 }
 
 export function generateBreadcrumbs(params: CatalogRouteParams): BreadcrumbItem[] {
-  const breadcrumbs: BreadcrumbItem[] = [
-    { label: 'Dashboard', path: '/admin/dashboard' }
-  ];
+  const breadcrumbs: BreadcrumbItem[] = [{ label: 'Dashboard', path: '/admin/dashboard' }];
 
   // Add breadcrumbs based on current level and available params
   switch (params.tab) {
@@ -100,11 +105,11 @@ export function generateBreadcrumbs(params: CatalogRouteParams): BreadcrumbItem[
       if (params.medium) {
         breadcrumbs.push({
           label: 'Mediums',
-          path: buildAdminRoute({ tab: 'mediums' })
+          path: buildAdminRoute({ tab: 'mediums' }),
         });
         breadcrumbs.push({
           label: 'Boards',
-          path: buildAdminRoute({ tab: 'boards', medium: params.medium })
+          path: buildAdminRoute({ tab: 'boards', medium: params.medium }),
         });
       }
       break;
@@ -113,11 +118,11 @@ export function generateBreadcrumbs(params: CatalogRouteParams): BreadcrumbItem[
       if (params.medium) {
         breadcrumbs.push({
           label: 'Mediums',
-          path: buildAdminRoute({ tab: 'mediums' })
+          path: buildAdminRoute({ tab: 'mediums' }),
         });
         breadcrumbs.push({
           label: 'Exams',
-          path: buildAdminRoute({ tab: 'exams', medium: params.medium })
+          path: buildAdminRoute({ tab: 'exams', medium: params.medium }),
         });
       }
       break;
@@ -126,26 +131,26 @@ export function generateBreadcrumbs(params: CatalogRouteParams): BreadcrumbItem[
       if (params.medium) {
         breadcrumbs.push({
           label: 'Mediums',
-          path: buildAdminRoute({ tab: 'mediums' })
+          path: buildAdminRoute({ tab: 'mediums' }),
         });
 
         if (params.board) {
           breadcrumbs.push({
             label: 'Boards',
-            path: buildAdminRoute({ tab: 'boards', medium: params.medium })
+            path: buildAdminRoute({ tab: 'boards', medium: params.medium }),
           });
           breadcrumbs.push({
             label: 'Courses',
-            path: buildAdminRoute({ tab: 'courses', medium: params.medium, board: params.board })
+            path: buildAdminRoute({ tab: 'courses', medium: params.medium, board: params.board }),
           });
         } else if (params.exam) {
           breadcrumbs.push({
             label: 'Exams',
-            path: buildAdminRoute({ tab: 'exams', medium: params.medium })
+            path: buildAdminRoute({ tab: 'exams', medium: params.medium }),
           });
           breadcrumbs.push({
             label: 'Courses',
-            path: buildAdminRoute({ tab: 'courses', medium: params.medium, exam: params.exam })
+            path: buildAdminRoute({ tab: 'courses', medium: params.medium, exam: params.exam }),
           });
         }
       }
@@ -156,40 +161,39 @@ export function generateBreadcrumbs(params: CatalogRouteParams): BreadcrumbItem[
       // This would require additional logic to fetch course data and determine board/exam
       breadcrumbs.push({
         label: 'Courses',
-        path: buildAdminRoute({ tab: 'courses' })
+        path: buildAdminRoute({ tab: 'courses' }),
       });
       breadcrumbs.push({
         label: 'Subjects',
-        path: buildAdminRoute({ tab: 'subjects', course: params.course })
+        path: buildAdminRoute({ tab: 'subjects', course: params.course }),
       });
       break;
 
     case 'chapters':
       breadcrumbs.push({
         label: 'Subjects',
-        path: buildAdminRoute({ tab: 'subjects' })
+        path: buildAdminRoute({ tab: 'subjects' }),
       });
       breadcrumbs.push({
         label: 'Chapters',
-        path: buildAdminRoute({ tab: 'chapters', subject: params.subject })
+        path: buildAdminRoute({ tab: 'chapters', subject: params.subject }),
       });
       break;
 
     case 'quizsets':
       breadcrumbs.push({
         label: 'Chapters',
-        path: buildAdminRoute({ tab: 'chapters' })
+        path: buildAdminRoute({ tab: 'chapters' }),
       });
       breadcrumbs.push({
         label: 'Quiz Sets',
-        path: buildAdminRoute({ tab: 'quizsets', chapter: params.chapter })
+        path: buildAdminRoute({ tab: 'quizsets', chapter: params.chapter }),
       });
       break;
   }
 
   return breadcrumbs;
 }
-
 
 // Filter state management (mutually exclusive Board vs Exam)
 export function createInitialFilters(): CatalogFilters {
@@ -249,7 +253,10 @@ export function pickSubject(filters: CatalogFilters, subjectId: string | null): 
 }
 
 // Convert filters to route params
-export function filtersToRouteParams(filters: CatalogFilters, tab: CatalogLevel): CatalogRouteParams {
+export function filtersToRouteParams(
+  filters: CatalogFilters,
+  tab: CatalogLevel
+): CatalogRouteParams {
   return {
     tab,
     medium: filters.mediumId || undefined,
@@ -349,5 +356,5 @@ export default {
   canNavigateToCourses,
   canNavigateToSubjects,
   canNavigateToChapters,
-  canNavigateToQuizSets
+  canNavigateToQuizSets,
 };

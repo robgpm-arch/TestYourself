@@ -21,7 +21,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: '8 prebuilt themes, asset library, and live-editable visual styles for screens.',
     icon: '🎨',
     highlight: '8 themes',
-    href: '/admin/dashboard?tab=design'
+    href: '/admin/dashboard?tab=design',
   },
   {
     id: 'quiz-themes',
@@ -29,7 +29,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Create, edit, preview, and assign quiz themes with cascading inheritance.',
     icon: '🎨',
     highlight: 'Quiz styling',
-    href: '/admin/themes/quiz'
+    href: '/admin/themes/quiz',
   },
   {
     id: 'screen-themes',
@@ -37,7 +37,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Manage screen design themes, gradients, card variants, and visual tokens.',
     icon: '🎨',
     highlight: 'Screen design',
-    href: '/admin/themes/screen'
+    href: '/admin/themes/screen',
   },
   {
     id: 'mediums',
@@ -45,7 +45,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Manage languages, locales, exam mediums, and visibility ordering.',
     icon: '🗣️',
     highlight: 'Language catalog',
-    href: '/admin/dashboard?tab=mediums'
+    href: '/admin/dashboard?tab=mediums',
   },
   {
     id: 'boards',
@@ -53,7 +53,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Link education boards to mediums with regional metadata and ordering.',
     icon: '🏫',
     highlight: 'Board structure',
-    href: '/admin/dashboard?tab=boards'
+    href: '/admin/dashboard?tab=boards',
   },
   {
     id: 'courses',
@@ -61,7 +61,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Curate course tracks, difficulty levels, and hero thumbnails per board.',
     icon: '📚',
     highlight: 'Course catalog',
-    href: '/admin/dashboard?tab=courses'
+    href: '/admin/dashboard?tab=courses',
   },
   {
     id: 'subjects',
@@ -69,7 +69,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Configure subject branding, colors, and icons for each course.',
     icon: '📘',
     highlight: 'Subject styling',
-    href: '/admin/dashboard?tab=subjects'
+    href: '/admin/dashboard?tab=subjects',
   },
   {
     id: 'chapters',
@@ -77,7 +77,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Organise lesson order, prerequisites, and pacing for every subject.',
     icon: '🧩',
     highlight: 'Progress map',
-    href: '/admin/dashboard?tab=chapters'
+    href: '/admin/dashboard?tab=chapters',
   },
   {
     id: 'quizSets',
@@ -85,7 +85,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Publish assessments, auto-run voices, and timing per chapter.',
     icon: '❓',
     highlight: 'Assessment bank',
-    href: '/admin/dashboard?tab=quizSets'
+    href: '/admin/dashboard?tab=quizSets',
   },
   {
     id: 'screens',
@@ -93,7 +93,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Toggle feature flags, routes, and role access across the app shell.',
     icon: '🗂️',
     highlight: 'Experience toggles',
-    href: '/admin/dashboard?tab=screens'
+    href: '/admin/dashboard?tab=screens',
   },
   {
     id: 'leaderboards',
@@ -101,7 +101,7 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Define competitive metrics, cadence, and display limits per subject.',
     icon: '🏆',
     highlight: 'Competition rules',
-    href: '/admin/dashboard?tab=leaderboards'
+    href: '/admin/dashboard?tab=leaderboards',
   },
   {
     id: 'files',
@@ -109,31 +109,31 @@ const ADMIN_SECTIONS: AdminSection[] = [
     description: 'Upload PDFs, audio, video, and JSON to Youware storage with presigned URLs.',
     icon: '📁',
     highlight: 'Storage uploads',
-    href: '/admin/files'
-  }
+    href: '/admin/files',
+  },
 ];
 
 const QUICK_ACTIONS = [
   {
     title: 'Open Full Dashboard',
     description: 'Jump straight into the live catalog workspace with all filters.',
-    action: '/admin/dashboard'
+    action: '/admin/dashboard',
   },
   {
     title: 'Manage Storage Files',
     description: 'Upload new study materials, assets, and downloadable resources.',
-    action: '/admin/files'
+    action: '/admin/files',
   },
   {
     title: 'Review Firestore Rules',
     description: 'Double-check admin-only access to catalog collections before shipping.',
-    action: '/firebase/rules'
+    action: '/firebase/rules',
   },
   {
     title: 'Sync Mobile Builds',
     description: 'Ensure Capacitor projects stay in sync after catalog updates.',
-    action: '/docs/mobile-sync'
-  }
+    action: '/docs/mobile-sync',
+  },
 ];
 
 const AdminPanel: React.FC = () => {
@@ -156,7 +156,10 @@ const AdminPanel: React.FC = () => {
               Control every learning surface from a single command center.
             </h1>
             <p className="mt-4 text-base md:text-lg text-slate-200/80 leading-relaxed">
-              Configure mediums, courses, assessments, feature flags, and leaderboard rules before your learners ever see the change. Everything routes into the catalogue-first Admin Dashboard where real-time Firestore updates keep the experience coherent across web and Android builds.
+              Configure mediums, courses, assessments, feature flags, and leaderboard rules before
+              your learners ever see the change. Everything routes into the catalogue-first Admin
+              Dashboard where real-time Firestore updates keep the experience coherent across web
+              and Android builds.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button variant="primary" size="large" onClick={() => navigate('/admin/dashboard')}>
@@ -165,7 +168,9 @@ const AdminPanel: React.FC = () => {
               <Button variant="outline" size="large" onClick={() => navigate('/admin/files')}>
                 Open File Manager
               </Button>
-              <Button variant="ghost" size="large" onClick={() => navigate('/')}>Return to App</Button>
+              <Button variant="ghost" size="large" onClick={() => navigate('/')}>
+                Return to App
+              </Button>
             </div>
           </div>
         </div>
@@ -176,12 +181,13 @@ const AdminPanel: React.FC = () => {
           <div>
             <h2 className="text-2xl font-semibold text-white">Manage Catalog Entities</h2>
             <p className="mt-2 text-slate-300 max-w-3xl">
-              Choose a module to open its dedicated workspace. Each workspace streams live Firestore data, supports quick duplication, and preserves audit trails.
+              Choose a module to open its dedicated workspace. Each workspace streams live Firestore
+              data, supports quick duplication, and preserves audit trails.
             </p>
           </div>
 
           <ResponsiveGrid cols={{ default: 1, sm: 2, lg: 3 }} gap={6}>
-            {ADMIN_SECTIONS.map((section) => (
+            {ADMIN_SECTIONS.map(section => (
               <Card
                 key={section.id}
                 variant="gradient"
@@ -197,7 +203,10 @@ const AdminPanel: React.FC = () => {
                 <h3 className="text-2xl font-semibold text-slate-900">{section.title}</h3>
                 <p className="mt-3 text-slate-700 leading-relaxed">{section.description}</p>
                 <div className="mt-6">
-                  <Button variant="outline" className="text-blue-700 border-blue-500 hover:bg-blue-500 hover:text-white">
+                  <Button
+                    variant="outline"
+                    className="text-blue-700 border-blue-500 hover:bg-blue-500 hover:text-white"
+                  >
                     Open {section.title}
                   </Button>
                 </div>
@@ -213,7 +222,8 @@ const AdminPanel: React.FC = () => {
             <div>
               <h2 className="text-2xl font-semibold">Operational Shortcuts</h2>
               <p className="mt-2 text-slate-600 max-w-3xl">
-                Keep deployment tidy: review rules, sync mobile artefacts, and verify supporting docs after catalog edits.
+                Keep deployment tidy: review rules, sync mobile artefacts, and verify supporting
+                docs after catalog edits.
               </p>
             </div>
             <Button variant="ghost" onClick={() => navigate('/admin/dashboard')}>
@@ -222,12 +232,16 @@ const AdminPanel: React.FC = () => {
           </div>
 
           <ResponsiveGrid cols={{ default: 1, md: 2, lg: 3, xl: 4 }} gap={5}>
-            {QUICK_ACTIONS.map((quick) => (
+            {QUICK_ACTIONS.map(quick => (
               <Card key={quick.title} variant="elevated" className="bg-slate-900 text-white">
                 <h3 className="text-xl font-semibold">{quick.title}</h3>
                 <p className="mt-3 text-slate-200 leading-relaxed">{quick.description}</p>
                 <div className="mt-6">
-                  <Button variant="outline" className="border-white/40 text-white hover:bg-white hover:text-slate-900" onClick={() => navigate(quick.action)}>
+                  <Button
+                    variant="outline"
+                    className="border-white/40 text-white hover:bg-white hover:text-slate-900"
+                    onClick={() => navigate(quick.action)}
+                  >
                     Open
                   </Button>
                 </div>

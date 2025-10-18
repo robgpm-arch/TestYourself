@@ -13,7 +13,7 @@ interface BattlePlayer {
 
 const optionColors = ['blue', 'green', 'orange', 'purple'] as const;
 
-type OptionColor = typeof optionColors[number];
+type OptionColor = (typeof optionColors)[number];
 
 const MultiplayerBattle: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -21,34 +21,41 @@ const MultiplayerBattle: React.FC = () => {
   const [streakCount, setStreakCount] = useState(3);
   const [timer, setTimer] = useState(18);
 
-  const players = useMemo<BattlePlayer[]>(() => [
-    {
-      id: 'p1',
-      name: 'Kavya',
-      avatar: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=facearea&w=120&h=120&q=80',
-      score: 1420,
-      isLeader: true
-    },
-    {
-      id: 'p2',
-      name: 'You',
-      avatar: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=120&h=120&q=80',
-      score: 1375,
-      isMe: true
-    },
-    {
-      id: 'p3',
-      name: 'Rehan',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=120&h=120&q=80',
-      score: 1305
-    },
-    {
-      id: 'p4',
-      name: 'Amrita',
-      avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=facearea&w=120&h=120&q=80',
-      score: 1240
-    }
-  ], []);
+  const players = useMemo<BattlePlayer[]>(
+    () => [
+      {
+        id: 'p1',
+        name: 'Kavya',
+        avatar:
+          'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=facearea&w=120&h=120&q=80',
+        score: 1420,
+        isLeader: true,
+      },
+      {
+        id: 'p2',
+        name: 'You',
+        avatar:
+          'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=120&h=120&q=80',
+        score: 1375,
+        isMe: true,
+      },
+      {
+        id: 'p3',
+        name: 'Rehan',
+        avatar:
+          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=120&h=120&q=80',
+        score: 1305,
+      },
+      {
+        id: 'p4',
+        name: 'Amrita',
+        avatar:
+          'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=facearea&w=120&h=120&q=80',
+        score: 1240,
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,8 +76,8 @@ const MultiplayerBattle: React.FC = () => {
       'Decrease by 10⁴ times',
       'Increase by 10⁴ times',
       'Decrease by 10 times',
-      'Increase by 10 times'
-    ]
+      'Increase by 10 times',
+    ],
   };
 
   const handleSelectOption = (option: string) => {
@@ -88,7 +95,12 @@ const MultiplayerBattle: React.FC = () => {
   const timerPercentage = (timer / 20) * 100;
 
   return (
-    <Layout variant="fullscreen" showHeader={false} showFooter={false} className="relative overflow-hidden">
+    <Layout
+      variant="fullscreen"
+      showHeader={false}
+      showFooter={false}
+      className="relative overflow-hidden"
+    >
       <div className="battle-bg absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-blue-900/60 via-transparent to-black/90" />
 
@@ -104,7 +116,11 @@ const MultiplayerBattle: React.FC = () => {
             >
               <div className="relative mr-3">
                 <img src={player.avatar} alt={player.name} className="leader-avatar" />
-                {player.isLeader && <span className="leader-crown" aria-hidden>👑</span>}
+                {player.isLeader && (
+                  <span className="leader-crown" aria-hidden>
+                    👑
+                  </span>
+                )}
               </div>
               <div className="flex-1">
                 <p className="leader-name">{player.name}</p>
@@ -112,7 +128,9 @@ const MultiplayerBattle: React.FC = () => {
                   <motion.div
                     className="leader-progress-bar"
                     initial={{ width: '0%' }}
-                    animate={{ width: `${Math.min(100, (player.score / players[0].score) * 100)}%` }}
+                    animate={{
+                      width: `${Math.min(100, (player.score / players[0].score) * 100)}%`,
+                    }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                   />
                 </div>
@@ -164,9 +182,7 @@ const MultiplayerBattle: React.FC = () => {
 
         <footer className="battle-footer">
           <div className="streak-meter" aria-label={`Current streak ${streakCount}`}>
-            <div className={`streak-flame ${streakCount > 0 ? 'active' : ''}`}>
-              🔥
-            </div>
+            <div className={`streak-flame ${streakCount > 0 ? 'active' : ''}`}>🔥</div>
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-orange-200/70">Streak</p>
               <p className="text-lg font-bold text-white">{streakCount} correct in a row</p>

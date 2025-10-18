@@ -31,10 +31,10 @@ interface QuizState {
 
 const QuizPlayerNumerical: React.FC = () => {
   const navigate = useNavigate();
-  
+
   // Sample numerical quiz data
   const quizData = {
-    title: "JEE – Physics",
+    title: 'JEE – Physics',
     totalQuestions: 25,
     timeLimit: 45 * 60, // 45 minutes in seconds
     questions: [
@@ -44,15 +44,15 @@ const QuizPlayerNumerical: React.FC = () => {
         formula: 'v = u + at',
         correctAnswer: 28,
         unit: 'm/s',
-        tolerance: 0.1
+        tolerance: 0.1,
       },
       {
-        id: 'q2', 
+        id: 'q2',
         text: 'Calculate the kinetic energy of a 2 kg object moving at 10 m/s.',
         formula: 'KE = ½mv²',
         correctAnswer: 100,
         unit: 'J',
-        tolerance: 1
+        tolerance: 1,
       },
       {
         id: 'q3',
@@ -60,7 +60,7 @@ const QuizPlayerNumerical: React.FC = () => {
         formula: 'V = IR',
         correctAnswer: 4,
         unit: 'Ω',
-        tolerance: 0.01
+        tolerance: 0.01,
       },
       {
         id: 'q4',
@@ -68,7 +68,7 @@ const QuizPlayerNumerical: React.FC = () => {
         formula: 'T = 2π√(L/g)',
         correctAnswer: 2.01,
         unit: 's',
-        tolerance: 0.05
+        tolerance: 0.05,
       },
       {
         id: 'q5',
@@ -76,27 +76,47 @@ const QuizPlayerNumerical: React.FC = () => {
         formula: 'F = ma',
         correctAnswer: 10,
         unit: 'N',
-        tolerance: 0.1
-      }
-    ]
+        tolerance: 0.1,
+      },
+    ],
   };
 
   const availableUnits = [
-    'm', 'cm', 'mm', 'km',
-    'kg', 'g', 'mg', 
-    's', 'ms', 'min', 'hr',
-    'm/s', 'm/s²', 'km/h',
-    'N', 'J', 'W', 'Pa',
-    'A', 'V', 'Ω', 'F',
-    '°C', '°F', 'K',
-    'mol', 'rad', 'Hz'
+    'm',
+    'cm',
+    'mm',
+    'km',
+    'kg',
+    'g',
+    'mg',
+    's',
+    'ms',
+    'min',
+    'hr',
+    'm/s',
+    'm/s²',
+    'km/h',
+    'N',
+    'J',
+    'W',
+    'Pa',
+    'A',
+    'V',
+    'Ω',
+    'F',
+    '°C',
+    '°F',
+    'K',
+    'mol',
+    'rad',
+    'Hz',
   ];
 
   const [quizState, setQuizState] = useState<QuizState>({
     currentQuestion: 0,
     answers: [],
     timeRemaining: quizData.timeLimit,
-    isCompleted: false
+    isCompleted: false,
   });
 
   const [inputMode, setInputMode] = useState<'text' | 'keypad'>('text');
@@ -111,7 +131,7 @@ const QuizPlayerNumerical: React.FC = () => {
       const timer = setTimeout(() => {
         setQuizState(prev => ({
           ...prev,
-          timeRemaining: prev.timeRemaining - 1
+          timeRemaining: prev.timeRemaining - 1,
         }));
       }, 1000);
       return () => clearTimeout(timer);
@@ -150,7 +170,7 @@ const QuizPlayerNumerical: React.FC = () => {
     setInputValue(value);
     const isValid = validateInput(value);
     setIsValidInput(isValid);
-    
+
     // Save answer
     if (isValid) {
       saveAnswer(value, selectedUnit);
@@ -166,19 +186,19 @@ const QuizPlayerNumerical: React.FC = () => {
           value: value,
           unit: unit,
           isMarkedForReview: currentAnswer?.isMarkedForReview || false,
-          timeSpent: 0
+          timeSpent: 0,
         });
       }
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
 
   const handleKeypadInput = (key: string) => {
     let newValue = inputValue;
-    
+
     switch (key) {
       case 'C':
         newValue = '';
@@ -204,7 +224,7 @@ const QuizPlayerNumerical: React.FC = () => {
         }
         break;
     }
-    
+
     handleInputChange(newValue);
   };
 
@@ -212,7 +232,7 @@ const QuizPlayerNumerical: React.FC = () => {
     setQuizState(prev => {
       const newAnswers = [...prev.answers];
       const existingIndex = newAnswers.findIndex(a => a.questionId === currentQuestion.id);
-      
+
       if (existingIndex >= 0) {
         newAnswers[existingIndex].isMarkedForReview = !newAnswers[existingIndex].isMarkedForReview;
       } else {
@@ -221,13 +241,13 @@ const QuizPlayerNumerical: React.FC = () => {
           value: inputValue,
           unit: selectedUnit,
           isMarkedForReview: true,
-          timeSpent: 0
+          timeSpent: 0,
         });
       }
-      
+
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
@@ -236,7 +256,7 @@ const QuizPlayerNumerical: React.FC = () => {
     if (quizState.currentQuestion > 0) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion - 1
+        currentQuestion: prev.currentQuestion - 1,
       }));
     }
   };
@@ -245,7 +265,7 @@ const QuizPlayerNumerical: React.FC = () => {
     if (quizState.currentQuestion < quizData.questions.length - 1) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion + 1
+        currentQuestion: prev.currentQuestion + 1,
       }));
     } else {
       handleQuizComplete();
@@ -264,11 +284,11 @@ const QuizPlayerNumerical: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-indigo-300 to-white relative overflow-hidden">
       {/* Background math symbols pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-20 text-4xl"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23374151' fill-opacity='0.3'%3E%3Ctext x='10' y='20' font-size='14'%3E➕%3C/text%3E%3Ctext x='35' y='35' font-size='14'%3E➖%3C/text%3E%3Ctext x='15' y='50' font-size='14'%3E✖️%3C/text%3E%3Ctext x='40' y='15' font-size='14'%3E➗%3C/text%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px'
+          backgroundSize: '60px 60px',
         }}
       />
 
@@ -290,14 +310,7 @@ const QuizPlayerNumerical: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <div className="relative w-10 h-10">
                   <svg className="w-10 h-10 transform -rotate-90">
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="16"
-                      stroke="#fee2e2"
-                      strokeWidth="3"
-                      fill="none"
-                    />
+                    <circle cx="20" cy="20" r="16" stroke="#fee2e2" strokeWidth="3" fill="none" />
                     <motion.circle
                       cx="20"
                       cy="20"
@@ -308,8 +321,9 @@ const QuizPlayerNumerical: React.FC = () => {
                       strokeLinecap="round"
                       strokeDasharray={`${2 * Math.PI * 16}`}
                       initial={{ strokeDashoffset: 0 }}
-                      animate={{ 
-                        strokeDashoffset: (1 - quizState.timeRemaining / quizData.timeLimit) * 2 * Math.PI * 16
+                      animate={{
+                        strokeDashoffset:
+                          (1 - quizState.timeRemaining / quizData.timeLimit) * 2 * Math.PI * 16,
                       }}
                       transition={{ duration: 0.5 }}
                     />
@@ -343,20 +357,22 @@ const QuizPlayerNumerical: React.FC = () => {
                     <h2 className="text-xl font-bold text-blue-900 mb-4 leading-relaxed">
                       {currentQuestion?.text}
                     </h2>
-                    
+
                     {/* Formula Display */}
                     {currentQuestion?.formula && (
                       <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-4 rounded-r-lg">
                         <p className="text-sm text-gray-600 mb-1">Formula:</p>
-                        <p className="font-mono text-lg text-indigo-800">{currentQuestion.formula}</p>
+                        <p className="font-mono text-lg text-indigo-800">
+                          {currentQuestion.formula}
+                        </p>
                       </div>
                     )}
 
                     {/* Question Image */}
                     {currentQuestion?.image && (
                       <div className="mb-4">
-                        <img 
-                          src={currentQuestion.image} 
+                        <img
+                          src={currentQuestion.image}
                           alt="Question diagram"
                           className="max-w-full h-auto rounded-lg shadow-md"
                         />
@@ -378,8 +394,8 @@ const QuizPlayerNumerical: React.FC = () => {
                         <button
                           onClick={() => setInputMode('text')}
                           className={`px-4 py-2 rounded-md transition-all duration-200 ${
-                            inputMode === 'text' 
-                              ? 'bg-indigo-500 text-white shadow-md' 
+                            inputMode === 'text'
+                              ? 'bg-indigo-500 text-white shadow-md'
                               : 'text-gray-600 hover:bg-gray-200'
                           }`}
                         >
@@ -391,8 +407,8 @@ const QuizPlayerNumerical: React.FC = () => {
                             setShowKeypad(true);
                           }}
                           className={`px-4 py-2 rounded-md transition-all duration-200 ${
-                            inputMode === 'keypad' 
-                              ? 'bg-indigo-500 text-white shadow-md' 
+                            inputMode === 'keypad'
+                              ? 'bg-indigo-500 text-white shadow-md'
                               : 'text-gray-600 hover:bg-gray-200'
                           }`}
                         >
@@ -409,23 +425,23 @@ const QuizPlayerNumerical: React.FC = () => {
                             <input
                               type="text"
                               value={inputValue}
-                              onChange={(e) => handleInputChange(e.target.value)}
+                              onChange={e => handleInputChange(e.target.value)}
                               placeholder="Type your answer here"
                               className={`w-full px-4 py-3 border-2 rounded-lg text-lg font-mono text-center transition-all duration-200 ${
-                                !isValidInput 
-                                  ? 'border-red-500 bg-red-50 focus:border-red-600 focus:ring-red-200' 
+                                !isValidInput
+                                  ? 'border-red-500 bg-red-50 focus:border-red-600 focus:ring-red-200'
                                   : inputValue && isValidInput
-                                  ? 'border-green-500 bg-green-50 focus:border-green-600 focus:ring-green-200'
-                                  : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                                    ? 'border-green-500 bg-green-50 focus:border-green-600 focus:ring-green-200'
+                                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
                               } focus:outline-none focus:ring-4`}
                             />
                           </div>
-                          
+
                           {/* Unit Dropdown */}
                           <div className="w-32">
                             <select
                               value={selectedUnit}
-                              onChange={(e) => {
+                              onChange={e => {
                                 setSelectedUnit(e.target.value);
                                 saveAnswer(inputValue, e.target.value);
                               }}
@@ -433,7 +449,9 @@ const QuizPlayerNumerical: React.FC = () => {
                             >
                               <option value="">Unit</option>
                               {availableUnits.map(unit => (
-                                <option key={unit} value={unit}>{unit}</option>
+                                <option key={unit} value={unit}>
+                                  {unit}
+                                </option>
                               ))}
                             </select>
                           </div>
@@ -446,21 +464,23 @@ const QuizPlayerNumerical: React.FC = () => {
                       <div className="space-y-4">
                         <div className="flex gap-4">
                           <div className="flex-1">
-                            <div className={`w-full px-4 py-3 border-2 rounded-lg text-lg font-mono text-center transition-all duration-200 bg-gray-50 ${
-                              !isValidInput 
-                                ? 'border-red-500' 
-                                : inputValue && isValidInput
-                                ? 'border-green-500'
-                                : 'border-gray-300'
-                            }`}>
+                            <div
+                              className={`w-full px-4 py-3 border-2 rounded-lg text-lg font-mono text-center transition-all duration-200 bg-gray-50 ${
+                                !isValidInput
+                                  ? 'border-red-500'
+                                  : inputValue && isValidInput
+                                    ? 'border-green-500'
+                                    : 'border-gray-300'
+                              }`}
+                            >
                               {inputValue || 'Tap keypad to enter answer'}
                             </div>
                           </div>
-                          
+
                           <div className="w-32">
                             <select
                               value={selectedUnit}
-                              onChange={(e) => {
+                              onChange={e => {
                                 setSelectedUnit(e.target.value);
                                 saveAnswer(inputValue, e.target.value);
                               }}
@@ -468,12 +488,14 @@ const QuizPlayerNumerical: React.FC = () => {
                             >
                               <option value="">Unit</option>
                               {availableUnits.map(unit => (
-                                <option key={unit} value={unit}>{unit}</option>
+                                <option key={unit} value={unit}>
+                                  {unit}
+                                </option>
                               ))}
                             </select>
                           </div>
                         </div>
-                        
+
                         <div className="text-center">
                           <button
                             onClick={() => setShowKeypad(true)}
@@ -506,7 +528,7 @@ const QuizPlayerNumerical: React.FC = () => {
                 animate={{ y: 0 }}
                 exit={{ y: 400 }}
                 className="w-full bg-white rounded-t-3xl p-6 max-h-96 overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
                 {/* Keypad Header */}
                 <div className="flex items-center justify-between mb-4">
@@ -520,13 +542,15 @@ const QuizPlayerNumerical: React.FC = () => {
                 </div>
 
                 {/* Preview Field */}
-                <div className={`w-full px-4 py-3 border-2 rounded-lg text-xl font-mono text-center mb-4 ${
-                  !isValidInput 
-                    ? 'border-red-500 bg-red-50' 
-                    : inputValue && isValidInput
-                    ? 'border-green-500 bg-green-50'
-                    : 'border-gray-300 bg-gray-50'
-                }`}>
+                <div
+                  className={`w-full px-4 py-3 border-2 rounded-lg text-xl font-mono text-center mb-4 ${
+                    !isValidInput
+                      ? 'border-red-500 bg-red-50'
+                      : inputValue && isValidInput
+                        ? 'border-green-500 bg-green-50'
+                        : 'border-gray-300 bg-gray-50'
+                  }`}
+                >
                   {inputValue || '0'}
                 </div>
 
@@ -657,8 +681,8 @@ const QuizPlayerNumerical: React.FC = () => {
               onClick={handleMarkForReview}
               variant="secondary"
               className={`${
-                currentAnswer?.isMarkedForReview 
-                  ? 'bg-orange-600 text-white hover:bg-orange-700' 
+                currentAnswer?.isMarkedForReview
+                  ? 'bg-orange-600 text-white hover:bg-orange-700'
                   : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
               } rounded-full px-6`}
             >
@@ -670,7 +694,9 @@ const QuizPlayerNumerical: React.FC = () => {
               variant="primary"
               className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white"
             >
-              {quizState.currentQuestion === quizData.questions.length - 1 ? 'Finish Quiz' : 'Next →'}
+              {quizState.currentQuestion === quizData.questions.length - 1
+                ? 'Finish Quiz'
+                : 'Next →'}
             </Button>
           </div>
 
@@ -678,7 +704,9 @@ const QuizPlayerNumerical: React.FC = () => {
           <div className="mt-3 max-w-6xl mx-auto">
             <div className="flex justify-between text-xs text-gray-600 mb-1">
               <span>Progress</span>
-              <span>{answeredQuestions}/{quizData.totalQuestions} answered</span>
+              <span>
+                {answeredQuestions}/{quizData.totalQuestions} answered
+              </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <motion.div

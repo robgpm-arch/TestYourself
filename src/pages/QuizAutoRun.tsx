@@ -57,13 +57,13 @@ const speakSegments = async (
       const words = segment.text.split(' ').length;
       const approxMs = Math.max(words * 280, 900);
       // eslint-disable-next-line no-await-in-loop
-      await new Promise((resolve) => setTimeout(resolve, approxMs));
+      await new Promise(resolve => setTimeout(resolve, approxMs));
     }
     onSegmentStart?.(null);
     return;
   }
 
-  await new Promise<void>((resolve) => {
+  await new Promise<void>(resolve => {
     let index = 0;
 
     const speakNext = () => {
@@ -109,7 +109,12 @@ const stopSpeech = (synth: SpeechSynthesis | null) => {
   synth.cancel();
 };
 
-const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueToQuiz, onReplay }) => {
+const QuizAutoRun: React.FC<QuizAutoRunProps> = ({
+  session,
+  onExit,
+  onContinueToQuiz,
+  onReplay,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const runtimeSession = session ?? (location.state as QuizAutoRunProps['session'] | undefined);
@@ -122,7 +127,9 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
   const [selectedVoice, setSelectedVoice] = useState('');
   const [speechRate, setSpeechRate] = useState(1);
   const [speechVolume, setSpeechVolume] = useState(1);
-  const [audioError, setAudioError] = useState<string | null>(supportsSpeech ? null : 'Voice playback not supported in this browser.');
+  const [audioError, setAudioError] = useState<string | null>(
+    supportsSpeech ? null : 'Voice playback not supported in this browser.'
+  );
   const [activeSegment, setActiveSegment] = useState<SpeechSegmentMetadata | null>(null);
   const synthRef = useRef<SpeechSynthesis | null>(supportsSpeech ? window.speechSynthesis : null);
   const delayRef = useRef<NodeJS.Timeout | null>(null);
@@ -148,19 +155,19 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
   const delaySeconds = autoRunOptions.delaySeconds ?? DEFAULT_DELAY_SECONDS;
 
   const segmentsForQuestion = useMemo(() => {
-    return questions.map((question) => {
+    return questions.map(question => {
       const segments: SpeechSegment[] = [
         {
           text: `Question ${question.id}: ${question.question}`,
-          payload: { type: 'question' }
-        }
+          payload: { type: 'question' },
+        },
       ];
 
       (question.options ?? []).slice(0, 4).forEach((option, index) => {
         const label = String.fromCharCode(65 + index);
         segments.push({
           text: `${label}. ${option}`,
-          payload: { type: 'option', index }
+          payload: { type: 'option', index },
         });
       });
 
@@ -170,7 +177,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
           const letter = String.fromCharCode(65 + correctIndex);
           segments.push({
             text: `Correct answer: option ${letter}.`,
-            payload: { type: 'answer', index: correctIndex }
+            payload: { type: 'answer', index: correctIndex },
           });
         }
       }
@@ -178,7 +185,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
       if (autoRunOptions.readExplanation && question.explanation) {
         segments.push({
           text: `Explanation: ${question.explanation}`,
-          payload: { type: 'explanation' }
+          payload: { type: 'explanation' },
         });
       }
 
@@ -226,7 +233,8 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
 
   useEffect(() => {
     if (!selectedVoice && voices.length) {
-      const englishVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('en')) ?? voices[0];
+      const englishVoice =
+        voices.find(voice => voice.lang?.toLowerCase().startsWith('en')) ?? voices[0];
       if (englishVoice) {
         setSelectedVoice(englishVoice.name);
       }
@@ -237,7 +245,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
     if (!selectedVoice) {
       return null;
     }
-    return voices.find((voice) => voice.name === selectedVoice) ?? null;
+    return voices.find(voice => voice.name === selectedVoice) ?? null;
   }, [voices, selectedVoice]);
 
   useEffect(() => {
@@ -254,7 +262,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
           voice: resolvedVoice,
           rate: speechRate,
           volume: speechVolume,
-          onSegmentStart: setActiveSegment
+          onSegmentStart: setActiveSegment,
         });
       } catch (error) {
         setAudioError('Unable to play narration. Try a different browser or voice setting.');
@@ -278,7 +286,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
 
       delayRef.current = setTimeout(() => {
         setActiveSegment(null);
-        setCurrentQuestion((prev) => Math.min(prev + 1, totalQuestions - 1));
+        setCurrentQuestion(prev => Math.min(prev + 1, totalQuestions - 1));
       }, delaySeconds * 1000);
     };
 
@@ -292,7 +300,17 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
       }
       stopSpeech(synthRef.current);
     };
-  }, [currentQuestion, delaySeconds, hasCompleted, isPlaying, segmentsForQuestion, totalQuestions, resolvedVoice, speechRate, speechVolume]);
+  }, [
+    currentQuestion,
+    delaySeconds,
+    hasCompleted,
+    isPlaying,
+    segmentsForQuestion,
+    totalQuestions,
+    resolvedVoice,
+    speechRate,
+    speechVolume,
+  ]);
 
   const handlePlay = () => {
     resetPlayback();
@@ -347,7 +365,8 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                 {runtimeSession.chapterInfo.subject} · {runtimeSession.chapterInfo.chapter}
               </h1>
               <p className="text-blue-200 mt-3 max-w-xl">
-                Sit back and listen. Every question, option and answer will be narrated automatically. When you are ready, jump into the live quiz experience.
+                Sit back and listen. Every question, option and answer will be narrated
+                automatically. When you are ready, jump into the live quiz experience.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 justify-end">
@@ -386,12 +405,16 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                 Question {Math.min(currentQuestion + 1, totalQuestions)} of {totalQuestions}
               </span>
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-blue-300">
-                <div className={`auto-run-wave ${isPlaying ? 'auto-run-wave-active' : ''} ${isPreparing ? 'auto-run-wave-preparing' : ''}`}>
+                <div
+                  className={`auto-run-wave ${isPlaying ? 'auto-run-wave-active' : ''} ${isPreparing ? 'auto-run-wave-preparing' : ''}`}
+                >
                   <span />
                   <span />
                   <span />
                 </div>
-                <span>{isPreparing ? 'Preparing narration' : isPlaying ? 'Live narration' : 'Paused'}</span>
+                <span>
+                  {isPreparing ? 'Preparing narration' : isPlaying ? 'Live narration' : 'Paused'}
+                </span>
               </div>
               <span>{Math.round(progress)}% narrated</span>
             </div>
@@ -426,17 +449,24 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
 
         <div className="flex-1 w-full mt-10 px-6 pb-24">
           <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-[1fr_minmax(220px,260px)]">
-            <Card variant="elevated" className={`bg-white/10 border border-white/10 shadow-2xl relative overflow-hidden ${isPlaying ? 'auto-run-question-card-playing' : ''}`}>
+            <Card
+              variant="elevated"
+              className={`bg-white/10 border border-white/10 shadow-2xl relative overflow-hidden ${isPlaying ? 'auto-run-question-card-playing' : ''}`}
+            >
               <div className="p-6 md:p-8 relative z-10">
-                <h2 className={`text-xl font-semibold text-white mb-4 ${isQuestionNarrated ? 'auto-run-question-active' : ''}`}>
+                <h2
+                  className={`text-xl font-semibold text-white mb-4 ${isQuestionNarrated ? 'auto-run-question-active' : ''}`}
+                >
                   {question?.question}
                 </h2>
                 <div className="grid gap-4">
                   {(question?.options ?? []).slice(0, 4).map((option, index) => {
                     const letter = String.fromCharCode(65 + index);
                     const isCorrect = Number(question?.correctAnswer) === index;
-                    const isActiveOption = activeSegment?.type === 'option' && activeSegment.index === index;
-                    const isAnswerCallout = activeSegment?.type === 'answer' && activeSegment.index === index;
+                    const isActiveOption =
+                      activeSegment?.type === 'option' && activeSegment.index === index;
+                    const isAnswerCallout =
+                      activeSegment?.type === 'answer' && activeSegment.index === index;
                     return (
                       <motion.div
                         key={option}
@@ -446,13 +476,17 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                       >
                         <div
                           className={`rounded-xl border py-4 px-5 flex items-center gap-3 transition-all duration-300 ${
-                            isCorrect ? 'border-emerald-400/80 bg-emerald-400/5 text-emerald-200' : 'border-white/10 bg-white/5 text-blue-50'
+                            isCorrect
+                              ? 'border-emerald-400/80 bg-emerald-400/5 text-emerald-200'
+                              : 'border-white/10 bg-white/5 text-blue-50'
                           } ${isActiveOption ? 'auto-run-option-active' : ''} ${isAnswerCallout ? 'auto-run-option-answer' : ''}`}
                         >
                           <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-sm font-semibold">
                             {letter}
                           </span>
-                          <span className="flex-1 text-sm md:text-base leading-relaxed">{option}</span>
+                          <span className="flex-1 text-sm md:text-base leading-relaxed">
+                            {option}
+                          </span>
                           {isCorrect && autoRunOptions.readCorrectAnswer && (
                             <span className="text-lg">✅</span>
                           )}
@@ -469,7 +503,9 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                     transition={{ delay: 0.5 }}
                     className={`mt-6 bg-white/5 border border-white/10 rounded-xl p-5 text-blue-100 ${activeSegment?.type === 'explanation' ? 'auto-run-explanation-active' : ''}`}
                   >
-                    <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300 mb-2">Explanation</h3>
+                    <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300 mb-2">
+                      Explanation
+                    </h3>
                     <p className="text-sm leading-relaxed">{question.explanation}</p>
                   </motion.div>
                 )}
@@ -479,14 +515,20 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
 
             <div className="space-y-4">
               <Card variant="elevated" className="bg-white/10 border border-white/10 p-5">
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300">Playback controls</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300">
+                  Playback controls
+                </h3>
                 <div className="auto-run-controls mt-4">
                   <Button
                     onClick={handlePlay}
                     disabled={isPlaying && !hasCompleted}
                     className="bg-blue-500/90 hover:bg-blue-500 text-white"
                   >
-                    {isPreparing ? 'Narrating…' : isPlaying && !hasCompleted ? 'Narrating…' : 'Play narration'}
+                    {isPreparing
+                      ? 'Narrating…'
+                      : isPlaying && !hasCompleted
+                        ? 'Narrating…'
+                        : 'Play narration'}
                   </Button>
                   <Button
                     onClick={handlePause}
@@ -510,7 +552,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                         clearTimeout(delayRef.current);
                         delayRef.current = null;
                       }
-                      setCurrentQuestion((prev) => Math.min(prev + 1, totalQuestions - 1));
+                      setCurrentQuestion(prev => Math.min(prev + 1, totalQuestions - 1));
                       setActiveSegment(null);
                     }}
                     disabled={currentQuestion >= totalQuestions - 1}
@@ -529,12 +571,12 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                     </div>
                     <select
                       value={selectedVoice}
-                      onChange={(event) => setSelectedVoice(event.target.value)}
+                      onChange={event => setSelectedVoice(event.target.value)}
                       className="w-full bg-white/10 border border-white/20 text-blue-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                       disabled={!voices.length}
                     >
                       {voices.length === 0 && <option value="">System default</option>}
-                      {voices.map((voice) => (
+                      {voices.map(voice => (
                         <option key={voice.name} value={voice.name}>
                           {voice.name} · {voice.lang}
                         </option>
@@ -553,7 +595,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                       max="1.6"
                       step="0.1"
                       value={speechRate}
-                      onChange={(event) => setSpeechRate(Number(event.target.value))}
+                      onChange={event => setSpeechRate(Number(event.target.value))}
                       className="w-full accent-blue-400 mt-2"
                     />
                   </div>
@@ -570,7 +612,7 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                         max="1"
                         step="0.05"
                         value={speechVolume}
-                        onChange={(event) => {
+                        onChange={event => {
                           const value = Number(event.target.value);
                           setSpeechVolume(value);
                           if (value > 0.05) {
@@ -611,7 +653,8 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                 </div>
 
                 <p className="mt-4 text-xs text-blue-200/70">
-                  Voice playback uses your browser's built-in speech synthesis. Audio experience may vary by device.
+                  Voice playback uses your browser's built-in speech synthesis. Audio experience may
+                  vary by device.
                 </p>
 
                 <AnimatePresence>
@@ -629,12 +672,16 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
               </Card>
 
               <Card variant="elevated" className="bg-white/5 border border-white/10 p-5">
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300">Session Summary</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-blue-300">
+                  Session Summary
+                </h3>
                 <ul className="mt-3 space-y-2 text-sm text-blue-100/90">
                   <li>• {totalQuestions} MCQs narrated automatically.</li>
                   <li>• Pause anytime and switch to the manual attempt.</li>
                   <li>• Delay between questions: {delaySeconds} seconds.</li>
-                  {autoRunOptions.readExplanation && <li>• Includes verbal explanations for every answer.</li>}
+                  {autoRunOptions.readExplanation && (
+                    <li>• Includes verbal explanations for every answer.</li>
+                  )}
                   <li>• Voice: {resolvedVoice?.name ?? 'System default'}.</li>
                 </ul>
 
@@ -647,7 +694,10 @@ const QuizAutoRun: React.FC<QuizAutoRunProps> = ({ session, onExit, onContinueTo
                       className="mt-5 rounded-xl bg-emerald-500/20 border border-emerald-400/40 px-4 py-3 text-emerald-100 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                     >
                       <p className="font-semibold">Narration complete!</p>
-                      <p className="text-sm mt-1">Ready to test yourself? Jump into the interactive quiz to lock in your learning.</p>
+                      <p className="text-sm mt-1">
+                        Ready to test yourself? Jump into the interactive quiz to lock in your
+                        learning.
+                      </p>
                     </motion.div>
                   )}
                 </AnimatePresence>

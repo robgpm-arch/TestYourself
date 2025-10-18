@@ -1,6 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Share2, RefreshCw, Eye, Coins, Flame, BarChart3, Trophy, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import {
+  Share2,
+  RefreshCw,
+  Eye,
+  Coins,
+  Flame,
+  BarChart3,
+  Trophy,
+  Volume2,
+  VolumeX,
+  RotateCcw,
+} from 'lucide-react';
 import Button from '../components/Button';
 import { useMotivationPersonality } from '../hooks/useMotivationPersonality';
 import type { PerformanceTier } from '../constants/personalities';
@@ -35,7 +46,7 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   score = 85,
   totalQuestions = 20,
   correctAnswers = 17,
-  playerName = "Champion",
+  playerName = 'Champion',
   streakDays = 5,
   coinsEarned = 125,
   timeSpent = 300,
@@ -44,7 +55,7 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   onPlayAgain,
   onBackToHome,
   onViewAnalytics,
-  onViewLeaderboard
+  onViewLeaderboard,
 }) => {
   const [displayScore, setDisplayScore] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -59,7 +70,7 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
         duration: 3,
         repeat: Infinity,
         ease: 'easeInOut',
-      }
+      },
     });
   }, [tierCardControls]);
 
@@ -75,30 +86,30 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   const getPerformanceMessage = (level: string, name: string) => {
     const messages = {
       excellent: {
-        primary: "Outstanding! 🏆",
+        primary: 'Outstanding! 🏆',
         secondary: `Absolutely brilliant, ${name}! You're a quiz master!`,
-        voice: `Amazing work, ${name}! You absolutely nailed it!`
+        voice: `Amazing work, ${name}! You absolutely nailed it!`,
       },
       great: {
-        primary: "Fantastic! 🎉",
+        primary: 'Fantastic! 🎉',
         secondary: `Great job, ${name}! You're really getting the hang of this!`,
-        voice: `Well done, ${name}! Keep up the excellent work!`
+        voice: `Well done, ${name}! Keep up the excellent work!`,
       },
       good: {
-        primary: "Well Done! 👏",
+        primary: 'Well Done! 👏',
         secondary: `Nice work, ${name}! You're making solid progress!`,
-        voice: `Good job, ${name}! You're on the right track!`
+        voice: `Good job, ${name}! You're on the right track!`,
       },
       okay: {
-        primary: "Good Try! 👍",
+        primary: 'Good Try! 👍',
         secondary: `Keep practicing, ${name}! You're improving!`,
-        voice: `Nice effort, ${name}! Practice makes perfect!`
+        voice: `Nice effort, ${name}! Practice makes perfect!`,
       },
       needs_improvement: {
-        primary: "Keep Learning! 📚",
+        primary: 'Keep Learning! 📚',
         secondary: `Don't give up, ${name}! Every expert was once a beginner!`,
-        voice: `Keep going, ${name}! You'll get there with practice!`
-      }
+        voice: `Keep going, ${name}! You'll get there with practice!`,
+      },
     };
     return messages[level as keyof typeof messages];
   };
@@ -124,7 +135,7 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   const tierLabels: Record<PerformanceTier, string> = {
     low: 'Needs encouragement',
     average: 'Steady progress',
-    high: 'Star performer'
+    high: 'Star performer',
   };
 
   const determinePerformanceColor = (tier: PerformanceTier) => {
@@ -199,8 +210,17 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   // Generate confetti pieces
   const generateConfetti = () => {
     const pieces: ConfettiPiece[] = [];
-    const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3', '#54A0FF'];
-    
+    const colors = [
+      '#FFD700',
+      '#FF6B6B',
+      '#4ECDC4',
+      '#45B7D1',
+      '#96CEB4',
+      '#FECA57',
+      '#FF9FF3',
+      '#54A0FF',
+    ];
+
     for (let i = 0; i < 50; i++) {
       pieces.push({
         id: i,
@@ -209,7 +229,7 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
         color: colors[Math.floor(Math.random() * colors.length)],
         rotation: Math.random() * 360,
         size: Math.random() * 8 + 4,
-        delay: Math.random() * 3000
+        delay: Math.random() * 3000,
       });
     }
     return pieces;
@@ -237,15 +257,15 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
   useEffect(() => {
     if (showCelebration) {
       setConfetti(generateConfetti());
-      
+
       // Start circle pulsing animation
       circleControls.start({
         scale: [1, 1.05, 1],
         transition: {
           duration: 2,
           repeat: Infinity,
-          ease: "easeInOut"
-        }
+          ease: 'easeInOut',
+        },
       });
     }
   }, [showCelebration, circleControls]);
@@ -266,37 +286,37 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
         transition={{ duration: 1 }}
         className="absolute inset-0 bg-gradient-to-br from-teal-400 via-purple-500 to-purple-600"
         style={{
-          background: 'linear-gradient(135deg, #4ECDC4 0%, #9b59b6 50%, #8e44ad 100%)'
+          background: 'linear-gradient(135deg, #4ECDC4 0%, #9b59b6 50%, #8e44ad 100%)',
         }}
       />
 
       {/* Animated Confetti */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {confetti.map((piece) => (
+        {confetti.map(piece => (
           <motion.div
             key={piece.id}
             initial={{
               x: `${piece.x}%`,
               y: -20,
               rotate: piece.rotation,
-              opacity: 0
+              opacity: 0,
             }}
             animate={{
               y: '110vh',
               rotate: piece.rotation + 720,
-              opacity: [0, 1, 1, 0]
+              opacity: [0, 1, 1, 0],
             }}
             transition={{
               duration: 4,
               delay: piece.delay / 1000,
-              ease: "easeOut"
+              ease: 'easeOut',
             }}
             className="absolute"
             style={{
               width: piece.size,
               height: piece.size,
               backgroundColor: piece.color,
-              borderRadius: '2px'
+              borderRadius: '2px',
             }}
           />
         ))}
@@ -304,18 +324,14 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
-        
         {/* Score Circle */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.2, type: 'spring', bounce: 0.4 }}
           className="mb-8"
         >
-          <motion.div
-            animate={circleControls}
-            className="relative"
-          >
+          <motion.div animate={circleControls} className="relative">
             <div className="w-48 h-48 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/30 flex flex-col items-center justify-center shadow-2xl">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/30 to-transparent" />
               <motion.div
@@ -335,17 +351,17 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
                 {correctAnswers}/{totalQuestions} Correct
               </motion.div>
             </div>
-            
+
             {/* Glow Effect */}
             <motion.div
               animate={{
                 scale: [1, 1.2, 1],
-                opacity: [0.3, 0.1, 0.3]
+                opacity: [0.3, 0.1, 0.3],
               }}
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: 'easeInOut',
               }}
               className="absolute inset-0 rounded-full bg-white/20 blur-xl -z-10"
             />
@@ -362,12 +378,8 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
           <div className="inline-flex items-center gap-3 px-4 py-1 rounded-full border border-white/30 bg-white/10 text-xs uppercase tracking-[0.35em] text-white/80 mb-3">
             {tierLabels[performanceTier]}
           </div>
-          <h1 className="text-4xl font-bold text-white mb-3">
-            {celebrationHeadline}
-          </h1>
-          <p className="text-xl text-white/90 max-w-md mx-auto">
-            {celebrationSubcopy}
-          </p>
+          <h1 className="text-4xl font-bold text-white mb-3">{celebrationHeadline}</h1>
+          <p className="text-xl text-white/90 max-w-md mx-auto">{celebrationSubcopy}</p>
         </motion.div>
 
         {/* Motivational personality block */}
@@ -378,11 +390,9 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
           className="mb-8 w-full max-w-3xl"
         >
           <div className="relative grid gap-6 md:grid-cols-[220px,1fr] bg-white/15 border border-white/25 rounded-3xl p-6 backdrop-blur-md shadow-2xl">
-            <motion.div
-              animate={tierCardControls}
-              className="relative"
-            >
-              <div className={`absolute -top-4 -left-3 px-3 py-1 rounded-full bg-gradient-to-r ${statusColor} text-xs font-semibold text-white shadow-lg`}
+            <motion.div animate={tierCardControls} className="relative">
+              <div
+                className={`absolute -top-4 -left-3 px-3 py-1 rounded-full bg-gradient-to-r ${statusColor} text-xs font-semibold text-white shadow-lg`}
               >
                 {tierLabels[performanceTier]}
               </div>
@@ -395,7 +405,9 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
                     loading="lazy"
                   />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-4xl text-white/70">🎉</div>
+                  <div className="flex items-center justify-center h-full text-4xl text-white/70">
+                    🎉
+                  </div>
                 )}
               </div>
             </motion.div>
@@ -408,14 +420,10 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
                   </div>
                   <div className="text-white/70 text-xs">{selectedPersonality.title}</div>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-2">
-                  {selectedPersonality.name}
-                </h2>
-                <p className="text-white/80 text-sm leading-relaxed mb-4">
-                  {celebrationSubcopy}
-                </p>
+                <h2 className="text-3xl font-bold text-white mb-2">{selectedPersonality.name}</h2>
+                <p className="text-white/80 text-sm leading-relaxed mb-4">{celebrationSubcopy}</p>
                 <div className="flex flex-wrap gap-2">
-                  {selectedPersonality.traits.map((trait) => (
+                  {selectedPersonality.traits.map(trait => (
                     <span
                       key={trait}
                       className="text-xs uppercase tracking-wide bg-white/10 text-white/80 px-3 py-1 rounded-full border border-white/15"
@@ -437,7 +445,13 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
                   }}
                   variant="outline"
                   className="flex-1 border-white/50 text-white hover:bg-white/10"
-                  icon={isVoicePlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  icon={
+                    isVoicePlaying ? (
+                      <VolumeX className="w-4 h-4" />
+                    ) : (
+                      <Volume2 className="w-4 h-4" />
+                    )
+                  }
                 >
                   {isVoicePlaying ? 'Pause voice message' : 'Play voice message'}
                 </Button>
@@ -569,11 +583,10 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
           transition={{ duration: 0.5, delay: 3 }}
           className="mt-8 text-center max-w-2xl"
         >
-          <p className="text-white/70 text-sm italic">
-            🔊 "{voiceTranscript}"
-          </p>
+          <p className="text-white/70 text-sm italic">🔊 "{voiceTranscript}"</p>
           <p className="text-white/60 text-xs mt-2">
-            Personalised by {selectedPersonality.name}. Update your favourite motivator in profile anytime.
+            Personalised by {selectedPersonality.name}. Update your favourite motivator in profile
+            anytime.
           </p>
         </motion.div>
       </div>
@@ -588,17 +601,17 @@ const ResultsCelebration: React.FC<ResultsCelebrationProps> = ({
               y: [0, -100, 0],
               x: [0, Math.random() * 50 - 25, 0],
               opacity: [0.3, 0.8, 0.3],
-              scale: [0.5, 1, 0.5]
+              scale: [0.5, 1, 0.5],
             }}
             transition={{
               duration: 4 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 3,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
             style={{
               left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
+              top: `${Math.random() * 100}%`,
             }}
           />
         ))}

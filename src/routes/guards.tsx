@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getUserGate, routeNeedsCourse } from './guardHelpers';
 
 export function RequireAdmin() {
-  const [state, setState] = useState<'loading'|'ok'|'deny'>('loading');
+  const [state, setState] = useState<'loading' | 'ok' | 'deny'>('loading');
 
   useEffect(() => {
     return onAuthStateChanged(auth, async (u: User | null) => {
@@ -22,7 +22,7 @@ export function RequireAdmin() {
 
 export function Guarded({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const [state, setState] = useState<"loading" | "ready">("loading");
+  const [state, setState] = useState<'loading' | 'ready'>('loading');
   const [gate, setGate] = useState({ signedIn: false, onboarded: false, courseChosen: false });
 
   useEffect(() => {
@@ -31,12 +31,14 @@ export function Guarded({ children }: { children: React.ReactNode }) {
       const g = await getUserGate();
       if (!alive) return;
       setGate({ signedIn: g.signedIn, onboarded: g.onboarded, courseChosen: g.courseChosen });
-      setState("ready");
+      setState('ready');
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, [location.pathname]);
 
-  if (state === "loading") return null;
+  if (state === 'loading') return null;
 
   if (!gate.signedIn) return <Navigate to="/" replace />;
   if (!gate.onboarded) return <Navigate to="/onboarding" replace />;

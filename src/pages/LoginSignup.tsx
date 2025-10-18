@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { sendOtp, confirmOtp, resetOtpFlow, isOtpPending, mapAuthError } from '../services/phoneAuth';
+import {
+  sendOtp,
+  confirmOtp,
+  resetOtpFlow,
+  isOtpPending,
+  mapAuthError,
+} from '../services/phoneAuth';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -77,7 +83,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
     let interval: NodeJS.Timeout | null = null;
     if (step === 'otp' && resendTimer > 0) {
       interval = setInterval(() => {
-        setResendTimer((prev) => {
+        setResendTimer(prev => {
           if (prev <= 1) {
             setIsResendActive(true);
             return 0;
@@ -112,7 +118,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
 
   const handleOtpChange = (index: number, value: string) => {
     if (value.length > 1) return; // Prevent multiple characters
-    
+
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -200,7 +206,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
           <div className="absolute top-60 right-1/4 text-6xl">🔒</div>
         </div>
       )}
-      
+
       {step === 'otp' && (
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-20 text-6xl">🔒</div>
@@ -213,36 +219,77 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
           <div className="absolute top-60 right-1/4 text-6xl">✉️</div>
         </div>
       )}
-      
+
       {step === 'success' && (
         <div className="absolute inset-0 pointer-events-none">
           {/* Confetti Animation */}
-          <div className="absolute top-0 left-1/6 w-3 h-3 bg-yellow-400 rounded-full animate-pulse" style={{animationDelay: '0s'}}></div>
-          <div className="absolute top-0 left-1/4 w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-          <div className="absolute top-0 left-1/3 w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-          <div className="absolute top-0 left-1/2 w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></div>
-          <div className="absolute top-0 left-2/3 w-3 h-3 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.8s'}}></div>
-          <div className="absolute top-0 left-3/4 w-2 h-2 bg-red-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-          <div className="absolute top-0 left-5/6 w-3 h-3 bg-orange-400 rounded-full animate-pulse" style={{animationDelay: '1.2s'}}></div>
-          
-          <div className="absolute top-20 left-1/5 text-2xl animate-bounce" style={{animationDelay: '0.5s'}}>🎉</div>
-          <div className="absolute top-32 left-2/5 text-2xl animate-bounce" style={{animationDelay: '1.0s'}}>✨</div>
-          <div className="absolute top-40 left-3/5 text-2xl animate-bounce" style={{animationDelay: '0.8s'}}>🎊</div>
-          <div className="absolute top-28 left-4/5 text-2xl animate-bounce" style={{animationDelay: '1.3s'}}>🌟</div>
+          <div
+            className="absolute top-0 left-1/6 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"
+            style={{ animationDelay: '0s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-1/4 w-2 h-2 bg-pink-400 rounded-full animate-pulse"
+            style={{ animationDelay: '0.2s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-1/3 w-3 h-3 bg-blue-400 rounded-full animate-pulse"
+            style={{ animationDelay: '0.4s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-1/2 w-2 h-2 bg-green-400 rounded-full animate-pulse"
+            style={{ animationDelay: '0.6s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-2/3 w-3 h-3 bg-purple-400 rounded-full animate-pulse"
+            style={{ animationDelay: '0.8s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-3/4 w-2 h-2 bg-red-400 rounded-full animate-pulse"
+            style={{ animationDelay: '1s' }}
+          ></div>
+          <div
+            className="absolute top-0 left-5/6 w-3 h-3 bg-orange-400 rounded-full animate-pulse"
+            style={{ animationDelay: '1.2s' }}
+          ></div>
+
+          <div
+            className="absolute top-20 left-1/5 text-2xl animate-bounce"
+            style={{ animationDelay: '0.5s' }}
+          >
+            🎉
+          </div>
+          <div
+            className="absolute top-32 left-2/5 text-2xl animate-bounce"
+            style={{ animationDelay: '1.0s' }}
+          >
+            ✨
+          </div>
+          <div
+            className="absolute top-40 left-3/5 text-2xl animate-bounce"
+            style={{ animationDelay: '0.8s' }}
+          >
+            🎊
+          </div>
+          <div
+            className="absolute top-28 left-4/5 text-2xl animate-bounce"
+            style={{ animationDelay: '1.3s' }}
+          >
+            🌟
+          </div>
         </div>
       )}
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-8">
-        
         {/* Glassmorphism Login Card */}
         <div className="w-full max-w-md mx-auto">
-          <div className={`backdrop-blur-lg rounded-3xl p-8 shadow-2xl border ${
-            step === 'otp' || step === 'success'
-              ? 'bg-white bg-opacity-95 border-white border-opacity-50'
-              : 'bg-white bg-opacity-20 border-white border-opacity-30'
-          }`}>
-
+          <div
+            className={`backdrop-blur-lg rounded-3xl p-8 shadow-2xl border ${
+              step === 'otp' || step === 'success'
+                ? 'bg-white bg-opacity-95 border-white border-opacity-50'
+                : 'bg-white bg-opacity-20 border-white border-opacity-30'
+            }`}
+          >
             <div className="flex justify-center mb-4">
               <button
                 className={`px-4 py-2 mx-1 rounded-lg font-medium transition-colors ${
@@ -278,9 +325,13 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                   >
-                    {step === 'mobile' ? (tab === 'login' ? 'Login' : 'Register') : 'Verify Your Mobile'}
+                    {step === 'mobile'
+                      ? tab === 'login'
+                        ? 'Login'
+                        : 'Register'
+                      : 'Verify Your Mobile'}
                   </motion.h1>
-                  <motion.p 
+                  <motion.p
                     className={`opacity-90 ${
                       step === 'mobile' ? 'text-blue-100' : 'text-gray-600'
                     }`}
@@ -288,10 +339,9 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                   >
-                    {step === 'mobile' 
-                      ? 'Login with your mobile number' 
-                      : `We've sent an OTP to ${countryCode} ${mobileNumber.slice(0, -4).replace(/./g, 'X')}${mobileNumber.slice(-4)}`
-                    }
+                    {step === 'mobile'
+                      ? 'Login with your mobile number'
+                      : `We've sent an OTP to ${countryCode} ${mobileNumber.slice(0, -4).replace(/./g, 'X')}${mobileNumber.slice(-4)}`}
                   </motion.p>
                 </>
               ) : (
@@ -303,27 +353,20 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                 >
                   {/* Success Checkmark */}
                   <div className="w-32 h-32 mx-auto mb-6 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                    <motion.svg 
-                      className="w-20 h-20" 
+                    <motion.svg
+                      className="w-20 h-20"
                       viewBox="0 0 52 52"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                      <circle 
-                        cx="26" 
-                        cy="26" 
-                        r="25" 
-                        fill="none" 
-                        stroke="#10B981" 
-                        strokeWidth="2"
-                      />
-                      <motion.path 
-                        fill="none" 
-                        stroke="#10B981" 
-                        strokeWidth="3" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
+                      <circle cx="26" cy="26" r="25" fill="none" stroke="#10B981" strokeWidth="2" />
+                      <motion.path
+                        fill="none"
+                        stroke="#10B981"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M14 27l7 7 16-16"
                         initial={{ pathLength: 0 }}
                         animate={{ pathLength: 1 }}
@@ -331,8 +374,8 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       />
                     </motion.svg>
                   </div>
-                  
-                  <motion.h1 
+
+                  <motion.h1
                     className="text-4xl font-bold text-gray-900"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -340,8 +383,8 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                   >
                     Mobile Verified Successfully!
                   </motion.h1>
-                  
-                  <motion.p 
+
+                  <motion.p
                     className="text-gray-600 text-lg"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -349,8 +392,8 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                   >
                     Your account is now secured and ready to use
                   </motion.p>
-                  
-                  <motion.div 
+
+                  <motion.div
                     className="text-6xl"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -358,7 +401,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                   >
                     ✅ 🎉
                   </motion.div>
-                  
+
                   <motion.div
                     className="bg-white bg-opacity-80 backdrop-blur-lg rounded-2xl p-4 shadow-lg"
                     initial={{ opacity: 0, y: 20 }}
@@ -366,11 +409,12 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                     transition={{ duration: 0.6, delay: 1.3 }}
                   >
                     <p className="text-gray-700 text-lg font-semibold">
-                      Redirecting to Profile Setup in <span className="font-bold text-emerald-600 text-xl">3</span>s...
+                      Redirecting to Profile Setup in{' '}
+                      <span className="font-bold text-emerald-600 text-xl">3</span>s...
                     </p>
                   </motion.div>
-                  
-                  <motion.p 
+
+                  <motion.p
                     className="text-gray-600 text-sm italic"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -383,10 +427,8 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
             </div>
 
             <AnimatePresence mode="wait">
-              {step === 'success' ? (
-                // Success state is handled in the header above
-                null
-              ) : step === 'mobile' && !usePasswordLogin ? (
+              {step === 'success' ? // Success state is handled in the header above
+              null : step === 'mobile' && !usePasswordLogin ? (
                 <motion.div
                   key="mobile-step"
                   initial={{ opacity: 0, x: -20 }}
@@ -403,7 +445,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       <div className="relative">
                         <select
                           value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
+                          onChange={e => setCountryCode(e.target.value)}
                           className="appearance-none bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent min-w-[100px]"
                         >
                           <option value="+91">🇮🇳 +91</option>
@@ -422,13 +464,13 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                         <motion.input
                           type="tel"
                           value={mobileNumber}
-                          onChange={(e) => setMobileNumber(e.target.value.replace(/[^0-9]/g, ''))}
+                          onChange={e => setMobileNumber(e.target.value.replace(/[^0-9]/g, ''))}
                           placeholder="Enter Mobile Number"
                           className="w-full px-4 py-3 bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-gray-500 text-gray-800"
                           maxLength={10}
-                          whileFocus={{ 
+                          whileFocus={{
                             boxShadow: '0 0 20px rgba(20, 184, 166, 0.3)',
-                            scale: 1.02
+                            scale: 1.02,
                           }}
                           transition={{ duration: 0.2 }}
                         />
@@ -447,10 +489,14 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       onClick={handleSendOtp}
                       disabled={mobileNumber.length < 10 || isLoading}
                       className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300"
-                      whileHover={mobileNumber.length >= 10 && !isLoading ? {
-                        scale: 1.02,
-                        boxShadow: '0 10px 30px rgba(20, 184, 166, 0.4)'
-                      } : {}}
+                      whileHover={
+                        mobileNumber.length >= 10 && !isLoading
+                          ? {
+                              scale: 1.02,
+                              boxShadow: '0 10px 30px rgba(20, 184, 166, 0.4)',
+                            }
+                          : {}
+                      }
                       whileTap={mobileNumber.length >= 10 && !isLoading ? { scale: 0.98 } : {}}
                     >
                       <span className="flex items-center justify-center">
@@ -473,7 +519,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       <div className="relative">
                         <select
                           value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
+                          onChange={e => setCountryCode(e.target.value)}
                           className="appearance-none bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent min-w-[100px]"
                         >
                           <option value="+91">+91</option>
@@ -485,7 +531,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                         <motion.input
                           type="tel"
                           value={mobileNumber}
-                          onChange={(e) => setMobileNumber(e.target.value.replace(/[^0-9]/g, ''))}
+                          onChange={e => setMobileNumber(e.target.value.replace(/[^0-9]/g, ''))}
                           placeholder="Enter Mobile Number"
                           className="w-full px-4 py-3 bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-gray-500 text-gray-800"
                           maxLength={10}
@@ -496,7 +542,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       <motion.input
                         type="password"
                         value={passwordLogin}
-                        onChange={(e) => setPasswordLogin(e.target.value)}
+                        onChange={e => setPasswordLogin(e.target.value)}
                         placeholder="Password"
                         className="w-full px-4 py-3 bg-white bg-opacity-90 border border-white border-opacity-30 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent placeholder-gray-500 text-gray-800"
                       />
@@ -567,22 +613,26 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                       {Array.from({ length: 6 }).map((_, index) => (
                         <motion.input
                           key={index}
-                          ref={(el) => otpRefs.current[index] = el}
+                          ref={el => (otpRefs.current[index] = el)}
                           type="text"
                           value={otp[index]}
-                          onChange={(e) => handleOtpChange(index, e.target.value)}
-                          onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                          onChange={e => handleOtpChange(index, e.target.value)}
+                          onKeyDown={e => handleOtpKeyDown(index, e)}
                           className="w-14 h-16 text-center text-2xl font-bold bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-gray-800 transition-all duration-200"
                           maxLength={1}
                           inputMode="numeric"
-                          whileFocus={{ 
+                          whileFocus={{
                             scale: 1.05,
-                            boxShadow: '0 0 15px rgba(20, 184, 166, 0.4)'
+                            boxShadow: '0 0 15px rgba(20, 184, 166, 0.4)',
                           }}
-                          animate={otp[index] ? {
-                            scale: [1, 1.15, 1],
-                            transition: { duration: 0.3, ease: 'easeOut' }
-                          } : {}}
+                          animate={
+                            otp[index]
+                              ? {
+                                  scale: [1, 1.15, 1],
+                                  transition: { duration: 0.3, ease: 'easeOut' },
+                                }
+                              : {}
+                          }
                         />
                       ))}
                     </div>
@@ -598,7 +648,8 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                     <div className="text-center space-y-2">
                       {resendTimer > 0 ? (
                         <p className="text-gray-600 text-sm">
-                          Didn't receive? Resend OTP in <span className="font-bold text-teal-600">{resendTimer}s</span>
+                          Didn't receive? Resend OTP in{' '}
+                          <span className="font-bold text-teal-600">{resendTimer}s</span>
                         </p>
                       ) : (
                         <button
@@ -620,10 +671,14 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                           ? 'bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white cursor-pointer'
                           : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       }`}
-                      whileHover={isOtpComplete && !isLoading ? {
-                        scale: 1.02,
-                        boxShadow: '0 10px 30px rgba(20, 184, 166, 0.4)'
-                      } : {}}
+                      whileHover={
+                        isOtpComplete && !isLoading
+                          ? {
+                              scale: 1.02,
+                              boxShadow: '0 10px 30px rgba(20, 184, 166, 0.4)',
+                            }
+                          : {}
+                      }
                       whileTap={isOtpComplete && !isLoading ? { scale: 0.98 } : {}}
                     >
                       {isLoading ? '⏳ Verifying...' : 'Verify & Continue'}
@@ -633,36 +688,34 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
               )}
             </AnimatePresence>
 
-
-
             {/* Footer Links */}
             {step !== 'success' && (
               <div className="text-center space-y-3 mt-8">
-                <p className={`text-xs ${
-                  step === 'mobile' ? 'text-blue-100' : 'text-gray-500'
-                }`}>
+                <p className={`text-xs ${step === 'mobile' ? 'text-blue-100' : 'text-gray-500'}`}>
                   By continuing, you agree to{' '}
-                  <button className={`underline ${
-                    step === 'mobile' 
-                      ? 'text-teal-200 hover:text-teal-100' 
-                      : 'text-teal-600 hover:text-teal-700'
-                  }`}>
+                  <button
+                    className={`underline ${
+                      step === 'mobile'
+                        ? 'text-teal-200 hover:text-teal-100'
+                        : 'text-teal-600 hover:text-teal-700'
+                    }`}
+                  >
                     Terms & Privacy Policy
                   </button>
                 </p>
-                
-                <p className={`text-sm ${
-                  step === 'mobile' ? 'text-blue-100' : 'text-gray-500'
-                }`}>
-                  <button className={`transition-colors duration-200 underline ${
-                    step === 'mobile' 
-                      ? 'text-teal-200 hover:text-teal-100' 
-                      : 'text-teal-600 hover:text-teal-700'
-                  }`}>
+
+                <p className={`text-sm ${step === 'mobile' ? 'text-blue-100' : 'text-gray-500'}`}>
+                  <button
+                    className={`transition-colors duration-200 underline ${
+                      step === 'mobile'
+                        ? 'text-teal-200 hover:text-teal-100'
+                        : 'text-teal-600 hover:text-teal-700'
+                    }`}
+                  >
                     Need help?
                   </button>
                 </p>
-                
+
                 <div className="mt-2">
                   <button
                     type="button"
@@ -673,14 +726,16 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
                   </button>
                 </div>
                 {onSkip && (
-                  <p className={`text-sm mt-4 ${
-                    step === 'mobile' ? 'text-blue-100' : 'text-gray-500'
-                  }`}>
-                    <button 
+                  <p
+                    className={`text-sm mt-4 ${
+                      step === 'mobile' ? 'text-blue-100' : 'text-gray-500'
+                    }`}
+                  >
+                    <button
                       onClick={onSkip}
                       className={`transition-colors duration-200 underline ${
-                        step === 'mobile' 
-                          ? 'text-white/70 hover:text-white' 
+                        step === 'mobile'
+                          ? 'text-white/70 hover:text-white'
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                     >
@@ -695,8 +750,14 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
 
         {/* Bottom Illustration Elements */}
         <div className="absolute bottom-10 left-10 w-6 h-6 bg-yellow-300 rounded-full opacity-70 animate-pulse"></div>
-        <div className="absolute bottom-20 right-16 w-4 h-4 bg-pink-300 rounded-full opacity-70 animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-40 right-10 w-5 h-5 bg-cyan-300 rounded-full opacity-70 animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div
+          className="absolute bottom-20 right-16 w-4 h-4 bg-pink-300 rounded-full opacity-70 animate-pulse"
+          style={{ animationDelay: '1s' }}
+        ></div>
+        <div
+          className="absolute top-40 right-10 w-5 h-5 bg-cyan-300 rounded-full opacity-70 animate-pulse"
+          style={{ animationDelay: '2s' }}
+        ></div>
       </div>
     </div>
   );

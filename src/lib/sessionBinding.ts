@@ -1,7 +1,7 @@
 // SDK-only session binding: no direct calls to securetoken/identitytoolkit
-import { getAuth, onIdTokenChanged, Unsubscribe } from "firebase/auth";
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { getDeviceId } from "@/utils/deviceId";
+import { getAuth, onIdTokenChanged, Unsubscribe } from 'firebase/auth';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { getDeviceId } from '@/utils/deviceId';
 
 /**
  * Best-effort device binding via callable "bindDevice".
@@ -18,10 +18,10 @@ export async function bindActiveDevice(): Promise<void> {
       await user.getIdToken(true);
       return;
     } catch (e: any) {
-      if (e?.code === "auth/user-token-expired" || e?.code === "auth/id-token-expired") {
+      if (e?.code === 'auth/user-token-expired' || e?.code === 'auth/id-token-expired') {
         try {
           await user.reload();
-          await new Promise((r) => setTimeout(r, 250));
+          await new Promise(r => setTimeout(r, 250));
           await user.getIdToken(true);
           return;
         } catch (e2) {
@@ -35,12 +35,15 @@ export async function bindActiveDevice(): Promise<void> {
   try {
     await refreshIdToken();
     const deviceId = await getDeviceId();
-    const fn = httpsCallable(getFunctions(), "bindDevice");
+    const fn = httpsCallable(getFunctions(), 'bindDevice');
     try {
       await fn({ deviceId });
     } catch (callErr: any) {
       // Retry once if auth has just rotated and callable sees stale auth
-      if (callErr?.code === "functions/unauthenticated" || callErr?.message?.includes("Unauthenticated")) {
+      if (
+        callErr?.code === 'functions/unauthenticated' ||
+        callErr?.message?.includes('Unauthenticated')
+      ) {
         await refreshIdToken();
         await fn({ deviceId });
       } else {
@@ -50,7 +53,7 @@ export async function bindActiveDevice(): Promise<void> {
     // Pull updated custom claims (e.g., deviceId)
     await refreshIdToken();
   } catch (err) {
-    console.warn("bindActiveDevice() best-effort error:", err);
+    console.warn('bindActiveDevice() best-effort error:', err);
   }
 }
 
@@ -65,18 +68,22 @@ export async function bindActiveDevice(): Promise<void> {
 export function watchDeviceClaim(cb?: (deviceId?: string) => void): Unsubscribe {
   const auth = getAuth();
   const safeCall = (val?: string) => {
-    if (typeof cb === "function") {
-      try { cb(val); } catch (err) { console.warn("watchDeviceClaim cb error:", err); }
+    if (typeof cb === 'function') {
+      try {
+        cb(val);
+      } catch (err) {
+        console.warn('watchDeviceClaim cb error:', err);
+      }
     }
   };
   try {
-    return onIdTokenChanged(auth, async (u) => {
+    return onIdTokenChanged(auth, async u => {
       if (!u) return safeCall(undefined);
       try {
         const res = await u.getIdTokenResult();
         safeCall((res.claims as any)?.deviceId as string | undefined);
       } catch (e) {
-        console.warn("watchDeviceClaim token read failed:", e);
+        console.warn('watchDeviceClaim token read failed:', e);
         safeCall(undefined);
       }
     });

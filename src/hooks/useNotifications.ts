@@ -36,7 +36,7 @@ export const useNotifications = () => {
   const [permission, setPermission] = useState<NotificationPermission>({
     granted: false,
     denied: false,
-    prompt: true
+    prompt: true,
   });
   const [settings, setSettings] = useState<NotificationSettings>({
     pushEnabled: false,
@@ -48,17 +48,17 @@ export const useNotifications = () => {
       studyReminders: true,
       leaderboardUpdates: true,
       social: true,
-      system: true
+      system: true,
     },
     quietHours: {
       enabled: false,
       start: '22:00',
-      end: '08:00'
+      end: '08:00',
     },
     frequency: {
       quizReminders: 'daily',
-      studyReminders: 'daily'
-    }
+      studyReminders: 'daily',
+    },
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -95,11 +95,12 @@ export const useNotifications = () => {
         name: 'notifications_initialized',
         parameters: {
           permission_granted: currentPermission.granted,
-          platform: navigator.platform
-        }
+          platform: navigator.platform,
+        },
       });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to initialize notifications';
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to initialize notifications';
       setError(errorMessage);
       console.error('Notification initialization error:', err);
     } finally {
@@ -134,22 +135,22 @@ export const useNotifications = () => {
     try {
       const newPermission = await NotificationService.requestPermission();
       setPermission(newPermission);
-      
+
       if (newPermission.granted) {
         setSettings(prev => ({ ...prev, pushEnabled: true }));
-        
+
         // Track permission granted
         AnalyticsService.trackCustomEvent({
           name: 'notification_permission_granted',
-          parameters: { method: 'manual_request' }
+          parameters: { method: 'manual_request' },
         });
       } else {
         setSettings(prev => ({ ...prev, pushEnabled: false }));
-        
+
         // Track permission denied
         AnalyticsService.trackCustomEvent({
           name: 'notification_permission_denied',
-          parameters: { method: 'manual_request' }
+          parameters: { method: 'manual_request' },
         });
       }
 
@@ -166,146 +167,162 @@ export const useNotifications = () => {
   const updateSettings = useCallback((newSettings: Partial<NotificationSettings>) => {
     setSettings(prev => {
       const updated = { ...prev, ...newSettings };
-      
+
       // Track settings changes
       AnalyticsService.trackCustomEvent({
         name: 'notification_settings_updated',
         parameters: {
           changes: Object.keys(newSettings),
-          push_enabled: updated.pushEnabled
-        }
+          push_enabled: updated.pushEnabled,
+        },
       });
 
       return updated;
     });
   }, []);
 
-  const toggleCategory = useCallback((category: keyof NotificationSettings['categories']) => {
-    setSettings(prev => ({
-      ...prev,
-      categories: {
-        ...prev.categories,
-        [category]: !prev.categories[category]
+  const toggleCategory = useCallback(
+    (category: keyof NotificationSettings['categories']) => {
+      setSettings(prev => ({
+        ...prev,
+        categories: {
+          ...prev.categories,
+          [category]: !prev.categories[category],
+        },
+      }));
+
+      // Track category toggle
+      AnalyticsService.trackCustomEvent({
+        name: 'notification_category_toggled',
+        parameters: {
+          category,
+          enabled: !settings.categories[category],
+        },
+      });
+    },
+    [settings.categories]
+  );
+
+  const scheduleQuizReminder = useCallback(
+    async (quizId: string, quizTitle: string, reminderTime: Date) => {
+      if (!settings.categories.quizReminders || !permission.granted) {
+        return;
       }
-    }));
 
-    // Track category toggle
-    AnalyticsService.trackCustomEvent({
-      name: 'notification_category_toggled',
-      parameters: {
-        category,
-        enabled: !settings.categories[category]
+      try {
+        await NotificationService.scheduleNotification({
+          id: parseInt(`${Date.now()}${Math.random() * 1000}`),
+          title: 'Quiz Reminder 📚',
+          body: `Time to take "${quizTitle}"!`,
+          schedule: { at: reminderTime },
+          data: { type: 'quiz_reminder', quizId },
+        });
+
+        // Track scheduled reminder
+        AnalyticsService.trackCustomEvent({
+          name: 'quiz_reminder_scheduled',
+          parameters: {
+            quiz_id: quizId,
+            reminder_delay_minutes: Math.round((reminderTime.getTime() - Date.now()) / (1000 * 60)),
+          },
+        });
+      } catch (err) {
+        console.error('Failed to schedule quiz reminder:', err);
+        throw err;
       }
-    });
-  }, [settings.categories]);
+    },
+    [settings.categories.quizReminders, permission.granted]
+  );
 
-  const scheduleQuizReminder = useCallback(async (quizId: string, quizTitle: string, reminderTime: Date) => {
-    if (!settings.categories.quizReminders || !permission.granted) {
-      return;
-    }
+  const scheduleStudyReminder = useCallback(
+    async (reminderTime: Date) => {
+      if (!settings.categories.studyReminders || !permission.granted) {
+        return;
+      }
 
-    try {
-      await NotificationService.scheduleNotification({
-        id: parseInt(`${Date.now()}${Math.random() * 1000}`),
-        title: 'Quiz Reminder 📚',
-        body: `Time to take "${quizTitle}"!`,
-        schedule: { at: reminderTime },
-        data: { type: 'quiz_reminder', quizId }
-      });
+      try {
+        await NotificationService.scheduleNotification({
+          id: parseInt(`${Date.now()}${Math.random() * 1000}`),
+          title: 'Study Time! 📖',
+          body: 'Keep up your learning streak! Time to study.',
+          schedule: { at: reminderTime, repeats: true },
+          data: { type: 'study_reminder' },
+        });
 
-      // Track scheduled reminder
-      AnalyticsService.trackCustomEvent({
-        name: 'quiz_reminder_scheduled',
-        parameters: {
-          quiz_id: quizId,
-          reminder_delay_minutes: Math.round((reminderTime.getTime() - Date.now()) / (1000 * 60))
-        }
-      });
-    } catch (err) {
-      console.error('Failed to schedule quiz reminder:', err);
-      throw err;
-    }
-  }, [settings.categories.quizReminders, permission.granted]);
+        // Track scheduled study reminder
+        AnalyticsService.trackCustomEvent({
+          name: 'study_reminder_scheduled',
+          parameters: {
+            frequency: settings.frequency.studyReminders,
+            reminder_time: reminderTime.toISOString(),
+          },
+        });
+      } catch (err) {
+        console.error('Failed to schedule study reminder:', err);
+        throw err;
+      }
+    },
+    [settings.categories.studyReminders, settings.frequency.studyReminders, permission.granted]
+  );
 
-  const scheduleStudyReminder = useCallback(async (reminderTime: Date) => {
-    if (!settings.categories.studyReminders || !permission.granted) {
-      return;
-    }
+  const sendAchievementNotification = useCallback(
+    async (achievementName: string) => {
+      if (!settings.categories.achievements) {
+        return;
+      }
 
-    try {
-      await NotificationService.scheduleNotification({
-        id: parseInt(`${Date.now()}${Math.random() * 1000}`),
-        title: 'Study Time! 📖',
-        body: 'Keep up your learning streak! Time to study.',
-        schedule: { at: reminderTime, repeats: true },
-        data: { type: 'study_reminder' }
-      });
+      try {
+        const template =
+          NotificationService.getNotificationTemplates().achievementUnlocked(achievementName);
+        await NotificationService.sendLocalNotification(template);
 
-      // Track scheduled study reminder
-      AnalyticsService.trackCustomEvent({
-        name: 'study_reminder_scheduled',
-        parameters: {
-          frequency: settings.frequency.studyReminders,
-          reminder_time: reminderTime.toISOString()
-        }
-      });
-    } catch (err) {
-      console.error('Failed to schedule study reminder:', err);
-      throw err;
-    }
-  }, [settings.categories.studyReminders, settings.frequency.studyReminders, permission.granted]);
+        // Track achievement notification
+        AnalyticsService.trackCustomEvent({
+          name: 'achievement_notification_sent',
+          parameters: {
+            achievement_name: achievementName,
+          },
+        });
+      } catch (err) {
+        console.error('Failed to send achievement notification:', err);
+        throw err;
+      }
+    },
+    [settings.categories.achievements]
+  );
 
-  const sendAchievementNotification = useCallback(async (achievementName: string) => {
-    if (!settings.categories.achievements) {
-      return;
-    }
+  const sendLeaderboardUpdate = useCallback(
+    async (position: number) => {
+      if (!settings.categories.leaderboardUpdates) {
+        return;
+      }
 
-    try {
-      const template = NotificationService.getNotificationTemplates().achievementUnlocked(achievementName);
-      await NotificationService.sendLocalNotification(template);
+      try {
+        const template = NotificationService.getNotificationTemplates().leaderboardUpdate(position);
+        await NotificationService.sendLocalNotification(template);
 
-      // Track achievement notification
-      AnalyticsService.trackCustomEvent({
-        name: 'achievement_notification_sent',
-        parameters: {
-          achievement_name: achievementName
-        }
-      });
-    } catch (err) {
-      console.error('Failed to send achievement notification:', err);
-      throw err;
-    }
-  }, [settings.categories.achievements]);
-
-  const sendLeaderboardUpdate = useCallback(async (position: number) => {
-    if (!settings.categories.leaderboardUpdates) {
-      return;
-    }
-
-    try {
-      const template = NotificationService.getNotificationTemplates().leaderboardUpdate(position);
-      await NotificationService.sendLocalNotification(template);
-
-      // Track leaderboard notification
-      AnalyticsService.trackCustomEvent({
-        name: 'leaderboard_notification_sent',
-        parameters: {
-          new_position: position
-        }
-      });
-    } catch (err) {
-      console.error('Failed to send leaderboard notification:', err);
-      throw err;
-    }
-  }, [settings.categories.leaderboardUpdates]);
+        // Track leaderboard notification
+        AnalyticsService.trackCustomEvent({
+          name: 'leaderboard_notification_sent',
+          parameters: {
+            new_position: position,
+          },
+        });
+      } catch (err) {
+        console.error('Failed to send leaderboard notification:', err);
+        throw err;
+      }
+    },
+    [settings.categories.leaderboardUpdates]
+  );
 
   const testNotification = useCallback(async () => {
     try {
       await NotificationService.testNotification();
-      
+
       // Track test notification
       AnalyticsService.trackCustomEvent({
-        name: 'test_notification_sent'
+        name: 'test_notification_sent',
       });
     } catch (err) {
       console.error('Failed to send test notification:', err);
@@ -316,10 +333,10 @@ export const useNotifications = () => {
   const clearAllNotifications = useCallback(async () => {
     try {
       await NotificationService.clearAllNotifications();
-      
+
       // Track clear all
       AnalyticsService.trackCustomEvent({
-        name: 'all_notifications_cleared'
+        name: 'all_notifications_cleared',
       });
     } catch (err) {
       console.error('Failed to clear notifications:', err);
@@ -332,10 +349,10 @@ export const useNotifications = () => {
       await NotificationService.unsubscribe();
       setPermission({ granted: false, denied: true, prompt: false });
       setSettings(prev => ({ ...prev, pushEnabled: false }));
-      
+
       // Track unsubscribe
       AnalyticsService.trackCustomEvent({
-        name: 'notifications_unsubscribed'
+        name: 'notifications_unsubscribed',
       });
     } catch (err) {
       console.error('Failed to unsubscribe from notifications:', err);
@@ -348,10 +365,10 @@ export const useNotifications = () => {
 
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
-    
+
     const [startHour, startMin] = settings.quietHours.start.split(':').map(Number);
     const [endHour, endMin] = settings.quietHours.end.split(':').map(Number);
-    
+
     const startTime = startHour * 60 + startMin;
     const endTime = endHour * 60 + endMin;
 
@@ -371,7 +388,7 @@ export const useNotifications = () => {
       error,
       isLoading,
       isInQuietHours: isInQuietHours(),
-      canReceiveNotifications: permission.granted && settings.pushEnabled
+      canReceiveNotifications: permission.granted && settings.pushEnabled,
     };
   }, [isInitialized, permission, settings, error, isLoading, isInQuietHours]);
 
@@ -382,7 +399,7 @@ export const useNotifications = () => {
     settings,
     error,
     isLoading,
-    
+
     // Actions
     requestPermission,
     updateSettings,
@@ -394,10 +411,10 @@ export const useNotifications = () => {
     testNotification,
     clearAllNotifications,
     unsubscribe,
-    
+
     // Utilities
     isInQuietHours,
-    getNotificationStatus
+    getNotificationStatus,
   };
 };
 

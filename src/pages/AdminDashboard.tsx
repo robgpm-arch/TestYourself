@@ -19,7 +19,7 @@ import {
   syncChaptersToFirestore,
   syncQuizSetsToFirestore,
   syncExamsToFirestore,
-  syncLeaderboardsToFirestore
+  syncLeaderboardsToFirestore,
 } from '../utils/syncScreens';
 import { loadTheme, uploadAsset } from '../design/api';
 import type { ThemeDoc, ScreenStyle } from '../design/types';
@@ -28,15 +28,24 @@ import app from '../config/firebase';
 import { indexAssets, listenAssetManifest } from '../admin/design/assetsApi';
 import { listenThemes } from '../admin/design/themesApi';
 import { listenExams, Exam } from '../admin/subjects/examsApi';
-import { SubjectFilters, filtersReady, normalizeBoard, normalizeExam } from '../utils/subjectFilters';
+import {
+  SubjectFilters,
+  filtersReady,
+  normalizeBoard,
+  normalizeExam,
+} from '../utils/subjectFilters';
 import { SubjectNameSelect } from '../admin/subjects/SubjectNameSelect';
 import { EmojiSelect } from '../admin/shared/EmojiSelect';
 import { ColorSelect } from '../admin/shared/ColorSelect';
 import SubjectCard from '../admin/subjects/SubjectCard';
 import SubjectFormModal from '../admin/subjects/SubjectFormModal';
 import {
-  createSubject, updateSubject, deleteSubject,
-  duplicateSubject, toggleSubjectEnabled, SubjectInput
+  createSubject,
+  updateSubject,
+  deleteSubject,
+  duplicateSubject,
+  toggleSubjectEnabled,
+  SubjectInput,
 } from '../services/adminCatalogService';
 import { CoursePicker } from '../admin/courses/CoursePicker';
 import { SlugSelect } from '../admin/components/SlugSelect';
@@ -58,7 +67,7 @@ import {
   AppScreen,
   LeaderboardConfig,
   CatalogExam,
-  COLLECTIONS
+  COLLECTIONS,
 } from '../types/firebase';
 import type { Timestamp } from 'firebase/firestore';
 
@@ -82,7 +91,19 @@ interface ModalState {
   item?: CatalogEntity;
 }
 
-type FormFieldType = 'text' | 'textarea' | 'number' | 'select' | 'checkbox' | 'subjectName' | 'emoji' | 'color' | 'course' | 'slug' | 'levelSelect' | 'thumbnailSelect';
+type FormFieldType =
+  | 'text'
+  | 'textarea'
+  | 'number'
+  | 'select'
+  | 'checkbox'
+  | 'subjectName'
+  | 'emoji'
+  | 'color'
+  | 'course'
+  | 'slug'
+  | 'levelSelect'
+  | 'thumbnailSelect';
 
 interface FormFieldConfig {
   id: string;
@@ -100,82 +121,85 @@ const isValidAdminTab = (value: string | null): value is AdminTab =>
 
 const DEFAULT_ORDER = 1000;
 
-const TAB_LABELS: Record<AdminTab, { plural: string; singular: string; icon: string; description: string }> = {
+const TAB_LABELS: Record<
+  AdminTab,
+  { plural: string; singular: string; icon: string; description: string }
+> = {
   mediums: {
     plural: 'Mediums',
     singular: 'Medium',
     icon: '🗣️',
-    description: 'Languages and education mediums for course catalogs'
+    description: 'Languages and education mediums for course catalogs',
   },
   boards: {
     plural: 'Boards',
     singular: 'Board',
     icon: '🏫',
-    description: 'Education boards associated with each medium'
+    description: 'Education boards associated with each medium',
   },
   courses: {
     plural: 'Courses',
     singular: 'Course',
     icon: '📚',
-    description: 'Course tracks and preparation programs'
+    description: 'Course tracks and preparation programs',
   },
   subjects: {
     plural: 'Subjects',
     singular: 'Subject',
     icon: '📘',
-    description: 'Subject catalog under each course'
+    description: 'Subject catalog under each course',
   },
   chapters: {
     plural: 'Chapters',
     singular: 'Chapter',
     icon: '🧩',
-    description: 'Chapter progression for the selected subject'
+    description: 'Chapter progression for the selected subject',
   },
   quizSets: {
     plural: 'Quiz Sets',
     singular: 'Quiz Set',
     icon: '❓',
-    description: 'Assessments mapped to each chapter'
+    description: 'Assessments mapped to each chapter',
   },
   screens: {
     plural: 'App Screens',
     singular: 'Screen',
     icon: '🗂️',
-    description: 'Front-end screens and feature toggles'
+    description: 'Front-end screens and feature toggles',
   },
   design: {
     plural: 'Design System',
     singular: 'Design',
     icon: '🎨',
-    description: 'Live-editable themes, backgrounds, and visual styles'
+    description: 'Live-editable themes, backgrounds, and visual styles',
   },
   leaderboards: {
     plural: 'Leaderboards',
     singular: 'Leaderboard',
     icon: '🏆',
-    description: 'Leaderboard definitions and scoring rules'
+    description: 'Leaderboard definitions and scoring rules',
   },
   exams: {
     plural: 'Exams',
     singular: 'Exam',
     icon: '📝',
-    description: 'Competitive/entrance exams and certifications'
+    description: 'Competitive/entrance exams and certifications',
   },
   seo: {
     plural: 'SEO & Discovery',
     singular: 'SEO',
     icon: '🔍',
-    description: 'Manage meta titles, descriptions, and search engine settings'
+    description: 'Manage meta titles, descriptions, and search engine settings',
   },
   sync: {
     plural: 'Sync Center',
     singular: 'Sync',
     icon: '🔄',
-    description: 'Run seeding/backfills and scan assets'
-  }
+    description: 'Run seeding/backfills and scan assets',
+  },
 };
 
-const COLLECTION_MAP: Record<AdminTab, typeof COLLECTIONS[keyof typeof COLLECTIONS]> = {
+const COLLECTION_MAP: Record<AdminTab, (typeof COLLECTIONS)[keyof typeof COLLECTIONS]> = {
   mediums: COLLECTIONS.MEDIUMS,
   boards: COLLECTIONS.BOARDS,
   courses: COLLECTIONS.COURSES,
@@ -187,7 +211,7 @@ const COLLECTION_MAP: Record<AdminTab, typeof COLLECTIONS[keyof typeof COLLECTIO
   exams: COLLECTIONS.EXAMS,
   design: COLLECTIONS.SCREENS, // Placeholder, design tab doesn't use standard collections
   seo: COLLECTIONS.SCREENS, // Placeholder, seo tab doesn't use standard collections
-  sync: COLLECTIONS.SCREENS // Placeholder, sync tab doesn't use standard collections
+  sync: COLLECTIONS.SCREENS, // Placeholder, sync tab doesn't use standard collections
 };
 
 const PREREQUISITE_MESSAGES: Partial<Record<AdminTab, string>> = {
@@ -195,7 +219,7 @@ const PREREQUISITE_MESSAGES: Partial<Record<AdminTab, string>> = {
   courses: 'Create at least one board before adding a course.',
   subjects: 'Create at least one course before adding a subject.',
   chapters: 'Create at least one subject before adding a chapter.',
-  quizSets: 'Create at least one chapter before adding a quiz set.'
+  quizSets: 'Create at least one chapter before adding a quiz set.',
 };
 
 const formatTimestamp = (value: unknown): string => {
@@ -245,7 +269,7 @@ const parseCommaSeparated = (value: unknown): string[] | undefined => {
 
   const parts = value
     .split(',')
-    .map((part) => part.trim())
+    .map(part => part.trim())
     .filter(Boolean);
 
   return parts.length ? parts : undefined;
@@ -261,24 +285,32 @@ const stringifyList = (value?: string[] | null): string => {
 const getCurrentUserId = () => auth.currentUser?.uid ?? undefined;
 
 function slugify(s: string) {
-  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return s
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 function validateCourse(d: {
-  name?: string; slug?: string; mediumId?: string;
-  boardId?: string; examId?: string;
+  name?: string;
+  slug?: string;
+  mediumId?: string;
+  boardId?: string;
+  examId?: string;
 }) {
   const errors: string[] = [];
-  if (!d.name?.trim()) errors.push("Name is required.");
-  if (!d.slug?.match(/^[a-z0-9-]{1,80}$/)) errors.push("Slug must be URL-friendly (a–z, 0–9, hyphen).");
-  if (!d.mediumId) errors.push("Medium is required.");
-  if (!(d.boardId || d.examId)) errors.push("Select Board or Exam.");
+  if (!d.name?.trim()) errors.push('Name is required.');
+  if (!d.slug?.match(/^[a-z0-9-]{1,80}$/))
+    errors.push('Slug must be URL-friendly (a–z, 0–9, hyphen).');
+  if (!d.mediumId) errors.push('Medium is required.');
+  if (!(d.boardId || d.examId)) errors.push('Select Board or Exam.');
   return errors;
 }
 
 // Helper to remove undefined values recursively
 function stripUndefined<T>(obj: T): T {
-  if (obj === null || typeof obj !== "object") return obj;
+  if (obj === null || typeof obj !== 'object') return obj;
   if (Array.isArray(obj)) return obj.map(stripUndefined) as unknown as T;
   const out: any = {};
   Object.entries(obj as any).forEach(([k, v]) => {
@@ -309,19 +341,22 @@ function useUrlFilters() {
     exam: params.get('exam') || '',
     course: params.get('course') || '',
     subject: params.get('subject') || '',
-    chapter: params.get('chapter') || ''
+    chapter: params.get('chapter') || '',
   };
 }
 
 // Function to update URL filters
-function updateUrlFilters(navigate: ReturnType<typeof useNavigate>, updates: Partial<{
-  medium: string;
-  board: string;
-  exam: string;
-  course: string;
-  subject: string;
-  chapter: string;
-}>) {
+function updateUrlFilters(
+  navigate: ReturnType<typeof useNavigate>,
+  updates: Partial<{
+    medium: string;
+    board: string;
+    exam: string;
+    course: string;
+    subject: string;
+    chapter: string;
+  }>
+) {
   const currentUrl = new URL(window.location.href);
   const params = currentUrl.searchParams;
 
@@ -386,8 +421,10 @@ const AdminDashboard: React.FC = () => {
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [formError, setFormError] = useState<Explained | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [busyState, setBusyState] = useState<{ id: string; action: 'toggle' | 'delete' | 'duplicate' | 'sync' } | null>(null);
-
+  const [busyState, setBusyState] = useState<{
+    id: string;
+    action: 'toggle' | 'delete' | 'duplicate' | 'sync';
+  } | null>(null);
 
   const [mediums, setMediums] = useState<CatalogMedium[]>([]);
   const [boards, setBoards] = useState<CatalogBoard[]>([]);
@@ -424,18 +461,18 @@ const AdminDashboard: React.FC = () => {
     medium: '',
     board: '',
     courseId: '',
-    examId: ''
+    examId: '',
   });
 
   useEffect(() => {
     const unsubscribers: Array<() => void> = [];
 
     const subscribe = <T extends CatalogEntity>(
-      collectionName: typeof COLLECTIONS[keyof typeof COLLECTIONS],
+      collectionName: (typeof COLLECTIONS)[keyof typeof COLLECTIONS],
       setter: React.Dispatch<React.SetStateAction<T[]>>
     ) => {
       try {
-        const unsubscribe = AdminCatalogService.subscribeToCollection<T>(collectionName, (items) => {
+        const unsubscribe = AdminCatalogService.subscribeToCollection<T>(collectionName, items => {
           setter(items);
         });
         unsubscribers.push(unsubscribe);
@@ -464,16 +501,16 @@ const AdminDashboard: React.FC = () => {
       }
     });
 
-    const assetUnsub = listenAssetManifest((items) => {
+    const assetUnsub = listenAssetManifest(items => {
       setAssetCount(items.length);
     });
 
-    const examUnsub = listenExams((rows) => {
+    const examUnsub = listenExams(rows => {
       setExamOptions(rows);
     });
 
     return () => {
-      unsubscribers.forEach((unsubscribe) => unsubscribe());
+      unsubscribers.forEach(unsubscribe => unsubscribe());
       themeUnsub();
       assetUnsub();
       examUnsub();
@@ -493,17 +530,20 @@ const AdminDashboard: React.FC = () => {
 
       setSubjectsLoading(true);
 
-      const { collection, query: queryFn, where, orderBy, getDocs } = await import('firebase/firestore');
+      const {
+        collection,
+        query: queryFn,
+        where,
+        orderBy,
+        getDocs,
+      } = await import('firebase/firestore');
       const { db } = await import('../config/firebase');
 
-      const base = queryFn(
-        collection(db, "subjects"),
-        where("courseId", "==", selectedCourseId)
-      );
+      const base = queryFn(collection(db, 'subjects'), where('courseId', '==', selectedCourseId));
 
       try {
         // Try ordered path first
-        const snap = await getDocs(queryFn(base, orderBy("order")));
+        const snap = await getDocs(queryFn(base, orderBy('order')));
         if (ignore) return;
         const rows = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
         setSubjects(
@@ -511,26 +551,28 @@ const AdminDashboard: React.FC = () => {
             .filter(r => r.enabled !== false && r.isVisible !== false && r.active !== false)
             .map(r => ({ id: r.id, name: r.name ?? r.id, ...r }))
         );
-        console.log("[Subjects] found (indexed)", rows.length, { selectedCourseId });
+        console.log('[Subjects] found (indexed)', rows.length, { selectedCourseId });
       } catch (err) {
         // Fallback: no index or order field
-        console.warn("[Subjects] fallback:", err);
+        console.warn('[Subjects] fallback:', err);
         const snap = await getDocs(base);
         if (ignore) return;
         const rows = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
         setSubjects(
           rows
             .filter(r => r.enabled !== false && r.isVisible !== false && r.active !== false)
-            .sort((a,b)=> String(a.name??a.id).localeCompare(String(b.name??b.id)))
+            .sort((a, b) => String(a.name ?? a.id).localeCompare(String(b.name ?? b.id)))
             .map(r => ({ id: r.id, name: r.name ?? r.id, ...r }))
         );
-        console.log("[Subjects] found (fallback)", rows.length, { selectedCourseId });
+        console.log('[Subjects] found (fallback)', rows.length, { selectedCourseId });
       } finally {
         setSubjectsLoading(false);
       }
     })();
 
-    return () => { ignore = true; };
+    return () => {
+      ignore = true;
+    };
   }, [selectedMediumId, selectedBoardId, selectedExamId, selectedCourseId]);
 
   // Sync URL filters with state
@@ -576,21 +618,21 @@ const AdminDashboard: React.FC = () => {
     }
   }, [activeTab, subjectFilters, gate]);
 
-  const mediumLookup = useMemo(() => new Map(mediums.map((item) => [item.id, item])), [mediums]);
-  const boardLookup = useMemo(() => new Map(boards.map((item) => [item.id, item])), [boards]);
-  const courseLookup = useMemo(() => new Map(courses.map((item) => [item.id, item])), [courses]);
-  const subjectLookup = useMemo(() => new Map(subjects.map((item) => [item.id, item])), [subjects]);
-  const chapterLookup = useMemo(() => new Map(chapters.map((item) => [item.id, item])), [chapters]);
+  const mediumLookup = useMemo(() => new Map(mediums.map(item => [item.id, item])), [mediums]);
+  const boardLookup = useMemo(() => new Map(boards.map(item => [item.id, item])), [boards]);
+  const courseLookup = useMemo(() => new Map(courses.map(item => [item.id, item])), [courses]);
+  const subjectLookup = useMemo(() => new Map(subjects.map(item => [item.id, item])), [subjects]);
+  const chapterLookup = useMemo(() => new Map(chapters.map(item => [item.id, item])), [chapters]);
 
   const filteredBoards = useMemo(() => {
     if (!selectedMediumId) {
       return boards;
     }
-    return boards.filter((board) => board.mediumId === selectedMediumId);
+    return boards.filter(board => board.mediumId === selectedMediumId);
   }, [boards, selectedMediumId]);
 
   const filteredCourses = useMemo(() => {
-    return courses.filter((course) => {
+    return courses.filter(course => {
       if (selectedMediumId && course.mediumId && course.mediumId !== selectedMediumId) {
         return false;
       }
@@ -629,7 +671,7 @@ const AdminDashboard: React.FC = () => {
   }, [subjects]);
 
   const filteredChapters = useMemo(() => {
-    return chapters.filter((chapter) => {
+    return chapters.filter(chapter => {
       if (selectedSubjectId && chapter.subjectId !== selectedSubjectId) {
         return false;
       }
@@ -671,10 +713,19 @@ const AdminDashboard: React.FC = () => {
 
       return true;
     });
-  }, [chapters, selectedSubjectId, selectedCourseId, selectedBoardId, selectedExamId, selectedMediumId, subjectLookup, courseLookup]);
+  }, [
+    chapters,
+    selectedSubjectId,
+    selectedCourseId,
+    selectedBoardId,
+    selectedExamId,
+    selectedMediumId,
+    subjectLookup,
+    courseLookup,
+  ]);
 
   const filteredQuizSets = useMemo(() => {
-    return quizSets.filter((quizSet) => {
+    return quizSets.filter(quizSet => {
       if (selectedChapterId && quizSet.chapterId !== selectedChapterId) {
         return false;
       }
@@ -723,7 +774,18 @@ const AdminDashboard: React.FC = () => {
 
       return true;
     });
-  }, [quizSets, selectedChapterId, selectedSubjectId, selectedCourseId, selectedBoardId, selectedExamId, selectedMediumId, chapterLookup, subjectLookup, courseLookup]);
+  }, [
+    quizSets,
+    selectedChapterId,
+    selectedSubjectId,
+    selectedCourseId,
+    selectedBoardId,
+    selectedExamId,
+    selectedMediumId,
+    chapterLookup,
+    subjectLookup,
+    courseLookup,
+  ]);
 
   const filteredLeaderboardConfigs = useMemo(() => {
     if (!selectedSubjectId) {
@@ -735,7 +797,7 @@ const AdminDashboard: React.FC = () => {
     }
     const relatedCourse = courseLookup.get(selectedSubject.courseId);
 
-    return leaderboardConfigs.filter((config) => {
+    return leaderboardConfigs.filter(config => {
       if (config.subject && config.subject !== selectedSubjectId) {
         return false;
       }
@@ -750,7 +812,7 @@ const AdminDashboard: React.FC = () => {
     if (!selectedMediumId) {
       return exams;
     }
-    return exams.filter((exam) => exam.mediumId === selectedMediumId);
+    return exams.filter(exam => exam.mediumId === selectedMediumId);
   }, [exams, selectedMediumId]);
 
   const counts = useMemo(
@@ -766,19 +828,30 @@ const AdminDashboard: React.FC = () => {
       exams: exams.length,
       design: themeCount,
       seo: 0, // SEO doesn't have a count
-      sync: 0 // Sync Center doesn't have a count
+      sync: 0, // Sync Center doesn't have a count
     }),
-    [mediums.length, boards.length, courses.length, subjects.length, chapters.length, quizSets.length, screens.length, leaderboardConfigs.length, exams.length, themeCount]
+    [
+      mediums.length,
+      boards.length,
+      courses.length,
+      subjects.length,
+      chapters.length,
+      quizSets.length,
+      screens.length,
+      leaderboardConfigs.length,
+      exams.length,
+      themeCount,
+    ]
   );
 
   const tabCards = useMemo(
     () =>
-      (Object.keys(TAB_LABELS) as AdminTab[]).map((tab) => ({
+      (Object.keys(TAB_LABELS) as AdminTab[]).map(tab => ({
         id: tab,
         label: TAB_LABELS[tab].plural,
         icon: TAB_LABELS[tab].icon,
         description: TAB_LABELS[tab].description,
-        count: counts[tab]
+        count: counts[tab],
       })),
     [counts]
   );
@@ -810,7 +883,7 @@ const AdminDashboard: React.FC = () => {
       exam: '',
       course: '',
       subject: '',
-      chapter: ''
+      chapter: '',
     });
     setSubjectFilters({ medium: '', board: '', courseId: '', examId: '' });
   };
@@ -824,52 +897,70 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleMediumFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, {
-      medium: value,
-      board: '',
-      course: '',
-      subject: '',
-      chapter: ''
-    });
-  }, [navigate]);
+  const handleMediumFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, {
+        medium: value,
+        board: '',
+        course: '',
+        subject: '',
+        chapter: '',
+      });
+    },
+    [navigate]
+  );
 
-  const handleBoardFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, {
-      board: value,
-      course: '',
-      subject: '',
-      chapter: ''
-    });
-  }, [navigate]);
+  const handleBoardFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, {
+        board: value,
+        course: '',
+        subject: '',
+        chapter: '',
+      });
+    },
+    [navigate]
+  );
 
-  const handleCourseFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, {
-      course: value,
-      subject: '',
-      chapter: ''
-    });
-  }, [navigate]);
+  const handleCourseFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, {
+        course: value,
+        subject: '',
+        chapter: '',
+      });
+    },
+    [navigate]
+  );
 
-  const handleSubjectFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, {
-      subject: value,
-      chapter: ''
-    });
-  }, [navigate]);
+  const handleSubjectFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, {
+        subject: value,
+        chapter: '',
+      });
+    },
+    [navigate]
+  );
 
-  const handleExamFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, {
-      exam: value,
-      course: '',
-      subject: '',
-      chapter: ''
-    });
-  }, [navigate]);
+  const handleExamFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, {
+        exam: value,
+        course: '',
+        subject: '',
+        chapter: '',
+      });
+    },
+    [navigate]
+  );
 
-  const handleChapterFilterChange = useCallback((value: string) => {
-    updateUrlFilters(navigate, { chapter: value });
-  }, [navigate]);
+  const handleChapterFilterChange = useCallback(
+    (value: string) => {
+      updateUrlFilters(navigate, { chapter: value });
+    },
+    [navigate]
+  );
 
   const getItemsForTab = (tab: AdminTab): CatalogEntity[] => {
     switch (tab) {
@@ -906,7 +997,7 @@ const AdminDashboard: React.FC = () => {
             description: medium?.description ?? '',
             code: medium?.code ?? '',
             order: medium?.order?.toString() ?? '',
-            isVisible: medium?.isVisible ?? true
+            isVisible: medium?.isVisible ?? true,
           };
         }
         case 'boards': {
@@ -918,51 +1009,57 @@ const AdminDashboard: React.FC = () => {
             code: board?.code ?? '',
             mediumId: board?.mediumId ?? selectedMediumId,
             order: board?.order?.toString() ?? '',
-            isVisible: board?.isVisible ?? true
+            isVisible: board?.isVisible ?? true,
           };
         }
         case 'courses': {
-            const course = item as CatalogCourse | undefined;
-            return {
-              name: course?.name ?? '',
-              description: course?.description ?? '',
-              slug: course?.slug ?? '',
-              level: course?.level ?? '',
-              thumbnail: course?.thumbnail ?? '',
-              mediumId: course?.mediumId ?? selectedMediumId ?? '',
-              boardId: course?.boardId ?? selectedBoardId ?? '',
-              examId: (course as any)?.examId ?? '',
-              order: course?.order?.toString() ?? '',
-              isVisible: course?.isVisible ?? true
-            };
-          }
+          const course = item as CatalogCourse | undefined;
+          return {
+            name: course?.name ?? '',
+            description: course?.description ?? '',
+            slug: course?.slug ?? '',
+            level: course?.level ?? '',
+            thumbnail: course?.thumbnail ?? '',
+            mediumId: course?.mediumId ?? selectedMediumId ?? '',
+            boardId: course?.boardId ?? selectedBoardId ?? '',
+            examId: (course as any)?.examId ?? '',
+            order: course?.order?.toString() ?? '',
+            isVisible: course?.isVisible ?? true,
+          };
+        }
         case 'subjects': {
-           const subject = item as CatalogSubject | undefined;
-           const examId = (subject as any)?.examId ?? '';
-           const examName = examId ? examOptions.find(e => e.id === examId)?.name || '' : '';
-           return {
-             name: subject?.name ?? '',
-             description: subject?.description ?? '',
-             emoji: (subject as any)?.emojiId ? {
-               id: (subject as any).emojiId,
-               name: (subject as any).emojiName,
-               char: (subject as any).emoji
-             } : null,
-             color: (subject as any)?.brandColorId ? {
-               id: (subject as any).brandColorId,
-               hex: (subject as any).brandColorHex
-             } : null,
-             course: (subject as any)?.courseId ? {
-               id: (subject as any).courseId,
-               name: (subject as any).courseName || 'Loading...'
-             } : null,
-             cardKind: (subject as any)?.cardKind ?? 'grid',
-             cardSize: (subject as any)?.cardSize ?? 'large',
-             examId,
-             order: subject?.order?.toString() ?? '',
-             isVisible: subject?.isVisible ?? true
-           };
-         }
+          const subject = item as CatalogSubject | undefined;
+          const examId = (subject as any)?.examId ?? '';
+          const examName = examId ? examOptions.find(e => e.id === examId)?.name || '' : '';
+          return {
+            name: subject?.name ?? '',
+            description: subject?.description ?? '',
+            emoji: (subject as any)?.emojiId
+              ? {
+                  id: (subject as any).emojiId,
+                  name: (subject as any).emojiName,
+                  char: (subject as any).emoji,
+                }
+              : null,
+            color: (subject as any)?.brandColorId
+              ? {
+                  id: (subject as any).brandColorId,
+                  hex: (subject as any).brandColorHex,
+                }
+              : null,
+            course: (subject as any)?.courseId
+              ? {
+                  id: (subject as any).courseId,
+                  name: (subject as any).courseName || 'Loading...',
+                }
+              : null,
+            cardKind: (subject as any)?.cardKind ?? 'grid',
+            cardSize: (subject as any)?.cardSize ?? 'large',
+            examId,
+            order: subject?.order?.toString() ?? '',
+            isVisible: subject?.isVisible ?? true,
+          };
+        }
         case 'chapters': {
           const chapter = item as CatalogChapter | undefined;
           return {
@@ -973,7 +1070,7 @@ const AdminDashboard: React.FC = () => {
             durationMinutes: chapter?.durationMinutes?.toString() ?? '',
             prerequisites: stringifyList(chapter?.prerequisites ?? []),
             order: chapter?.order?.toString() ?? '',
-            isVisible: chapter?.isVisible ?? true
+            isVisible: chapter?.isVisible ?? true,
           };
         }
         case 'quizSets': {
@@ -993,33 +1090,33 @@ const AdminDashboard: React.FC = () => {
             autoRunVoice: quizSet?.autoRunConfig?.voice ?? 'default',
             autoRunSubscriberOnly: quizSet?.autoRunConfig?.subscriberOnly ?? false,
             order: quizSet?.order?.toString() ?? '',
-            isVisible: quizSet?.isVisible ?? true
+            isVisible: quizSet?.isVisible ?? true,
           };
         }
         case 'screens': {
-           const screen = item as AppScreen | undefined;
-           const style = (screen as any)?.style as ScreenStyle | undefined;
-           return {
-             name: screen?.name ?? '',
-             path: screen?.path ?? '',
-             description: screen?.description ?? '',
-             category: screen?.category ?? '',
-             roles: stringifyList(screen?.roles ?? []),
-             order: screen?.order?.toString() ?? '',
-             isVisible: screen?.isVisible ?? true,
-             // Design
-             designTheme: style?.theme ?? 'default',
-             designGradient: style?.gradient ?? null,
-             designBgImage: style?.bgImage ?? null,
-             designBgMode: style?.bgMode ?? 'cover',
-             designBgBlend: style?.bgBlend ?? 'normal',
-             designOverlay: style?.overlay ?? null,
-             designCardVariant: style?.cardVariant ?? 'elevated',
-             designContainerMaxWidth: style?.container?.maxWidth ?? 1100,
-             designContainerPadding: style?.container?.padding ?? 24,
-             designContainerGap: style?.container?.gap ?? 24
-           };
-         }
+          const screen = item as AppScreen | undefined;
+          const style = (screen as any)?.style as ScreenStyle | undefined;
+          return {
+            name: screen?.name ?? '',
+            path: screen?.path ?? '',
+            description: screen?.description ?? '',
+            category: screen?.category ?? '',
+            roles: stringifyList(screen?.roles ?? []),
+            order: screen?.order?.toString() ?? '',
+            isVisible: screen?.isVisible ?? true,
+            // Design
+            designTheme: style?.theme ?? 'default',
+            designGradient: style?.gradient ?? null,
+            designBgImage: style?.bgImage ?? null,
+            designBgMode: style?.bgMode ?? 'cover',
+            designBgBlend: style?.bgBlend ?? 'normal',
+            designOverlay: style?.overlay ?? null,
+            designCardVariant: style?.cardVariant ?? 'elevated',
+            designContainerMaxWidth: style?.container?.maxWidth ?? 1100,
+            designContainerPadding: style?.container?.padding ?? 24,
+            designContainerGap: style?.container?.gap ?? 24,
+          };
+        }
         case 'leaderboards': {
           const leaderboard = item as LeaderboardConfig | undefined;
           return {
@@ -1030,7 +1127,7 @@ const AdminDashboard: React.FC = () => {
             metric: leaderboard?.metric ?? 'score',
             limit: leaderboard?.limit?.toString() ?? '',
             order: leaderboard?.order?.toString() ?? '',
-            isVisible: leaderboard?.isVisible ?? true
+            isVisible: leaderboard?.isVisible ?? true,
           };
         }
         case 'exams': {
@@ -1042,7 +1139,7 @@ const AdminDashboard: React.FC = () => {
             title: exam?.title ?? '',
             description: exam?.description ?? '',
             order: exam?.order?.toString() ?? '',
-            isVisible: exam?.isVisible ?? true
+            isVisible: exam?.isVisible ?? true,
           };
         }
         default:
@@ -1058,11 +1155,26 @@ const AdminDashboard: React.FC = () => {
         case 'mediums':
           return [
             { id: 'name', label: 'Name', type: 'text', required: true },
-            { id: 'description', label: 'Description', type: 'textarea', placeholder: 'Short summary of the medium' },
+            {
+              id: 'description',
+              label: 'Description',
+              type: 'textarea',
+              placeholder: 'Short summary of the medium',
+            },
             { id: 'code', label: 'Code', type: 'text', placeholder: 'Internal code (e.g. EN)' },
-            { id: 'locale', label: 'Locale', type: 'text', placeholder: 'Optional locale (e.g. en-IN)' },
-            { id: 'order', label: 'Display Order', type: 'number', helperText: 'Lower numbers appear first.' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            {
+              id: 'locale',
+              label: 'Locale',
+              type: 'text',
+              placeholder: 'Optional locale (e.g. en-IN)',
+            },
+            {
+              id: 'order',
+              label: 'Display Order',
+              type: 'number',
+              helperText: 'Lower numbers appear first.',
+            },
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         case 'boards':
           return [
@@ -1071,59 +1183,68 @@ const AdminDashboard: React.FC = () => {
               label: 'Medium',
               type: 'select',
               required: true,
-              options: mediums.map((medium) => ({ value: medium.id, label: medium.name }))
+              options: mediums.map(medium => ({ value: medium.id, label: medium.name })),
             },
             { id: 'name', label: 'Name', type: 'text', required: true },
             { id: 'description', label: 'Description', type: 'textarea' },
             { id: 'region', label: 'Region', type: 'text', placeholder: 'Region or country' },
             { id: 'code', label: 'Code', type: 'text', placeholder: 'Internal board code' },
             { id: 'order', label: 'Display Order', type: 'number' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         case 'courses':
-            return [
-              {
-                id: 'mediumId',
-                label: 'Medium',
-                type: 'select',
-                options: mediums.map((medium) => ({ value: medium.id, label: medium.name }))
-              },
-              {
-                id: 'boardId',
-                label: 'Board (optional)',
-                type: 'select',
-                options: [{ value: '', label: '— No Board —' }, ...boards.map((board) => ({ value: board.id, label: board.name }))]
-              },
-              {
-                id: 'examId',
-                label: 'Exam (optional)',
-                type: 'select',
-                options: [{ value: '', label: '— No Exam —' }, ...examOptions.map((exam) => ({ value: exam.id, label: exam.name }))]
-              },
-              { id: 'name', label: 'Name', type: 'text', required: true },
-              { id: 'description', label: 'Description', type: 'textarea' },
-              { id: 'slug', label: 'Slug', type: 'slug' },
-              { id: 'level', label: 'Level', type: 'levelSelect' },
-              { id: 'thumbnail', label: 'Thumbnail', type: 'thumbnailSelect' },
-              { id: 'order', label: 'Display Order', type: 'number' },
-              { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
-            ];
+          return [
+            {
+              id: 'mediumId',
+              label: 'Medium',
+              type: 'select',
+              options: mediums.map(medium => ({ value: medium.id, label: medium.name })),
+            },
+            {
+              id: 'boardId',
+              label: 'Board (optional)',
+              type: 'select',
+              options: [
+                { value: '', label: '— No Board —' },
+                ...boards.map(board => ({ value: board.id, label: board.name })),
+              ],
+            },
+            {
+              id: 'examId',
+              label: 'Exam (optional)',
+              type: 'select',
+              options: [
+                { value: '', label: '— No Exam —' },
+                ...examOptions.map(exam => ({ value: exam.id, label: exam.name })),
+              ],
+            },
+            { id: 'name', label: 'Name', type: 'text', required: true },
+            { id: 'description', label: 'Description', type: 'textarea' },
+            { id: 'slug', label: 'Slug', type: 'slug' },
+            { id: 'level', label: 'Level', type: 'levelSelect' },
+            { id: 'thumbnail', label: 'Thumbnail', type: 'thumbnailSelect' },
+            { id: 'order', label: 'Display Order', type: 'number' },
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
+          ];
         case 'subjects':
-           return [
-             { id: 'name', label: 'Subject', type: 'subjectName', required: true },
-             { id: 'description', label: 'Description', type: 'textarea' },
-             { id: 'emoji', label: 'Icon Emoji', type: 'emoji' },
-             { id: 'color', label: 'Brand Color', type: 'color' },
-             { id: 'course', label: 'Course', type: 'course' },
-             {
-               id: 'examId',
-               label: 'Exam (optional)',
-               type: 'select',
-               options: [{ value: '', label: '— No Exam —' }, ...examOptions.map((exam) => ({ value: exam.id, label: exam.name }))]
-             },
-             { id: 'order', label: 'Display Order', type: 'number' },
-             { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
-           ];
+          return [
+            { id: 'name', label: 'Subject', type: 'subjectName', required: true },
+            { id: 'description', label: 'Description', type: 'textarea' },
+            { id: 'emoji', label: 'Icon Emoji', type: 'emoji' },
+            { id: 'color', label: 'Brand Color', type: 'color' },
+            { id: 'course', label: 'Course', type: 'course' },
+            {
+              id: 'examId',
+              label: 'Exam (optional)',
+              type: 'select',
+              options: [
+                { value: '', label: '— No Exam —' },
+                ...examOptions.map(exam => ({ value: exam.id, label: exam.name })),
+              ],
+            },
+            { id: 'order', label: 'Display Order', type: 'number' },
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
+          ];
         case 'chapters':
           return [
             {
@@ -1131,15 +1252,25 @@ const AdminDashboard: React.FC = () => {
               label: 'Subject',
               type: 'select',
               required: true,
-              options: subjects.map((subject) => ({ value: subject.id, label: subject.name }))
+              options: subjects.map(subject => ({ value: subject.id, label: subject.name })),
             },
             { id: 'name', label: 'Name', type: 'text', required: true },
             { id: 'description', label: 'Description', type: 'textarea' },
-            { id: 'chapterNumber', label: 'Chapter Number', type: 'number', helperText: 'Used for ordering within the subject.' },
+            {
+              id: 'chapterNumber',
+              label: 'Chapter Number',
+              type: 'number',
+              helperText: 'Used for ordering within the subject.',
+            },
             { id: 'durationMinutes', label: 'Recommended Duration (minutes)', type: 'number' },
-            { id: 'prerequisites', label: 'Prerequisites', type: 'text', placeholder: 'Comma separated chapter IDs' },
+            {
+              id: 'prerequisites',
+              label: 'Prerequisites',
+              type: 'text',
+              placeholder: 'Comma separated chapter IDs',
+            },
             { id: 'order', label: 'Display Order', type: 'number' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         case 'quizSets':
           return [
@@ -1148,7 +1279,7 @@ const AdminDashboard: React.FC = () => {
               label: 'Chapter',
               type: 'select',
               required: true,
-              options: chapters.map((chapter) => ({ value: chapter.id, label: chapter.name }))
+              options: chapters.map(chapter => ({ value: chapter.id, label: chapter.name })),
             },
             { id: 'name', label: 'Name', type: 'text', required: true },
             { id: 'description', label: 'Description', type: 'textarea' },
@@ -1159,8 +1290,8 @@ const AdminDashboard: React.FC = () => {
               options: [
                 { value: 'easy', label: 'Easy' },
                 { value: 'medium', label: 'Medium' },
-                { value: 'hard', label: 'Hard' }
-              ]
+                { value: 'hard', label: 'Hard' },
+              ],
             },
             { id: 'totalQuestions', label: 'Number of Questions', type: 'number' },
             { id: 'durationMinutes', label: 'Time Limit (minutes)', type: 'number' },
@@ -1168,78 +1299,114 @@ const AdminDashboard: React.FC = () => {
             { id: 'autoRunEnabled', label: 'Enable Auto Run preview', type: 'checkbox' },
             { id: 'autoRunReadAnswer', label: 'Read correct answer aloud', type: 'checkbox' },
             { id: 'autoRunReadExplanation', label: 'Read explanation aloud', type: 'checkbox' },
-            { id: 'autoRunDelaySeconds', label: 'Delay between steps (seconds)', type: 'number', helperText: 'Pause before moving to next question.' },
+            {
+              id: 'autoRunDelaySeconds',
+              label: 'Delay between steps (seconds)',
+              type: 'number',
+              helperText: 'Pause before moving to next question.',
+            },
             { id: 'autoRunVoice', label: 'Narration voice', type: 'text', placeholder: 'default' },
             { id: 'autoRunSubscriberOnly', label: 'Subscribers only', type: 'checkbox' },
             { id: 'order', label: 'Display Order', type: 'number' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         case 'screens':
-           return [
-             { id: 'name', label: 'Screen Name', type: 'text', required: true },
-             { id: 'path', label: 'Route Path', type: 'text', required: true, placeholder: '/admin' },
-             { id: 'description', label: 'Description', type: 'textarea' },
-             { id: 'category', label: 'Category', type: 'text', placeholder: 'Navigation, Feature Flag, etc.' },
-             { id: 'roles', label: 'Allowed Roles', type: 'text', placeholder: 'Comma separated roles (admin, tutor, ...)' },
-             { id: 'order', label: 'Display Order', type: 'number' },
-             { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
-             // Design fields
-             {
-               id: 'designTheme',
-               label: 'Theme',
-               type: 'select',
-               options: [{ value: 'default', label: 'Default' }]
-             },
-             {
-               id: 'designGradient',
-               label: 'Background Gradient',
-               type: 'select',
-               options: [
-                 { value: '', label: 'None' },
-                 { value: 'blueGlass', label: 'Blue Glass' },
-                 { value: 'sunset', label: 'Sunset' }
-               ]
-             },
-             {
-               id: 'designBgImage',
-               label: 'Background Image',
-               type: 'select',
-               options: [{ value: '', label: 'None' }] // Will be populated with uploaded images
-             },
-             {
-               id: 'designBgMode',
-               label: 'Background Mode',
-               type: 'select',
-               options: [
-                 { value: 'cover', label: 'Cover' },
-                 { value: 'contain', label: 'Contain' }
-               ]
-             },
-             {
-               id: 'designBgBlend',
-               label: 'Background Blend',
-               type: 'select',
-               options: [
-                 { value: 'normal', label: 'Normal' },
-                 { value: 'overlay', label: 'Overlay' },
-                 { value: 'multiply', label: 'Multiply' },
-                 { value: 'screen', label: 'Screen' }
-               ]
-             },
-             { id: 'designOverlay', label: 'Overlay Color', type: 'text', placeholder: 'rgba(255,255,255,.55)' },
-             {
-               id: 'designCardVariant',
-               label: 'Card Variant',
-               type: 'select',
-               options: [
-                 { value: 'elevated', label: 'Elevated' },
-                 { value: 'flat', label: 'Flat' }
-               ]
-             },
-             { id: 'designContainerMaxWidth', label: 'Container Max Width', type: 'number', placeholder: '1100' },
-             { id: 'designContainerPadding', label: 'Container Padding', type: 'number', placeholder: '24' },
-             { id: 'designContainerGap', label: 'Container Gap', type: 'number', placeholder: '24' }
-           ];
+          return [
+            { id: 'name', label: 'Screen Name', type: 'text', required: true },
+            {
+              id: 'path',
+              label: 'Route Path',
+              type: 'text',
+              required: true,
+              placeholder: '/admin',
+            },
+            { id: 'description', label: 'Description', type: 'textarea' },
+            {
+              id: 'category',
+              label: 'Category',
+              type: 'text',
+              placeholder: 'Navigation, Feature Flag, etc.',
+            },
+            {
+              id: 'roles',
+              label: 'Allowed Roles',
+              type: 'text',
+              placeholder: 'Comma separated roles (admin, tutor, ...)',
+            },
+            { id: 'order', label: 'Display Order', type: 'number' },
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
+            // Design fields
+            {
+              id: 'designTheme',
+              label: 'Theme',
+              type: 'select',
+              options: [{ value: 'default', label: 'Default' }],
+            },
+            {
+              id: 'designGradient',
+              label: 'Background Gradient',
+              type: 'select',
+              options: [
+                { value: '', label: 'None' },
+                { value: 'blueGlass', label: 'Blue Glass' },
+                { value: 'sunset', label: 'Sunset' },
+              ],
+            },
+            {
+              id: 'designBgImage',
+              label: 'Background Image',
+              type: 'select',
+              options: [{ value: '', label: 'None' }], // Will be populated with uploaded images
+            },
+            {
+              id: 'designBgMode',
+              label: 'Background Mode',
+              type: 'select',
+              options: [
+                { value: 'cover', label: 'Cover' },
+                { value: 'contain', label: 'Contain' },
+              ],
+            },
+            {
+              id: 'designBgBlend',
+              label: 'Background Blend',
+              type: 'select',
+              options: [
+                { value: 'normal', label: 'Normal' },
+                { value: 'overlay', label: 'Overlay' },
+                { value: 'multiply', label: 'Multiply' },
+                { value: 'screen', label: 'Screen' },
+              ],
+            },
+            {
+              id: 'designOverlay',
+              label: 'Overlay Color',
+              type: 'text',
+              placeholder: 'rgba(255,255,255,.55)',
+            },
+            {
+              id: 'designCardVariant',
+              label: 'Card Variant',
+              type: 'select',
+              options: [
+                { value: 'elevated', label: 'Elevated' },
+                { value: 'flat', label: 'Flat' },
+              ],
+            },
+            {
+              id: 'designContainerMaxWidth',
+              label: 'Container Max Width',
+              type: 'number',
+              placeholder: '1100',
+            },
+            {
+              id: 'designContainerPadding',
+              label: 'Container Padding',
+              type: 'number',
+              placeholder: '24',
+            },
+            { id: 'designContainerGap', label: 'Container Gap', type: 'number', placeholder: '24' },
+          ];
         case 'leaderboards':
           return [
             { id: 'title', label: 'Title', type: 'text', required: true },
@@ -1252,14 +1419,17 @@ const AdminDashboard: React.FC = () => {
                 { value: 'daily', label: 'Daily' },
                 { value: 'weekly', label: 'Weekly' },
                 { value: 'monthly', label: 'Monthly' },
-                { value: 'all-time', label: 'All Time' }
-              ]
+                { value: 'all-time', label: 'All Time' },
+              ],
             },
             {
               id: 'subject',
               label: 'Subject (optional)',
               type: 'select',
-              options: [{ value: '', label: 'All Subjects' }, ...subjects.map((subject) => ({ value: subject.id, label: subject.name }))]
+              options: [
+                { value: '', label: 'All Subjects' },
+                ...subjects.map(subject => ({ value: subject.id, label: subject.name })),
+              ],
             },
             {
               id: 'metric',
@@ -1269,17 +1439,27 @@ const AdminDashboard: React.FC = () => {
                 { value: 'score', label: 'Score' },
                 { value: 'streak', label: 'Streak' },
                 { value: 'accuracy', label: 'Accuracy' },
-                { value: 'time', label: 'Fastest Time' }
-              ]
+                { value: 'time', label: 'Fastest Time' },
+              ],
             },
-            { id: 'limit', label: 'Maximum Entries', type: 'number', helperText: 'Defaults to 10 if left blank.' },
-            { id: 'cardKind', label: 'Card Layout', type: 'select', options: [
-              { value: 'grid', label: 'Grid' },
-              { value: 'bar', label: 'Bar' }
-            ] },
+            {
+              id: 'limit',
+              label: 'Maximum Entries',
+              type: 'number',
+              helperText: 'Defaults to 10 if left blank.',
+            },
+            {
+              id: 'cardKind',
+              label: 'Card Layout',
+              type: 'select',
+              options: [
+                { value: 'grid', label: 'Grid' },
+                { value: 'bar', label: 'Bar' },
+              ],
+            },
             { id: 'cardSize', label: 'Card Size', type: 'select', options: [] }, // Dynamic based on cardKind
             { id: 'order', label: 'Display Order', type: 'number' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         case 'exams':
           return [
@@ -1288,14 +1468,25 @@ const AdminDashboard: React.FC = () => {
               label: 'Medium',
               type: 'select',
               required: true,
-              options: mediums.map((medium) => ({ value: medium.id, label: medium.name }))
+              options: mediums.map(medium => ({ value: medium.id, label: medium.name })),
             },
-            { id: 'code', label: 'Code', type: 'text', required: true, placeholder: 'e.g., JEE, NEET' },
+            {
+              id: 'code',
+              label: 'Code',
+              type: 'text',
+              required: true,
+              placeholder: 'e.g., JEE, NEET',
+            },
             { id: 'name', label: 'Name', type: 'text', required: true },
             { id: 'title', label: 'Title', type: 'text', placeholder: 'Optional display title' },
             { id: 'description', label: 'Description', type: 'textarea' },
-            { id: 'order', label: 'Display Order', type: 'number', helperText: 'Lower numbers appear first.' },
-            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' }
+            {
+              id: 'order',
+              label: 'Display Order',
+              type: 'number',
+              helperText: 'Lower numbers appear first.',
+            },
+            { id: 'isVisible', label: 'Visible to users', type: 'checkbox' },
           ];
         default:
           return [];
@@ -1329,7 +1520,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleFormChange = (fieldId: string, value: any) => {
-    setFormState((prev) => ({ ...prev, [fieldId]: value }));
+    setFormState(prev => ({ ...prev, [fieldId]: value }));
   };
 
   const parseNumberField = (value: unknown): number | undefined => {
@@ -1343,7 +1534,7 @@ const AdminDashboard: React.FC = () => {
   const buildPayload = (tab: AdminTab, values: Record<string, any>) => {
     const base: Record<string, any> = {
       isVisible: values.isVisible !== undefined ? values.isVisible : true,
-      order: parseNumberField(values.order) ?? DEFAULT_ORDER
+      order: parseNumberField(values.order) ?? DEFAULT_ORDER,
     };
 
     const trimmed = (input: unknown) => (typeof input === 'string' ? input.trim() : input);
@@ -1355,7 +1546,7 @@ const AdminDashboard: React.FC = () => {
           name: trimmed(values.name) ?? '',
           description: trimmed(values.description) || undefined,
           code: trimmed(values.code) || undefined,
-          locale: trimmed(values.locale) || undefined
+          locale: trimmed(values.locale) || undefined,
         };
       case 'boards':
         return {
@@ -1364,22 +1555,22 @@ const AdminDashboard: React.FC = () => {
           description: trimmed(values.description) || undefined,
           region: trimmed(values.region) || undefined,
           code: trimmed(values.code) || undefined,
-          mediumId: values.mediumId || undefined
+          mediumId: values.mediumId || undefined,
         };
       case 'courses': {
-          const doc: any = {
-            ...base,
-            name: trimmed(values.name) ?? '',
-            description: trimmed(values.description) || null,
-            slug: trimmed(values.slug) || null,
-            level: trimmed(values.level) || null,
-            thumbnail: trimmed(values.thumbnail) || null,
-            mediumId: values.mediumId || null
-          };
-          if (values.boardId) doc.boardId = values.boardId;
-          if (values.examId) doc.examId = values.examId;
-          return stripUndefined(doc);
-        }
+        const doc: any = {
+          ...base,
+          name: trimmed(values.name) ?? '',
+          description: trimmed(values.description) || null,
+          slug: trimmed(values.slug) || null,
+          level: trimmed(values.level) || null,
+          thumbnail: trimmed(values.thumbnail) || null,
+          mediumId: values.mediumId || null,
+        };
+        if (values.boardId) doc.boardId = values.boardId;
+        if (values.examId) doc.examId = values.examId;
+        return stripUndefined(doc);
+      }
       case 'subjects':
         const examId = values.examId || null;
         const examName = examId ? examOptions.find(e => e.id === examId)?.name || null : null;
@@ -1410,7 +1601,9 @@ const AdminDashboard: React.FC = () => {
           cardKind: values.cardKind || 'grid',
           cardSize: values.cardSize || 'large',
           examId: courseExamId, // Denormalized from course
-          examName: courseExamId ? examOptions.find(e => e.id === courseExamId)?.name || null : null
+          examName: courseExamId
+            ? examOptions.find(e => e.id === courseExamId)?.name || null
+            : null,
         };
       case 'chapters': {
         // Get boardId and examId from the selected subject for denormalization
@@ -1427,7 +1620,7 @@ const AdminDashboard: React.FC = () => {
           examId: subjectExamId, // Denormalized from subject
           chapterNumber: parseNumberField(values.chapterNumber) ?? undefined,
           durationMinutes: parseNumberField(values.durationMinutes) ?? undefined,
-          prerequisites: parseCommaSeparated(values.prerequisites)
+          prerequisites: parseCommaSeparated(values.prerequisites),
         };
       }
       case 'quizSets': {
@@ -1453,34 +1646,37 @@ const AdminDashboard: React.FC = () => {
             readExplanation: Boolean(values.autoRunReadExplanation),
             delaySeconds: parseNumberField(values.autoRunDelaySeconds) ?? 5,
             voice: trimmed(values.autoRunVoice) || 'default',
-            subscriberOnly: Boolean(values.autoRunSubscriberOnly)
-          }
+            subscriberOnly: Boolean(values.autoRunSubscriberOnly),
+          },
         };
       }
       case 'screens':
-         const style: ScreenStyle = {
-           theme: values.designTheme || 'default',
-           gradient: values.designGradient || null,
-           bgImage: values.designBgImage || null,
-           bgMode: values.designBgMode || 'cover',
-           bgBlend: values.designBgBlend || 'normal',
-           overlay: typeof values.designOverlay === 'string' && values.designOverlay.trim() ? values.designOverlay.trim() : null,
-           cardVariant: values.designCardVariant || 'elevated',
-           container: {
-             maxWidth: parseNumberField(values.designContainerMaxWidth) ?? 1100,
-             padding: parseNumberField(values.designContainerPadding) ?? 24,
-             gap: parseNumberField(values.designContainerGap) ?? 24
-           }
-         };
-         return {
-           ...base,
-           name: trimmed(values.name) ?? '',
-           path: trimmed(values.path) ?? '',
-           description: trimmed(values.description) || undefined,
-           category: trimmed(values.category) || undefined,
-           roles: parseCommaSeparated(values.roles),
-           style
-         };
+        const style: ScreenStyle = {
+          theme: values.designTheme || 'default',
+          gradient: values.designGradient || null,
+          bgImage: values.designBgImage || null,
+          bgMode: values.designBgMode || 'cover',
+          bgBlend: values.designBgBlend || 'normal',
+          overlay:
+            typeof values.designOverlay === 'string' && values.designOverlay.trim()
+              ? values.designOverlay.trim()
+              : null,
+          cardVariant: values.designCardVariant || 'elevated',
+          container: {
+            maxWidth: parseNumberField(values.designContainerMaxWidth) ?? 1100,
+            padding: parseNumberField(values.designContainerPadding) ?? 24,
+            gap: parseNumberField(values.designContainerGap) ?? 24,
+          },
+        };
+        return {
+          ...base,
+          name: trimmed(values.name) ?? '',
+          path: trimmed(values.path) ?? '',
+          description: trimmed(values.description) || undefined,
+          category: trimmed(values.category) || undefined,
+          roles: parseCommaSeparated(values.roles),
+          style,
+        };
       case 'leaderboards':
         return {
           ...base,
@@ -1489,7 +1685,7 @@ const AdminDashboard: React.FC = () => {
           period: values.period ?? 'weekly',
           subject: values.subject || undefined,
           metric: values.metric ?? 'score',
-          limit: parseNumberField(values.limit) ?? undefined
+          limit: parseNumberField(values.limit) ?? undefined,
         };
       case 'exams':
         const code = trimmed(values.code);
@@ -1499,7 +1695,7 @@ const AdminDashboard: React.FC = () => {
           code: typeof code === 'string' ? code.toUpperCase() : '',
           name: trimmed(values.name) ?? '',
           title: trimmed(values.title) || undefined,
-          description: trimmed(values.description) || undefined
+          description: trimmed(values.description) || undefined,
         };
       default:
         return base;
@@ -1531,7 +1727,7 @@ const AdminDashboard: React.FC = () => {
         slug: payload.slug,
         mediumId: payload.mediumId,
         boardId: payload.boardId,
-        examId: payload.examId
+        examId: payload.examId,
       });
       if (errs.length) {
         setFormError({
@@ -1586,7 +1782,12 @@ const AdminDashboard: React.FC = () => {
       if (mode === 'create') {
         await AdminCatalogService.createItem(collectionName, payload, userId);
       } else if (item) {
-        await AdminCatalogService.updateItem(collectionName, (item as { id: string }).id, payload, userId);
+        await AdminCatalogService.updateItem(
+          collectionName,
+          (item as { id: string }).id,
+          payload,
+          userId
+        );
       }
 
       closeModal();
@@ -1603,7 +1804,11 @@ const AdminDashboard: React.FC = () => {
     setBusyState({ id, action: 'toggle' });
     try {
       const collectionName = COLLECTION_MAP[tab];
-      await AdminCatalogService.toggleVisibility(collectionName, id, !(item as { isVisible?: boolean }).isVisible);
+      await AdminCatalogService.toggleVisibility(
+        collectionName,
+        id,
+        !(item as { isVisible?: boolean }).isVisible
+      );
     } catch (error) {
       console.error('Failed to toggle visibility', error);
     } finally {
@@ -1774,7 +1979,7 @@ const AdminDashboard: React.FC = () => {
       await updateSubject(editingSubjectId, {
         name: data.name,
         order: data.order,
-        enabled: data.enabled
+        enabled: data.enabled,
       });
       setEditingSubjectId(null);
     } catch (error) {
@@ -1784,7 +1989,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleSubjectDelete = async (id: string) => {
-    if (!confirm("Delete this subject? This cannot be undone.")) return;
+    if (!confirm('Delete this subject? This cannot be undone.')) return;
     try {
       await deleteSubject(id);
     } catch (error) {
@@ -1812,14 +2017,39 @@ const AdminDashboard: React.FC = () => {
   };
 
   const renderFilterBar = () => {
-    const shouldShowMedium = ['boards', 'courses', 'subjects', 'chapters', 'quizSets', 'leaderboards', 'exams'].includes(activeTab);
-    const shouldShowBoard = ['courses', 'subjects', 'chapters', 'quizSets', 'leaderboards'].includes(activeTab);
-    const shouldShowCourse = ['subjects', 'chapters', 'quizSets', 'leaderboards'].includes(activeTab);
+    const shouldShowMedium = [
+      'boards',
+      'courses',
+      'subjects',
+      'chapters',
+      'quizSets',
+      'leaderboards',
+      'exams',
+    ].includes(activeTab);
+    const shouldShowBoard = [
+      'courses',
+      'subjects',
+      'chapters',
+      'quizSets',
+      'leaderboards',
+    ].includes(activeTab);
+    const shouldShowCourse = ['subjects', 'chapters', 'quizSets', 'leaderboards'].includes(
+      activeTab
+    );
     const shouldShowSubject = ['chapters', 'quizSets', 'leaderboards'].includes(activeTab);
     const shouldShowChapter = ['quizSets'].includes(activeTab);
-    const shouldShowExam = ['courses', 'subjects', 'chapters', 'quizSets', 'leaderboards'].includes(activeTab);
+    const shouldShowExam = ['courses', 'subjects', 'chapters', 'quizSets', 'leaderboards'].includes(
+      activeTab
+    );
 
-    if (!shouldShowMedium && !shouldShowBoard && !shouldShowCourse && !shouldShowSubject && !shouldShowChapter && !shouldShowExam) {
+    if (
+      !shouldShowMedium &&
+      !shouldShowBoard &&
+      !shouldShowCourse &&
+      !shouldShowSubject &&
+      !shouldShowChapter &&
+      !shouldShowExam
+    ) {
       return null;
     }
 
@@ -1834,7 +2064,8 @@ const AdminDashboard: React.FC = () => {
       const { ready, message } = gate('subjects', filters);
 
       // For enabling course dropdown, we need medium + (board OR exam)
-      const readyForCourse = !!subjectFilters.medium && (!!subjectFilters.board || !!subjectFilters.examId);
+      const readyForCourse =
+        !!subjectFilters.medium && (!!subjectFilters.board || !!subjectFilters.examId);
 
       return (
         <div className="space-y-4 mb-6">
@@ -1845,19 +2076,19 @@ const AdminDashboard: React.FC = () => {
               </label>
               <select
                 value={subjectFilters.medium}
-                onChange={(event) => {
+                onChange={event => {
                   handleMediumFilterChange(event.target.value);
                   setSubjectFilters(f => ({
                     medium: event.target.value,
-                    board: "",
-                    examId: "",
-                    courseId: ""
+                    board: '',
+                    examId: '',
+                    courseId: '',
                   }));
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">— Select Medium —</option>
-                {mediums.map((medium) => (
+                {mediums.map(medium => (
                   <option key={medium.id} value={medium.id}>
                     {medium.name}
                   </option>
@@ -1870,18 +2101,18 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={subjectFilters.board}
                 disabled={!subjectFilters.medium}
-                onChange={(event) => {
+                onChange={event => {
                   handleBoardFilterChange(event.target.value);
                   setSubjectFilters(f => ({
                     ...f,
                     board: event.target.value,
-                    courseId: ""
+                    courseId: '',
                   }));
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Board —</option>
-                {filteredBoards.map((board) => (
+                {filteredBoards.map(board => (
                   <option key={board.id} value={board.id}>
                     {board.name}
                   </option>
@@ -1894,18 +2125,18 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={subjectFilters.examId}
                 disabled={!subjectFilters.medium}
-                onChange={(event) => {
+                onChange={event => {
                   handleExamFilterChange(event.target.value);
                   setSubjectFilters(f => ({
                     ...f,
                     examId: event.target.value,
-                    courseId: ""
+                    courseId: '',
                   }));
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Exam —</option>
-                {examOptions.map((exam) => (
+                {examOptions.map(exam => (
                   <option key={exam.id} value={exam.id}>
                     {exam.name}
                   </option>
@@ -1918,14 +2149,14 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={subjectFilters.courseId}
                 disabled={!readyForCourse}
-                onChange={(event) => {
+                onChange={event => {
                   handleCourseFilterChange(event.target.value);
                   setSubjectFilters(f => ({ ...f, courseId: event.target.value }));
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Course —</option>
-                {filteredCourses.map((course) => (
+                {filteredCourses.map(course => (
                   <option key={course.id} value={course.id}>
                     {course.name}
                   </option>
@@ -1934,10 +2165,13 @@ const AdminDashboard: React.FC = () => {
             </div>
 
             <div className="self-end">
-              <Button variant="ghost" onClick={() => {
-                clearFilters();
-                setSubjectFilters({ medium: '', board: '', courseId: '', examId: '' });
-              }}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  clearFilters();
+                  setSubjectFilters({ medium: '', board: '', courseId: '', examId: '' });
+                }}
+              >
                 Clear Filters
               </Button>
             </div>
@@ -1970,11 +2204,11 @@ const AdminDashboard: React.FC = () => {
               </label>
               <select
                 value={selectedMediumId}
-                onChange={(event) => handleMediumFilterChange(event.target.value)}
+                onChange={event => handleMediumFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">— Select Medium —</option>
-                {mediums.map((medium) => (
+                {mediums.map(medium => (
                   <option key={medium.id} value={medium.id}>
                     {medium.name}
                   </option>
@@ -1987,11 +2221,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedBoardId}
                 disabled={!selectedMediumId}
-                onChange={(event) => handleBoardFilterChange(event.target.value)}
+                onChange={event => handleBoardFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Board —</option>
-                {filteredBoards.map((board) => (
+                {filteredBoards.map(board => (
                   <option key={board.id} value={board.id}>
                     {board.name}
                   </option>
@@ -2004,11 +2238,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedExamId}
                 disabled={!selectedMediumId}
-                onChange={(event) => handleExamFilterChange(event.target.value)}
+                onChange={event => handleExamFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Exam —</option>
-                {filteredExams.map((exam) => (
+                {filteredExams.map(exam => (
                   <option key={exam.id} value={exam.id}>
                     {exam.name}
                   </option>
@@ -2058,11 +2292,11 @@ const AdminDashboard: React.FC = () => {
               <label className="block text-sm font-medium text-gray-600 mb-1">Medium</label>
               <select
                 value={selectedMediumId}
-                onChange={(event) => handleMediumFilterChange(event.target.value)}
+                onChange={event => handleMediumFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">— Select Medium —</option>
-                {mediums.map((medium) => (
+                {mediums.map(medium => (
                   <option key={medium.id} value={medium.id}>
                     {medium.name}
                   </option>
@@ -2077,11 +2311,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedBoardId}
                 disabled={!selectedMediumId}
-                onChange={(event) => handleBoardFilterChange(event.target.value)}
+                onChange={event => handleBoardFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Board —</option>
-                {filteredBoards.map((board) => (
+                {filteredBoards.map(board => (
                   <option key={board.id} value={board.id}>
                     {board.name}
                   </option>
@@ -2096,11 +2330,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedExamId}
                 disabled={!selectedMediumId}
-                onChange={(event) => handleExamFilterChange(event.target.value)}
+                onChange={event => handleExamFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Exam —</option>
-                {filteredExams.map((exam) => (
+                {filteredExams.map(exam => (
                   <option key={exam.id} value={exam.id}>
                     {exam.name}
                   </option>
@@ -2115,11 +2349,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedCourseId}
                 disabled={!selectedMediumId || (!selectedBoardId && !selectedExamId)}
-                onChange={(event) => handleCourseFilterChange(event.target.value)}
+                onChange={event => handleCourseFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Course —</option>
-                {filteredCourses.map((course) => (
+                {filteredCourses.map(course => (
                   <option key={course.id} value={course.id}>
                     {course.name}
                   </option>
@@ -2134,11 +2368,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedSubjectId}
                 disabled={!selectedCourseId}
-                onChange={(event) => handleSubjectFilterChange(event.target.value)}
+                onChange={event => handleSubjectFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Subject —</option>
-                {filteredSubjects.map((subject) => (
+                {filteredSubjects.map(subject => (
                   <option key={subject.id} value={subject.id}>
                     {subject.name}
                   </option>
@@ -2153,11 +2387,11 @@ const AdminDashboard: React.FC = () => {
               <select
                 value={selectedChapterId}
                 disabled={!selectedSubjectId}
-                onChange={(event) => handleChapterFilterChange(event.target.value)}
+                onChange={event => handleChapterFilterChange(event.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
               >
                 <option value="">— Select Chapter —</option>
-                {filteredChapters.map((chapter) => (
+                {filteredChapters.map(chapter => (
                   <option key={chapter.id} value={chapter.id}>
                     {chapter.name}
                   </option>
@@ -2204,7 +2438,9 @@ const AdminDashboard: React.FC = () => {
       case 'courses': {
         const course = item as CatalogCourse;
         const boardName = course.boardId ? boardLookup.get(course.boardId)?.name : '';
-        const examName = (course as any).examId ? examOptions.find(e => e.id === (course as any).examId)?.name : '';
+        const examName = (course as any).examId
+          ? examOptions.find(e => e.id === (course as any).examId)?.name
+          : '';
         return (
           <div className="mt-3 space-y-1">
             {renderMetaLine('Board', boardName)}
@@ -2237,14 +2473,19 @@ const AdminDashboard: React.FC = () => {
         const subject = subjectLookup.get(chapter.subjectId);
         const course = subject ? courseLookup.get(subject.courseId) : undefined;
         const boardName = course?.boardId ? boardLookup.get(course.boardId)?.name : '';
-        const examName = (chapter as any).examId ? examOptions.find(e => e.id === (chapter as any).examId)?.name : '';
+        const examName = (chapter as any).examId
+          ? examOptions.find(e => e.id === (chapter as any).examId)?.name
+          : '';
         return (
           <div className="mt-3 space-y-1">
             {renderMetaLine('Board', boardName)}
             {renderMetaLine('Exam', examName)}
             {renderMetaLine('Subject', subject?.name)}
             {renderMetaLine('Chapter No.', chapter.chapterNumber?.toString())}
-            {renderMetaLine('Duration', chapter.durationMinutes ? `${chapter.durationMinutes} min` : undefined)}
+            {renderMetaLine(
+              'Duration',
+              chapter.durationMinutes ? `${chapter.durationMinutes} min` : undefined
+            )}
           </div>
         );
       }
@@ -2255,7 +2496,9 @@ const AdminDashboard: React.FC = () => {
         const subject = chapter ? subjectLookup.get(chapter.subjectId) : undefined;
         const course = subject ? courseLookup.get(subject.courseId) : undefined;
         const boardName = course?.boardId ? boardLookup.get(course.boardId)?.name : '';
-        const examName = (quizSet as any).examId ? examOptions.find(e => e.id === (quizSet as any).examId)?.name : '';
+        const examName = (quizSet as any).examId
+          ? examOptions.find(e => e.id === (quizSet as any).examId)?.name
+          : '';
         return (
           <div className="mt-3 space-y-1">
             {renderMetaLine('Board', boardName)}
@@ -2264,7 +2507,10 @@ const AdminDashboard: React.FC = () => {
             {renderMetaLine('Difficulty', quizSet.difficulty)}
             {renderMetaLine('Questions', quizSet.totalQuestions?.toString())}
             {autoRun?.enabled
-              ? renderMetaLine('Auto Run', `${autoRun.subscriberOnly ? 'Subscribers only' : 'Enabled'} · Delay ${(autoRun.delaySeconds ?? 5).toString()}s`)
+              ? renderMetaLine(
+                  'Auto Run',
+                  `${autoRun.subscriberOnly ? 'Subscribers only' : 'Enabled'} · Delay ${(autoRun.delaySeconds ?? 5).toString()}s`
+                )
               : renderMetaLine('Auto Run', 'Disabled')}
           </div>
         );
@@ -2318,7 +2564,7 @@ const AdminDashboard: React.FC = () => {
         const logicalName = file.name.split('.')[0];
         const updatedTheme = {
           ...currentTheme,
-          images: { ...currentTheme.images, [logicalName]: path }
+          images: { ...currentTheme.images, [logicalName]: path },
         };
         // Save to Firestore
         const db = getFirestore(app);
@@ -2394,11 +2640,11 @@ const AdminDashboard: React.FC = () => {
                 Edit Current Theme
               </Button>
               <select
-                onChange={(e) => setGlobalThemeHandler(e.target.value)}
+                onChange={e => setGlobalThemeHandler(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
               >
                 <option value="">Set Global Theme</option>
-                {themes.map((theme) => (
+                {themes.map(theme => (
                   <option key={theme.id} value={theme.id}>
                     {theme.name}
                   </option>
@@ -2453,9 +2699,7 @@ const AdminDashboard: React.FC = () => {
 
         <Card variant="elevated" className="p-6">
           <h4 className="text-lg font-semibold mb-4">Live Preview</h4>
-          <p className="text-gray-600 mb-4">
-            See your design changes applied in real-time.
-          </p>
+          <p className="text-gray-600 mb-4">See your design changes applied in real-time.</p>
           <Button variant="outline" onClick={() => window.open('/', '_blank')}>
             Preview App
           </Button>
@@ -2578,8 +2822,12 @@ const AdminDashboard: React.FC = () => {
       return (
         <Card variant="outlined" className="text-center py-12">
           <div className="text-5xl mb-4">📋</div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">No {tabDefinition.plural} yet</h3>
-          <p className="text-gray-500 mb-6">Start by creating your first {tabDefinition.singular.toLowerCase()}.</p>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            No {tabDefinition.plural} yet
+          </h3>
+          <p className="text-gray-500 mb-6">
+            Start by creating your first {tabDefinition.singular.toLowerCase()}.
+          </p>
           <div className="flex justify-center">
             {activeTab === 'subjects' ? (
               <Button
@@ -2600,12 +2848,14 @@ const AdminDashboard: React.FC = () => {
     }
 
     if (activeTab === 'subjects') {
-      const boardNameMap = Object.fromEntries(Array.from(boardLookup.entries()).map(([id, board]) => [id, board.name]));
+      const boardNameMap = Object.fromEntries(
+        Array.from(boardLookup.entries()).map(([id, board]) => [id, board.name])
+      );
       const examNameMap = examOptions.reduce((acc, exam) => ({ ...acc, [exam.id]: exam.name }), {});
 
       return (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => {
+          {items.map(item => {
             const subject = item as any;
             return (
               <SubjectCard
@@ -2614,7 +2864,7 @@ const AdminDashboard: React.FC = () => {
                 boardName={boardNameMap}
                 examName={examNameMap}
                 onToggleVisible={handleSubjectToggle}
-                onEdit={(id) => {
+                onEdit={id => {
                   setEditingSubjectId(id);
                   setSubjectModalOpen(true);
                 }}
@@ -2629,14 +2879,22 @@ const AdminDashboard: React.FC = () => {
 
     return (
       <ResponsiveGrid cols={{ default: 1, md: 2, xl: 3 }} gap={5}>
-        {items.map((item) => {
+        {items.map(item => {
           const visibility = (item as { isVisible?: boolean }).isVisible !== false;
-          const isToggleBusy = busyState?.id === (item as { id: string }).id && busyState.action === 'toggle';
-          const isDeleteBusy = busyState?.id === (item as { id: string }).id && busyState.action === 'delete';
-          const isDuplicateBusy = busyState?.id === (item as { id: string }).id && busyState.action === 'duplicate';
+          const isToggleBusy =
+            busyState?.id === (item as { id: string }).id && busyState.action === 'toggle';
+          const isDeleteBusy =
+            busyState?.id === (item as { id: string }).id && busyState.action === 'delete';
+          const isDuplicateBusy =
+            busyState?.id === (item as { id: string }).id && busyState.action === 'duplicate';
 
           return (
-            <Card key={(item as { id: string }).id} variant="elevated" className="relative overflow-hidden" hover={false}>
+            <Card
+              key={(item as { id: string }).id}
+              variant="elevated"
+              className="relative overflow-hidden"
+              hover={false}
+            >
               <div className="absolute top-4 right-4 flex gap-2 z-20">
                 <Button
                   variant={visibility ? 'secondary' : 'outline'}
@@ -2656,7 +2914,9 @@ const AdminDashboard: React.FC = () => {
                   {tabDefinition.icon} {getItemDisplayName(activeTab, item)}
                 </h3>
                 {'description' in item && item.description && (
-                  <p className="text-gray-600 mb-3">{(item as { description?: string }).description}</p>
+                  <p className="text-gray-600 mb-3">
+                    {(item as { description?: string }).description}
+                  </p>
                 )}
 
                 <div className="flex flex-wrap gap-3 text-xs text-gray-500">
@@ -2664,10 +2924,12 @@ const AdminDashboard: React.FC = () => {
                     Order: {(item as { order?: number }).order ?? DEFAULT_ORDER}
                   </span>
                   <span className="bg-gray-50 px-2 py-1 rounded-full">
-                    Created: {formatTimestamp((item as { createdAt?: Timestamp | string }).createdAt)}
+                    Created:{' '}
+                    {formatTimestamp((item as { createdAt?: Timestamp | string }).createdAt)}
                   </span>
                   <span className="bg-gray-50 px-2 py-1 rounded-full">
-                    Updated: {formatTimestamp((item as { updatedAt?: Timestamp | string }).updatedAt)}
+                    Updated:{' '}
+                    {formatTimestamp((item as { updatedAt?: Timestamp | string }).updatedAt)}
                   </span>
                 </div>
 
@@ -2709,7 +2971,7 @@ const AdminDashboard: React.FC = () => {
         handleFormChange(field.id, event.target.value),
       required: field.required,
       placeholder: field.placeholder,
-      disabled: field.disabled
+      disabled: field.disabled,
     };
 
     switch (field.type) {
@@ -2733,7 +2995,7 @@ const AdminDashboard: React.FC = () => {
               name={field.id}
               type="checkbox"
               checked={Boolean(value ?? true)}
-              onChange={(event) => handleFormChange(field.id, event.target.checked)}
+              onChange={event => handleFormChange(field.id, event.target.checked)}
               className="h-5 w-5 text-blue-600 border-gray-300 rounded"
             />
             <span className="text-sm text-gray-700">{field.label}</span>
@@ -2743,16 +3005,17 @@ const AdminDashboard: React.FC = () => {
         let options = field.options || [];
         if (field.id === 'cardSize') {
           const cardKind = formState.cardKind || 'grid';
-          options = cardKind === 'grid'
-            ? [
-                { value: 'small', label: 'Small' },
-                { value: 'large', label: 'Large' },
-                { value: 'extra-large', label: 'Extra Large' }
-              ]
-            : [
-                { value: 'thin', label: 'Thin' },
-                { value: 'wide', label: 'Wide' }
-              ];
+          options =
+            cardKind === 'grid'
+              ? [
+                  { value: 'small', label: 'Small' },
+                  { value: 'large', label: 'Large' },
+                  { value: 'extra-large', label: 'Extra Large' },
+                ]
+              : [
+                  { value: 'thin', label: 'Thin' },
+                  { value: 'wide', label: 'Wide' },
+                ];
         }
         return (
           <select
@@ -2760,52 +3023,78 @@ const AdminDashboard: React.FC = () => {
             name={field.id}
             value={value ?? ''}
             required={field.required}
-            onChange={(event) => handleFormChange(field.id, event.target.value)}
+            onChange={event => handleFormChange(field.id, event.target.value)}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select an option</option>
-            {options.map((option) => (
+            {options.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
           </select>
         );
-       case 'subjectName':
-         return <SubjectNameSelect value={value ?? ''} onChange={(v) => handleFormChange(field.id, v)} />;
-       case 'emoji':
-         return <EmojiSelect value={value as EmojiOpt | null} onChange={(v) => handleFormChange(field.id, v)} />;
-       case 'color':
-         const colorValue = value as { id: string; hex: string } | null;
-         return <ColorSelect id={colorValue?.id || null} onChange={(id, hex) => handleFormChange(field.id, { id, hex })} />;
-       case 'course':
-         return <CoursePicker
-           ctx={{
-             medium: subjectFilters.medium,
-             board: subjectFilters.board,
-             examId: subjectFilters.examId
-           }}
-           onAttached={(instanceId) => handleFormChange(field.id, { id: instanceId, name: 'Loading...' })}
-           allowExamSelection={true}
-         />;
-       case 'slug':
-         return <SlugSelect
-           name={formState.name || ''}
-           ctx={{
-             medium: formState.mediumId ? mediumLookup.get(formState.mediumId)?.name : undefined,
-             board: formState.boardId ? boardLookup.get(formState.boardId)?.name : undefined,
-             examName: formState.examId ? examOptions.find(e => e.id === formState.examId)?.name : undefined
-           }}
-           value={value}
-           onChange={(v) => handleFormChange(field.id, v)}
-           collectionToCheck="courses"
-         />;
-       case 'levelSelect':
-         return <LevelSelect value={value} onChange={(v) => handleFormChange(field.id, v)} />;
-       case 'thumbnailSelect':
-         return <ThumbnailSelect value={value} onChange={(v) => handleFormChange(field.id, v)} storagePath="design-assets/thumbnails" />;
-       default:
-         return null;
+      case 'subjectName':
+        return (
+          <SubjectNameSelect value={value ?? ''} onChange={v => handleFormChange(field.id, v)} />
+        );
+      case 'emoji':
+        return (
+          <EmojiSelect
+            value={value as EmojiOpt | null}
+            onChange={v => handleFormChange(field.id, v)}
+          />
+        );
+      case 'color':
+        const colorValue = value as { id: string; hex: string } | null;
+        return (
+          <ColorSelect
+            id={colorValue?.id || null}
+            onChange={(id, hex) => handleFormChange(field.id, { id, hex })}
+          />
+        );
+      case 'course':
+        return (
+          <CoursePicker
+            ctx={{
+              medium: subjectFilters.medium,
+              board: subjectFilters.board,
+              examId: subjectFilters.examId,
+            }}
+            onAttached={instanceId =>
+              handleFormChange(field.id, { id: instanceId, name: 'Loading...' })
+            }
+            allowExamSelection={true}
+          />
+        );
+      case 'slug':
+        return (
+          <SlugSelect
+            name={formState.name || ''}
+            ctx={{
+              medium: formState.mediumId ? mediumLookup.get(formState.mediumId)?.name : undefined,
+              board: formState.boardId ? boardLookup.get(formState.boardId)?.name : undefined,
+              examName: formState.examId
+                ? examOptions.find(e => e.id === formState.examId)?.name
+                : undefined,
+            }}
+            value={value}
+            onChange={v => handleFormChange(field.id, v)}
+            collectionToCheck="courses"
+          />
+        );
+      case 'levelSelect':
+        return <LevelSelect value={value} onChange={v => handleFormChange(field.id, v)} />;
+      case 'thumbnailSelect':
+        return (
+          <ThumbnailSelect
+            value={value}
+            onChange={v => handleFormChange(field.id, v)}
+            storagePath="design-assets/thumbnails"
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -2820,12 +3109,17 @@ const AdminDashboard: React.FC = () => {
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Admin Control Center</h1>
                 <p className="text-gray-500 mt-1 max-w-2xl">
-                  Manage mediums, boards, courses, subjects, chapters, quiz sets, application screens, and leaderboards in one place.
+                  Manage mediums, boards, courses, subjects, chapters, quiz sets, application
+                  screens, and leaderboards in one place.
                 </p>
               </div>
               <div className="flex gap-3">
-                <Button variant="outline" onClick={() => navigate('/admin')}>Exit Admin</Button>
-                <Button variant="outline" onClick={handleSignOut}>Sign Out</Button>
+                <Button variant="outline" onClick={() => navigate('/admin')}>
+                  Exit Admin
+                </Button>
+                <Button variant="outline" onClick={handleSignOut}>
+                  Sign Out
+                </Button>
                 {activeTab === 'subjects' ? (
                   <Button
                     variant="primary"
@@ -2835,10 +3129,7 @@ const AdminDashboard: React.FC = () => {
                     Add {tabDefinition.singular}
                   </Button>
                 ) : (
-                  <Button
-                    variant="primary"
-                    onClick={() => openCreateModal(activeTab)}
-                  >
+                  <Button variant="primary" onClick={() => openCreateModal(activeTab)}>
                     Add {tabDefinition.singular}
                   </Button>
                 )}
@@ -2848,7 +3139,11 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-          <div role="tablist" aria-label="Admin sections" className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            role="tablist"
+            aria-label="Admin sections"
+            className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
             <AdminTile
               tab="mediums"
               activeTab={activeTab}
@@ -3058,7 +3353,7 @@ const AdminDashboard: React.FC = () => {
         size="large"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
-          {formFields.map((field) => (
+          {formFields.map(field => (
             <div key={field.id}>
               {field.type !== 'checkbox' && (
                 <label htmlFor={field.id} className="block text-sm font-medium text-gray-700 mb-2">
@@ -3077,9 +3372,13 @@ const AdminDashboard: React.FC = () => {
               <div className="mt-1 text-red-700">{formError.message}</div>
               {formError.actionHref && (
                 <div className="mt-2">
-                  <a className="inline-flex items-center rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
-                     href={formError.actionHref} target="_blank" rel="noreferrer">
-                    {formError.actionLabel || "Open Console"}
+                  <a
+                    className="inline-flex items-center rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700"
+                    href={formError.actionHref}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {formError.actionLabel || 'Open Console'}
                   </a>
                 </div>
               )}
@@ -3094,7 +3393,8 @@ const AdminDashboard: React.FC = () => {
 
           <div className="flex gap-4">
             <Button type="submit" variant="primary" fullWidth loading={isSubmitting}>
-              {modalState?.mode === 'edit' ? 'Update' : 'Create'} {modalState ? TAB_LABELS[modalState.tab].singular : ''}
+              {modalState?.mode === 'edit' ? 'Update' : 'Create'}{' '}
+              {modalState ? TAB_LABELS[modalState.tab].singular : ''}
             </Button>
             <Button type="button" variant="outline" fullWidth onClick={closeModal}>
               Cancel
@@ -3115,7 +3415,7 @@ const AdminDashboard: React.FC = () => {
           </p>
           <textarea
             value={themeJson}
-            onChange={(e) => setThemeJson(e.target.value)}
+            onChange={e => setThemeJson(e.target.value)}
             className="w-full h-96 px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm"
             placeholder="Theme JSON..."
           />
@@ -3132,18 +3432,24 @@ const AdminDashboard: React.FC = () => {
 
       <SubjectFormModal
         open={subjectModalOpen}
-        initial={editingSubjectId ? (() => {
-          const subject = subjects.find(s => s.id === editingSubjectId);
-          return subject ? {
-            name: subject.name,
-            order: subject.order ?? 1,
-            enabled: subject.enabled ?? true,
-            mediumId: subject.mediumId || '',
-            courseId: subject.courseId,
-            boardId: subject.boardId || null,
-            examId: subject.examId || null
-          } : undefined;
-        })() : undefined}
+        initial={
+          editingSubjectId
+            ? (() => {
+                const subject = subjects.find(s => s.id === editingSubjectId);
+                return subject
+                  ? {
+                      name: subject.name,
+                      order: subject.order ?? 1,
+                      enabled: subject.enabled ?? true,
+                      mediumId: subject.mediumId || '',
+                      courseId: subject.courseId,
+                      boardId: subject.boardId || null,
+                      examId: subject.examId || null,
+                    }
+                  : undefined;
+              })()
+            : undefined
+        }
         onClose={() => {
           setSubjectModalOpen(false);
           setEditingSubjectId(null);

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeftIcon, PlayIcon, CheckCircleIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronLeftIcon,
+  PlayIcon,
+  CheckCircleIcon,
+  LockClosedIcon,
+} from '@heroicons/react/24/outline';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export interface MCQQuestion {
@@ -88,8 +93,8 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
         readCorrectAnswer: true,
         delaySeconds: 4,
         subscriberOnly: false,
-        voice: 'default'
-      }
+        voice: 'default',
+      },
     },
     {
       id: 2,
@@ -107,8 +112,8 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
         readExplanation: true,
         delaySeconds: 6,
         subscriberOnly: true,
-        voice: 'default'
-      }
+        voice: 'default',
+      },
     },
     {
       id: 3,
@@ -121,9 +126,9 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
       timeEstimate: '25 min',
       difficulty: 'hard',
       autoRunConfig: {
-        enabled: false
-      }
-    }
+        enabled: false,
+      },
+    },
   ];
 
   useEffect(() => {
@@ -140,12 +145,12 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
 
   const loadSetsData = async () => {
     setLoading(true);
-    
+
     try {
       // In a real app, this would load from JSON files based on subject/chapter
       // For now, using mock data with simulated loading
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       // Load progress from localStorage
       const savedProgress = localStorage.getItem(`chapter_${chapterInfo.chapterNumber}_progress`);
       if (savedProgress) {
@@ -153,7 +158,7 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
         const updatedSets = mockSets.map(set => ({
           ...set,
           completed: progress[set.id]?.completed || false,
-          progress: progress[set.id]?.progress || 0
+          progress: progress[set.id]?.progress || 0,
         }));
         setSets(updatedSets);
       } else {
@@ -172,21 +177,24 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
       // In a real app, this would load from actual JSON files
       // File naming convention: /data/mcqs/{subject}/{chapter}/set{setId}.json
       const fileName = `/data/mcqs/${chapterInfo.subject.toLowerCase()}/${chapterInfo.chapter.toLowerCase().replace(/\s+/g, '-')}/set${setId}.json`;
-      
+
       // For demo purposes, return mock data
-      const mockQuestions: MCQQuestion[] = Array.from({ length: sets.find(s => s.id === setId)?.totalQuestions || 20 }, (_, index) => ({
-        id: index + 1,
-        question: `Question ${index + 1}: This is a sample MCQ question for ${chapterInfo.chapter} - Set ${setId}?`,
-        options: [
-          'Option A: First possible answer',
-          'Option B: Second possible answer',
-          'Option C: Third possible answer',
-          'Option D: Fourth possible answer'
-        ],
-        correctAnswer: Math.floor(Math.random() * 4),
-        explanation: `This is the explanation for question ${index + 1} in Set ${setId}.`,
-        difficulty: sets.find(s => s.id === setId)?.difficulty || 'medium'
-      }));
+      const mockQuestions: MCQQuestion[] = Array.from(
+        { length: sets.find(s => s.id === setId)?.totalQuestions || 20 },
+        (_, index) => ({
+          id: index + 1,
+          question: `Question ${index + 1}: This is a sample MCQ question for ${chapterInfo.chapter} - Set ${setId}?`,
+          options: [
+            'Option A: First possible answer',
+            'Option B: Second possible answer',
+            'Option C: Third possible answer',
+            'Option D: Fourth possible answer',
+          ],
+          correctAnswer: Math.floor(Math.random() * 4),
+          explanation: `This is the explanation for question ${index + 1} in Set ${setId}.`,
+          difficulty: sets.find(s => s.id === setId)?.difficulty || 'medium',
+        })
+      );
 
       return mockQuestions;
     } catch (error) {
@@ -232,19 +240,27 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return 'bg-green-100 text-green-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'hard': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'easy':
+        return 'bg-green-100 text-green-800';
+      case 'medium':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'hard':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
   const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return '🟢';
-      case 'medium': return '🟡';
-      case 'hard': return '🔴';
-      default: return '⚪';
+      case 'easy':
+        return '🟢';
+      case 'medium':
+        return '🟡';
+      case 'hard':
+        return '🔴';
+      default:
+        return '⚪';
     }
   };
 
@@ -315,8 +331,8 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                     onClick={() => handleSetSelect(set)}
                     aria-label={set.locked ? `${set.name} locked` : `Open ${set.name}`}
                     className={`relative bg-white rounded-2xl p-6 shadow-lg text-left transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-purple-200 ${
-                      set.locked 
-                        ? 'opacity-60 cursor-not-allowed' 
+                      set.locked
+                        ? 'opacity-60 cursor-not-allowed'
                         : 'hover:shadow-xl cursor-pointer'
                     }`}
                   >
@@ -338,7 +354,7 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                           <p className="text-sm text-gray-500">{set.timeEstimate}</p>
                         </div>
                       </div>
-                      
+
                       {/* Status Icon */}
                       <div className="flex items-center">
                         {set.completed ? (
@@ -350,9 +366,7 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                      {set.description}
-                    </p>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">{set.description}</p>
 
                     {set.autoRunConfig?.enabled && (
                       <div
@@ -373,7 +387,9 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
                         <div className="text-center">
-                          <div className="text-lg font-bold text-gray-900">{set.totalQuestions}</div>
+                          <div className="text-lg font-bold text-gray-900">
+                            {set.totalQuestions}
+                          </div>
                           <div className="text-xs text-gray-500">Questions</div>
                         </div>
                         <div className="text-center">
@@ -381,9 +397,11 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                           <div className="text-xs text-gray-500">Complete</div>
                         </div>
                       </div>
-                      
+
                       {/* Difficulty Badge */}
-                      <div className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getDifficultyColor(set.difficulty)}`}>
+                      <div
+                        className={`px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${getDifficultyColor(set.difficulty)}`}
+                      >
                         <span>{getDifficultyIcon(set.difficulty)}</span>
                         <span className="capitalize">{set.difficulty}</span>
                       </div>
@@ -405,8 +423,8 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                         set.locked
                           ? 'bg-gray-200 text-gray-400'
                           : set.completed
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
                       }`}
                     >
                       {set.locked ? (
@@ -451,11 +469,7 @@ const ChapterSets: React.FC<ChapterSetsProps> = ({
                 <div
                   key={set.id}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    set.completed
-                      ? 'bg-green-400'
-                      : set.locked
-                      ? 'bg-gray-400'
-                      : 'bg-blue-400'
+                    set.completed ? 'bg-green-400' : set.locked ? 'bg-gray-400' : 'bg-blue-400'
                   }`}
                 />
               ))}

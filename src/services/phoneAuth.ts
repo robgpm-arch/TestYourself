@@ -39,7 +39,7 @@ function ensureRecaptcha(anchorId: string): RecaptchaVerifier {
       size: 'invisible',
       callback: () => {
         if (window.__DEBUG) console.log('[PhoneAuth] reCAPTCHA solved');
-      }
+      },
     });
   }
   return recaptcha;
@@ -66,7 +66,9 @@ export async function sendOtp(e164Number: string): Promise<void> {
   } catch (error: any) {
     if (window.__DEBUG) console.error('[PhoneAuth] sendOtp failed:', error.code, error.message);
     // Reset verifier so next attempt can recreate a fresh instance
-    try { recaptcha?.clear(); } catch {}
+    try {
+      recaptcha?.clear();
+    } catch {}
     recaptcha = null;
     throw error;
   }

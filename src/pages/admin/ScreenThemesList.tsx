@@ -23,7 +23,7 @@ const ScreenThemesList: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = listenThemes((rows) => {
+    const unsubscribe = listenThemes(rows => {
       setThemes(rows);
       setLoading(false);
     });
@@ -77,15 +77,18 @@ const ScreenThemesList: React.FC = () => {
                 <Button variant="outline" onClick={() => navigate('/admin')}>
                   Back to Admin
                 </Button>
-                <Button variant="secondary" onClick={async () => {
-                  try {
-                    const count = await seedDesignThemes();
-                    alert(`Seeded ${count} themes!`);
-                    window.location.reload();
-                  } catch (error) {
-                    alert('Failed to seed themes');
-                  }
-                }}>
+                <Button
+                  variant="secondary"
+                  onClick={async () => {
+                    try {
+                      const count = await seedDesignThemes();
+                      alert(`Seeded ${count} themes!`);
+                      window.location.reload();
+                    } catch (error) {
+                      alert('Failed to seed themes');
+                    }
+                  }}
+                >
                   Seed 8 Themes
                 </Button>
                 <Button variant="primary" onClick={() => navigate('/admin/themes/screen/new')}>
@@ -98,14 +101,10 @@ const ScreenThemesList: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <ResponsiveGrid cols={{ default: 1, md: 2, xl: 3 }} gap={6}>
-            {themes.map((theme) => (
+            {themes.map(theme => (
               <Card key={theme.id} variant="elevated" className="relative">
                 <div className="absolute top-4 right-4 flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="small"
-                    onClick={() => handleSetDefault(theme.id)}
-                  >
+                  <Button variant="outline" size="small" onClick={() => handleSetDefault(theme.id)}>
                     Set Default
                   </Button>
                 </div>
@@ -139,11 +138,7 @@ const ScreenThemesList: React.FC = () => {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="danger"
-                    size="small"
-                    onClick={() => handleDelete(theme.id)}
-                  >
+                  <Button variant="danger" size="small" onClick={() => handleDelete(theme.id)}>
                     Delete
                   </Button>
                 </div>

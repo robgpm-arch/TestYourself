@@ -19,7 +19,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '📚',
     color: 'from-blue-500 to-blue-600',
-    searchTerms: ['cbse', 'central', 'board', 'class']
+    searchTerms: ['cbse', 'central', 'board', 'class'],
   },
   {
     id: 'icse',
@@ -28,7 +28,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🎓',
     color: 'from-purple-500 to-purple-600',
-    searchTerms: ['icse', 'council']
+    searchTerms: ['icse', 'council'],
   },
   {
     id: 'isc',
@@ -37,7 +37,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🔬',
     color: 'from-indigo-500 to-indigo-600',
-    searchTerms: ['isc', 'science', 'commerce']
+    searchTerms: ['isc', 'science', 'commerce'],
   },
   {
     id: 'iit-foundation',
@@ -46,7 +46,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '⚙️',
     color: 'from-orange-500 to-red-500',
-    searchTerms: ['iit', 'foundation']
+    searchTerms: ['iit', 'foundation'],
   },
   {
     id: 'ts-board',
@@ -55,7 +55,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🏛️',
     color: 'from-teal-500 to-cyan-500',
-    searchTerms: ['telangana', 'ts']
+    searchTerms: ['telangana', 'ts'],
   },
   {
     id: 'ap-board',
@@ -64,7 +64,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🌅',
     color: 'from-yellow-500 to-orange-500',
-    searchTerms: ['andhra', 'ap']
+    searchTerms: ['andhra', 'ap'],
   },
   {
     id: 'tn-board',
@@ -73,7 +73,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🏺',
     color: 'from-red-500 to-pink-500',
-    searchTerms: ['tamil', 'tn']
+    searchTerms: ['tamil', 'tn'],
   },
   {
     id: 'mh-board',
@@ -82,7 +82,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'board',
     icon: '🎭',
     color: 'from-green-500 to-emerald-500',
-    searchTerms: ['maharashtra', 'mh']
+    searchTerms: ['maharashtra', 'mh'],
   },
   {
     id: 'jee',
@@ -91,7 +91,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '⚛️',
     color: 'from-blue-600 to-indigo-600',
-    searchTerms: ['jee', 'engineering']
+    searchTerms: ['jee', 'engineering'],
   },
   {
     id: 'neet',
@@ -100,7 +100,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '🩺',
     color: 'from-green-600 to-teal-600',
-    searchTerms: ['neet', 'medical']
+    searchTerms: ['neet', 'medical'],
   },
   {
     id: 'upsc',
@@ -109,7 +109,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '🏛️',
     color: 'from-purple-600 to-pink-600',
-    searchTerms: ['upsc', 'civil']
+    searchTerms: ['upsc', 'civil'],
   },
   {
     id: 'ssc',
@@ -118,7 +118,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '📋',
     color: 'from-orange-600 to-red-600',
-    searchTerms: ['ssc', 'staff']
+    searchTerms: ['ssc', 'staff'],
   },
   {
     id: 'banking',
@@ -127,7 +127,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '🏦',
     color: 'from-emerald-600 to-green-600',
-    searchTerms: ['banking', 'ibps']
+    searchTerms: ['banking', 'ibps'],
   },
   {
     id: 'rrb',
@@ -136,7 +136,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '🚂',
     color: 'from-gray-600 to-slate-600',
-    searchTerms: ['rrb', 'railway']
+    searchTerms: ['rrb', 'railway'],
   },
   {
     id: 'dsc-tet',
@@ -145,7 +145,7 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '👨‍🏫',
     color: 'from-cyan-600 to-blue-600',
-    searchTerms: ['dsc', 'tet']
+    searchTerms: ['dsc', 'tet'],
   },
   {
     id: 'gate',
@@ -154,8 +154,8 @@ const boardExamOptions: BoardExamOption[] = [
     category: 'exam',
     icon: '🎯',
     color: 'from-violet-600 to-purple-600',
-    searchTerms: ['gate', 'aptitude']
-  }
+    searchTerms: ['gate', 'aptitude'],
+  },
 ];
 
 interface BoardExamSelectorProps {
@@ -176,10 +176,11 @@ const BoardExamSelector: React.FC<BoardExamSelectorProps> = ({ onSelection }) =>
     if (!searchQuery.trim()) return subset;
 
     const keyword = searchQuery.toLowerCase();
-    return subset.filter(option =>
-      option.name.toLowerCase().includes(keyword) ||
-      option.tagline.toLowerCase().includes(keyword) ||
-      option.searchTerms.some(term => term.toLowerCase().includes(keyword))
+    return subset.filter(
+      option =>
+        option.name.toLowerCase().includes(keyword) ||
+        option.tagline.toLowerCase().includes(keyword) ||
+        option.searchTerms.some(term => term.toLowerCase().includes(keyword))
     );
   }, [activeTab, searchQuery]);
 
@@ -223,7 +224,7 @@ const BoardExamSelector: React.FC<BoardExamSelectorProps> = ({ onSelection }) =>
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search boards or exams..."
             className="w-full px-4 py-2 pl-10 rounded-2xl bg-white/80 text-gray-800 placeholder-gray-500 text-xs shadow-lg focus:outline-none focus:ring-3 focus:ring-blue-300/40 transition-all duration-300"
           />
@@ -233,18 +234,25 @@ const BoardExamSelector: React.FC<BoardExamSelectorProps> = ({ onSelection }) =>
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
           </svg>
         </div>
       </motion.div>
 
       <div className="flex bg-white/20 backdrop-blur-sm rounded-2xl p-1 mb-4 max-w-md w-full">
-        {(['board', 'exam'] as const).map((tab) => (
+        {(['board', 'exam'] as const).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`relative flex-1 px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 ${
-              activeTab === tab ? 'text-blue-900 bg-white shadow' : 'text-blue-100 hover:text-white hover:bg-white/10'
+              activeTab === tab
+                ? 'text-blue-900 bg-white shadow'
+                : 'text-blue-100 hover:text-white hover:bg-white/10'
             }`}
           >
             {tab === 'board' ? 'Boards' : 'Exams'}
@@ -280,41 +288,47 @@ const BoardExamSelector: React.FC<BoardExamSelectorProps> = ({ onSelection }) =>
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleOptionSelect(option.id)}
                 className={`relative rounded-2xl p-2.5 sm:p-3 bg-white text-center shadow transition-all duration-200 ${
-                  selectedOption === option.id ? 'ring-3 ring-teal-300 shadow-lg bg-white' : 'hover:shadow-md'
+                  selectedOption === option.id
+                    ? 'ring-3 ring-teal-300 shadow-lg bg-white'
+                    : 'hover:shadow-md'
                 }`}
-            >
-              {selectedOption === option.id && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.15 }}
-                  className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-400"
-                />
-              )}
+              >
+                {selectedOption === option.id && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.15 }}
+                    className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-400"
+                  />
+                )}
 
-              <div className="relative z-10 flex flex-col items-center gap-2">
-                <div className={`inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${option.color} text-sm sm:text-base text-white shadow-inner`}>
-                  <span>{option.icon}</span>
+                <div className="relative z-10 flex flex-col items-center gap-2">
+                  <div
+                    className={`inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${option.color} text-sm sm:text-base text-white shadow-inner`}
+                  >
+                    <span>{option.icon}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xs sm:text-sm font-semibold text-gray-800">
+                      {option.name}
+                    </h3>
+                    <p className="text-[10px] sm:text-[11px] text-gray-600 font-medium leading-tight">
+                      {option.tagline}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xs sm:text-sm font-semibold text-gray-800">{option.name}</h3>
-                  <p className="text-[10px] sm:text-[11px] text-gray-600 font-medium leading-tight">
-                    {option.tagline}
-                  </p>
-                </div>
-              </div>
 
-              {selectedOption === option.id && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 w-5 h-5 bg-teal-500 text-white rounded-full flex items-center justify-center shadow"
-                >
-                  ✓
-                </motion.div>
-              )}
-            </motion.button>
-          ))}
-        </AnimatePresence>
+                {selectedOption === option.id && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-teal-500 text-white rounded-full flex items-center justify-center shadow"
+                  >
+                    ✓
+                  </motion.div>
+                )}
+              </motion.button>
+            ))}
+          </AnimatePresence>
         </div>
       </motion.div>
 

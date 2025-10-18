@@ -1,9 +1,20 @@
 // src/services/adminCatalogService.ts
 import {
-  collection, doc, getDoc, getDocs, query, where,
-  addDoc, setDoc, updateDoc, deleteDoc, serverTimestamp, onSnapshot, orderBy
-} from "firebase/firestore";
-import { db } from "../lib/firebase";
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  addDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+  onSnapshot,
+  orderBy,
+} from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 export type CatalogEntity = {
   id: string;
@@ -65,10 +76,10 @@ export default class AdminCatalogService {
     callback: (items: T[]) => void
   ) {
     const q = query(collection(db, collectionName), orderBy('order', 'asc'));
-    return onSnapshot(q, (snapshot) => {
+    return onSnapshot(q, snapshot => {
       const items = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       })) as T[];
       callback(items);
     });
@@ -86,7 +97,7 @@ export type SubjectInput = {
   enabled?: boolean;
 };
 
-const SUBJECTS_COLL = "subjects";
+const SUBJECTS_COLL = 'subjects';
 
 export async function createSubject(input: SubjectInput) {
   const payload = {
@@ -115,7 +126,7 @@ export async function deleteSubject(id: string) {
 
 export async function duplicateSubject(id: string) {
   const snap = await getDoc(doc(db, SUBJECTS_COLL, id));
-  if (!snap.exists()) throw new Error("Subject not found");
+  if (!snap.exists()) throw new Error('Subject not found');
   const src = snap.data();
   const copy = {
     ...src,

@@ -6,7 +6,7 @@ export function useIsAdmin() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (user) => {
+    const unsub = onAuthStateChanged(auth, async user => {
       if (!user) return setIsAdmin(false);
       try {
         const t = await getIdTokenResult(user, true); // refresh claims

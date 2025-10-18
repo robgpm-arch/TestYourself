@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   iconPosition = 'left',
   fullWidth = false,
   className = '',
-  type = 'button'
+  type = 'button',
 }) => {
   const getVariantClasses = () => {
     switch (variant) {
@@ -72,13 +72,9 @@ const Button: React.FC<ButtonProps> = ({
         <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
       ) : (
         <>
-          {icon && iconPosition === 'left' && (
-            <span className="mr-2">{icon}</span>
-          )}
+          {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
           {children}
-          {icon && iconPosition === 'right' && (
-            <span className="ml-2">{icon}</span>
-          )}
+          {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
         </>
       )}
     </>

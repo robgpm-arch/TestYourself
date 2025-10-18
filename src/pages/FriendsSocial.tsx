@@ -24,77 +24,86 @@ const cardVariants = {
     transition: {
       duration: 0.5,
       delay: index * 0.08,
-      ease: [0.34, 1.56, 0.64, 1]
-    }
-  })
+      ease: [0.34, 1.56, 0.64, 1],
+    },
+  }),
 };
 
 const FriendsSocial: React.FC = () => {
-  const friends = useMemo<Friend[]>(() => [
-    {
-      id: 'f1',
-      name: 'Anika Sharma',
-      tagline: 'Preparing for JEE 2025',
-      avatar: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'online',
-      mutualFriends: [
-        'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=128&h=128&q=80',
-        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=128&h=128&q=80'
-      ],
-      color: 'from-teal-400 via-cyan-400 to-blue-400'
-    },
-    {
-      id: 'f2',
-      name: 'Rahul Mehta',
-      tagline: 'Focused on NEET Physics',
-      avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'offline',
-      mutualFriends: [
-        'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=128&h=128&q=80'
-      ],
-      color: 'from-indigo-400 via-purple-400 to-fuchsia-400'
-    },
-    {
-      id: 'f3',
-      name: 'Sara Ali',
-      tagline: 'UPSC aspirant • Ethics',
-      avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'online',
-      color: 'from-rose-400 via-orange-400 to-amber-300'
-    },
-    {
-      id: 'f4',
-      name: 'Dev Patel',
-      tagline: 'CAT Quant Squad',
-      avatar: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'online',
-      mutualFriends: [
-        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=128&h=128&q=80',
-        'https://images.unsplash.com/photo-1546422401-82c8da113fe6?auto=format&fit=facearea&w=128&h=128&q=80',
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=128&h=128&q=80'
-      ],
-      color: 'from-emerald-400 via-teal-300 to-lime-300'
-    },
-    {
-      id: 'f5',
-      name: 'Nisha Verma',
-      tagline: 'SSC CGL • Reasoning',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'offline',
-      color: 'from-sky-400 via-cyan-300 to-violet-300'
-    },
-    {
-      id: 'f6',
-      name: 'Rohan Das',
-      tagline: 'ICSE Class 10 topper',
-      avatar: 'https://images.unsplash.com/photo-1546422401-82c8da113fe6?auto=format&fit=facearea&w=160&h=160&q=80',
-      status: 'online',
-      mutualFriends: [
-        'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=facearea&w=128&h=128&q=80'
-      ],
-      color: 'from-amber-400 via-orange-300 to-pink-300'
-    }
-  ], []);
+  const friends = useMemo<Friend[]>(
+    () => [
+      {
+        id: 'f1',
+        name: 'Anika Sharma',
+        tagline: 'Preparing for JEE 2025',
+        avatar:
+          'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'online',
+        mutualFriends: [
+          'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=128&h=128&q=80',
+          'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=128&h=128&q=80',
+        ],
+        color: 'from-teal-400 via-cyan-400 to-blue-400',
+      },
+      {
+        id: 'f2',
+        name: 'Rahul Mehta',
+        tagline: 'Focused on NEET Physics',
+        avatar:
+          'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'offline',
+        mutualFriends: [
+          'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=128&h=128&q=80',
+        ],
+        color: 'from-indigo-400 via-purple-400 to-fuchsia-400',
+      },
+      {
+        id: 'f3',
+        name: 'Sara Ali',
+        tagline: 'UPSC aspirant • Ethics',
+        avatar:
+          'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'online',
+        color: 'from-rose-400 via-orange-400 to-amber-300',
+      },
+      {
+        id: 'f4',
+        name: 'Dev Patel',
+        tagline: 'CAT Quant Squad',
+        avatar:
+          'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'online',
+        mutualFriends: [
+          'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=128&h=128&q=80',
+          'https://images.unsplash.com/photo-1546422401-82c8da113fe6?auto=format&fit=facearea&w=128&h=128&q=80',
+          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=128&h=128&q=80',
+        ],
+        color: 'from-emerald-400 via-teal-300 to-lime-300',
+      },
+      {
+        id: 'f5',
+        name: 'Nisha Verma',
+        tagline: 'SSC CGL • Reasoning',
+        avatar:
+          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'offline',
+        color: 'from-sky-400 via-cyan-300 to-violet-300',
+      },
+      {
+        id: 'f6',
+        name: 'Rohan Das',
+        tagline: 'ICSE Class 10 topper',
+        avatar:
+          'https://images.unsplash.com/photo-1546422401-82c8da113fe6?auto=format&fit=facearea&w=160&h=160&q=80',
+        status: 'online',
+        mutualFriends: [
+          'https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=facearea&w=128&h=128&q=80',
+        ],
+        color: 'from-amber-400 via-orange-300 to-pink-300',
+      },
+    ],
+    []
+  );
 
   return (
     <Layout className="relative overflow-hidden" showFooter={false}>
@@ -164,14 +173,18 @@ const FriendsSocial: React.FC = () => {
                     <span className={`status-dot ${friend.status}`} />
                   </div>
                   <div className="flex-1">
-                    <h2 className="text-lg font-semibold tracking-tight drop-shadow-sm">{friend.name}</h2>
+                    <h2 className="text-lg font-semibold tracking-tight drop-shadow-sm">
+                      {friend.name}
+                    </h2>
                     <p className="text-sm text-white/80">{friend.tagline}</p>
                   </div>
                 </div>
 
                 {friend.mutualFriends && friend.mutualFriends.length > 0 && (
                   <div className="mt-5">
-                    <p className="text-xs uppercase tracking-widest text-white/70 mb-3">Mutual friends</p>
+                    <p className="text-xs uppercase tracking-widest text-white/70 mb-3">
+                      Mutual friends
+                    </p>
                     <div className="flex items-center">
                       {friend.mutualFriends.map((avatar, i) => (
                         <img

@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({
   showCloseButton = true,
   closeOnOverlayClick = true,
   closeOnEscape = true,
-  className = ''
+  className = '',
 }) => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -72,11 +72,11 @@ const Modal: React.FC<ModalProps> = ({
           className="fixed inset-0 z-50 overflow-y-auto"
         >
           {/* Overlay */}
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
             onClick={handleOverlayClick}
           />
-          
+
           {/* Modal */}
           <div className="flex min-h-full items-center justify-center p-4">
             <motion.div
@@ -93,11 +93,7 @@ const Modal: React.FC<ModalProps> = ({
               {/* Header */}
               {(title || showCloseButton) && (
                 <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                  {title && (
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {title}
-                    </h3>
-                  )}
+                  {title && <h3 className="text-lg font-semibold text-gray-900">{title}</h3>}
                   {showCloseButton && (
                     <button
                       onClick={onClose}
@@ -108,11 +104,9 @@ const Modal: React.FC<ModalProps> = ({
                   )}
                 </div>
               )}
-              
+
               {/* Content */}
-              <div className="p-6">
-                {children}
-              </div>
+              <div className="p-6">{children}</div>
             </motion.div>
           </div>
         </motion.div>

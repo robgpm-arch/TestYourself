@@ -20,7 +20,7 @@ const QuizThemesList: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = listenThemes((rows) => {
+    const unsubscribe = listenThemes(rows => {
       setThemes(rows);
       setLoading(false);
     });
@@ -80,22 +80,16 @@ const QuizThemesList: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <ResponsiveGrid cols={{ default: 1, md: 2, xl: 3 }} gap={6}>
-            {themes.map((theme) => (
+            {themes.map(theme => (
               <Card key={theme.id} variant="elevated" className="relative">
                 <div className="absolute top-4 right-4 flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="small"
-                    onClick={() => handleSetDefault(theme.id)}
-                  >
+                  <Button variant="outline" size="small" onClick={() => handleSetDefault(theme.id)}>
                     Set Default
                   </Button>
                 </div>
 
                 <div className="pr-32">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    🎨 {theme.name}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">🎨 {theme.name}</h3>
 
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2">
@@ -134,11 +128,7 @@ const QuizThemesList: React.FC = () => {
                   >
                     Edit
                   </Button>
-                  <Button
-                    variant="danger"
-                    size="small"
-                    onClick={() => handleDelete(theme.id)}
-                  >
+                  <Button variant="danger" size="small" onClick={() => handleDelete(theme.id)}>
                     Delete
                   </Button>
                 </div>

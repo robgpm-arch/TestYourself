@@ -13,12 +13,13 @@ interface SeoSettings {
 }
 
 const DEFAULT_SEO: SeoSettings = {
-  title: "TestYourself – Practice MCQs, Mock Exams & Analytics",
-  description: "Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.",
-  ogImage: "/og-image-1200x630.png",
-  twitterHandle: "@testyourselfapp",
-  canonical: "https://testyourself.app/",
-  robots: "index,follow",
+  title: 'TestYourself – Practice MCQs, Mock Exams & Analytics',
+  description:
+    'Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.',
+  ogImage: '/og-image-1200x630.png',
+  twitterHandle: '@testyourselfapp',
+  canonical: 'https://testyourself.app/',
+  robots: 'index,follow',
   sitemapEnabled: true,
 };
 
@@ -26,7 +27,7 @@ export function useSeoSettings() {
   const [seo, setSeo] = useState<SeoSettings>(DEFAULT_SEO);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "app_settings", "seo"), (snap) => {
+    const unsub = onSnapshot(doc(db, 'app_settings', 'seo'), snap => {
       if (snap.exists()) {
         setSeo({ ...DEFAULT_SEO, ...snap.data() });
       }

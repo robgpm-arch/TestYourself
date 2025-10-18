@@ -27,7 +27,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 6',
     subjects: ['Math', 'Science', 'English'],
     color: 'from-pink-400 to-rose-500',
-    icon: '📚'
+    icon: '📚',
   },
   {
     id: 'class-7',
@@ -35,7 +35,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 7',
     subjects: ['Math', 'Science', 'English'],
     color: 'from-purple-400 to-violet-500',
-    icon: '📖'
+    icon: '📖',
   },
   {
     id: 'class-8',
@@ -43,7 +43,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 8',
     subjects: ['Math', 'Science', 'English'],
     color: 'from-blue-400 to-cyan-500',
-    icon: '📝'
+    icon: '📝',
   },
   {
     id: 'class-9',
@@ -51,7 +51,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 9',
     subjects: ['Math', 'Physics', 'Chemistry', 'Biology'],
     color: 'from-green-400 to-emerald-500',
-    icon: '🔬'
+    icon: '🔬',
   },
   {
     id: 'class-10',
@@ -59,7 +59,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 10',
     subjects: ['Math', 'Physics', 'Chemistry', 'Biology'],
     color: 'from-yellow-400 to-orange-500',
-    icon: '🎯'
+    icon: '🎯',
   },
   {
     id: 'class-11',
@@ -67,7 +67,7 @@ const classOptions: ClassOption[] = [
     name: 'Class 11',
     subjects: ['PCM/PCB', 'Commerce', 'Arts'],
     color: 'from-red-400 to-pink-500',
-    icon: '🎓'
+    icon: '🎓',
   },
   {
     id: 'class-12',
@@ -75,8 +75,8 @@ const classOptions: ClassOption[] = [
     name: 'Class 12',
     subjects: ['PCM/PCB', 'Commerce', 'Arts'],
     color: 'from-indigo-400 to-purple-500',
-    icon: '🏆'
-  }
+    icon: '🏆',
+  },
 ];
 
 const courseOptions: { [key: string]: CourseOption[] } = {
@@ -88,7 +88,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '2 Years • Classes 11-12',
       icon: '🏗️',
       color: 'from-blue-500 to-indigo-600',
-      examType: 'jee'
+      examType: 'jee',
     },
     {
       id: 'jee-crash',
@@ -97,7 +97,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '6 Months • 2025 Target',
       icon: '⚡',
       color: 'from-orange-500 to-red-600',
-      examType: 'jee'
+      examType: 'jee',
     },
     {
       id: 'jee-full',
@@ -106,7 +106,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '1 Year • Main + Advanced',
       icon: '📋',
       color: 'from-green-500 to-teal-600',
-      examType: 'jee'
+      examType: 'jee',
     },
     {
       id: 'jee-test',
@@ -115,8 +115,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '6 Months • 100+ Tests',
       icon: '🎯',
       color: 'from-purple-500 to-indigo-600',
-      examType: 'jee'
-    }
+      examType: 'jee',
+    },
   ],
   neet: [
     {
@@ -126,7 +126,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '2 Years • Classes 11-12',
       icon: '🏥',
       color: 'from-green-500 to-emerald-600',
-      examType: 'neet'
+      examType: 'neet',
     },
     {
       id: 'neet-crash',
@@ -135,7 +135,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '4 Months • 2025 Target',
       icon: '💊',
       color: 'from-red-500 to-pink-600',
-      examType: 'neet'
+      examType: 'neet',
     },
     {
       id: 'neet-full',
@@ -144,7 +144,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '1 Year • Physics, Chemistry, Biology',
       icon: '🔬',
       color: 'from-blue-500 to-cyan-600',
-      examType: 'neet'
+      examType: 'neet',
     },
     {
       id: 'neet-test',
@@ -153,8 +153,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '6 Months • Weekly Tests',
       icon: '📊',
       color: 'from-purple-500 to-violet-600',
-      examType: 'neet'
-    }
+      examType: 'neet',
+    },
   ],
   upsc: [
     {
@@ -164,7 +164,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '8 Months • General Studies',
       icon: '📚',
       color: 'from-indigo-500 to-purple-600',
-      examType: 'upsc'
+      examType: 'upsc',
     },
     {
       id: 'upsc-mains',
@@ -173,7 +173,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '1 Year • Essay + Optional',
       icon: '✍️',
       color: 'from-blue-500 to-indigo-600',
-      examType: 'upsc'
+      examType: 'upsc',
     },
     {
       id: 'upsc-complete',
@@ -182,8 +182,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '18 Months • Full Preparation',
       icon: '🏛️',
       color: 'from-green-500 to-blue-600',
-      examType: 'upsc'
-    }
+      examType: 'upsc',
+    },
   ],
   ssc: [
     {
@@ -193,7 +193,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '6 Months • Tier 1 + Tier 2',
       icon: '📋',
       color: 'from-orange-500 to-red-600',
-      examType: 'ssc'
+      examType: 'ssc',
     },
     {
       id: 'ssc-chsl',
@@ -202,8 +202,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '4 Months • Tier 1 + Tier 2',
       icon: '📝',
       color: 'from-blue-500 to-cyan-600',
-      examType: 'ssc'
-    }
+      examType: 'ssc',
+    },
   ],
   banking: [
     {
@@ -213,7 +213,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '8 Months • SBI + IBPS',
       icon: '🏦',
       color: 'from-green-500 to-teal-600',
-      examType: 'banking'
+      examType: 'banking',
     },
     {
       id: 'banking-clerk',
@@ -222,8 +222,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '6 Months • All Banks',
       icon: '💼',
       color: 'from-blue-500 to-indigo-600',
-      examType: 'banking'
-    }
+      examType: 'banking',
+    },
   ],
   'dsc-tet': [
     {
@@ -233,7 +233,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Complete Pedagogy & Content',
       icon: '🏫',
       color: 'from-blue-500 to-indigo-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-telugu',
@@ -242,7 +242,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Telugu Language Pedagogy & Content',
       icon: '🗣️',
       color: 'from-cyan-500 to-blue-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-hindi',
@@ -251,7 +251,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Hindi Language Pedagogy & Content',
       icon: '📝',
       color: 'from-amber-500 to-orange-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-english',
@@ -260,7 +260,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'English Language Pedagogy & Content',
       icon: '📘',
       color: 'from-indigo-500 to-purple-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-mathematics',
@@ -269,7 +269,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Advanced Mathematics Pedagogy',
       icon: '➗',
       color: 'from-green-500 to-emerald-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-physical-science',
@@ -278,7 +278,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Physics & Chemistry Pedagogy',
       icon: '🔬',
       color: 'from-rose-500 to-red-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-biological-science',
@@ -287,7 +287,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Life Sciences Pedagogy',
       icon: '🌿',
       color: 'from-emerald-500 to-teal-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-social-studies',
@@ -296,7 +296,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'History, Civics & Geography',
       icon: '🌍',
       color: 'from-purple-500 to-fuchsia-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-school-assistant-physical-education',
@@ -305,7 +305,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Sports Science & Pedagogy',
       icon: '🏃‍♂️',
       color: 'from-orange-500 to-red-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-language-pandit-telugu',
@@ -314,7 +314,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Advanced Telugu Language Teaching',
       icon: '📜',
       color: 'from-sky-500 to-blue-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-language-pandit-hindi',
@@ -323,7 +323,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Advanced Hindi Language Teaching',
       icon: '🪔',
       color: 'from-yellow-500 to-amber-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-physical-education-teacher',
@@ -332,7 +332,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Sports Pedagogy & Fitness Training',
       icon: '🏅',
       color: 'from-lime-500 to-green-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-perspectives-in-education',
@@ -341,7 +341,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Educational Psychology & Methodology',
       icon: '🧠',
       color: 'from-indigo-500 to-cyan-600',
-      examType: 'dsc-tet'
+      examType: 'dsc-tet',
     },
     {
       id: 'dsc-general-knowledge-current-affairs',
@@ -350,8 +350,8 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: 'Daily Updates & Mock Drills',
       icon: '📰',
       color: 'from-gray-500 to-slate-600',
-      examType: 'dsc-tet'
-    }
+      examType: 'dsc-tet',
+    },
   ],
   // Default fallback for other exams
   default: [
@@ -362,7 +362,7 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '8 Months • 2025 Target',
       icon: '📚',
       color: 'from-gray-500 to-slate-600',
-      examType: 'general'
+      examType: 'general',
     },
     {
       id: 'test-series',
@@ -371,24 +371,36 @@ const courseOptions: { [key: string]: CourseOption[] } = {
       duration: '4 Months • Regular Tests',
       icon: '🎯',
       color: 'from-purple-500 to-indigo-600',
-      examType: 'general'
-    }
-  ]
+      examType: 'general',
+    },
+  ],
 };
 
 // Board categories that show class selection
-const boardCategories = ['cbse', 'icse', 'isc', 'iit-foundation', 'ts-board', 'ap-board', 'tn-board', 'mh-board'];
+const boardCategories = [
+  'cbse',
+  'icse',
+  'isc',
+  'iit-foundation',
+  'ts-board',
+  'ap-board',
+  'tn-board',
+  'mh-board',
+];
 
 interface ClassCourseSelectorProps {
   selectedBoardExam: string;
   onSelection: (selection: string) => void;
 }
 
-const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoardExam, onSelection }) => {
+const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({
+  selectedBoardExam,
+  onSelection,
+}) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isConfirming, setIsConfirming] = useState(false);
   const autoAdvanceRef = useRef<number | null>(null);
-  
+
   const isBoard = boardCategories.includes(selectedBoardExam);
   const currentCourses = courseOptions[selectedBoardExam] || courseOptions.default;
 
@@ -462,17 +474,17 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                   type="button"
                   initial={{ opacity: 0, y: 20, rotateY: 180 }}
                   animate={{ opacity: 1, y: 0, rotateY: 0 }}
-                  transition={{ 
-                    duration: 0.6, 
+                  transition={{
+                    duration: 0.6,
                     delay: index * 0.1,
-                    type: "spring",
-                    stiffness: 100
+                    type: 'spring',
+                    stiffness: 100,
                   }}
                   whileHover={{ scale: 1.05, rotateY: 5 }}
-                  whileTap={{ 
+                  whileTap={{
                     scale: 0.95,
                     rotateY: selectedOption === classOption.id ? 360 : 180,
-                    transition: { duration: 0.6 }
+                    transition: { duration: 0.6 },
                   }}
                   onClick={() => handleOptionSelect(classOption.id)}
                   aria-pressed={selectedOption === classOption.id}
@@ -481,9 +493,10 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                     relative cursor-pointer rounded-2xl p-4 sm:p-5 lg:p-6 aspect-[4/5]
                     bg-gradient-to-br ${classOption.color} text-white w-full max-w-[150px] sm:max-w-[180px] lg:max-w-[220px]
                     shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70
-                    ${selectedOption === classOption.id 
-                      ? 'ring-2 ring-white ring-opacity-50 shadow-2xl scale-105' 
-                      : ''
+                    ${
+                      selectedOption === classOption.id
+                        ? 'ring-2 ring-white ring-opacity-50 shadow-2xl scale-105'
+                        : ''
                     }
                   `}
                   style={{ transformStyle: 'preserve-3d' }}
@@ -510,14 +523,22 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                     </div>
 
                     {/* Selection indicator */}
-                      {selectedOption === classOption.id && (
+                    {selectedOption === classOption.id && (
                       <motion.div
                         initial={{ scale: 0, rotate: -180 }}
                         animate={{ scale: 1, rotate: 0 }}
                         className="absolute -top-2 -right-2 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg"
                       >
-                        <svg className="w-6 h-6 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        <svg
+                          className="w-6 h-6 text-teal-500"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </motion.div>
                     )}
@@ -541,11 +562,11 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                   type="button"
                   initial={{ opacity: 0, x: 100 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ 
-                    duration: 0.5, 
+                  transition={{
+                    duration: 0.5,
                     delay: index * 0.1,
-                    type: "spring",
-                    stiffness: 100
+                    type: 'spring',
+                    stiffness: 100,
                   }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -553,29 +574,26 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                   className={`
                     relative cursor-pointer rounded-2xl p-6 bg-white/95 backdrop-blur-sm
                     shadow-lg hover:shadow-2xl transition-all duration-300
-                    ${selectedOption === course.id 
-                      ? 'ring-4 ring-teal-300 shadow-2xl bg-white scale-102' 
-                      : 'hover:bg-white'
+                    ${
+                      selectedOption === course.id
+                        ? 'ring-4 ring-teal-300 shadow-2xl bg-white scale-102'
+                        : 'hover:bg-white'
                     }
                   `}
                 >
                   <div className="flex items-center space-x-6">
                     {/* Course Icon */}
-                    <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center text-2xl text-white shadow-lg`}>
+                    <div
+                      className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center text-2xl text-white shadow-lg`}
+                    >
                       {course.icon}
                     </div>
 
                     {/* Course Details */}
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-gray-800 mb-1">
-                        {course.name}
-                      </h3>
-                      <p className="text-lg text-gray-600 font-medium mb-2">
-                        {course.type}
-                      </p>
-                      <p className="text-sm text-gray-500 font-medium">
-                        {course.duration}
-                      </p>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-1">{course.name}</h3>
+                      <p className="text-lg text-gray-600 font-medium mb-2">{course.type}</p>
+                      <p className="text-sm text-gray-500 font-medium">{course.duration}</p>
                     </div>
 
                     {/* Selection indicator */}
@@ -586,7 +604,11 @@ const ClassCourseSelector: React.FC<ClassCourseSelectorProps> = ({ selectedBoard
                         className="flex-shrink-0 w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center"
                       >
                         <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       </motion.div>
                     )}

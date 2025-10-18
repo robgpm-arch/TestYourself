@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import RegisterDialog from '../components/RegisterDialog'
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import RegisterDialog from '../components/RegisterDialog';
+import { Link } from 'react-router-dom';
 
 export default function Splash() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white p-6">
@@ -29,5 +29,5 @@ export default function Splash() {
 
       <RegisterDialog open={open} onClose={() => setOpen(false)} />
     </div>
-  )
+  );
 }

@@ -1,3 +1,3 @@
 # Styles Directory
 
-This is a styles reserved directory. 
+This is a styles reserved directory.

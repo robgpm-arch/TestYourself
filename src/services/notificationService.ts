@@ -1,5 +1,9 @@
 import { getMessaging, getToken, onMessage, deleteToken } from 'firebase/messaging';
-import { PushNotifications, PushNotificationSchema, ActionPerformed } from '@capacitor/push-notifications';
+import {
+  PushNotifications,
+  PushNotificationSchema,
+  ActionPerformed,
+} from '@capacitor/push-notifications';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 import { Capacitor } from '@capacitor/core';
 import { messaging } from '../config/firebase';
@@ -58,7 +62,7 @@ export class NotificationService {
       } else {
         await this.initializeWebNotifications();
       }
-      
+
       this.isInitialized = true;
       console.log('Notification service initialized');
     } catch (error) {
@@ -90,7 +94,7 @@ export class NotificationService {
     await this.requestPermission();
 
     // Listen for foreground messages
-    onMessage(messaging, (payload) => {
+    onMessage(messaging, payload => {
       console.log('Foreground message received:', payload);
       this.handleForegroundMessage(payload);
     });
@@ -107,25 +111,25 @@ export class NotificationService {
     await PushNotifications.register();
 
     // Handle registration
-    PushNotifications.addListener('registration', (token) => {
+    PushNotifications.addListener('registration', token => {
       console.log('Native push registration success, token:', token.value);
       this.fcmToken = token.value;
       this.saveFCMToken(token.value);
     });
 
     // Handle registration error
-    PushNotifications.addListener('registrationError', (error) => {
+    PushNotifications.addListener('registrationError', error => {
       console.error('Native push registration error:', error);
     });
 
     // Handle received notifications
-    PushNotifications.addListener('pushNotificationReceived', (notification) => {
+    PushNotifications.addListener('pushNotificationReceived', notification => {
       console.log('Push notification received:', notification);
       this.handleNativeNotificationReceived(notification);
     });
 
     // Handle notification actions
-    PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+    PushNotifications.addListener('pushNotificationActionPerformed', notification => {
       console.log('Push notification action performed:', notification);
       this.handleNativeNotificationAction(notification);
     });
@@ -140,14 +144,14 @@ export class NotificationService {
   private static async initializeLocalNotifications(): Promise<void> {
     // Request permission for local notifications
     const permission = await LocalNotifications.requestPermissions();
-    
+
     if (permission.display !== 'granted') {
       console.warn('Local notification permission not granted');
       return;
     }
 
     // Handle local notification actions
-    LocalNotifications.addListener('localNotificationActionPerformed', (notification) => {
+    LocalNotifications.addListener('localNotificationActionPerformed', notification => {
       console.log('Local notification action performed:', notification);
       this.handleLocalNotificationAction(notification);
     });
@@ -182,7 +186,7 @@ export class NotificationService {
     const result = {
       granted: permission === 'granted',
       denied: permission === 'denied',
-      prompt: permission === 'default'
+      prompt: permission === 'default',
     };
 
     if (result.granted && messaging) {
@@ -197,11 +201,11 @@ export class NotificationService {
    */
   private static async requestNativePermission(): Promise<NotificationPermission> {
     const permission = await PushNotifications.requestPermissions();
-    
+
     return {
       granted: permission.receive === 'granted',
       denied: permission.receive === 'denied',
-      prompt: permission.receive === 'prompt'
+      prompt: permission.receive === 'prompt',
     };
   }
 
@@ -213,9 +217,9 @@ export class NotificationService {
 
     try {
       const token = await getToken(messaging, {
-        vapidKey: import.meta.env.VITE_VAPID_PUBLIC_KEY
+        vapidKey: import.meta.env.VITE_VAPID_PUBLIC_KEY,
       });
-      
+
       if (token) {
         console.log('FCM token generated:', token);
         this.fcmToken = token;
@@ -247,8 +251,8 @@ export class NotificationService {
         name: 'notification_token_registered',
         parameters: {
           platform: Capacitor.getPlatform(),
-          token_length: token.length
-        }
+          token_length: token.length,
+        },
       });
     } catch (error) {
       console.error('Failed to save FCM token:', error);
@@ -287,8 +291,8 @@ export class NotificationService {
       actions: notification.actions?.map(action => ({
         action: action.action,
         title: action.title,
-        icon: action.icon
-      }))
+        icon: action.icon,
+      })),
     };
 
     const webNotification = new Notification(notification.title, options);
@@ -310,7 +314,9 @@ export class NotificationService {
   /**
    * Send native local notification
    */
-  private static async sendNativeLocalNotification(notification: NotificationPayload): Promise<void> {
+  private static async sendNativeLocalNotification(
+    notification: NotificationPayload
+  ): Promise<void> {
     const localNotification: LocalNotificationSchema = {
       title: notification.title,
       body: notification.body,
@@ -318,11 +324,11 @@ export class NotificationService {
       sound: 'default',
       attachments: notification.image ? [{ id: 'image', url: notification.image }] : undefined,
       actionTypeId: 'GENERAL',
-      extra: notification.data
+      extra: notification.data,
     };
 
     await LocalNotifications.schedule({
-      notifications: [localNotification]
+      notifications: [localNotification],
     });
   }
 
@@ -341,11 +347,11 @@ export class NotificationService {
       body: notification.body,
       schedule: notification.schedule,
       sound: 'default',
-      extra: notification.data
+      extra: notification.data,
     };
 
     await LocalNotifications.schedule({
-      notifications: [scheduledNotification]
+      notifications: [scheduledNotification],
     });
 
     console.log('Notification scheduled:', notification);
@@ -358,7 +364,7 @@ export class NotificationService {
     if (!Capacitor.isNativePlatform()) return;
 
     await LocalNotifications.cancel({
-      notifications: [{ id: id.toString() }]
+      notifications: [{ id: id.toString() }],
     });
   }
 
@@ -391,7 +397,7 @@ export class NotificationService {
     this.showInAppNotification({
       title: payload.notification?.title || 'New Notification',
       body: payload.notification?.body || '',
-      data: payload.data
+      data: payload.data,
     });
 
     // Track notification received
@@ -399,8 +405,8 @@ export class NotificationService {
       name: 'notification_received_foreground',
       parameters: {
         notification_type: payload.data?.type || 'unknown',
-        platform: 'web'
-      }
+        platform: 'web',
+      },
     });
   }
 
@@ -414,7 +420,7 @@ export class NotificationService {
     this.showInAppNotification({
       title: notification.title || 'New Notification',
       body: notification.body || '',
-      data: notification.data
+      data: notification.data,
     });
 
     // Track notification received
@@ -422,8 +428,8 @@ export class NotificationService {
       name: 'notification_received_native',
       parameters: {
         notification_type: notification.data?.type || 'unknown',
-        platform: Capacitor.getPlatform()
-      }
+        platform: Capacitor.getPlatform(),
+      },
     });
   }
 
@@ -441,8 +447,8 @@ export class NotificationService {
       parameters: {
         action_id: notification.actionId,
         notification_type: notification.notification.data?.type || 'unknown',
-        platform: Capacitor.getPlatform()
-      }
+        platform: Capacitor.getPlatform(),
+      },
     });
   }
 
@@ -460,8 +466,8 @@ export class NotificationService {
       parameters: {
         action_id: notification.actionId,
         notification_id: notification.notification.id,
-        platform: Capacitor.getPlatform()
-      }
+        platform: Capacitor.getPlatform(),
+      },
     });
   }
 
@@ -508,7 +514,7 @@ export class NotificationService {
 
     // Dispatch custom event for UI components to listen to
     const event = new CustomEvent('inAppNotification', {
-      detail: notification
+      detail: notification,
     });
     window.dispatchEvent(event);
   }
@@ -548,7 +554,7 @@ export class NotificationService {
       fcmToken: this.fcmToken,
       platform: Capacitor.getPlatform(),
       pendingNotifications: pendingNotifications.length,
-      isInitialized: this.isInitialized
+      isInitialized: this.isInitialized,
     };
   }
 
@@ -561,7 +567,7 @@ export class NotificationService {
       body: 'This is a test notification from TestYourself!',
       icon: '/icons/icon-192.webp',
       data: { type: 'test' },
-      requireInteraction: false
+      requireInteraction: false,
     });
   }
 
@@ -577,8 +583,8 @@ export class NotificationService {
         data: { type: 'quiz_reminder', quizId },
         actions: [
           { action: 'start_quiz', title: 'Start Quiz' },
-          { action: 'remind_later', title: 'Remind Later' }
-        ]
+          { action: 'remind_later', title: 'Remind Later' },
+        ],
       }),
 
       achievementUnlocked: (achievementName: string): NotificationPayload => ({
@@ -586,22 +592,22 @@ export class NotificationService {
         body: `Congratulations! You've earned "${achievementName}"`,
         icon: '/icons/icon-192.webp',
         data: { type: 'achievement' },
-        requireInteraction: true
+        requireInteraction: true,
       }),
 
       studyReminder: (): NotificationPayload => ({
         title: 'Study Time! 📖',
         body: 'Keep up your learning streak! Check out new study materials.',
         icon: '/icons/icon-192.webp',
-        data: { type: 'study_reminder' }
+        data: { type: 'study_reminder' },
       }),
 
       leaderboardUpdate: (position: number): NotificationPayload => ({
         title: 'Leaderboard Update! 📊',
         body: `You're now #${position} on the leaderboard! Keep it up!`,
         icon: '/icons/icon-192.webp',
-        data: { type: 'leaderboard' }
-      })
+        data: { type: 'leaderboard' },
+      }),
     };
   }
 }

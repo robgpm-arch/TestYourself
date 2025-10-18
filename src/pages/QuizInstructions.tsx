@@ -25,7 +25,7 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
   onStartQuiz,
   onAutoRun,
   onBack,
-  onUnlockSubscriber
+  onUnlockSubscriber,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,7 +61,7 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
   const totalQuestions = runtimeSession.questions.length;
   const durationMinutes = runtimeSession.set.timeEstimate
     ? Number.parseInt(runtimeSession.set.timeEstimate, 10)
-    : runtimeSession.set.totalQuestions ?? totalQuestions;
+    : (runtimeSession.set.totalQuestions ?? totalQuestions);
 
   const instructionCards = useMemo(
     () => [
@@ -69,32 +69,32 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
         id: 'time',
         icon: '⏱️',
         title: 'Time Limit',
-        description: `Recommended time ~${runtimeSession.set.timeEstimate || `${Math.max(totalQuestions, 20)} min`}.`
+        description: `Recommended time ~${runtimeSession.set.timeEstimate || `${Math.max(totalQuestions, 20)} min`}.`,
       },
       {
         id: 'questions',
         icon: '❓',
         title: 'Questions',
-        description: `${totalQuestions} curated multiple choice questions.`
+        description: `${totalQuestions} curated multiple choice questions.`,
       },
       {
         id: 'scoring',
         icon: '🏆',
         title: 'Scoring',
-        description: '+1 for correct, 0 for wrong, 0 for skipped.'
+        description: '+1 for correct, 0 for wrong, 0 for skipped.',
       },
       {
         id: 'navigation',
         icon: '🔄',
         title: 'Navigation',
-        description: 'You can skip and return before submitting.'
+        description: 'You can skip and return before submitting.',
       },
       {
         id: 'integrity',
         icon: '📶',
         title: 'Integrity',
-        description: 'Do not switch apps during exam mode.'
-      }
+        description: 'Do not switch apps during exam mode.',
+      },
     ],
     [runtimeSession, totalQuestions]
   );
@@ -109,9 +109,9 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
         duration: 0.5,
         type: 'spring',
         stiffness: 110,
-        damping: 14
-      }
-    })
+        damping: 14,
+      },
+    }),
   };
 
   const buttonPulse = {
@@ -119,8 +119,8 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
     transition: {
       duration: 2,
       repeat: Infinity,
-      ease: 'easeInOut'
-    }
+      ease: 'easeInOut',
+    },
   };
 
   const handleBack = () => {
@@ -201,11 +201,18 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
               transition={{ delay: 0.2, duration: 0.5 }}
               className="max-w-3xl mx-auto"
             >
-              <Card variant="elevated" className="bg-white/80 backdrop-blur-sm border border-white/40">
+              <Card
+                variant="elevated"
+                className="bg-white/80 backdrop-blur-sm border border-white/40"
+              >
                 <div className="flex flex-wrap items-center justify-between gap-4 p-5">
                   <div>
-                    <p className="text-sm uppercase tracking-wide text-blue-500 font-semibold">Chapter Overview</p>
-                    <h2 className="text-2xl font-bold text-gray-800">{runtimeSession.set.description}</h2>
+                    <p className="text-sm uppercase tracking-wide text-blue-500 font-semibold">
+                      Chapter Overview
+                    </p>
+                    <h2 className="text-2xl font-bold text-gray-800">
+                      {runtimeSession.set.description}
+                    </h2>
                   </div>
                   <div className="flex flex-wrap gap-4 sm:gap-8 text-sm text-gray-600">
                     <div className="text-center">
@@ -221,7 +228,9 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                       <p>Minutes</p>
                     </div>
                     <div className="text-center">
-                      <p className="font-semibold text-gray-800 text-lg capitalize">{runtimeSession.set.difficulty}</p>
+                      <p className="font-semibold text-gray-800 text-lg capitalize">
+                        {runtimeSession.set.difficulty}
+                      </p>
                       <p>Difficulty</p>
                     </div>
                   </div>
@@ -250,7 +259,9 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                   >
                     <div className="mb-4">
                       <div className="text-4xl mb-3">{instruction.icon}</div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">{instruction.title}</h3>
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                        {instruction.title}
+                      </h3>
                       <p className="text-gray-600 leading-relaxed">{instruction.description}</p>
                     </div>
                   </Card>
@@ -270,18 +281,22 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                     <div className="flex items-center gap-3 mb-3">
                       <span className="text-3xl">🎭</span>
                       <div>
-                        <p className="text-sm uppercase tracking-wide text-blue-500 font-semibold">Motivational companion</p>
+                        <p className="text-sm uppercase tracking-wide text-blue-500 font-semibold">
+                          Motivational companion
+                        </p>
                         <h3 className="text-xl font-semibold text-gray-800">
                           {selectedPersonality.name}
                         </h3>
                       </div>
                     </div>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      Choose who celebrates you after each quiz. Your selected personality plays a themed GIF and voice message automatically when results load.
+                      Choose who celebrates you after each quiz. Your selected personality plays a
+                      themed GIF and voice message automatically when results load.
                     </p>
                     {autoRunConfig && autoRunRequiresSubscriber && !autoRunAccessible && (
                       <p className="mt-3 text-xs text-gray-500">
-                        Auto-run narration needs an active subscription. You can still preview your chosen motivator after upgrading.
+                        Auto-run narration needs an active subscription. You can still preview your
+                        chosen motivator after upgrading.
                       </p>
                     )}
                   </div>
@@ -321,7 +336,8 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                     <h3 className="text-lg font-semibold text-gray-800">Pro Tip</h3>
                   </div>
                   <p className="text-gray-700">
-                    Read each question carefully and take your time. You can always review your answers before final submission.
+                    Read each question carefully and take your time. You can always review your
+                    answers before final submission.
                   </p>
                 </Card>
               </motion.div>
@@ -363,9 +379,7 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                     Preparing...
                   </>
                 ) : (
-                  <>
-                    🤖 Auto Run Preview
-                  </>
+                  <>🤖 Auto Run Preview</>
                 )}
               </Button>
 
@@ -389,9 +403,7 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
             </div>
 
             {autoRunLockedMessage && (
-              <div className="text-center text-sm text-gray-500 mt-4">
-                {autoRunLockedMessage}
-              </div>
+              <div className="text-center text-sm text-gray-500 mt-4">{autoRunLockedMessage}</div>
             )}
 
             <motion.div
@@ -430,8 +442,12 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white/95 backdrop-blur-sm">
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">Choose your motivational voice</h3>
-                <p className="text-sm text-gray-500">Pick the personality that celebrates you after each quiz.</p>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  Choose your motivational voice
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Pick the personality that celebrates you after each quiz.
+                </p>
               </div>
               <button
                 onClick={() => setShowPersonalitySelector(false)}
@@ -441,7 +457,7 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
-              {personalities.map((personality) => {
+              {personalities.map(personality => {
                 const isSelected = personality.id === selectedPersonality.id;
                 return (
                   <div
@@ -463,15 +479,20 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                     </div>
                     <div className="p-4 space-y-3">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.25em] text-blue-500">{personality.title}</p>
+                        <p className="text-xs uppercase tracking-[0.25em] text-blue-500">
+                          {personality.title}
+                        </p>
                         <p className="text-lg font-semibold text-gray-900">{personality.name}</p>
                       </div>
                       <p className="text-sm text-gray-600 leading-relaxed">
                         {personality.description}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        {personality.traits.map((trait) => (
-                          <span key={trait} className="text-[11px] uppercase tracking-wide bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full">
+                        {personality.traits.map(trait => (
+                          <span
+                            key={trait}
+                            className="text-[11px] uppercase tracking-wide bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full"
+                          >
                             {trait}
                           </span>
                         ))}
@@ -484,7 +505,11 @@ const QuizInstructions: React.FC<QuizInstructionsProps> = ({
                         variant={isSelected ? 'secondary' : 'primary'}
                         size="small"
                         fullWidth
-                        className={isSelected ? '' : 'bg-blue-600 text-white hover:bg-blue-700 border-blue-600'}
+                        className={
+                          isSelected
+                            ? ''
+                            : 'bg-blue-600 text-white hover:bg-blue-700 border-blue-600'
+                        }
                       >
                         {isSelected ? 'Currently selected' : 'Use this motivator'}
                       </Button>

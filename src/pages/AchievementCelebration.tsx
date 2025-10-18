@@ -36,7 +36,7 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
   rewardCoins = 120,
   isStreak = true,
   onViewAchievements,
-  onContinue
+  onContinue,
 }) => {
   const [showBadge, setShowBadge] = useState(false);
 
@@ -45,49 +45,59 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
-  const confettiPieces = useMemo<ConfettiPiece[]>(() =>
-    Array.from({ length: 35 }).map((_, index) => ({
-      id: index,
-      left: Math.random() * 100,
-      delay: Math.random() * 1.8,
-      duration: 3 + Math.random() * 2,
-      hue: Math.floor(Math.random() * 360),
-      size: 6 + Math.random() * 10
-    })),
+  const confettiPieces = useMemo<ConfettiPiece[]>(
+    () =>
+      Array.from({ length: 35 }).map((_, index) => ({
+        id: index,
+        left: Math.random() * 100,
+        delay: Math.random() * 1.8,
+        duration: 3 + Math.random() * 2,
+        hue: Math.floor(Math.random() * 360),
+        size: 6 + Math.random() * 10,
+      })),
     []
   );
 
-  const coinPieces = useMemo<CoinPiece[]>(() =>
-    Array.from({ length: 20 }).map((_, index) => ({
-      id: index,
-      left: Math.random() * 100,
-      delay: Math.random() * 1.2,
-      duration: 2.5 + Math.random() * 1.5,
-      scale: 0.7 + Math.random() * 0.6
-    })),
+  const coinPieces = useMemo<CoinPiece[]>(
+    () =>
+      Array.from({ length: 20 }).map((_, index) => ({
+        id: index,
+        left: Math.random() * 100,
+        delay: Math.random() * 1.2,
+        duration: 2.5 + Math.random() * 1.5,
+        scale: 0.7 + Math.random() * 0.6,
+      })),
     []
   );
 
-  const fireworks = useMemo(() => [
-    { id: 1, top: '25%', left: '20%', delay: 0 },
-    { id: 2, top: '18%', left: '70%', delay: 0.8 },
-    { id: 3, top: '50%', left: '85%', delay: 1.2 },
-  ], []);
+  const fireworks = useMemo(
+    () => [
+      { id: 1, top: '25%', left: '20%', delay: 0 },
+      { id: 2, top: '18%', left: '70%', delay: 0.8 },
+      { id: 3, top: '50%', left: '85%', delay: 1.2 },
+    ],
+    []
+  );
 
   return (
-    <Layout variant="fullscreen" showHeader={false} showFooter={false} className="relative overflow-hidden">
+    <Layout
+      variant="fullscreen"
+      showHeader={false}
+      showFooter={false}
+      className="relative overflow-hidden"
+    >
       <div className="celebration-bg absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
 
       {/* Fireworks */}
-      {fireworks.map((firework) => (
+      {fireworks.map(firework => (
         <span
           key={firework.id}
           className="firework"
           style={{
             top: firework.top,
             left: firework.left,
-            animationDelay: `${firework.delay}s`
+            animationDelay: `${firework.delay}s`,
           }}
         />
       ))}
@@ -104,7 +114,7 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
               animationDuration: `${piece.duration}s`,
               width: piece.size,
               height: piece.size,
-              background: `hsl(${piece.hue}deg 80% 60%)`
+              background: `hsl(${piece.hue}deg 80% 60%)`,
             }}
           />
         ))}
@@ -120,7 +130,7 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
               left: `${piece.left}%`,
               animationDelay: `${piece.delay}s`,
               animationDuration: `${piece.duration}s`,
-              transform: `scale(${piece.scale})`
+              transform: `scale(${piece.scale})`,
             }}
           />
         ))}
@@ -197,8 +207,7 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
         >
           <div className="flex items-center gap-3 text-lg font-semibold text-amber-200">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm">
-              <span className="text-2xl">🪙</span>
-              +{rewardCoins} bonus coins
+              <span className="text-2xl">🪙</span>+{rewardCoins} bonus coins
             </span>
             {isStreak && (
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-orange-200">
@@ -208,7 +217,8 @@ const AchievementCelebration: React.FC<AchievementCelebrationProps> = ({
             )}
           </div>
           <p className="text-sm text-indigo-200/80 max-w-md">
-            Coins will be added to your wallet instantly. Keep exploring challenges to stack more rewards!
+            Coins will be added to your wallet instantly. Keep exploring challenges to stack more
+            rewards!
           </p>
         </motion.div>
 

@@ -1,13 +1,13 @@
-import { initializeApp, getApps, getApp, setLogLevel } from "firebase/app";
+import { initializeApp, getApps, getApp, setLogLevel } from 'firebase/app';
 import {
   getFirestore,
   initializeFirestore,
   persistentLocalCache,
   persistentMultipleTabManager,
   CACHE_SIZE_UNLIMITED,
-  Firestore
-} from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+  Firestore,
+} from 'firebase/firestore';
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

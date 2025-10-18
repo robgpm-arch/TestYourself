@@ -82,3 +82,7 @@ serviceAccount*.json
 .firebase/*.json
 functions/.runtimeconfig.json
 
+
+# secrets & local env
+firebase-service-account*.json
+

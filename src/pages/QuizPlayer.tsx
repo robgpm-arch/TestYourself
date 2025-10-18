@@ -68,10 +68,16 @@ interface QuizPlayerProps {
 const LETTERS: Array<'A' | 'B' | 'C' | 'D'> = ['A', 'B', 'C', 'D'];
 
 async function recordQuizResult(result: {
-  score: number; totalQuestions: number; timeSec: number;
-  courseId?: string; subjectId?: string; chapterId?: string;
-  boardId?: string|null; examId?: string|null;
-  state?: string|null; district?: string|null;
+  score: number;
+  totalQuestions: number;
+  timeSec: number;
+  courseId?: string;
+  subjectId?: string;
+  chapterId?: string;
+  boardId?: string | null;
+  examId?: string | null;
+  state?: string | null;
+  district?: string | null;
 }) {
   const uid = getAuth().currentUser?.uid;
   if (!uid) return;
@@ -94,18 +100,20 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
 
   const quizData = useMemo(() => {
     const totalQuestions = session.questions.length;
-    const formattedQuestions: FormattedQuizQuestion[] = session.questions.map((question, index) => ({
-      id: question.id?.toString() ?? `question-${index + 1}`,
-      text: question.question,
-      image: undefined,
-      explanation: question.explanation,
-      options: (question.options ?? []).slice(0, 4).map((optionText, optionIndex) => ({
-        id: optionIndex.toString(),
-        text: optionText,
-        letter: LETTERS[optionIndex] ?? 'A',
-      })),
-      correctAnswer: question.correctAnswer?.toString() ?? '0',
-    }));
+    const formattedQuestions: FormattedQuizQuestion[] = session.questions.map(
+      (question, index) => ({
+        id: question.id?.toString() ?? `question-${index + 1}`,
+        text: question.question,
+        image: undefined,
+        explanation: question.explanation,
+        options: (question.options ?? []).slice(0, 4).map((optionText, optionIndex) => ({
+          id: optionIndex.toString(),
+          text: optionText,
+          letter: LETTERS[optionIndex] ?? 'A',
+        })),
+        correctAnswer: question.correctAnswer?.toString() ?? '0',
+      })
+    );
 
     return {
       title: `${session.chapterInfo.subject} – ${session.chapterInfo.chapter} (${session.set.name})`,
@@ -139,7 +147,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
       const timer = setTimeout(() => {
         setQuizState(prev => ({
           ...prev,
-          timeRemaining: prev.timeRemaining - 1
+          timeRemaining: prev.timeRemaining - 1,
         }));
       }, 1000);
       return () => clearTimeout(timer);
@@ -169,7 +177,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
 
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
@@ -178,7 +186,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
     setQuizState(prev => {
       const newAnswers = [...prev.answers];
       const existingIndex = newAnswers.findIndex(a => a.questionId === currentQuestion.id);
-      
+
       if (existingIndex >= 0) {
         newAnswers[existingIndex].isMarkedForReview = !newAnswers[existingIndex].isMarkedForReview;
       } else {
@@ -192,7 +200,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
 
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
@@ -201,7 +209,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
     if (quizState.currentQuestion > 0) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion - 1
+        currentQuestion: prev.currentQuestion - 1,
       }));
     }
   };
@@ -210,7 +218,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
     if (quizState.currentQuestion < quizData.questions.length - 1) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion + 1
+        currentQuestion: prev.currentQuestion + 1,
       }));
     } else {
       handleQuizComplete();
@@ -232,12 +240,10 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
     }, 0);
 
     const timeSpent = Math.max(quizData.timeLimit - quizState.timeRemaining, 0);
-    const passed = quizData.totalQuestions > 0
-      ? correctCount / quizData.totalQuestions >= 0.6
-      : true;
-    const scorePercentage = quizData.totalQuestions > 0
-      ? Math.round((correctCount / quizData.totalQuestions) * 100)
-      : 0;
+    const passed =
+      quizData.totalQuestions > 0 ? correctCount / quizData.totalQuestions >= 0.6 : true;
+    const scorePercentage =
+      quizData.totalQuestions > 0 ? Math.round((correctCount / quizData.totalQuestions) * 100) : 0;
 
     const completionResult: QuizCompletionResult = {
       title: quizData.title,
@@ -287,16 +293,23 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
           session,
           answers: quizState.answers,
           timeSpent,
-          passed
-        }
+          passed,
+        },
       });
     }
-  }, [navigate, quizData, quizState.answers, quizState.isCompleted, quizState.timeRemaining, session]);
+  }, [
+    navigate,
+    quizData,
+    quizState.answers,
+    quizState.isCompleted,
+    quizState.timeRemaining,
+    session,
+  ]);
 
   const jumpToQuestion = (questionIndex: number) => {
     setQuizState(prev => ({
       ...prev,
-      currentQuestion: questionIndex
+      currentQuestion: questionIndex,
     }));
     setShowSideNav(false);
   };
@@ -304,7 +317,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
   const getQuestionStatus = (questionIndex: number) => {
     const question = quizData.questions[questionIndex];
     const answer = quizState.answers.find(a => a.questionId === question.id);
-    
+
     if (answer?.isMarkedForReview) return 'marked';
     if (answer?.selectedOption) return 'answered';
     return 'unanswered';
@@ -342,7 +355,9 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
             {/* Quiz Title */}
             <div className="flex items-center space-x-4">
               <div>
-                <h1 className={cx('text-xl font-bold', themeStyles.topBarTitle)}>{quizData.title}</h1>
+                <h1 className={cx('text-xl font-bold', themeStyles.topBarTitle)}>
+                  {quizData.title}
+                </h1>
                 <p className={cx('text-sm', themeStyles.topBarMeta)}>
                   {quizData.totalQuestions} questions · {Math.floor(quizData.timeLimit / 60)} min
                 </p>
@@ -394,7 +409,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
                       initial={{ strokeDashoffset: 0 }}
                       animate={{
                         strokeDashoffset:
-                          (1 - quizState.timeRemaining / quizData.timeLimit) * 2 * Math.PI * 16
+                          (1 - quizState.timeRemaining / quizData.timeLimit) * 2 * Math.PI * 16,
                       }}
                       transition={{ duration: 0.5 }}
                     />
@@ -453,7 +468,12 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
                   {/* Question Card */}
                   <Card variant="elevated" className={cx('mb-6', themeStyles.questionCard)}>
                     <div className="p-6">
-                      <h2 className={cx('text-xl font-bold mb-4 leading-relaxed', themeStyles.questionText)}>
+                      <h2
+                        className={cx(
+                          'text-xl font-bold mb-4 leading-relaxed',
+                          themeStyles.questionText
+                        )}
+                      >
                         {currentQuestion?.text}
                       </h2>
 
@@ -472,7 +492,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
 
                   {/* Options */}
                   <div className="grid gap-4 md:grid-cols-2">
-                    {currentQuestion?.options.map((option) => {
+                    {currentQuestion?.options.map(option => {
                       const isSelected = currentAnswer?.selectedOption === option.id;
                       const palette = themeStyles.optionPalette[option.letter];
                       return (
@@ -551,9 +571,11 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
                 animate={{ x: 0 }}
                 exit={{ x: -300 }}
                 className={cx('w-80 h-full p-6 overflow-y-auto', themeStyles.mobileNav)}
-                onClick={(e) => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
               >
-                <h3 className={cx('text-lg font-semibold mb-4', themeStyles.mobileNavText)}>Questions</h3>
+                <h3 className={cx('text-lg font-semibold mb-4', themeStyles.mobileNavText)}>
+                  Questions
+                </h3>
                 <div className="grid grid-cols-5 gap-3">
                   {quizData.questions.map((_, index) => {
                     const status = getQuestionStatus(index);
@@ -572,7 +594,7 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
                     );
                   })}
                 </div>
-                
+
                 {/* Legend */}
                 <div className={cx('mt-6 space-y-2 text-sm', themeStyles.mobileNavText)}>
                   <div className="flex items-center space-x-2">
@@ -628,12 +650,10 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
             </Button>
 
             {/* Next Button */}
-            <Button
-              onClick={handleNext}
-              variant="primary"
-              className={themeStyles.buttons.next}
-            >
-              {quizState.currentQuestion === quizData.questions.length - 1 ? 'Finish Quiz' : 'Next →'}
+            <Button onClick={handleNext} variant="primary" className={themeStyles.buttons.next}>
+              {quizState.currentQuestion === quizData.questions.length - 1
+                ? 'Finish Quiz'
+                : 'Next →'}
             </Button>
           </div>
 
@@ -641,12 +661,18 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
           <div className="mt-3 max-w-6xl mx-auto">
             <div className={cx('flex justify-between text-xs mb-1', themeStyles.progress.text)}>
               <span>Progress</span>
-              <span>{answeredQuestions}/{quizData.totalQuestions} answered</span>
+              <span>
+                {answeredQuestions}/{quizData.totalQuestions} answered
+              </span>
             </div>
             <div className={cx('w-full rounded-full h-2', themeStyles.progress.track)}>
               <motion.div
                 className={cx('h-2 rounded-full', themeStyles.progress.fillClass)}
-                style={themeStyles.progress.fillColor ? { background: themeStyles.progress.fillColor } : undefined}
+                style={
+                  themeStyles.progress.fillColor
+                    ? { background: themeStyles.progress.fillColor }
+                    : undefined
+                }
                 initial={{ width: 0 }}
                 animate={{ width: `${progressPercentage}%` }}
                 transition={{ duration: 0.5 }}
@@ -655,7 +681,6 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
           </div>
         </motion.div>
       </div>
-
     </div>
   );
 };

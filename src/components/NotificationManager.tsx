@@ -34,8 +34,8 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
     quietHours: {
       enabled: false,
       start: '22:00',
-      end: '08:00'
-    }
+      end: '08:00',
+    },
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
       setPermissionStatus(notificationSettings.permission.granted ? 'granted' : 'denied');
       setSettings(prev => ({
         ...prev,
-        pushEnabled: notificationSettings.permission.granted
+        pushEnabled: notificationSettings.permission.granted,
       }));
     } catch (error) {
       console.error('Failed to initialize notifications:', error);
@@ -64,15 +64,14 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
   const setupEventListeners = () => {
     // Listen for in-app notifications
     window.addEventListener('inAppNotification', handleInAppNotification);
-    
+
     // Listen for permission changes
     if ('permissions' in navigator) {
-      navigator.permissions.query({name: 'notifications' as PermissionName})
-        .then(permission => {
-          permission.addEventListener('change', () => {
-            setPermissionStatus(permission.state);
-          });
+      navigator.permissions.query({ name: 'notifications' as PermissionName }).then(permission => {
+        permission.addEventListener('change', () => {
+          setPermissionStatus(permission.state);
         });
+      });
     }
   };
 
@@ -91,11 +90,11 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
       data: notificationData.data,
       timestamp: Date.now(),
       read: false,
-      actions: getNotificationActions(notificationData.data)
+      actions: getNotificationActions(notificationData.data),
     };
 
     setNotifications(prev => [newNotification, ...prev.slice(0, 9)]); // Keep last 10 notifications
-    
+
     // Auto-remove after 5 seconds for non-important notifications
     if (newNotification.type === 'info') {
       setTimeout(() => {
@@ -108,8 +107,8 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
       name: 'in_app_notification_displayed',
       parameters: {
         notification_type: notificationData.data?.type || 'unknown',
-        notification_title: notificationData.title
-      }
+        notification_title: notificationData.title,
+      },
     });
   };
 
@@ -144,10 +143,10 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
             window.location.href = `/quiz/${data.quizId}`;
             AnalyticsService.trackCustomEvent({
               name: 'notification_action_clicked',
-              parameters: { action: 'start_quiz', quiz_id: data.quizId }
+              parameters: { action: 'start_quiz', quiz_id: data.quizId },
             });
           },
-          primary: true
+          primary: true,
         });
         break;
       case 'achievement':
@@ -157,10 +156,10 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
             window.location.href = '/profile?tab=achievements';
             AnalyticsService.trackCustomEvent({
               name: 'notification_action_clicked',
-              parameters: { action: 'view_achievement' }
+              parameters: { action: 'view_achievement' },
             });
           },
-          primary: true
+          primary: true,
         });
         break;
       case 'leaderboard':
@@ -170,10 +169,10 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
             window.location.href = '/leaderboards';
             AnalyticsService.trackCustomEvent({
               name: 'notification_action_clicked',
-              parameters: { action: 'view_leaderboard' }
+              parameters: { action: 'view_leaderboard' },
             });
           },
-          primary: true
+          primary: true,
         });
         break;
     }
@@ -186,16 +185,14 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
   };
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => 
-      prev.map(n => n.id === id ? { ...n, read: true } : n)
-    );
+    setNotifications(prev => prev.map(n => (n.id === id ? { ...n, read: true } : n)));
   };
 
   const clearAllNotifications = () => {
     setNotifications([]);
     AnalyticsService.trackCustomEvent({
       name: 'notifications_cleared',
-      parameters: { count: notifications.length }
+      parameters: { count: notifications.length },
     });
   };
 
@@ -204,10 +201,10 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
       const permission = await NotificationService.requestPermission();
       setPermissionStatus(permission.granted ? 'granted' : 'denied');
       setSettings(prev => ({ ...prev, pushEnabled: permission.granted }));
-      
+
       if (permission.granted) {
         AnalyticsService.trackCustomEvent({
-          name: 'notification_permission_granted'
+          name: 'notification_permission_granted',
         });
       }
     } catch (error) {
@@ -219,7 +216,7 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
     try {
       await NotificationService.testNotification();
       AnalyticsService.trackCustomEvent({
-        name: 'test_notification_sent'
+        name: 'test_notification_sent',
       });
     } catch (error) {
       console.error('Failed to send test notification:', error);
@@ -331,7 +328,7 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
                 )}
               </div>
             ) : (
-              notifications.map((notification) => (
+              notifications.map(notification => (
                 <div
                   key={notification.id}
                   className={`px-4 py-3 border-b border-gray-100 ${
@@ -346,13 +343,11 @@ export const NotificationManager: React.FC<NotificationManagerProps> = ({ classN
                       <p className="text-sm font-medium text-gray-900 truncate">
                         {notification.title}
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">
-                        {notification.body}
-                      </p>
+                      <p className="text-sm text-gray-600 mt-1">{notification.body}</p>
                       <p className="text-xs text-gray-400 mt-1">
                         {new Date(notification.timestamp).toLocaleTimeString()}
                       </p>
-                      
+
                       {/* Actions */}
                       {notification.actions && (
                         <div className="flex gap-2 mt-2">

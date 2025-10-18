@@ -107,12 +107,12 @@ export interface CatalogMedium extends AdminAuditMetadata, VisibilityConfig {
   id: string;
   name: string;
   description?: string;
-  code?: string;   // e.g. en, hi, te
+  code?: string; // e.g. en, hi, te
 }
 
 export interface CatalogBoard extends AdminAuditMetadata, VisibilityConfig {
   id: string;
-  mediumId: string;  // parent Medium
+  mediumId: string; // parent Medium
   name: string;
   description?: string;
   region?: string;
@@ -125,7 +125,7 @@ export interface CatalogExam extends AdminAuditMetadata, VisibilityConfig {
   name: string;
   title?: string;
   description?: string;
-  mediumId?: string;  // parent Medium (lets you scope exams per medium)
+  mediumId?: string; // parent Medium (lets you scope exams per medium)
 }
 
 export interface CatalogCourse extends AdminAuditMetadata, VisibilityConfig {
@@ -144,7 +144,7 @@ export interface CatalogCourse extends AdminAuditMetadata, VisibilityConfig {
 
 export interface CatalogSubject extends AdminAuditMetadata, VisibilityConfig {
   id: string;
-  courseId: string;        // parent Course
+  courseId: string; // parent Course
   // mirror for filtering (optional but speeds UI)
   mediumId: string;
   boardId?: string;
@@ -158,7 +158,7 @@ export interface CatalogSubject extends AdminAuditMetadata, VisibilityConfig {
 
 export interface CatalogChapter extends AdminAuditMetadata, VisibilityConfig {
   id: string;
-  subjectId: string;       // parent Subject
+  subjectId: string; // parent Subject
   // denormalized for filtering
   boardId?: string;
   examId?: string;
@@ -180,13 +180,13 @@ export interface CatalogQuizSetAutoRunConfig {
 
 export interface CatalogQuizSet extends AdminAuditMetadata, VisibilityConfig {
   id: string;
-  chapterId: string;       // parent Chapter
+  chapterId: string; // parent Chapter
   // denormalized for filtering
   boardId?: string;
   examId?: string;
   name: string;
   description?: string;
-  difficulty?: 'easy'|'medium'|'hard';
+  difficulty?: 'easy' | 'medium' | 'hard';
   totalQuestions?: number;
   durationMinutes?: number;
   tags?: string[];
@@ -414,7 +414,7 @@ export const COLLECTIONS = {
   QUIZ_SETS: 'quiz_sets',
   SCREENS: 'screens',
   LEADERBOARD_CONFIGS: 'leaderboard_configs',
-  EXAMS: 'exams'
+  EXAMS: 'exams',
 } as const;
 
-export type CollectionName = typeof COLLECTIONS[keyof typeof COLLECTIONS];
+export type CollectionName = (typeof COLLECTIONS)[keyof typeof COLLECTIONS];

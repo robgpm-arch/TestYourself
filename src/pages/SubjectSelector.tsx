@@ -19,7 +19,7 @@ const subjects: Subject[] = [
     emoji: '🔢',
     color: 'from-blue-400 to-blue-600',
     description: 'Numbers, Algebra, Geometry',
-    subIcon: '📐'
+    subIcon: '📐',
   },
   {
     id: 'science',
@@ -28,7 +28,7 @@ const subjects: Subject[] = [
     emoji: '⚛️',
     color: 'from-green-400 to-green-600',
     description: 'Physics, Chemistry, Biology',
-    subIcon: '🧪'
+    subIcon: '🧪',
   },
   {
     id: 'history',
@@ -37,7 +37,7 @@ const subjects: Subject[] = [
     emoji: '🏛️',
     color: 'from-amber-600 to-orange-700',
     description: 'Past Events, Civilizations',
-    subIcon: '⚔️'
+    subIcon: '⚔️',
   },
   {
     id: 'geography',
@@ -46,7 +46,7 @@ const subjects: Subject[] = [
     emoji: '🗺️',
     color: 'from-cyan-400 to-teal-600',
     description: 'Earth, Maps, Climate',
-    subIcon: '🧭'
+    subIcon: '🧭',
   },
   {
     id: 'english',
@@ -55,7 +55,7 @@ const subjects: Subject[] = [
     emoji: '✍️',
     color: 'from-purple-400 to-purple-600',
     description: 'Language, Literature, Grammar',
-    subIcon: '📝'
+    subIcon: '📝',
   },
   {
     id: 'general-knowledge',
@@ -64,7 +64,7 @@ const subjects: Subject[] = [
     emoji: '💡',
     color: 'from-yellow-400 to-yellow-600',
     description: 'Facts, Trivia, Current Events',
-    subIcon: '🧠'
+    subIcon: '🧠',
   },
   {
     id: 'reasoning',
@@ -73,7 +73,7 @@ const subjects: Subject[] = [
     emoji: '🎯',
     color: 'from-orange-400 to-red-500',
     description: 'Logic, Puzzles, Problem Solving',
-    subIcon: '⚡'
+    subIcon: '⚡',
   },
   {
     id: 'current-affairs',
@@ -82,8 +82,8 @@ const subjects: Subject[] = [
     emoji: '📡',
     color: 'from-red-400 to-pink-500',
     description: 'News, Politics, Events',
-    subIcon: '📺'
-  }
+    subIcon: '📺',
+  },
 ];
 
 interface SubjectSelectorProps {
@@ -171,31 +171,36 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({
               type="button"
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 delay: 0.3 + index * 0.1,
-                type: "spring",
-                stiffness: 100
+                type: 'spring',
+                stiffness: 100,
               }}
-              whileHover={{ 
-                scale: 1.05, 
+              whileHover={{
+                scale: 1.05,
                 y: -5,
-                transition: { duration: 0.2 }
+                transition: { duration: 0.2 },
               }}
-              whileTap={{ 
+              whileTap={{
                 scale: comingSoonSet.has(subject.id) ? 1 : 0.98,
-                transition: { duration: 0.1 }
+                transition: { duration: 0.1 },
               }}
               onClick={() => handleSubjectSelect(subject.id)}
               aria-pressed={selectedSubject === subject.id}
-              aria-label={comingSoonSet.has(subject.id) ? `${subject.name} coming soon` : `Select ${subject.name}`}
+              aria-label={
+                comingSoonSet.has(subject.id)
+                  ? `${subject.name} coming soon`
+                  : `Select ${subject.name}`
+              }
               className={`
                 relative cursor-pointer rounded-2xl p-4 sm:p-5 lg:p-6 aspect-[4/5]
                 bg-gradient-to-br ${subject.color} text-white w-full max-w-[150px] sm:max-w-[180px] lg:max-w-[220px]
                 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col focus:outline-none focus-visible:ring-4 focus-visible:ring-white/70
-                ${selectedSubject === subject.id 
-                  ? 'ring-2 ring-white ring-opacity-50 shadow-2xl scale-105' 
-                  : ''
+                ${
+                  selectedSubject === subject.id
+                    ? 'ring-2 ring-white ring-opacity-50 shadow-2xl scale-105'
+                    : ''
                 }
                 ${comingSoonSet.has(subject.id) ? 'opacity-90' : ''}
               `}
@@ -220,9 +225,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({
                 )}
 
                 {/* Main Icon */}
-                <div className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-3">
-                  {subject.icon}
-                </div>
+                <div className="text-3xl sm:text-4xl md:text-5xl mb-2 sm:mb-3">{subject.icon}</div>
 
                 {/* Subject Name */}
                 <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 leading-tight">
@@ -235,9 +238,7 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({
                 </p>
 
                 {/* Sub Icon */}
-                <div className="text-xl sm:text-2xl md:text-3xl opacity-80">
-                  {subject.subIcon}
-                </div>
+                <div className="text-xl sm:text-2xl md:text-3xl opacity-80">{subject.subIcon}</div>
 
                 {/* Selection indicator */}
                 {selectedSubject === subject.id && !comingSoonSet.has(subject.id) && (
@@ -247,15 +248,17 @@ const SubjectSelector: React.FC<SubjectSelectorProps> = ({
                     className="absolute -top-2 -right-2 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg"
                   >
                     <svg className="w-6 h-6 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </motion.div>
                 )}
 
                 {/* Hover overlay */}
-                <motion.div
-                  className="absolute inset-0 rounded-3xl bg-white opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none"
-                />
+                <motion.div className="absolute inset-0 rounded-3xl bg-white opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
               </div>
 
               {/* Card expansion effect */}

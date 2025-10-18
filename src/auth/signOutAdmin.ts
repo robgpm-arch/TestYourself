@@ -10,7 +10,7 @@ const LOCAL_KEYS_TO_CLEAR = [
   'class_course_selected',
   'subject_selected',
   'redirectAfterAuth',
-  'lastRoute'
+  'lastRoute',
 ];
 
 export async function signOutAdmin(): Promise<void> {

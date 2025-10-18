@@ -1,8 +1,35 @@
-export const CASTE_OPTIONS = ['SC','ST','OBC','BC-A','BC-B','BC-C','BC-D','BC-E','EWS','OC'];
-export const GENDER_OPTIONS = ['Male','Female'];
-export const STATE_OPTIONS = ['Andhra Pradesh','Telangana','Karnataka','Tamil Nadu','Kerala','Maharashtra','Delhi','Gujarat','Rajasthan','Uttar Pradesh'];
-export const STATE_ZONE_OPTIONS = ['Zone-1','Zone-2','Zone-3','Zone-4'];
-export const CENTRAL_ZONE_OPTIONS = ['Central-North','Central-South','Central-East','Central-West'];
+export const CASTE_OPTIONS = [
+  'SC',
+  'ST',
+  'OBC',
+  'BC-A',
+  'BC-B',
+  'BC-C',
+  'BC-D',
+  'BC-E',
+  'EWS',
+  'OC',
+];
+export const GENDER_OPTIONS = ['Male', 'Female'];
+export const STATE_OPTIONS = [
+  'Andhra Pradesh',
+  'Telangana',
+  'Karnataka',
+  'Tamil Nadu',
+  'Kerala',
+  'Maharashtra',
+  'Delhi',
+  'Gujarat',
+  'Rajasthan',
+  'Uttar Pradesh',
+];
+export const STATE_ZONE_OPTIONS = ['Zone-1', 'Zone-2', 'Zone-3', 'Zone-4'];
+export const CENTRAL_ZONE_OPTIONS = [
+  'Central-North',
+  'Central-South',
+  'Central-East',
+  'Central-West',
+];
 
 export function districtsForState(state: string): string[] {
   if (state === 'Telangana') {

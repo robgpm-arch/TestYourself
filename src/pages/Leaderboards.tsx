@@ -28,34 +28,127 @@ interface TabType {
 // Mock data for different leaderboard types
 const mockLeaderboards = {
   national: [
-    { id: 1, rank: 1, name: "Alex Chen", avatar: "/assets/avatar-1.jpg", score: 9850, badge: "🏆", streak: 15 },
-    { id: 2, rank: 2, name: "Sarah Johnson", avatar: "/assets/avatar-2.jpg", score: 9720, badge: "🥈" },
-    { id: 3, rank: 3, name: "Mike Rodriguez", avatar: "/assets/avatar-3.jpg", score: 9650, badge: "🥉" },
-    { id: 4, rank: 4, name: "Emma Wilson", avatar: "/assets/avatar-4.jpg", score: 9480, badge: "🔥", streak: 12 },
-    { id: 5, rank: 5, name: "David Kim", avatar: "/assets/avatar-5.jpg", score: 9350 },
-    { id: 6, rank: 12, name: "You", avatar: "/assets/logo.png", score: 8750, isCurrentUser: true, streak: 8 },
-    { id: 7, rank: 6, name: "Lisa Zhang", avatar: "/assets/avatar-6.jpg", score: 9200 },
-    { id: 8, rank: 7, name: "James Miller", avatar: "/assets/avatar-7.jpg", score: 9100, badge: "🔥", streak: 10 },
+    {
+      id: 1,
+      rank: 1,
+      name: 'Alex Chen',
+      avatar: '/assets/avatar-1.jpg',
+      score: 9850,
+      badge: '🏆',
+      streak: 15,
+    },
+    {
+      id: 2,
+      rank: 2,
+      name: 'Sarah Johnson',
+      avatar: '/assets/avatar-2.jpg',
+      score: 9720,
+      badge: '🥈',
+    },
+    {
+      id: 3,
+      rank: 3,
+      name: 'Mike Rodriguez',
+      avatar: '/assets/avatar-3.jpg',
+      score: 9650,
+      badge: '🥉',
+    },
+    {
+      id: 4,
+      rank: 4,
+      name: 'Emma Wilson',
+      avatar: '/assets/avatar-4.jpg',
+      score: 9480,
+      badge: '🔥',
+      streak: 12,
+    },
+    { id: 5, rank: 5, name: 'David Kim', avatar: '/assets/avatar-5.jpg', score: 9350 },
+    {
+      id: 6,
+      rank: 12,
+      name: 'You',
+      avatar: '/assets/logo.png',
+      score: 8750,
+      isCurrentUser: true,
+      streak: 8,
+    },
+    { id: 7, rank: 6, name: 'Lisa Zhang', avatar: '/assets/avatar-6.jpg', score: 9200 },
+    {
+      id: 8,
+      rank: 7,
+      name: 'James Miller',
+      avatar: '/assets/avatar-7.jpg',
+      score: 9100,
+      badge: '🔥',
+      streak: 10,
+    },
   ],
   state: [
-    { id: 1, rank: 1, name: "Sarah Johnson", avatar: "/assets/avatar-2.jpg", score: 9720, badge: "🏆" },
-    { id: 2, rank: 2, name: "You", avatar: "/assets/logo.png", score: 8750, isCurrentUser: true, streak: 8 },
-    { id: 3, rank: 3, name: "Emma Wilson", avatar: "/assets/avatar-4.jpg", score: 8680, badge: "🔥", streak: 12 },
-    { id: 4, rank: 4, name: "Lisa Zhang", avatar: "/assets/avatar-6.jpg", score: 8550 },
-    { id: 5, rank: 5, name: "James Miller", avatar: "/assets/avatar-7.jpg", score: 8420, badge: "🔥", streak: 10 },
+    {
+      id: 1,
+      rank: 1,
+      name: 'Sarah Johnson',
+      avatar: '/assets/avatar-2.jpg',
+      score: 9720,
+      badge: '🏆',
+    },
+    {
+      id: 2,
+      rank: 2,
+      name: 'You',
+      avatar: '/assets/logo.png',
+      score: 8750,
+      isCurrentUser: true,
+      streak: 8,
+    },
+    {
+      id: 3,
+      rank: 3,
+      name: 'Emma Wilson',
+      avatar: '/assets/avatar-4.jpg',
+      score: 8680,
+      badge: '🔥',
+      streak: 12,
+    },
+    { id: 4, rank: 4, name: 'Lisa Zhang', avatar: '/assets/avatar-6.jpg', score: 8550 },
+    {
+      id: 5,
+      rank: 5,
+      name: 'James Miller',
+      avatar: '/assets/avatar-7.jpg',
+      score: 8420,
+      badge: '🔥',
+      streak: 10,
+    },
   ],
   friends: [
-    { id: 1, rank: 1, name: "You", avatar: "/assets/logo.png", score: 8750, isCurrentUser: true, streak: 8 },
-    { id: 2, rank: 2, name: "John Doe", avatar: "/assets/avatar-8.jpg", score: 7850, badge: "🔥", streak: 6 },
-    { id: 3, rank: 3, name: "Jane Smith", avatar: "/assets/avatar-9.jpg", score: 7650 },
-    { id: 4, rank: 4, name: "Tom Brown", avatar: "/assets/avatar-10.jpg", score: 7320 },
-  ]
+    {
+      id: 1,
+      rank: 1,
+      name: 'You',
+      avatar: '/assets/logo.png',
+      score: 8750,
+      isCurrentUser: true,
+      streak: 8,
+    },
+    {
+      id: 2,
+      rank: 2,
+      name: 'John Doe',
+      avatar: '/assets/avatar-8.jpg',
+      score: 7850,
+      badge: '🔥',
+      streak: 6,
+    },
+    { id: 3, rank: 3, name: 'Jane Smith', avatar: '/assets/avatar-9.jpg', score: 7650 },
+    { id: 4, rank: 4, name: 'Tom Brown', avatar: '/assets/avatar-10.jpg', score: 7320 },
+  ],
 };
 
 const tabs: TabType[] = [
   { id: 'national', label: 'National', icon: '🌍' },
   { id: 'state', label: 'State/District', icon: '📍' },
-  { id: 'friends', label: 'Friends', icon: '👥' }
+  { id: 'friends', label: 'Friends', icon: '👥' },
 ];
 
 const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
@@ -113,14 +206,14 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
         </div>
 
         <div className="text-center mb-8">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold text-white mb-2"
           >
             Leaderboards
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -133,7 +226,7 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
         {/* Tabs */}
         <div className="flex justify-center mb-8">
           <div className="bg-white/20 backdrop-blur-sm rounded-full p-1 flex">
-            {tabs.map((tab) => (
+            {tabs.map(tab => (
               <motion.button
                 key={tab.id}
                 whileTap={{ scale: 0.95 }}
@@ -169,18 +262,20 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`mb-4 ${
-                    player.isCurrentUser ? 'relative' : ''
-                  }`}
+                  className={`mb-4 ${player.isCurrentUser ? 'relative' : ''}`}
                 >
                   {/* Current user glow effect */}
                   {player.isCurrentUser && (
                     <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-blue-500 rounded-2xl blur-sm opacity-60 animate-pulse"></div>
                   )}
-                  
-                  <div className={`relative bg-white rounded-2xl p-4 shadow-lg ${
-                    player.isCurrentUser ? 'ring-2 ring-teal-400 bg-gradient-to-r from-teal-50 to-blue-50' : ''
-                  }`}>
+
+                  <div
+                    className={`relative bg-white rounded-2xl p-4 shadow-lg ${
+                      player.isCurrentUser
+                        ? 'ring-2 ring-teal-400 bg-gradient-to-r from-teal-50 to-blue-50'
+                        : ''
+                    }`}
+                  >
                     <div className="flex items-center justify-between">
                       {/* Rank and Avatar */}
                       <div className="flex items-center gap-4">
@@ -191,14 +286,14 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
                           >
                             {player.rank <= 3 && (
                               <motion.div
-                                animate={{ 
+                                animate={{
                                   scale: player.rank === 1 ? [1, 1.2, 1] : 1,
-                                  rotate: player.rank === 1 ? [0, 5, -5, 0] : 0
+                                  rotate: player.rank === 1 ? [0, 5, -5, 0] : 0,
                                 }}
-                                transition={{ 
-                                  duration: 2, 
+                                transition={{
+                                  duration: 2,
                                   repeat: player.rank === 1 ? Infinity : 0,
-                                  repeatType: "reverse"
+                                  repeatType: 'reverse',
                                 }}
                                 className="text-2xl"
                               >
@@ -217,18 +312,21 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
                             src={player.avatar}
                             alt={player.name}
                             className="w-full h-full object-cover"
-                            onError={(e) => {
+                            onError={e => {
                               const target = e.target as HTMLImageElement;
-                              target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0idHJhbnNmb3JtOiB0cmFuc2xhdGUoOHB4LCA4cHgpOyI+CjxwYXRoIGQ9Ik0yMCAyMVYxOUE0IDQgMCAwIDAgMTYgMTVIOEE0IDQgMCAwIDAgNCAxOVYyMSIgc3Ryb2tlPSIjOUI5QkEwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjciIHI9IjQiIHN0cm9rZT0iIzlCOUJBMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cjwvc3ZnPgo=";
+                              target.src =
+                                'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBzdHlsZT0idHJhbnNmb3JtOiB0cmFuc2xhdGUoOHB4LCA4cHgpOyI+CjxwYXRoIGQ9Ik0yMCAyMVYxOUE0IDQgMCAwIDAgMTYgMTVIOEE0IDQgMCAwIDAgNCAxOVYyMSIgc3Ryb2tlPSIjOUI5QkEwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjciIHI9IjQiIHN0cm9rZT0iIzlCOUJBMCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cjwvc3ZnPgo=';
                             }}
                           />
                         </motion.div>
 
                         <div>
                           <div className="flex items-center gap-2">
-                            <h3 className={`font-semibold ${
-                              player.isCurrentUser ? 'text-teal-700' : 'text-gray-900'
-                            }`}>
+                            <h3
+                              className={`font-semibold ${
+                                player.isCurrentUser ? 'text-teal-700' : 'text-gray-900'
+                              }`}
+                            >
                               {player.name}
                             </h3>
                             {player.isCurrentUser && (
@@ -259,15 +357,15 @@ const Leaderboards: React.FC<LeaderboardsProps> = ({ onBack, onContinue }) => {
                           </motion.div>
                           {player.badge && (
                             <motion.div
-                              animate={{ 
+                              animate={{
                                 rotate: [0, 10, -10, 0],
-                                scale: [1, 1.1, 1]
+                                scale: [1, 1.1, 1],
                               }}
-                              transition={{ 
-                                duration: 1.5, 
-                                repeat: Infinity, 
-                                repeatType: "reverse",
-                                delay: Math.random() * 2
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                repeatType: 'reverse',
+                                delay: Math.random() * 2,
                               }}
                               className="text-2xl"
                             >

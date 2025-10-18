@@ -72,7 +72,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({
     if (featuresParam) {
       return featuresParam
         .split(',')
-        .map((item) => item.trim())
+        .map(item => item.trim())
         .filter(Boolean);
     }
     return defaultFeatures;
@@ -122,7 +122,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({
       } else {
         await state.notifyHandler?.();
       }
-      await new Promise((resolve) => setTimeout(resolve, 650));
+      await new Promise(resolve => setTimeout(resolve, 650));
       setNotifyStatus('success');
     } catch (error) {
       console.error('Notification opt-in failed', error);
@@ -251,7 +251,8 @@ const ComingSoon: React.FC<ComingSoonProps> = ({
                 We’re building this for you!
               </h2>
               <p className="text-sm leading-relaxed text-[color:var(--text-muted,#64748B)] dark:text-slate-300">
-                {subjectName} content is on the way. You’ll get quizzes, notes, and mock tests here soon.
+                {subjectName} content is on the way. You’ll get quizzes, notes, and mock tests here
+                soon.
               </p>
             </div>
 
@@ -289,7 +290,7 @@ const ComingSoon: React.FC<ComingSoonProps> = ({
                     ETA: {etaLabel}
                   </span>
                 )}
-                {features.map((feature) => (
+                {features.map(feature => (
                   <span
                     key={feature}
                     className="inline-flex items-center gap-1 rounded-full bg-white/70 px-3 py-1 text-xs uppercase tracking-wide text-[color:var(--text-muted,#64748B)] shadow-sm ring-1 ring-[color:var(--border,#E2E8F0)] dark:bg-white/5 dark:text-slate-200 dark:ring-white/10"

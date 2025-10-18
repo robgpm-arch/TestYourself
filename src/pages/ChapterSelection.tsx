@@ -19,10 +19,13 @@ export interface ChapterSelectionProps {
   onBack: () => void;
 }
 
-const difficultyPills: Record<ChapterSelectionItem['difficulty'], { label: string; color: string }> = {
+const difficultyPills: Record<
+  ChapterSelectionItem['difficulty'],
+  { label: string; color: string }
+> = {
   easy: { label: 'Easy', color: 'bg-emerald-100 text-emerald-600' },
   medium: { label: 'Medium', color: 'bg-amber-100 text-amber-600' },
-  hard: { label: 'Hard', color: 'bg-rose-100 text-rose-600' }
+  hard: { label: 'Hard', color: 'bg-rose-100 text-rose-600' },
 };
 
 const ChapterSelection: React.FC<ChapterSelectionProps> = ({
@@ -30,7 +33,7 @@ const ChapterSelection: React.FC<ChapterSelectionProps> = ({
   subjectName,
   chapters,
   onSelect,
-  onBack
+  onBack,
 }) => {
   const gradientSeed = useMemo(() => {
     const colors: Record<string, string> = {
@@ -41,7 +44,7 @@ const ChapterSelection: React.FC<ChapterSelectionProps> = ({
       english: 'from-purple-600 via-indigo-500 to-blue-500',
       reasoning: 'from-orange-600 via-amber-500 to-rose-500',
       'current-affairs': 'from-rose-600 via-pink-500 to-purple-500',
-      'general-knowledge': 'from-yellow-500 via-amber-500 to-emerald-500'
+      'general-knowledge': 'from-yellow-500 via-amber-500 to-emerald-500',
     };
     return colors[subjectId] ?? 'from-blue-600 via-teal-500 to-indigo-500';
   }, [subjectId]);
@@ -49,7 +52,9 @@ const ChapterSelection: React.FC<ChapterSelectionProps> = ({
   return (
     <div className="min-h-screen bg-slate-900 relative overflow-hidden">
       <div className="absolute inset-0 opacity-30">
-        <div className={`absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl bg-gradient-to-br ${gradientSeed}`} />
+        <div
+          className={`absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl bg-gradient-to-br ${gradientSeed}`}
+        />
         <div className="absolute top-24 left-16 text-7xl opacity-40">📚</div>
         <div className="absolute bottom-24 right-12 text-6xl opacity-30">🧠</div>
         <div className="absolute top-1/2 left-1/3 text-5xl opacity-20">📈</div>
@@ -70,11 +75,10 @@ const ChapterSelection: React.FC<ChapterSelectionProps> = ({
 
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-slate-300">Select Chapter</p>
-            <h1 className="mt-3 text-4xl md:text-5xl font-bold text-white">
-              {subjectName}
-            </h1>
+            <h1 className="mt-3 text-4xl md:text-5xl font-bold text-white">{subjectName}</h1>
             <p className="mt-3 text-base md:text-lg text-slate-300 max-w-2xl">
-              Pick a chapter to continue your practice journey. Each chapter contains curated quiz sets tailored to its difficulty level.
+              Pick a chapter to continue your practice journey. Each chapter contains curated quiz
+              sets tailored to its difficulty level.
             </p>
           </div>
         </header>
@@ -109,10 +113,10 @@ const ChapterSelection: React.FC<ChapterSelectionProps> = ({
                           {chapter.description}
                         </p>
                         <div className="flex flex-wrap items-center gap-3 mt-3 text-xs uppercase tracking-[0.25em] text-slate-300">
-                          <span className="flex items-center gap-2">
-                            ⏱ {chapter.duration}
-                          </span>
-                          <span className={`rounded-full px-3 py-1 font-semibold tracking-wide ${difficulty.color}`}>
+                          <span className="flex items-center gap-2">⏱ {chapter.duration}</span>
+                          <span
+                            className={`rounded-full px-3 py-1 font-semibold tracking-wide ${difficulty.color}`}
+                          >
                             {difficulty.label}
                           </span>
                         </div>

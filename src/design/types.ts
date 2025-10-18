@@ -18,8 +18,8 @@ export type ScreenStyle = {
   theme?: string;
   gradient?: string | null;
   bgImage?: string | null;
-  bgMode?: "cover" | "contain";
-  bgBlend?: "normal" | "overlay" | "multiply" | "screen";
+  bgMode?: 'cover' | 'contain';
+  bgBlend?: 'normal' | 'overlay' | 'multiply' | 'screen';
   overlay?: string | null;
   cardVariant?: string;
   container?: { maxWidth?: number; padding?: number; gap?: number };

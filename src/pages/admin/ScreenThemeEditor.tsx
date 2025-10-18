@@ -13,33 +13,33 @@ const DEFAULT_THEME: ThemeDoc = {
   id: 'default',
   name: 'Default Theme',
   tokens: {
-    "radius.xs": "8px",
-    "radius.md": "16px",
-    "radius.lg": "24px",
-    "shadow.card": "0 10px 30px rgba(0,0,0,.08)",
-    "spacing.card.p": "24px",
-    "color.text": "#0f172a",
-    "color.muted": "#475569"
+    'radius.xs': '8px',
+    'radius.md': '16px',
+    'radius.lg': '24px',
+    'shadow.card': '0 10px 30px rgba(0,0,0,.08)',
+    'spacing.card.p': '24px',
+    'color.text': '#0f172a',
+    'color.muted': '#475569',
   },
   gradients: {
-    "blueGlass": "linear-gradient(135deg, #9bd2ff 0%, #adc8ff 50%, #e3e8ff 100%)",
-    "sunset": "linear-gradient(135deg, #f6d365 0%, #fda085 100%)"
+    blueGlass: 'linear-gradient(135deg, #9bd2ff 0%, #adc8ff 50%, #e3e8ff 100%)',
+    sunset: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
   },
   cardVariants: {
-    "elevated": {
-      "radius": "var(radius.lg)",
-      "shadow": "var(shadow.card)",
-      "bg": "rgba(255,255,255,.75)",
-      "backdropBlur": "8px"
+    elevated: {
+      radius: 'var(radius.lg)',
+      shadow: 'var(shadow.card)',
+      bg: 'rgba(255,255,255,.75)',
+      backdropBlur: '8px',
     },
-    "flat": {
-      "radius": "var(radius.md)",
-      "shadow": "none",
-      "bg": "#ffffff",
-      "backdropBlur": "0px"
-    }
+    flat: {
+      radius: 'var(radius.md)',
+      shadow: 'none',
+      bg: '#ffffff',
+      backdropBlur: '0px',
+    },
   },
-  images: {}
+  images: {},
 };
 
 const ScreenThemeEditor: React.FC = () => {
@@ -54,13 +54,15 @@ const ScreenThemeEditor: React.FC = () => {
 
   useEffect(() => {
     if (!isNew && id) {
-      loadTheme(id).then((existingTheme) => {
-        setTheme(existingTheme);
-        setThemeJson(JSON.stringify(existingTheme, null, 2));
-        setLoading(false);
-      }).catch(() => {
-        setLoading(false);
-      });
+      loadTheme(id)
+        .then(existingTheme => {
+          setTheme(existingTheme);
+          setThemeJson(JSON.stringify(existingTheme, null, 2));
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
     } else {
       setThemeJson(JSON.stringify(DEFAULT_THEME, null, 2));
       setLoading(false);
@@ -127,7 +129,7 @@ const ScreenThemeEditor: React.FC = () => {
             </p>
             <textarea
               value={themeJson}
-              onChange={(e) => setThemeJson(e.target.value)}
+              onChange={e => setThemeJson(e.target.value)}
               className="w-full h-96 px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm"
               placeholder="Theme JSON..."
             />

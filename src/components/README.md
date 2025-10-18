@@ -1,3 +1,3 @@
 # Components Directory
 
-This is a components reserved directory. 
+This is a components reserved directory.

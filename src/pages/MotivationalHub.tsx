@@ -47,16 +47,14 @@ const fadeInUp = {
     transition: {
       duration: 0.6,
       delay: index * 0.1,
-      ease: [0.22, 1, 0.36, 1]
-    }
-  })
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
 };
 
-const sparkleGradient =
-  'linear-gradient(135deg, rgba(20,184,166,0.85), rgba(79,70,229,0.85))';
+const sparkleGradient = 'linear-gradient(135deg, rgba(20,184,166,0.85), rgba(79,70,229,0.85))';
 
-const sparklesPattern =
-  'radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px)';
+const sparklesPattern = 'radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px)';
 
 const MotivationalHub: React.FC = () => {
   const learnerName = useMemo(() => {
@@ -64,77 +62,89 @@ const MotivationalHub: React.FC = () => {
     return storedName && storedName.trim().length > 0 ? storedName.split(' ')[0] : 'Champion';
   }, []);
 
-  const primaryFeed = useMemo<FeedCard[]>(() => [
-    {
-      id: 'quote-1',
-      type: 'quote',
-      title: 'Daily Spark',
-      quote: 'Dream is not that which you see while sleeping, it is something that does not let you sleep.',
-      author: 'Dr. A.P.J. Abdul Kalam',
-      authorRole: '11th President of India',
-      authorImage: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=200&h=200&q=80'
-    },
-    {
-      id: 'gif-1',
-      type: 'gif',
-      title: 'Cheer Squad',
-      gifUrl: 'https://media.tenor.com/-TMz5_8ABakAAAAM/cheering-celebration.gif',
-      overlayText: `Keep pushing, ${learnerName}!`
-    },
-    {
-      id: 'voice-1',
-      type: 'voice',
-      title: 'Voice Boost',
-      persona: 'Virat Kohli',
-      avatar: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=200&h=200&q=80',
-      audio: 'https://samplelib.com/lib/preview/mp3/sample-6s.mp3'
-    },
-    {
-      id: 'progress-1',
-      type: 'progress',
-      title: 'Progress Highlight',
-      streakText: "🔥 You're on a 10-day streak!",
-      badgeName: 'Consistency Legend',
-      badgeIcon: '🔥',
-      description: 'You unlocked the Consistency Legend badge by practicing daily. Keep it blazing!'
-    }
-  ], [learnerName]);
+  const primaryFeed = useMemo<FeedCard[]>(
+    () => [
+      {
+        id: 'quote-1',
+        type: 'quote',
+        title: 'Daily Spark',
+        quote:
+          'Dream is not that which you see while sleeping, it is something that does not let you sleep.',
+        author: 'Dr. A.P.J. Abdul Kalam',
+        authorRole: '11th President of India',
+        authorImage:
+          'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=200&h=200&q=80',
+      },
+      {
+        id: 'gif-1',
+        type: 'gif',
+        title: 'Cheer Squad',
+        gifUrl: 'https://media.tenor.com/-TMz5_8ABakAAAAM/cheering-celebration.gif',
+        overlayText: `Keep pushing, ${learnerName}!`,
+      },
+      {
+        id: 'voice-1',
+        type: 'voice',
+        title: 'Voice Boost',
+        persona: 'Virat Kohli',
+        avatar:
+          'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=facearea&w=200&h=200&q=80',
+        audio: 'https://samplelib.com/lib/preview/mp3/sample-6s.mp3',
+      },
+      {
+        id: 'progress-1',
+        type: 'progress',
+        title: 'Progress Highlight',
+        streakText: "🔥 You're on a 10-day streak!",
+        badgeName: 'Consistency Legend',
+        badgeIcon: '🔥',
+        description:
+          'You unlocked the Consistency Legend badge by practicing daily. Keep it blazing!',
+      },
+    ],
+    [learnerName]
+  );
 
-  const extraFeed = useMemo<FeedCard[]>(() => [
-    {
-      id: 'quote-2',
-      type: 'quote',
-      title: 'Mindset Reset',
-      quote: 'No act of kindness, no matter how small, is ever wasted.',
-      author: 'Abdul Sattar Edhi',
-      authorRole: 'Humanitarian & Founder, Edhi Foundation',
-      authorImage: 'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=facearea&w=200&h=200&q=80'
-    },
-    {
-      id: 'gif-2',
-      type: 'gif',
-      title: 'Winning Moments',
-      gifUrl: 'https://media.tenor.com/OrSlX1LflE4AAAAM/fireworks-celebration.gif',
-      overlayText: `Momentum is yours, ${learnerName}!`
-    },
-    {
-      id: 'voice-2',
-      type: 'voice',
-      title: 'Coach Corner',
-      persona: 'Dr. A.P.J. Abdul Kalam',
-      avatar: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=200&h=200&q=80',
-      audio: 'https://samplelib.com/lib/preview/mp3/sample-9s.mp3'
-    },
-    {
-      id: 'progress-2',
-      type: 'progress',
-      title: 'Milestone Replay',
-      streakText: '🌟 Badge Rewind: Precision Pro',
-      badgeName: 'Precision Pro',
-      badgeIcon: '🏅',
-      description: 'Your accuracy stayed above 90% across 5 quizzes. Focus level: unbeatable!'
-    }
-  ], [learnerName]);
+  const extraFeed = useMemo<FeedCard[]>(
+    () => [
+      {
+        id: 'quote-2',
+        type: 'quote',
+        title: 'Mindset Reset',
+        quote: 'No act of kindness, no matter how small, is ever wasted.',
+        author: 'Abdul Sattar Edhi',
+        authorRole: 'Humanitarian & Founder, Edhi Foundation',
+        authorImage:
+          'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=facearea&w=200&h=200&q=80',
+      },
+      {
+        id: 'gif-2',
+        type: 'gif',
+        title: 'Winning Moments',
+        gifUrl: 'https://media.tenor.com/OrSlX1LflE4AAAAM/fireworks-celebration.gif',
+        overlayText: `Momentum is yours, ${learnerName}!`,
+      },
+      {
+        id: 'voice-2',
+        type: 'voice',
+        title: 'Coach Corner',
+        persona: 'Dr. A.P.J. Abdul Kalam',
+        avatar:
+          'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=200&h=200&q=80',
+        audio: 'https://samplelib.com/lib/preview/mp3/sample-9s.mp3',
+      },
+      {
+        id: 'progress-2',
+        type: 'progress',
+        title: 'Milestone Replay',
+        streakText: '🌟 Badge Rewind: Precision Pro',
+        badgeName: 'Precision Pro',
+        badgeIcon: '🏅',
+        description: 'Your accuracy stayed above 90% across 5 quizzes. Focus level: unbeatable!',
+      },
+    ],
+    [learnerName]
+  );
 
   const [visibleFeed, setVisibleFeed] = useState<FeedCard[]>(primaryFeed);
   const [hasLoadedMore, setHasLoadedMore] = useState(false);
@@ -150,7 +160,7 @@ const MotivationalHub: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      Object.values(audioMap.current).forEach((audio) => {
+      Object.values(audioMap.current).forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
       });
@@ -181,7 +191,7 @@ const MotivationalHub: React.FC = () => {
     setActiveAudioId(card.id);
 
     existing.onended = () => {
-      setActiveAudioId((prev) => (prev === card.id ? null : prev));
+      setActiveAudioId(prev => (prev === card.id ? null : prev));
     };
   };
 
@@ -194,7 +204,7 @@ const MotivationalHub: React.FC = () => {
         await navigator.share({
           title: 'Stay Motivated',
           text: shareText,
-          url: shareUrl
+          url: shareUrl,
         });
         return;
       } catch (error) {
@@ -203,15 +213,16 @@ const MotivationalHub: React.FC = () => {
     }
 
     const encodedMessage = encodeURIComponent(`${shareText} ${shareUrl}`);
-    const targetUrl = platform === 'whatsapp'
-      ? `https://wa.me/?text=${encodedMessage}`
-      : `https://www.instagram.com/?url=${encodeURIComponent(shareUrl)}`;
+    const targetUrl =
+      platform === 'whatsapp'
+        ? `https://wa.me/?text=${encodedMessage}`
+        : `https://www.instagram.com/?url=${encodeURIComponent(shareUrl)}`;
 
     window.open(targetUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleLoadMore = () => {
-    setVisibleFeed((current) => {
+    setVisibleFeed(current => {
       if (!hasLoadedMore) {
         setHasLoadedMore(true);
         return [...current, ...extraFeed];
@@ -230,7 +241,7 @@ const MotivationalHub: React.FC = () => {
           backgroundImage: `${sparkleGradient}, ${sparklesPattern}`,
           backgroundSize: 'cover, 80px 80px',
           backgroundPosition: 'center',
-          filter: 'saturate(1.05)'
+          filter: 'saturate(1.05)',
         }}
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.3),transparent_55%)]" />
@@ -246,7 +257,8 @@ const MotivationalHub: React.FC = () => {
             Stay Motivated
           </h1>
           <p className="mt-4 text-lg text-indigo-100">
-            A personalized stream of quotes, cheers, and achievements curated to keep your energy high.
+            A personalized stream of quotes, cheers, and achievements curated to keep your energy
+            high.
           </p>
         </motion.header>
 
@@ -261,7 +273,11 @@ const MotivationalHub: React.FC = () => {
               viewport={{ once: true, amount: 0.4 }}
             >
               {card.type === 'quote' && (
-                <Card variant="elevated" padding="large" className="bg-white/95 backdrop-blur rounded-3xl shadow-xl">
+                <Card
+                  variant="elevated"
+                  padding="large"
+                  className="bg-white/95 backdrop-blur rounded-3xl shadow-xl"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-6">
                     <div className="flex-1">
                       <p className="text-sm uppercase tracking-widest text-teal-500 font-semibold mb-3">
@@ -338,7 +354,9 @@ const MotivationalHub: React.FC = () => {
                         src={card.avatar}
                         alt={`${card.persona} avatar`}
                         className={`h-20 w-20 rounded-full object-cover transition-all duration-500 ${
-                          activeAudioId === card.id ? 'shadow-[0_0_35px_rgba(129,140,248,0.6)] scale-105' : ''
+                          activeAudioId === card.id
+                            ? 'shadow-[0_0_35px_rgba(129,140,248,0.6)] scale-105'
+                            : ''
                         }`}
                       />
                       <span className="absolute -bottom-1 -right-1 inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500 text-white text-sm font-semibold">
@@ -352,14 +370,18 @@ const MotivationalHub: React.FC = () => {
                       <h3 className="text-xl font-semibold text-gray-900 mb-2">
                         {card.persona} recorded a message for you
                       </h3>
-                      <p className="text-sm text-gray-600">Hit play to hear your personalized boost.</p>
+                      <p className="text-sm text-gray-600">
+                        Hit play to hear your personalized boost.
+                      </p>
                     </div>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handlePlayAudio(card)}
                       className={`px-6 py-3 rounded-full font-semibold text-white shadow-lg transition-colors ${
-                        activeAudioId === card.id ? 'bg-indigo-600 hover:bg-indigo-500' : 'bg-violet-500 hover:bg-violet-400'
+                        activeAudioId === card.id
+                          ? 'bg-indigo-600 hover:bg-indigo-500'
+                          : 'bg-violet-500 hover:bg-violet-400'
                       }`}
                     >
                       {activeAudioId === card.id ? 'Playing…' : '▶ Hear Message'}
@@ -388,7 +410,9 @@ const MotivationalHub: React.FC = () => {
                         <p className="text-sm uppercase tracking-widest text-orange-100 font-semibold">
                           {card.title}
                         </p>
-                        <h3 className="text-2xl font-bold text-white drop-shadow">{card.streakText}</h3>
+                        <h3 className="text-2xl font-bold text-white drop-shadow">
+                          {card.streakText}
+                        </h3>
                         <p className="text-sm text-orange-50 mt-1">{card.description}</p>
                       </div>
                     </div>

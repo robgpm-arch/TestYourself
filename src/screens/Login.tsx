@@ -36,7 +36,7 @@ export default function Login() {
     <LoginSignup
       initialTab="login"
       onSuccess={async () => {
-        await bindActiveDevice().catch(()=>{});
+        await bindActiveDevice().catch(() => {});
         // clear the lock before redirecting
         localStorage.removeItem('auth_intent');
         await navigateAfterAuth(navigate);

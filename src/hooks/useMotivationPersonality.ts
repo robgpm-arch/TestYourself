@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { motivationPersonalities, MotivationPersonality, PERSONALITY_STORAGE_KEY } from '../constants/personalities';
+import {
+  motivationPersonalities,
+  MotivationPersonality,
+  PERSONALITY_STORAGE_KEY,
+} from '../constants/personalities';
 
 const defaultPersonality = motivationPersonalities[0];
 
@@ -29,13 +33,16 @@ export const useMotivationPersonality = (): UseMotivationPersonalityReturn => {
   }, []);
 
   const selectedPersonality = useMemo(() => {
-    return motivationPersonalities.find((personality) => personality.id === personalityId) ?? defaultPersonality;
+    return (
+      motivationPersonalities.find(personality => personality.id === personalityId) ??
+      defaultPersonality
+    );
   }, [personalityId]);
 
   return {
     personalities: motivationPersonalities,
     selectedPersonality,
-    selectPersonality
+    selectPersonality,
   };
 };
 

@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({
   padding = 'medium',
   rounded = 'medium',
   onClick,
-  hover = true
+  hover = true,
 }) => {
   const getVariantClasses = () => {
     switch (variant) {
@@ -69,10 +69,12 @@ const Card: React.FC<CardProps> = ({
     ${className}
   `;
 
-  const hoverEffects = hover ? {
-    whileHover: { scale: 1.02, y: -2 },
-    whileTap: { scale: 0.98 }
-  } : {};
+  const hoverEffects = hover
+    ? {
+        whileHover: { scale: 1.02, y: -2 },
+        whileTap: { scale: 0.98 },
+      }
+    : {};
 
   return (
     <motion.div

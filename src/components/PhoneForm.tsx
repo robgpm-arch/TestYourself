@@ -53,50 +53,34 @@ const PhoneForm: React.FC<PhoneFormProps> = ({ onSend, onConfirm, error }) => {
             type="tel"
             placeholder="+91 Enter phone number"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={e => setPhone(e.target.value)}
             className="w-full"
           />
-          <Button
-            onClick={handleSendOtp}
-            loading={loading}
-            fullWidth
-          >
+          <Button onClick={handleSendOtp} loading={loading} fullWidth>
             Send OTP
           </Button>
         </>
       ) : (
         <>
-          <p className="text-sm text-gray-600">
-            OTP sent to {phone}
-          </p>
+          <p className="text-sm text-gray-600">OTP sent to {phone}</p>
           <Input
             type="text"
             placeholder="Enter 6-digit OTP"
             value={otp}
-            onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+            onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
             className="w-full text-center text-2xl tracking-widest"
           />
           <div className="flex space-x-2">
-            <Button
-              onClick={() => setStep('phone')}
-              variant="outline"
-              className="flex-1"
-            >
+            <Button onClick={() => setStep('phone')} variant="outline" className="flex-1">
               Change Number
             </Button>
-            <Button
-              onClick={handleConfirmOtp}
-              loading={loading}
-              className="flex-1"
-            >
+            <Button onClick={handleConfirmOtp} loading={loading} className="flex-1">
               Verify OTP
             </Button>
           </div>
         </>
       )}
-      {error && (
-        <p className="text-red-600 text-sm">{error}</p>
-      )}
+      {error && <p className="text-red-600 text-sm">{error}</p>}
     </div>
   );
 };

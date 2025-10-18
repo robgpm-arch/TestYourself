@@ -1,9 +1,9 @@
-import React from "react";
-import { FALLBACK_FLOWS, FlowKey } from "./flows";
+import React from 'react';
+import { FALLBACK_FLOWS, FlowKey } from './flows';
 
 // OPTIONAL Firestore loading
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 type FlowMap = Partial<Record<FlowKey, string[]>>;
 
@@ -21,13 +21,13 @@ export function FlowProvider({ children }: { children: React.ReactNode }) {
     let cancelled = false;
     (async () => {
       try {
-        const keys: FlowKey[] = ["onboarding", "quiz", "profile"];
+        const keys: FlowKey[] = ['onboarding', 'quiz', 'profile'];
         const loaded: FlowMap = {};
         for (const fk of keys) {
           const qy = query(
-            collection(db, "screens"),
-            where("flow", "==", fk),
-            orderBy("order", "asc")
+            collection(db, 'screens'),
+            where('flow', '==', fk),
+            orderBy('order', 'asc')
           );
           const snap = await getDocs(qy);
           if (!cancelled && !snap.empty) {
@@ -39,7 +39,9 @@ export function FlowProvider({ children }: { children: React.ReactNode }) {
         // silently keep FALLBACK_FLOWS
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return <FlowCtx.Provider value={{ flows, setFlows }}>{children}</FlowCtx.Provider>;
@@ -47,6 +49,6 @@ export function FlowProvider({ children }: { children: React.ReactNode }) {
 
 export function useFlows() {
   const ctx = React.useContext(FlowCtx);
-  if (!ctx) throw new Error("useFlows must be used inside <FlowProvider/>");
+  if (!ctx) throw new Error('useFlows must be used inside <FlowProvider/>');
   return ctx.flows;
 }

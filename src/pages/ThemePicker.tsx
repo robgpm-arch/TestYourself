@@ -42,13 +42,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['A) Romanesque', 'B) Gothic', 'C) Renaissance', 'D) Baroque'],
         backgroundColor: 'bg-gradient-to-br from-slate-950 via-purple-950 to-rose-900',
         questionColor: 'text-violet-100',
-        optionStyle: 'bg-white/10 border border-purple-400/40 text-violet-100 backdrop-blur-lg shadow-lg shadow-purple-900/40',
+        optionStyle:
+          'bg-white/10 border border-purple-400/40 text-violet-100 backdrop-blur-lg shadow-lg shadow-purple-900/40',
         accentColor: 'text-fuchsia-200',
         pattern: 'prism',
         progressColor: '#f0abfc',
-        optionHover: '#5b21b6'
+        optionHover: '#5b21b6',
       },
-      features: ['Prismatic glow', 'Glass layering', 'Editorial headings']
+      features: ['Prismatic glow', 'Glass layering', 'Editorial headings'],
     },
     {
       id: 'cyber-slate',
@@ -59,13 +60,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['A) HTTP', 'B) TCP', 'C) TLS', 'D) FTP'],
         backgroundColor: 'bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950',
         questionColor: 'text-emerald-100',
-        optionStyle: 'bg-slate-800/80 border border-emerald-500/50 text-emerald-100 shadow-inner shadow-black/50',
+        optionStyle:
+          'bg-slate-800/80 border border-emerald-500/50 text-emerald-100 shadow-inner shadow-black/50',
         accentColor: 'text-emerald-300',
         pattern: 'circuit',
         progressColor: '#34d399',
-        optionHover: '#064e3b'
+        optionHover: '#064e3b',
       },
-      features: ['Circuit etching', 'Holographic indicators', 'Night-mode comfort']
+      features: ['Circuit etching', 'Holographic indicators', 'Night-mode comfort'],
     },
     {
       id: 'velvet-muse',
@@ -76,13 +78,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['A) Fresco', 'B) Tenebrism', 'C) Sfumato', 'D) Impasto'],
         backgroundColor: 'bg-gradient-to-br from-rose-950 via-fuchsia-950 to-slate-950',
         questionColor: 'text-rose-100',
-        optionStyle: 'bg-rose-900/60 border border-fuchsia-500/40 text-rose-100 shadow-lg shadow-rose-900/40',
+        optionStyle:
+          'bg-rose-900/60 border border-fuchsia-500/40 text-rose-100 shadow-lg shadow-rose-900/40',
         accentColor: 'text-fuchsia-200',
         pattern: 'flora',
         progressColor: '#fb7185',
-        optionHover: '#7f1d1d'
+        optionHover: '#7f1d1d',
       },
-      features: ['Botanical silhouettes', 'Velvet grain', 'Gallery mood']
+      features: ['Botanical silhouettes', 'Velvet grain', 'Gallery mood'],
     },
     {
       id: 'cobalt-frost',
@@ -93,13 +96,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['A) Atlantic', 'B) Arctic', 'C) Indian', 'D) Pacific'],
         backgroundColor: 'bg-gradient-to-br from-sky-950 via-blue-900 to-slate-950',
         questionColor: 'text-sky-100',
-        optionStyle: 'bg-white/10 border border-sky-400/40 text-sky-100 backdrop-blur-lg shadow-lg shadow-sky-900/40',
+        optionStyle:
+          'bg-white/10 border border-sky-400/40 text-sky-100 backdrop-blur-lg shadow-lg shadow-sky-900/40',
         accentColor: 'text-sky-300',
         pattern: 'aurora',
         progressColor: '#38bdf8',
-        optionHover: '#1e293b'
+        optionHover: '#1e293b',
       },
-      features: ['Dancing aurora', 'Icy reflections', 'High-latitude calm']
+      features: ['Dancing aurora', 'Icy reflections', 'High-latitude calm'],
     },
     {
       id: 'starlit-story',
@@ -110,13 +114,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['🪐 Saturn', '🌍 Earth', '🔥 Venus', '🌑 Mercury'],
         backgroundColor: 'bg-gradient-to-br from-indigo-900 via-sky-900 to-purple-900',
         questionColor: 'text-amber-100',
-        optionStyle: 'bg-indigo-800/70 border border-yellow-300/60 text-yellow-100 shadow-lg shadow-indigo-900/40 rounded-xl',
+        optionStyle:
+          'bg-indigo-800/70 border border-yellow-300/60 text-yellow-100 shadow-lg shadow-indigo-900/40 rounded-xl',
         accentColor: 'text-amber-200',
         pattern: 'sparkle',
         progressColor: '#fde68a',
-        optionHover: '#312e81'
+        optionHover: '#312e81',
       },
-      features: ['Storybook stars', 'Friendly icons', 'Bedtime palette']
+      features: ['Storybook stars', 'Friendly icons', 'Bedtime palette'],
     },
     {
       id: 'bubble-pop',
@@ -127,13 +132,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['🐧 Penguin', '🦊 Fox', '🦅 Eagle', '🐫 Camel'],
         backgroundColor: 'bg-gradient-to-br from-sky-200 via-cyan-200 to-emerald-200',
         questionColor: 'text-sky-900',
-        optionStyle: 'bg-white/80 border border-sky-300 text-sky-700 shadow-lg shadow-cyan-200/40 rounded-full',
+        optionStyle:
+          'bg-white/80 border border-sky-300 text-sky-700 shadow-lg shadow-cyan-200/40 rounded-full',
         accentColor: 'text-teal-600',
         pattern: 'bubbles',
         progressColor: '#2dd4bf',
-        optionHover: '#bae6fd'
+        optionHover: '#bae6fd',
       },
-      features: ['Squishy bubbles', 'Rounded typography', 'Optimistic pastels']
+      features: ['Squishy bubbles', 'Rounded typography', 'Optimistic pastels'],
     },
     {
       id: 'solstice-glow',
@@ -144,13 +150,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['A) Maya', 'B) Inca', 'C) Aztec', 'D) Olmec'],
         backgroundColor: 'bg-gradient-to-br from-amber-900 via-rose-900 to-stone-900',
         questionColor: 'text-amber-100',
-        optionStyle: 'bg-amber-900/60 border border-yellow-400/40 text-amber-100 shadow-lg shadow-amber-900/40',
+        optionStyle:
+          'bg-amber-900/60 border border-yellow-400/40 text-amber-100 shadow-lg shadow-amber-900/40',
         accentColor: 'text-yellow-200',
         pattern: 'sunburst',
         progressColor: '#fcd34d',
-        optionHover: '#7c2d12'
+        optionHover: '#7c2d12',
       },
-      features: ['Radiant arcs', 'Deco geometry', 'Warm minimal luxe']
+      features: ['Radiant arcs', 'Deco geometry', 'Warm minimal luxe'],
     },
     {
       id: 'urban-ink',
@@ -158,16 +165,22 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
       description: 'Monochrome grids with editorial calm',
       preview: {
         question: 'Which designer popularized the International Typographic Style?',
-        options: ['A) Paul Rand', 'B) Josef Müller-Brockmann', 'C) Massimo Vignelli', 'D) Saul Bass'],
+        options: [
+          'A) Paul Rand',
+          'B) Josef Müller-Brockmann',
+          'C) Massimo Vignelli',
+          'D) Saul Bass',
+        ],
         backgroundColor: 'bg-gradient-to-br from-neutral-950 via-zinc-900 to-neutral-800',
         questionColor: 'text-zinc-100',
-        optionStyle: 'bg-neutral-800/80 border border-zinc-600/40 text-zinc-100 shadow-inner shadow-black/50',
+        optionStyle:
+          'bg-neutral-800/80 border border-zinc-600/40 text-zinc-100 shadow-inner shadow-black/50',
         accentColor: 'text-orange-200',
         pattern: 'mono-grid',
         progressColor: '#fb923c',
-        optionHover: '#3f3f46'
+        optionHover: '#3f3f46',
       },
-      features: ['Swiss grid', 'Ink overlays', 'High-contrast focus']
+      features: ['Swiss grid', 'Ink overlays', 'High-contrast focus'],
     },
     {
       id: 'galaxy-arcade',
@@ -178,13 +191,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['🌌 Milky Way', '🌀 Whirlpool', '🎮 Andromeda', '✨ Sombrero'],
         backgroundColor: 'bg-gradient-to-br from-slate-950 via-purple-950 to-blue-950',
         questionColor: 'text-purple-100',
-        optionStyle: 'bg-purple-900/70 border border-pink-500/50 text-pink-200 shadow-lg shadow-purple-900/50 rounded-xl',
+        optionStyle:
+          'bg-purple-900/70 border border-pink-500/50 text-pink-200 shadow-lg shadow-purple-900/50 rounded-xl',
         accentColor: 'text-pink-300',
         pattern: 'pixel-stars',
         progressColor: '#f472b6',
-        optionHover: '#581c87'
+        optionHover: '#581c87',
       },
-      features: ['Pixel constellations', 'Arcade glow', 'Fun galaxy icons']
+      features: ['Pixel constellations', 'Arcade glow', 'Fun galaxy icons'],
     },
     {
       id: 'candy-circuit',
@@ -195,14 +209,15 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
         options: ['🍭 Lollipop', '🍫 Chocolate', '🍪 Cookie', '🧁 Cupcake'],
         backgroundColor: 'bg-gradient-to-br from-rose-200 via-pink-200 to-sky-200',
         questionColor: 'text-rose-900',
-        optionStyle: 'bg-white/85 border border-rose-300 text-rose-600 shadow-lg shadow-rose-200/40 rounded-2xl',
+        optionStyle:
+          'bg-white/85 border border-rose-300 text-rose-600 shadow-lg shadow-rose-200/40 rounded-2xl',
         accentColor: 'text-rose-500',
         pattern: 'candy',
         progressColor: '#fb7185',
-        optionHover: '#fecdd3'
+        optionHover: '#fecdd3',
       },
-      features: ['Candy wires', 'Soft pastels', 'Energetic badges']
-    }
+      features: ['Candy wires', 'Soft pastels', 'Energetic badges'],
+    },
   ];
 
   const handleThemeSelect = (themeId: string) => {
@@ -230,17 +245,21 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
             <motion.div
               className="absolute inset-0"
               style={{
-                backgroundImage: 'linear-gradient(120deg, rgba(196,181,253,0.25), rgba(236,72,153,0.12), rgba(96,165,250,0.18))',
-                filter: 'blur(70px)'
+                backgroundImage:
+                  'linear-gradient(120deg, rgba(196,181,253,0.25), rgba(236,72,153,0.12), rgba(96,165,250,0.18))',
+                filter: 'blur(70px)',
               }}
-              animate={isHovered ? { opacity: [0.3, 0.6, 0.3], rotate: [0, 4, -4, 0] } : { opacity: 0.45 }}
+              animate={
+                isHovered ? { opacity: [0.3, 0.6, 0.3], rotate: [0, 4, -4, 0] } : { opacity: 0.45 }
+              }
               transition={{ duration: 7, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
             />
             <motion.div
               className="absolute inset-0"
               style={{
-                backgroundImage: 'conic-gradient(from 130deg at 50% 50%, rgba(236,72,153,0.18), rgba(96,165,250,0.12), rgba(192,132,252,0.2))',
-                mixBlendMode: 'screen'
+                backgroundImage:
+                  'conic-gradient(from 130deg at 50% 50%, rgba(236,72,153,0.18), rgba(96,165,250,0.12), rgba(192,132,252,0.2))',
+                mixBlendMode: 'screen',
               }}
               animate={isHovered ? { scale: [1, 1.06, 1], rotate: [0, -6, 6, 0] } : {}}
               transition={{ duration: 9, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
@@ -250,7 +269,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
       case 'circuit':
         return (
           <div className="absolute inset-0 opacity-30 pointer-events-none">
-            <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(52,211,153,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,0.22) 1px, transparent 1px)', backgroundSize: '34px 34px' }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'linear-gradient(rgba(52,211,153,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,0.22) 1px, transparent 1px)',
+                backgroundSize: '34px 34px',
+              }}
+            />
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
@@ -259,10 +285,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                   width: 36 + i * 14,
                   height: 36 + i * 14,
                   left: `${12 + i * 14}%`,
-                  top: `${18 + (i * 19) % 54}%`
+                  top: `${18 + ((i * 19) % 54)}%`,
                 }}
                 animate={isHovered ? { opacity: [0.15, 0.4, 0.15] } : {}}
-                transition={{ duration: 4.5 + i, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{
+                  duration: 4.5 + i,
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                }}
               />
             ))}
           </div>
@@ -292,10 +322,15 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  fontSize: `${18 + Math.random() * 16}px`
+                  fontSize: `${18 + Math.random() * 16}px`,
                 }}
                 animate={isHovered ? { rotate: [0, 12, -12, 0], scale: [1, 1.1, 1] } : {}}
-                transition={{ duration: 5, repeat: isHovered ? Infinity : 0, ease: 'easeInOut', delay: Math.random() * 2 }}
+                transition={{
+                  duration: 5,
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                  delay: Math.random() * 2,
+                }}
               >
                 ✿
               </motion.div>
@@ -308,21 +343,39 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
             <motion.div
               className="absolute inset-0"
               style={{
-                backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(253,224,71,0.3), transparent 40%), radial-gradient(circle at 80% 30%, rgba(249,115,22,0.25), transparent 45%), radial-gradient(circle at 50% 80%, rgba(244,63,94,0.25), transparent 40%)'
+                backgroundImage:
+                  'radial-gradient(circle at 20% 20%, rgba(253,224,71,0.3), transparent 40%), radial-gradient(circle at 80% 30%, rgba(249,115,22,0.25), transparent 45%), radial-gradient(circle at 50% 80%, rgba(244,63,94,0.25), transparent 40%)',
               }}
               animate={isHovered ? { opacity: [0.3, 0.6, 0.3] } : { opacity: 0.35 }}
               transition={{ duration: 6, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
             />
-            <div className="absolute inset-0" style={{ backgroundImage: 'repeating-conic-gradient(from 0deg, rgba(253,224,71,0.15) 0deg 6deg, transparent 6deg 12deg)', opacity: 0.2 }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'repeating-conic-gradient(from 0deg, rgba(253,224,71,0.15) 0deg 6deg, transparent 6deg 12deg)',
+                opacity: 0.2,
+              }}
+            />
           </div>
         );
       case 'mono-grid':
         return (
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(90deg, rgba(244,114,182,0.12) 1px, transparent 1px), linear-gradient(rgba(244,114,182,0.12) 1px, transparent 1px)', backgroundSize: '26px 26px', opacity: 0.25 }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'linear-gradient(90deg, rgba(244,114,182,0.12) 1px, transparent 1px), linear-gradient(rgba(244,114,182,0.12) 1px, transparent 1px)',
+                backgroundSize: '26px 26px',
+                opacity: 0.25,
+              }}
+            />
             <motion.div
               className="absolute inset-0"
-              style={{ backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.04), transparent 60%)' }}
+              style={{
+                backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.04), transparent 60%)',
+              }}
               animate={isHovered ? { opacity: [0.2, 0.4, 0.2] } : { opacity: 0.25 }}
               transition={{ duration: 5, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
             />
@@ -337,12 +390,18 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                 className="absolute"
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`
+                  top: `${Math.random() * 100}%`,
                 }}
                 animate={isHovered ? { opacity: [0.2, 0.8, 0.2] } : { opacity: 0.4 }}
-                transition={{ duration: 2.5 + Math.random(), repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{
+                  duration: 2.5 + Math.random(),
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                }}
               >
-                <span className="text-pink-300" style={{ fontSize: `${8 + Math.random() * 6}px` }}>✸</span>
+                <span className="text-pink-300" style={{ fontSize: `${8 + Math.random() * 6}px` }}>
+                  ✸
+                </span>
               </motion.div>
             ))}
           </div>
@@ -352,7 +411,11 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
               className="absolute inset-0"
-              style={{ backgroundImage: 'linear-gradient(135deg, rgba(248,187,208,0.25), rgba(147,197,253,0.2))', backgroundSize: '200% 200%' }}
+              style={{
+                backgroundImage:
+                  'linear-gradient(135deg, rgba(248,187,208,0.25), rgba(147,197,253,0.2))',
+                backgroundSize: '200% 200%',
+              }}
               animate={isHovered ? { backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] } : {}}
               transition={{ duration: 8, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
             />
@@ -362,12 +425,18 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                 className="absolute"
                 style={{
                   left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`
+                  top: `${Math.random() * 100}%`,
                 }}
                 animate={isHovered ? { rotate: [0, 10, -10, 0] } : {}}
-                transition={{ duration: 4 + Math.random() * 2, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{
+                  duration: 4 + Math.random() * 2,
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                }}
               >
-                <span className="text-rose-400" style={{ fontSize: `${14 + Math.random() * 6}px` }}>🍬</span>
+                <span className="text-rose-400" style={{ fontSize: `${14 + Math.random() * 6}px` }}>
+                  🍬
+                </span>
               </motion.div>
             ))}
           </div>
@@ -382,10 +451,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  fontSize: `${10 + Math.random() * 8}px`
+                  fontSize: `${10 + Math.random() * 8}px`,
                 }}
                 animate={isHovered ? { opacity: [0.2, 0.8, 0.2], scale: [0.8, 1.2, 0.8] } : {}}
-                transition={{ duration: 3 + Math.random() * 2, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                }}
               >
                 ✦
               </motion.div>
@@ -403,10 +476,14 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                   width: 60 + Math.random() * 60,
                   height: 60 + Math.random() * 60,
                   left: `${Math.random() * 80}%`,
-                  top: `${20 + Math.random() * 60}%`
+                  top: `${20 + Math.random() * 60}%`,
                 }}
                 animate={isHovered ? { y: [0, -14, 0], opacity: [0.35, 0.6, 0.35] } : {}}
-                transition={{ duration: 4 + Math.random() * 2, repeat: isHovered ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{
+                  duration: 4 + Math.random() * 2,
+                  repeat: isHovered ? Infinity : 0,
+                  ease: 'easeInOut',
+                }}
               />
             ))}
           </div>
@@ -459,8 +536,8 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                   <Card
                     variant="elevated"
                     className={`h-full cursor-pointer transition-all duration-300 ${
-                      selectedTheme === theme.id 
-                        ? 'ring-4 ring-yellow-400 ring-opacity-75 shadow-2xl shadow-yellow-400/25' 
+                      selectedTheme === theme.id
+                        ? 'ring-4 ring-yellow-400 ring-opacity-75 shadow-2xl shadow-yellow-400/25'
                         : 'hover:shadow-xl'
                     }`}
                     hover={true}
@@ -494,10 +571,12 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                           transition={{ duration: 0.2 }}
                         >
                           {renderThemePattern(theme.preview.pattern, hoveredTheme === theme.id)}
-                          
+
                           <div className="relative z-10">
                             {/* Mock Question */}
-                            <div className={`${theme.preview.questionColor} font-medium text-sm mb-4`}>
+                            <div
+                              className={`${theme.preview.questionColor} font-medium text-sm mb-4`}
+                            >
                               Q1. {theme.preview.question}
                             </div>
 
@@ -509,7 +588,7 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                                   className={`${theme.preview.optionStyle} p-2 rounded text-xs cursor-pointer transition-all duration-200`}
                                   whileHover={{
                                     scale: 1.02,
-                                    backgroundColor: theme.preview.optionHover
+                                    backgroundColor: theme.preview.optionHover,
                                   }}
                                   transition={{ duration: 0.12 }}
                                 >
@@ -587,10 +666,7 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
               </Button>
 
               {/* Apply Button */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={handleApplyTheme}
                   variant="primary"
@@ -620,7 +696,8 @@ const ThemePicker: React.FC<ThemePickerProps> = ({ onApply, onBack, initialTheme
                   className="text-center mt-4"
                 >
                   <p className="text-sm text-purple-700">
-                    Selected: <span className="font-semibold">{selectedThemeData.name}</span> - {selectedThemeData.description}
+                    Selected: <span className="font-semibold">{selectedThemeData.name}</span> -{' '}
+                    {selectedThemeData.description}
                   </p>
                 </motion.div>
               )}

@@ -1,3 +1,3 @@
 # Layouts Directory
 
-This is a layouts reserved directory. 
+This is a layouts reserved directory.

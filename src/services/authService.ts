@@ -7,23 +7,11 @@ import {
   sendEmailVerification,
   updateProfile,
   onAuthStateChanged,
-  User as FirebaseUser
+  User as FirebaseUser,
 } from 'firebase/auth';
-import {
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  serverTimestamp
-} from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db, googleProvider, facebookProvider } from '../lib/firebase';
-import {
-  User,
-  UserProfile,
-  UserPreferences,
-  UserStats,
-  COLLECTIONS
-} from '../types/firebase';
+import { User, UserProfile, UserPreferences, UserStats, COLLECTIONS } from '../types/firebase';
 
 export class AuthService {
   // ---------- PUBLIC API ----------
@@ -85,7 +73,7 @@ export class AuthService {
   static onAuthStateChange(
     callback: (firebaseUser: FirebaseUser | null, user: User | null) => void
   ): () => void {
-    return onAuthStateChanged(auth, async (firebaseUser) => {
+    return onAuthStateChanged(auth, async firebaseUser => {
       if (!firebaseUser) return callback(null, null);
       try {
         const data = await this.ensureUserDocument(firebaseUser);
@@ -113,7 +101,7 @@ export class AuthService {
           photoURL: firebaseUser.photoURL ?? null,
           phoneNumber: firebaseUser.phoneNumber ?? null,
           emailVerified: firebaseUser.emailVerified ?? false,
-          updatedAt: serverTimestamp()
+          updatedAt: serverTimestamp(),
         },
         { merge: true }
       );
@@ -133,7 +121,7 @@ export class AuthService {
       firstName: additionalData.displayName?.split(' ')[0] || '',
       lastName: additionalData.displayName?.split(' ')[1] || '',
       achievements: [],
-      badges: []
+      badges: [],
     };
 
     const defaultPreferences: UserPreferences = {
@@ -145,21 +133,21 @@ export class AuthService {
         inApp: true,
         reminders: true,
         achievements: true,
-        social: true
+        social: true,
       },
       privacy: {
         profileVisibility: 'public',
         showStats: true,
         showProgress: true,
-        allowFriendRequests: true
+        allowFriendRequests: true,
       },
       gameSettings: {
         soundEffects: true,
         backgroundMusic: true,
         vibration: true,
         autoSubmit: false,
-        showHints: true
-      }
+        showHints: true,
+      },
     };
 
     const defaultStats: UserStats = {
@@ -173,7 +161,7 @@ export class AuthService {
       level: 1,
       experiencePoints: 0,
       favoriteSubjects: [],
-      averageScore: 0
+      averageScore: 0,
     };
 
     const userData: User = {
@@ -189,7 +177,7 @@ export class AuthService {
       profile: defaultProfile,
       preferences: defaultPreferences,
       stats: defaultStats,
-      ...additionalData
+      ...additionalData,
     } as User;
 
     await setDoc(doc(db, COLLECTIONS.USERS, firebaseUser.uid), userData, { merge: true });
@@ -218,7 +206,10 @@ export class AuthService {
     );
   }
 
-  static async updateUserPreferences(uid: string, preferences: Partial<UserPreferences>): Promise<void> {
+  static async updateUserPreferences(
+    uid: string,
+    preferences: Partial<UserPreferences>
+  ): Promise<void> {
     await setDoc(
       doc(db, COLLECTIONS.USERS, uid),
       { preferences, updatedAt: serverTimestamp() },

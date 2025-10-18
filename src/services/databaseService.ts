@@ -19,7 +19,7 @@ import {
   arrayRemove,
   QueryDocumentSnapshot,
   DocumentData,
-  Unsubscribe
+  Unsubscribe,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import {
@@ -33,14 +33,14 @@ import {
   PaymentRecord,
   Badge,
   COLLECTIONS,
-  ApiResponse
+  ApiResponse,
 } from '../types/firebase';
 
 export class DatabaseService {
   /**
    * QUIZ OPERATIONS
    */
-  
+
   // Create a new quiz
   static async createQuiz(quiz: Omit<Quiz, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
     try {
@@ -51,9 +51,9 @@ export class DatabaseService {
         attempts: 0,
         averageScore: 0,
         rating: 0,
-        reviews: 0
+        reviews: 0,
       };
-      
+
       const docRef = await addDoc(collection(db, COLLECTIONS.QUIZZES), quizData);
       return docRef.id;
     } catch (error) {
@@ -110,10 +110,13 @@ export class DatabaseService {
       }
 
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as Quiz));
+      return querySnapshot.docs.map(
+        doc =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as Quiz
+      );
     } catch (error) {
       console.error('Error fetching quizzes:', error);
       return [];
@@ -125,7 +128,7 @@ export class DatabaseService {
     try {
       await updateDoc(doc(db, COLLECTIONS.QUIZZES, quizId), {
         ...updates,
-        updatedAt: serverTimestamp()
+        updatedAt: serverTimestamp(),
       });
     } catch (error) {
       console.error('Error updating quiz:', error);
@@ -148,10 +151,7 @@ export class DatabaseService {
    */
 
   // Start a quiz attempt
-  static async startQuizAttempt(
-    userId: string,
-    quizId: string
-  ): Promise<string> {
+  static async startQuizAttempt(userId: string, quizId: string): Promise<string> {
     try {
       const attemptData: Omit<CreateQuizAttempt, 'id'> = {
         quizId,
@@ -163,14 +163,14 @@ export class DatabaseService {
         passed: false,
         answers: [],
         status: 'in-progress',
-        reviewMode: false
+        reviewMode: false,
       };
 
       const docRef = await addDoc(collection(db, COLLECTIONS.QUIZ_ATTEMPTS), attemptData);
-      
+
       // Increment quiz attempts count
       await updateDoc(doc(db, COLLECTIONS.QUIZZES, quizId), {
-        attempts: increment(1)
+        attempts: increment(1),
       });
 
       return docRef.id;
@@ -197,7 +197,7 @@ export class DatabaseService {
         passed,
         answers,
         duration,
-        status: 'completed'
+        status: 'completed',
       });
     } catch (error) {
       console.error('Error completing quiz attempt:', error);
@@ -219,10 +219,13 @@ export class DatabaseService {
       }
 
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as QuizAttempt));
+      return querySnapshot.docs.map(
+        doc =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as QuizAttempt
+      );
     } catch (error) {
       console.error('Error fetching quiz attempts:', error);
       return [];
@@ -247,7 +250,7 @@ export class DatabaseService {
     try {
       const userRef = doc(db, COLLECTIONS.USERS, userId);
       const userDoc = await getDoc(userRef);
-      
+
       if (userDoc.exists()) {
         const userData = userDoc.data() as User;
         const currentStats = userData.stats;
@@ -263,13 +266,13 @@ export class DatabaseService {
           'stats.accuracy': newAccuracy,
           'stats.totalTimeSpent': increment(quizResult.timeSpent),
           'stats.experiencePoints': increment(quizResult.score),
-          updatedAt: serverTimestamp()
+          updatedAt: serverTimestamp(),
         });
 
         // Update favorite subjects
         if (!currentStats.favoriteSubjects.includes(quizResult.subject)) {
           await updateDoc(userRef, {
-            'stats.favoriteSubjects': arrayUnion(quizResult.subject)
+            'stats.favoriteSubjects': arrayUnion(quizResult.subject),
           });
         }
       }
@@ -302,10 +305,13 @@ export class DatabaseService {
       q = query(q, orderBy('score', 'desc'), limit(limitCount));
 
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map((doc, index) => ({
-        ...doc.data(),
-        rank: index + 1
-      } as LeaderboardEntry));
+      return querySnapshot.docs.map(
+        (doc, index) =>
+          ({
+            ...doc.data(),
+            rank: index + 1,
+          }) as LeaderboardEntry
+      );
     } catch (error) {
       console.error('Error fetching leaderboard:', error);
       return [];
@@ -317,13 +323,15 @@ export class DatabaseService {
    */
 
   // Get study materials
-  static async getStudyMaterials(filters: {
-    subject?: string;
-    grade?: number;
-    type?: string;
-    isPremium?: boolean;
-    limit?: number;
-  } = {}): Promise<StudyMaterial[]> {
+  static async getStudyMaterials(
+    filters: {
+      subject?: string;
+      grade?: number;
+      type?: string;
+      isPremium?: boolean;
+      limit?: number;
+    } = {}
+  ): Promise<StudyMaterial[]> {
     try {
       let q = query(collection(db, COLLECTIONS.STUDY_MATERIALS));
 
@@ -341,16 +349,19 @@ export class DatabaseService {
       }
 
       q = query(q, where('isPublic', '==', true), orderBy('createdAt', 'desc'));
-      
+
       if (filters.limit) {
         q = query(q, limit(filters.limit));
       }
 
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as StudyMaterial));
+      return querySnapshot.docs.map(
+        doc =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as StudyMaterial
+      );
     } catch (error) {
       console.error('Error fetching study materials:', error);
       return [];
@@ -366,7 +377,7 @@ export class DatabaseService {
     try {
       const docRef = await addDoc(collection(db, COLLECTIONS.NOTIFICATIONS), {
         ...notification,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       });
       return docRef.id;
     } catch (error) {
@@ -376,7 +387,10 @@ export class DatabaseService {
   }
 
   // Get user notifications
-  static async getUserNotifications(userId: string, unreadOnly: boolean = false): Promise<AppNotification[]> {
+  static async getUserNotifications(
+    userId: string,
+    unreadOnly: boolean = false
+  ): Promise<AppNotification[]> {
     try {
       let q = query(
         collection(db, COLLECTIONS.NOTIFICATIONS),
@@ -389,10 +403,13 @@ export class DatabaseService {
       }
 
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as AppNotification));
+      return querySnapshot.docs.map(
+        doc =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as AppNotification
+      );
     } catch (error) {
       console.error('Error fetching notifications:', error);
       return [];
@@ -403,7 +420,7 @@ export class DatabaseService {
   static async markNotificationAsRead(notificationId: string): Promise<void> {
     try {
       await updateDoc(doc(db, COLLECTIONS.NOTIFICATIONS, notificationId), {
-        read: true
+        read: true,
       });
     } catch (error) {
       console.error('Error marking notification as read:', error);
@@ -433,22 +450,29 @@ export class DatabaseService {
       limit(10)
     );
 
-    return onSnapshot(q, (snapshot) => {
-      const attempts = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as QuizAttempt));
-      callback(attempts);
-    }, (error) => {
-      // Handle permission errors gracefully
-      if (error.code === 'permission-denied') {
-        console.warn('Permission denied for quiz attempts subscription:', error);
-        callback([]); // Return empty array on permission error
-      } else {
-        console.error('Error in quiz attempts subscription:', error);
-        throw error;
+    return onSnapshot(
+      q,
+      snapshot => {
+        const attempts = snapshot.docs.map(
+          doc =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            }) as QuizAttempt
+        );
+        callback(attempts);
+      },
+      error => {
+        // Handle permission errors gracefully
+        if (error.code === 'permission-denied') {
+          console.warn('Permission denied for quiz attempts subscription:', error);
+          callback([]); // Return empty array on permission error
+        } else {
+          console.error('Error in quiz attempts subscription:', error);
+          throw error;
+        }
       }
-    });
+    );
   }
 
   // Subscribe to user notifications
@@ -469,22 +493,29 @@ export class DatabaseService {
       orderBy('createdAt', 'desc')
     );
 
-    return onSnapshot(q, (snapshot) => {
-      const notifications = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as AppNotification));
-      callback(notifications);
-    }, (error) => {
-      // Handle permission errors gracefully
-      if (error.code === 'permission-denied') {
-        console.warn('Permission denied for notifications subscription:', error);
-        callback([]); // Return empty array on permission error
-      } else {
-        console.error('Error in notifications subscription:', error);
-        throw error;
+    return onSnapshot(
+      q,
+      snapshot => {
+        const notifications = snapshot.docs.map(
+          doc =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            }) as AppNotification
+        );
+        callback(notifications);
+      },
+      error => {
+        // Handle permission errors gracefully
+        if (error.code === 'permission-denied') {
+          console.warn('Permission denied for notifications subscription:', error);
+          callback([]); // Return empty array on permission error
+        } else {
+          console.error('Error in notifications subscription:', error);
+          throw error;
+        }
       }
-    });
+    );
   }
 
   /**
@@ -514,7 +545,7 @@ export class DatabaseService {
     docId: string,
     callback: (data: T | null) => void
   ): Unsubscribe {
-    return onSnapshot(doc(db, collectionName, docId), (doc) => {
+    return onSnapshot(doc(db, collectionName, docId), doc => {
       if (doc.exists()) {
         callback({ id: doc.id, ...doc.data() } as T);
       } else {

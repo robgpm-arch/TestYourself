@@ -13,7 +13,7 @@ import {
   writeBatch,
   collectionGroup,
   QueryDocumentSnapshot,
-  DocumentData
+  DocumentData,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { db } from '../config/firebase';
@@ -24,7 +24,7 @@ import {
   CatalogCourse,
   CatalogSubject,
   CatalogChapter,
-  CatalogQuizSet
+  CatalogQuizSet,
 } from '../types/firebase';
 
 // Always refresh admin token once per admin session
@@ -35,13 +35,17 @@ export async function ensureAdminFreshToken() {
 // Generic upsert function for admin operations
 export async function upsert(coll: string, id: string, data: object) {
   await ensureAdminFreshToken();
-  await setDoc(doc(db, coll, id), {
-    ...data,
-    updatedAt: serverTimestamp(),
-    updatedBy: getAuth().currentUser?.uid || 'admin',
-    createdAt: (data as any).createdAt || serverTimestamp(),
-    createdBy: (data as any).createdBy || (getAuth().currentUser?.uid || 'admin')
-  }, { merge: true });
+  await setDoc(
+    doc(db, coll, id),
+    {
+      ...data,
+      updatedAt: serverTimestamp(),
+      updatedBy: getAuth().currentUser?.uid || 'admin',
+      createdAt: (data as any).createdAt || serverTimestamp(),
+      createdBy: (data as any).createdBy || getAuth().currentUser?.uid || 'admin',
+    },
+    { merge: true }
+  );
 }
 
 // Toggle enabled status
@@ -60,11 +64,7 @@ async function existsInGroup(groupName: string, field: string, value: string): P
 
 // Boards for a Medium
 export async function listBoards(mediumId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
-  const q = query(
-    collection(db, 'boards'),
-    where('mediumId', '==', mediumId),
-    orderBy('order')
-  );
+  const q = query(collection(db, 'boards'), where('mediumId', '==', mediumId), orderBy('order'));
   const snap = await getDocs(q);
   return snap.docs;
 }
@@ -79,19 +79,25 @@ export async function listExams(mediumId: string): Promise<QueryDocumentSnapshot
     return snap.docs;
   } catch (err) {
     // Fallback: no index or missing field 'order'
-    console.warn('[listExams] falling back (no index or \'order\' field):', err);
+    console.warn("[listExams] falling back (no index or 'order' field):", err);
     const snap = await getDocs(base);
     return snap.docs;
   }
 }
 
 // Alias for consistency with user request
-export async function listExamsByMedium(mediumId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+export async function listExamsByMedium(
+  mediumId: string
+): Promise<QueryDocumentSnapshot<DocumentData>[]> {
   return listExams(mediumId);
 }
 
 // Courses for Medium+Board or Medium+Exam (exactly one given)
-export async function listCourses(mediumId: string, boardId?: string, examId?: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+export async function listCourses(
+  mediumId: string,
+  boardId?: string,
+  examId?: string
+): Promise<QueryDocumentSnapshot<DocumentData>[]> {
   const col = collection(db, 'courses');
   const filters = boardId
     ? [where('mediumId', '==', mediumId), where('boardId', '==', boardId)]
@@ -102,28 +108,46 @@ export async function listCourses(mediumId: string, boardId?: string, examId?: s
 }
 
 // Subjects for a Course
-export async function listSubjects(courseId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+export async function listSubjects(
+  courseId: string
+): Promise<QueryDocumentSnapshot<DocumentData>[]> {
   const q = query(collection(db, 'subjects'), where('courseId', '==', courseId), orderBy('order'));
   const snap = await getDocs(q);
   return snap.docs;
 }
 
 // Chapters for a Subject
-export async function listChapters(subjectId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
-  const q = query(collection(db, 'chapters'), where('subjectId', '==', subjectId), orderBy('order'));
+export async function listChapters(
+  subjectId: string
+): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+  const q = query(
+    collection(db, 'chapters'),
+    where('subjectId', '==', subjectId),
+    orderBy('order')
+  );
   const snap = await getDocs(q);
   return snap.docs;
 }
 
 // Quiz sets for a Chapter
-export async function listQuizSets(chapterId: string): Promise<QueryDocumentSnapshot<DocumentData>[]> {
-  const q = query(collection(db, 'quiz_sets'), where('chapterId', '==', chapterId), orderBy('order'));
+export async function listQuizSets(
+  chapterId: string
+): Promise<QueryDocumentSnapshot<DocumentData>[]> {
+  const q = query(
+    collection(db, 'quiz_sets'),
+    where('chapterId', '==', chapterId),
+    orderBy('order')
+  );
   const snap = await getDocs(q);
   return snap.docs;
 }
 
 // "Catalog Course" dropdown: filtered by Medium + Board/Exam
-export async function listCatalogCoursesForContext(mediumId: string, boardId?: string, examId?: string): Promise<CatalogCourse[]> {
+export async function listCatalogCoursesForContext(
+  mediumId: string,
+  boardId?: string,
+  examId?: string
+): Promise<CatalogCourse[]> {
   const docs = await listCourses(mediumId, boardId, examId);
   return docs.map(d => ({ id: d.id, ...(d.data() as Omit<CatalogCourse, 'id'>) }));
 }
@@ -222,5 +246,5 @@ export default {
   deleteQuizSet,
   cascadeDeleteCourse,
   generateId,
-  ensureAdminFreshToken
+  ensureAdminFreshToken,
 };

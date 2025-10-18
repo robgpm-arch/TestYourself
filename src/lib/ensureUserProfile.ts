@@ -1,15 +1,15 @@
 // src/lib/ensureUserProfile.ts
-import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 export async function ensureUserProfile() {
-  const auth = getAuth()
-  const user = auth.currentUser
-  if (!user) throw new Error('No signed-in user')
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (!user) throw new Error('No signed-in user');
 
-  const db = getFirestore()
-  const ref = doc(db, 'users', user.uid)
-  const snap = await getDoc(ref)
+  const db = getFirestore();
+  const ref = doc(db, 'users', user.uid);
+  const snap = await getDoc(ref);
 
   if (!snap.exists()) {
     await setDoc(ref, {
@@ -28,7 +28,7 @@ export async function ensureUserProfile() {
 
       onboardingCompleted: false,
       createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    })
+      updatedAt: serverTimestamp(),
+    });
   }
 }

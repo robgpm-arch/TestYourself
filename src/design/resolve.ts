@@ -1,27 +1,36 @@
-import type { ThemeDoc, ScreenStyle, CardVariant } from "./types";
+import type { ThemeDoc, ScreenStyle, CardVariant } from './types';
 
 // Very small whitelist so style injection stays safe
 const SAFE_KEYS = new Set([
-  "width", "height", "maxWidth", "padding", "gap",
-  "margin", "borderRadius", "boxShadow", "background",
-  "color", "fontSize", "fontWeight"
+  'width',
+  'height',
+  'maxWidth',
+  'padding',
+  'gap',
+  'margin',
+  'borderRadius',
+  'boxShadow',
+  'background',
+  'color',
+  'fontSize',
+  'fontWeight',
 ]);
 
 export function expandTokens(value: string, tokens: Record<string, string>): string {
   // Allows var(token.name) usage from theme
-  return value.replace(/var\(([^)]+)\)/g, (_, key) => tokens[key.trim()] ?? "");
+  return value.replace(/var\(([^)]+)\)/g, (_, key) => tokens[key.trim()] ?? '');
 }
 
 export function composeBackground({
   gradientCss,
   imageUrl,
-  mode = "cover",
-  blend = "normal",
-  overlay
+  mode = 'cover',
+  blend = 'normal',
+  overlay,
 }: {
   gradientCss?: string | null;
   imageUrl?: string | null;
-  mode?: "cover" | "contain";
+  mode?: 'cover' | 'contain';
   blend?: string;
   overlay?: string | null;
 }): React.CSSProperties {
@@ -29,12 +38,12 @@ export function composeBackground({
   if (gradientCss) layers.push(gradientCss);
   if (imageUrl) layers.push(`url("${imageUrl}")`);
 
-  const background = layers.join(", ");
+  const background = layers.join(', ');
   const style: React.CSSProperties = {
     background,
     backgroundSize: layers.length > 1 ? `${mode}, ${mode}` : mode,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
     backgroundBlendMode: blend as any,
   };
 
@@ -51,10 +60,10 @@ export function cardStyleFromVariant(
 ): React.CSSProperties {
   if (!variant) return {};
 
-  const radius = expandTokens(variant.radius ?? "", tokens);
-  const shadow = expandTokens(variant.shadow ?? "", tokens);
-  const bg = expandTokens(variant.bg ?? "", tokens);
-  const blur = expandTokens(variant.backdropBlur ?? "0px", tokens);
+  const radius = expandTokens(variant.radius ?? '', tokens);
+  const shadow = expandTokens(variant.shadow ?? '', tokens);
+  const bg = expandTokens(variant.bg ?? '', tokens);
+  const blur = expandTokens(variant.backdropBlur ?? '0px', tokens);
 
   return {
     borderRadius: radius,

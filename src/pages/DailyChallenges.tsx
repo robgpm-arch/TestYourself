@@ -19,7 +19,7 @@ const missionVariants = {
     rotateY: 0,
     background: 'rgba(255,255,255,0.94)',
     boxShadow: '0 30px 60px -25px rgba(249, 115, 22, 0.35)',
-    borderColor: 'rgba(253, 186, 116, 0.35)'
+    borderColor: 'rgba(253, 186, 116, 0.35)',
   },
   completed: {
     rotateY: [0, 180, 360],
@@ -30,53 +30,56 @@ const missionVariants = {
       rotateY: { duration: 0.8, ease: 'easeInOut' },
       background: { duration: 0.4 },
       boxShadow: { duration: 0.4 },
-      borderColor: { duration: 0.4 }
-    }
-  }
+      borderColor: { duration: 0.4 },
+    },
+  },
 };
 
 const DailyChallenges: React.FC = () => {
-  const missionsData = useMemo<Mission[]>(() => [
-    {
-      id: 'mission-1',
-      title: 'Complete 2 Science quizzes today',
-      description: 'Keep your curiosity burning bright with focused practice.',
-      reward: '+20 coins',
-      rewardType: 'coins',
-      icon: '🧪',
-      progress: 1,
-      target: 2,
-      isCompleted: false
-    },
-    {
-      id: 'mission-2',
-      title: 'Maintain 5-day streak',
-      description: 'Consistency unlocked your flame bonus — don’t let it go!',
-      reward: 'Special Badge 🏅',
-      rewardType: 'badge',
-      icon: '🔥',
-      progress: 5,
-      target: 5,
-      isCompleted: true
-    },
-    {
-      id: 'mission-3',
-      title: 'Score 80%+ in any quiz',
-      description: 'Aim for precision and collect extra coins for mastery.',
-      reward: '+50 coins',
-      rewardType: 'coins',
-      icon: '🎯',
-      progress: 0,
-      target: 1,
-      isCompleted: false
-    }
-  ], []);
+  const missionsData = useMemo<Mission[]>(
+    () => [
+      {
+        id: 'mission-1',
+        title: 'Complete 2 Science quizzes today',
+        description: 'Keep your curiosity burning bright with focused practice.',
+        reward: '+20 coins',
+        rewardType: 'coins',
+        icon: '🧪',
+        progress: 1,
+        target: 2,
+        isCompleted: false,
+      },
+      {
+        id: 'mission-2',
+        title: 'Maintain 5-day streak',
+        description: 'Consistency unlocked your flame bonus — don’t let it go!',
+        reward: 'Special Badge 🏅',
+        rewardType: 'badge',
+        icon: '🔥',
+        progress: 5,
+        target: 5,
+        isCompleted: true,
+      },
+      {
+        id: 'mission-3',
+        title: 'Score 80%+ in any quiz',
+        description: 'Aim for precision and collect extra coins for mastery.',
+        reward: '+50 coins',
+        rewardType: 'coins',
+        icon: '🎯',
+        progress: 0,
+        target: 1,
+        isCompleted: false,
+      },
+    ],
+    []
+  );
 
   const [missions, setMissions] = useState<Mission[]>(missionsData);
 
   const handleStartMission = (missionId: string) => {
-    setMissions((prev) =>
-      prev.map((mission) => {
+    setMissions(prev =>
+      prev.map(mission => {
         if (mission.id !== missionId || mission.isCompleted) {
           return mission;
         }
@@ -85,7 +88,7 @@ const DailyChallenges: React.FC = () => {
         return {
           ...mission,
           progress: nextProgress,
-          isCompleted: nextProgress >= mission.target
+          isCompleted: nextProgress >= mission.target,
         };
       })
     );
@@ -109,7 +112,8 @@ const DailyChallenges: React.FC = () => {
           <p className="uppercase tracking-[0.3em] text-xs text-orange-500 mb-3">Mission Control</p>
           <h1 className="text-4xl md:text-5xl font-extrabold text-amber-700">Daily Challenges</h1>
           <p className="mt-4 text-base md:text-lg text-slate-600">
-            Complete missions to earn bonus coins & badges. Keep the streak alive and the rewards flowing!
+            Complete missions to earn bonus coins & badges. Keep the streak alive and the rewards
+            flowing!
           </p>
         </motion.header>
 
@@ -130,8 +134,12 @@ const DailyChallenges: React.FC = () => {
                 🔥
               </motion.span>
               <div>
-                <p className="text-sm uppercase text-orange-500 font-semibold tracking-widest">Streak Tracker</p>
-                <p className="text-lg font-semibold text-slate-800">{streakDays}-day streak active</p>
+                <p className="text-sm uppercase text-orange-500 font-semibold tracking-widest">
+                  Streak Tracker
+                </p>
+                <p className="text-lg font-semibold text-slate-800">
+                  {streakDays}-day streak active
+                </p>
               </div>
             </div>
             <div className="flex-1 min-w-[180px]">
@@ -153,8 +161,13 @@ const DailyChallenges: React.FC = () => {
 
         <div className="mt-8 space-y-5 max-h-[65vh] overflow-y-auto pr-1 custom-scrollbar">
           {missions.map((mission, index) => {
-            const progressLabel = mission.isCompleted ? 'Completed today' : `${mission.progress}/${mission.target} done`;
-            const progressPercent = Math.min(100, Math.round((mission.progress / mission.target) * 100));
+            const progressLabel = mission.isCompleted
+              ? 'Completed today'
+              : `${mission.progress}/${mission.target} done`;
+            const progressPercent = Math.min(
+              100,
+              Math.round((mission.progress / mission.target) * 100)
+            );
 
             return (
               <motion.div
@@ -174,17 +187,17 @@ const DailyChallenges: React.FC = () => {
                 >
                   <div className="flex flex-col md:flex-row md:items-center gap-6">
                     <div className="flex items-start gap-4">
-                      <div className={`h-14 w-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner ${
-                        mission.isCompleted
-                          ? 'bg-amber-100/90 text-amber-700'
-                          : 'bg-orange-100 text-orange-600'
-                      }`}>
+                      <div
+                        className={`h-14 w-14 rounded-2xl flex items-center justify-center text-3xl shadow-inner ${
+                          mission.isCompleted
+                            ? 'bg-amber-100/90 text-amber-700'
+                            : 'bg-orange-100 text-orange-600'
+                        }`}
+                      >
                         {mission.icon}
                       </div>
                       <div>
-                        <h2 className="text-lg font-semibold text-slate-900">
-                          {mission.title}
-                        </h2>
+                        <h2 className="text-lg font-semibold text-slate-900">{mission.title}</h2>
                         <p className="text-sm text-slate-600 mt-1">{mission.description}</p>
                         <div className="mt-3 flex items-center gap-3 text-sm font-medium">
                           <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-orange-100 text-orange-600">
@@ -208,9 +221,11 @@ const DailyChallenges: React.FC = () => {
                     </div>
 
                     <div className="flex md:flex-col md:items-end gap-4 md:gap-3 md:ml-auto">
-                      <div className={`text-sm font-semibold ${
-                        mission.isCompleted ? 'text-amber-700' : 'text-slate-500'
-                      }`}>
+                      <div
+                        className={`text-sm font-semibold ${
+                          mission.isCompleted ? 'text-amber-700' : 'text-slate-500'
+                        }`}
+                      >
                         {mission.isCompleted ? 'Reward unlocked' : 'Reward on completion'}
                       </div>
                       <motion.button

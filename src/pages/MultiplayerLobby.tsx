@@ -23,35 +23,42 @@ const totalSlots = 8;
 const circleRadius = 190;
 
 const MultiplayerLobby: React.FC = () => {
-  const initialPlayers = useMemo<LobbyPlayer[]>(() => [
-    {
-      id: 'host',
-      name: 'Kavya (Host)',
-      avatar: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=facearea&w=200&h=200&q=80',
-      ready: true,
-      isHost: true,
-      streak: 12
-    },
-    {
-      id: 'p2',
-      name: 'Rehan',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=200&h=200&q=80',
-      ready: false,
-      streak: 4
-    },
-    {
-      id: 'p3',
-      name: 'Amrita',
-      avatar: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=facearea&w=200&h=200&q=80',
-      ready: true
-    },
-    {
-      id: 'p4',
-      name: 'Zeeshan',
-      avatar: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=200&h=200&q=80',
-      ready: false
-    }
-  ], []);
+  const initialPlayers = useMemo<LobbyPlayer[]>(
+    () => [
+      {
+        id: 'host',
+        name: 'Kavya (Host)',
+        avatar:
+          'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=facearea&w=200&h=200&q=80',
+        ready: true,
+        isHost: true,
+        streak: 12,
+      },
+      {
+        id: 'p2',
+        name: 'Rehan',
+        avatar:
+          'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&w=200&h=200&q=80',
+        ready: false,
+        streak: 4,
+      },
+      {
+        id: 'p3',
+        name: 'Amrita',
+        avatar:
+          'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=facearea&w=200&h=200&q=80',
+        ready: true,
+      },
+      {
+        id: 'p4',
+        name: 'Zeeshan',
+        avatar:
+          'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=200&h=200&q=80',
+        ready: false,
+      },
+    ],
+    []
+  );
 
   const [players, setPlayers] = useState<LobbyPlayer[]>(initialPlayers);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -61,15 +68,15 @@ const MultiplayerLobby: React.FC = () => {
       sender: 'other',
       name: 'Kavya',
       content: 'Welcome to the lobby! We’ll start as soon as everyone is ready.',
-      timestamp: '19:02'
+      timestamp: '19:02',
     },
     {
       id: 'm2',
       sender: 'other',
       name: 'Amrita',
       content: 'I just reviewed the acid-base notes. Feeling confident!',
-      timestamp: '19:03'
-    }
+      timestamp: '19:03',
+    },
   ]);
   const [chatInput, setChatInput] = useState('');
   const chatEndRef = useRef<HTMLDivElement | null>(null);
@@ -106,9 +113,7 @@ const MultiplayerLobby: React.FC = () => {
   const handleToggleReady = () => {
     setPlayers(prev =>
       prev.map(player =>
-        player.id === currentUserId
-          ? { ...player, ready: !player.ready }
-          : player
+        player.id === currentUserId ? { ...player, ready: !player.ready } : player
       )
     );
   };
@@ -120,8 +125,8 @@ const MultiplayerLobby: React.FC = () => {
     ...players.map(player => ({ type: 'player' as const, data: player })),
     ...Array.from({ length: placeholders }).map((_, index) => ({
       type: 'placeholder' as const,
-      data: { id: `placeholder-${index}` }
-    }))
+      data: { id: `placeholder-${index}` },
+    })),
   ];
 
   const formatTime = () => {
@@ -142,28 +147,37 @@ const MultiplayerLobby: React.FC = () => {
         sender: 'me',
         name: 'You',
         content: trimmed,
-        timestamp: formatTime()
-      }
+        timestamp: formatTime(),
+      },
     ]);
     setChatInput('');
   };
 
   return (
-    <Layout variant="fullscreen" showHeader={false} showFooter={false} className="relative overflow-hidden">
+    <Layout
+      variant="fullscreen"
+      showHeader={false}
+      showFooter={false}
+      className="relative overflow-hidden"
+    >
       <div className="lobby-bg absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/50 via-transparent to-slate-950/85" />
 
       <div className="relative z-10 h-full flex flex-col">
         <header className="lobby-header">
           <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-cyan-200">Competitive Quiz Mode</p>
+            <p className="text-xs uppercase tracking-[0.4em] text-cyan-200">
+              Competitive Quiz Mode
+            </p>
             <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-violet-300 drop-shadow-[0_0_30px_rgba(34,211,238,0.55)]">
               Multiplayer Lobby
             </h1>
           </div>
           <div className="text-right">
             <p className="text-sm text-cyan-100/80">Players Ready</p>
-            <p className="text-xl font-semibold text-amber-200">{readyCount}/{players.length}</p>
+            <p className="text-xl font-semibold text-amber-200">
+              {readyCount}/{players.length}
+            </p>
           </div>
         </header>
 
@@ -174,8 +188,12 @@ const MultiplayerLobby: React.FC = () => {
                 <div className="lobby-pulse" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <p className="text-sm uppercase tracking-[0.35em] text-cyan-200/80">Quiz Topic</p>
-                    <h2 className="text-2xl font-semibold text-white">Lightning Science Showdown ⚡</h2>
+                    <p className="text-sm uppercase tracking-[0.35em] text-cyan-200/80">
+                      Quiz Topic
+                    </p>
+                    <h2 className="text-2xl font-semibold text-white">
+                      Lightning Science Showdown ⚡
+                    </h2>
                     <p className="text-xs text-cyan-100/70 mt-1">Winner grabs +150 coins</p>
                   </div>
                 </div>
@@ -183,7 +201,7 @@ const MultiplayerLobby: React.FC = () => {
                 {combinedSlots.map((slot, index) => {
                   const angle = (index / totalSlots) * 360;
                   const positionStyle = {
-                    transform: `rotate(${angle}deg) translate(${circleRadius}px) rotate(-${angle}deg)`
+                    transform: `rotate(${angle}deg) translate(${circleRadius}px) rotate(-${angle}deg)`,
                   };
 
                   if (slot.type === 'placeholder') {
@@ -204,20 +222,34 @@ const MultiplayerLobby: React.FC = () => {
                       style={positionStyle}
                       initial={{ scale: 0.5, opacity: 0, y: 20 }}
                       animate={{ scale: 1, opacity: 1, y: 0 }}
-                      transition={{ type: 'spring', stiffness: 260, damping: 20, delay: index * 0.08 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 260,
+                        damping: 20,
+                        delay: index * 0.08,
+                      }}
                     >
                       <div className={`player-card ${player.ready ? 'ready' : 'waiting'}`}>
                         <div className="player-avatar">
                           <img src={player.avatar} alt={player.name} />
-                          {player.isHost && <span className="host-crown" aria-hidden>👑</span>}
+                          {player.isHost && (
+                            <span className="host-crown" aria-hidden>
+                              👑
+                            </span>
+                          )}
                           {player.streak && player.streak > 0 && (
-                            <span className="streak-badge" aria-label={`On a ${player.streak}-day streak`}>
+                            <span
+                              className="streak-badge"
+                              aria-label={`On a ${player.streak}-day streak`}
+                            >
                               🔥 {player.streak}
                             </span>
                           )}
                         </div>
                         <p className="player-name">{player.name}</p>
-                        <p className={`player-status ${player.ready ? 'status-ready' : 'status-waiting'}`}>
+                        <p
+                          className={`player-status ${player.ready ? 'status-ready' : 'status-waiting'}`}
+                        >
                           {player.ready ? 'Ready ✅' : 'Waiting ⏳'}
                         </p>
                       </div>
@@ -253,7 +285,7 @@ const MultiplayerLobby: React.FC = () => {
                 <input
                   type="text"
                   value={chatInput}
-                  onChange={(event) => setChatInput(event.target.value)}
+                  onChange={event => setChatInput(event.target.value)}
                   placeholder="Say hi to the squad…"
                 />
                 <motion.button
@@ -284,7 +316,9 @@ const MultiplayerLobby: React.FC = () => {
             >
               {players.find(p => p.id === currentUserId)?.ready ? 'Unready' : 'Ready Up'}
             </motion.button>
-            <p className="text-xs text-cyan-100/80 mt-2">All set? Toggle ready when you’re pumped!</p>
+            <p className="text-xs text-cyan-100/80 mt-2">
+              All set? Toggle ready when you’re pumped!
+            </p>
           </div>
         </footer>
 

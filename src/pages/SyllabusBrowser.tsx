@@ -31,7 +31,7 @@ interface SyllabusData {
 const SyllabusBrowser: React.FC = () => {
   // Sample data - in real app this would come from API or state management
   const syllabusData: SyllabusData = {
-    'CBSE': {
+    CBSE: {
       'Class 10': [
         {
           id: 'ch1',
@@ -46,7 +46,7 @@ const SyllabusBrowser: React.FC = () => {
             { id: 't2', name: 'Properties of Bases', completed: true },
             { id: 't3', name: 'Salt Formation', completed: true },
             { id: 't4', name: 'pH Scale', completed: false },
-          ]
+          ],
         },
         {
           id: 'ch2',
@@ -60,7 +60,7 @@ const SyllabusBrowser: React.FC = () => {
             { id: 't5', name: 'Standard Form', completed: true },
             { id: 't6', name: 'Factorization', completed: true },
             { id: 't7', name: 'Quadratic Formula', completed: true },
-          ]
+          ],
         },
         {
           id: 'ch3',
@@ -75,7 +75,7 @@ const SyllabusBrowser: React.FC = () => {
             { id: 't9', name: 'Federalism', completed: true },
             { id: 't10', name: 'Democracy & Diversity', completed: false },
             { id: 't11', name: 'Gender & Religion', completed: false },
-          ]
+          ],
         },
         {
           id: 'ch4',
@@ -86,10 +86,10 @@ const SyllabusBrowser: React.FC = () => {
           status: 'pending',
           isBookmarked: false,
           topics: [
-            { id: 't12', name: 'Euclid\'s Division', completed: true },
+            { id: 't12', name: "Euclid's Division", completed: true },
             { id: 't13', name: 'Prime Factorization', completed: true },
             { id: 't14', name: 'Rational Numbers', completed: false },
-          ]
+          ],
         },
         {
           id: 'ch5',
@@ -104,10 +104,10 @@ const SyllabusBrowser: React.FC = () => {
             { id: 't16', name: 'Respiration', completed: false },
             { id: 't17', name: 'Transportation', completed: false },
             { id: 't18', name: 'Excretion', completed: false },
-          ]
-        }
-      ]
-    }
+          ],
+        },
+      ],
+    },
   };
 
   const [selectedBoard, setSelectedBoard] = useState('CBSE');
@@ -118,7 +118,8 @@ const SyllabusBrowser: React.FC = () => {
   const chapters = syllabusData[selectedBoard]?.[selectedClass] || [];
   const totalChapters = chapters.length;
   const completedChapters = chapters.filter(ch => ch.status === 'completed').length;
-  const overallProgress = totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
+  const overallProgress =
+    totalChapters > 0 ? Math.round((completedChapters / totalChapters) * 100) : 0;
 
   const toggleBookmark = (chapterId: string) => {
     // In real app, this would update the state/backend
@@ -155,7 +156,7 @@ const SyllabusBrowser: React.FC = () => {
         >
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Your Syllabus</h1>
           <p className="text-gray-600">Complete your learning journey step by step</p>
-          
+
           {/* Progress Summary */}
           <div className="mt-4 bg-white/80 backdrop-blur-sm rounded-lg p-4 mx-auto max-w-md">
             <div className="flex justify-between text-sm text-gray-600 mb-2">
@@ -167,10 +168,12 @@ const SyllabusBrowser: React.FC = () => {
                 className="bg-gradient-to-r from-teal-500 to-teal-600 h-2 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${overallProgress}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
+                transition={{ duration: 1, ease: 'easeOut' }}
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">{completedChapters} of {totalChapters} chapters completed</p>
+            <p className="text-xs text-gray-500 mt-1">
+              {completedChapters} of {totalChapters} chapters completed
+            </p>
           </div>
         </motion.div>
 
@@ -183,17 +186,17 @@ const SyllabusBrowser: React.FC = () => {
         >
           <select
             value={selectedBoard}
-            onChange={(e) => setSelectedBoard(e.target.value)}
+            onChange={e => setSelectedBoard(e.target.value)}
             className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg border border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="CBSE">CBSE Board</option>
             <option value="NCERT">NCERT</option>
             <option value="State Board">State Board</option>
           </select>
-          
+
           <select
             value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
+            onChange={e => setSelectedClass(e.target.value)}
             className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg border border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="Class 10">Class 10</option>
@@ -203,7 +206,7 @@ const SyllabusBrowser: React.FC = () => {
 
           <select
             value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value)}
+            onChange={e => setSelectedLanguage(e.target.value)}
             className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-lg border border-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             <option value="English">English</option>
@@ -218,13 +221,13 @@ const SyllabusBrowser: React.FC = () => {
           <div className="relative">
             {/* Glowing path line */}
             <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-teal-400 via-teal-500 to-teal-600 rounded-full shadow-lg shadow-teal-500/50" />
-            
+
             {/* Progress glow effect */}
             <motion.div
               className="absolute left-8 top-0 w-1 bg-gradient-to-b from-yellow-400 to-orange-500 rounded-full shadow-lg shadow-yellow-500/60"
               initial={{ height: 0 }}
               animate={{ height: `${(completedChapters / totalChapters) * 100}%` }}
-              transition={{ duration: 2, ease: "easeOut" }}
+              transition={{ duration: 2, ease: 'easeOut' }}
             />
 
             {/* Chapter Cards */}
@@ -271,7 +274,9 @@ const SyllabusBrowser: React.FC = () => {
                           <div className="flex items-center gap-3 mb-2">
                             <span className="text-2xl">{chapter.subjectIcon}</span>
                             <div>
-                              <h3 className="font-semibold text-gray-800 text-lg">{chapter.name}</h3>
+                              <h3 className="font-semibold text-gray-800 text-lg">
+                                {chapter.name}
+                              </h3>
                               <p className="text-sm text-gray-600">{chapter.subject}</p>
                             </div>
                           </div>
@@ -307,12 +312,12 @@ const SyllabusBrowser: React.FC = () => {
                             >
                               {chapter.status === 'completed' ? 'Completed' : 'Pending'}
                             </span>
-                            
+
                             {/* Bookmark */}
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
-                              onClick={(e) => {
+                              onClick={e => {
                                 e.stopPropagation();
                                 toggleBookmark(chapter.id);
                               }}
@@ -341,40 +346,52 @@ const SyllabusBrowser: React.FC = () => {
                         initial={false}
                         animate={{
                           height: expandedChapter === chapter.id ? 'auto' : 0,
-                          opacity: expandedChapter === chapter.id ? 1 : 0
+                          opacity: expandedChapter === chapter.id ? 1 : 0,
                         }}
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
                         {expandedChapter === chapter.id && (
                           <div className="mt-4 pt-4 border-t border-gray-200">
-                            <h4 className="font-medium text-gray-700 mb-3">Topics in this chapter:</h4>
+                            <h4 className="font-medium text-gray-700 mb-3">
+                              Topics in this chapter:
+                            </h4>
                             <div className="space-y-2 mb-4">
-                              {chapter.topics.map((topic) => (
+                              {chapter.topics.map(topic => (
                                 <div key={topic.id} className="flex items-center gap-3">
-                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                                    topic.completed
-                                      ? 'bg-green-500 border-green-400'
-                                      : 'border-gray-300'
-                                  }`}>
-                                    {topic.completed && <span className="text-white text-xs">✓</span>}
+                                  <div
+                                    className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                                      topic.completed
+                                        ? 'bg-green-500 border-green-400'
+                                        : 'border-gray-300'
+                                    }`}
+                                  >
+                                    {topic.completed && (
+                                      <span className="text-white text-xs">✓</span>
+                                    )}
                                   </div>
-                                  <span className={`text-sm ${
-                                    topic.completed ? 'text-gray-600 line-through' : 'text-gray-800'
-                                  }`}>
+                                  <span
+                                    className={`text-sm ${
+                                      topic.completed
+                                        ? 'text-gray-600 line-through'
+                                        : 'text-gray-800'
+                                    }`}
+                                  >
                                     {topic.name}
                                   </span>
                                   <div className="flex-1 h-px bg-gray-200" />
-                                  <div className={`w-16 h-1 rounded-full ${
-                                    topic.completed ? 'bg-green-400' : 'bg-gray-200'
-                                  }`} />
+                                  <div
+                                    className={`w-16 h-1 rounded-full ${
+                                      topic.completed ? 'bg-green-400' : 'bg-gray-200'
+                                    }`}
+                                  />
                                 </div>
                               ))}
                             </div>
-                            
+
                             {/* Start Quiz Button */}
                             <Button
-                              onClick={(e) => {
+                              onClick={e => {
                                 e?.stopPropagation();
                                 startQuiz(chapter.id);
                               }}

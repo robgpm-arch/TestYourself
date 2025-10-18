@@ -15,12 +15,12 @@ const QuizFeedback: React.FC = () => {
     { id: 'good', emoji: '😀', label: 'Good', description: 'Pretty good!' },
     { id: 'okay', emoji: '😐', label: 'Okay', description: 'It was okay' },
     { id: 'confusing', emoji: '😕', label: 'Confusing', description: 'A bit confusing' },
-    { id: 'disliked', emoji: '😞', label: "Didn't like it", description: 'Not my favorite' }
+    { id: 'disliked', emoji: '😞', label: "Didn't like it", description: 'Not my favorite' },
   ];
 
   const handleEmojiSelect = (feedbackId: string) => {
     setSelectedFeedback(feedbackId);
-    
+
     // Show confetti for positive feedback
     if (feedbackId === 'loved' || feedbackId === 'good') {
       setShowConfetti(true);
@@ -30,15 +30,15 @@ const QuizFeedback: React.FC = () => {
 
   const handleSubmit = () => {
     if (!selectedFeedback) return;
-    
+
     // Simulate feedback submission
-    console.log('Feedback submitted:', { 
-      rating: selectedFeedback, 
-      comment: comment.trim() 
+    console.log('Feedback submitted:', {
+      rating: selectedFeedback,
+      comment: comment.trim(),
     });
-    
+
     setSubmitted(true);
-    
+
     // Show success message and redirect after delay
     setTimeout(() => {
       // In real app, this would navigate to next screen
@@ -74,7 +74,7 @@ const QuizFeedback: React.FC = () => {
           transition={{
             duration: 3,
             delay: Math.random() * 0.5,
-            ease: "easeOut"
+            ease: 'easeOut',
           }}
         >
           🎉
@@ -126,13 +126,11 @@ const QuizFeedback: React.FC = () => {
         </div>
 
         {/* Confetti Effect */}
-        <AnimatePresence>
-          {showConfetti && <Confetti />}
-        </AnimatePresence>
-        
+        <AnimatePresence>{showConfetti && <Confetti />}</AnimatePresence>
+
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -141,13 +139,11 @@ const QuizFeedback: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               How was this quiz?
             </h1>
-            <p className="text-xl text-gray-600">
-              Your feedback helps us improve
-            </p>
+            <p className="text-xl text-gray-600">Your feedback helps us improve</p>
           </motion.div>
 
           {/* Emoji Feedback Options */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -159,16 +155,16 @@ const QuizFeedback: React.FC = () => {
                   key={option.id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.6, 
+                  transition={{
+                    duration: 0.6,
                     delay: 0.3 + index * 0.1,
-                    type: "spring",
-                    stiffness: 200
+                    type: 'spring',
+                    stiffness: 200,
                   }}
-                  whileHover={{ 
-                    scale: 1.1, 
+                  whileHover={{
+                    scale: 1.1,
                     y: -5,
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.2 },
                   }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleEmojiSelect(option.id)}
@@ -187,21 +183,23 @@ const QuizFeedback: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     />
                   )}
-                  
+
                   <div className="relative z-10 text-center">
-                    <motion.div 
+                    <motion.div
                       className="text-6xl md:text-7xl mb-3"
-                      animate={selectedFeedback === option.id ? {
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 5, -5, 0]
-                      } : {}}
+                      animate={
+                        selectedFeedback === option.id
+                          ? {
+                              scale: [1, 1.2, 1],
+                              rotate: [0, 5, -5, 0],
+                            }
+                          : {}
+                      }
                       transition={{ duration: 0.6 }}
                     >
                       {option.emoji}
                     </motion.div>
-                    <div className="text-sm font-medium text-gray-700">
-                      {option.label}
-                    </div>
+                    <div className="text-sm font-medium text-gray-700">{option.label}</div>
                   </div>
                 </motion.button>
               ))}
@@ -217,7 +215,8 @@ const QuizFeedback: React.FC = () => {
                   className="text-center mt-6"
                 >
                   <p className="text-xl font-medium text-purple-700">
-                    You chose: {feedbackOptions.find(opt => opt.id === selectedFeedback)?.description}
+                    You chose:{' '}
+                    {feedbackOptions.find(opt => opt.id === selectedFeedback)?.description}
                   </p>
                 </motion.div>
               )}
@@ -225,7 +224,7 @@ const QuizFeedback: React.FC = () => {
           </motion.div>
 
           {/* Optional Comment Box */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -237,7 +236,7 @@ const QuizFeedback: React.FC = () => {
               </h3>
               <textarea
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={e => setComment(e.target.value)}
                 placeholder="Share your thoughts about this quiz..."
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
                 rows={4}
@@ -250,7 +249,7 @@ const QuizFeedback: React.FC = () => {
           </motion.div>
 
           {/* Action Buttons */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -267,7 +266,7 @@ const QuizFeedback: React.FC = () => {
             >
               Submit Feedback
             </Button>
-            
+
             <motion.button
               onClick={handleSkip}
               whileHover={{ scale: 1.05 }}
@@ -279,7 +278,7 @@ const QuizFeedback: React.FC = () => {
           </motion.div>
 
           {/* Encouragement Text */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}

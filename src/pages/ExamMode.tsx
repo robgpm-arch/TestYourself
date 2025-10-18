@@ -23,53 +23,57 @@ interface ExamModeProps {
 }
 
 const ExamMode: React.FC<ExamModeProps> = ({
-  quizTitle = "Mathematics Final Examination",
+  quizTitle = 'Mathematics Final Examination',
   totalTime = 3600, // 1 hour default
   questions = [],
   onExamComplete,
-  onForceExit
+  onForceExit,
 }) => {
   // Exam state management
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<{[key: number]: number}>({});
+  const [answers, setAnswers] = useState<{ [key: number]: number }>({});
   const [timeRemaining, setTimeRemaining] = useState(totalTime);
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
 
   // Mock questions for demo
-  const mockQuestions: Question[] = questions.length > 0 ? questions : [
-    {
-      id: 1,
-      text: "What is the derivative of f(x) = 3x² + 2x - 1?",
-      type: "multiple-choice",
-      options: ["6x + 2", "6x² + 2x", "3x + 2", "6x + 1"],
-      correctAnswer: 0,
-      required: true
-    },
-    {
-      id: 2,
-      text: "Read the following passage and answer the question below:",
-      type: "passage",
-      passage: "The Industrial Revolution began in Britain in the late 18th century and marked a major turning point in history. It transformed the way goods were produced, from hand production methods to machines, new chemical manufacturing and iron production processes, improved efficiency of water power, the increasing use of steam power, and the development of machine tools.",
-      options: [
-        "Late 17th century",
-        "Late 18th century", 
-        "Early 19th century",
-        "Mid 18th century"
-      ],
-      correctAnswer: 1,
-      required: true
-    },
-    {
-      id: 3,
-      text: "Solve the equation: 2x + 5 = 13",
-      type: "multiple-choice",
-      equations: ["2x + 5 = 13", "2x = 13 - 5", "2x = 8", "x = 4"],
-      options: ["x = 4", "x = 9", "x = 6", "x = 3"],
-      correctAnswer: 0,
-      required: true
-    }
-  ];
+  const mockQuestions: Question[] =
+    questions.length > 0
+      ? questions
+      : [
+          {
+            id: 1,
+            text: 'What is the derivative of f(x) = 3x² + 2x - 1?',
+            type: 'multiple-choice',
+            options: ['6x + 2', '6x² + 2x', '3x + 2', '6x + 1'],
+            correctAnswer: 0,
+            required: true,
+          },
+          {
+            id: 2,
+            text: 'Read the following passage and answer the question below:',
+            type: 'passage',
+            passage:
+              'The Industrial Revolution began in Britain in the late 18th century and marked a major turning point in history. It transformed the way goods were produced, from hand production methods to machines, new chemical manufacturing and iron production processes, improved efficiency of water power, the increasing use of steam power, and the development of machine tools.',
+            options: [
+              'Late 17th century',
+              'Late 18th century',
+              'Early 19th century',
+              'Mid 18th century',
+            ],
+            correctAnswer: 1,
+            required: true,
+          },
+          {
+            id: 3,
+            text: 'Solve the equation: 2x + 5 = 13',
+            type: 'multiple-choice',
+            equations: ['2x + 5 = 13', '2x = 13 - 5', '2x = 8', 'x = 4'],
+            options: ['x = 4', 'x = 9', 'x = 6', 'x = 3'],
+            correctAnswer: 0,
+            required: true,
+          },
+        ];
 
   const totalQuestions = mockQuestions.length;
   const currentQuestion = mockQuestions[currentQuestionIndex];
@@ -111,10 +115,10 @@ const ExamMode: React.FC<ExamModeProps> = ({
   // Handle answer selection
   const handleAnswerSelect = (optionIndex: number) => {
     if (examSubmitted) return;
-    
+
     setAnswers(prev => ({
       ...prev,
-      [currentQuestion.id]: optionIndex
+      [currentQuestion.id]: optionIndex,
     }));
   };
 
@@ -202,28 +206,26 @@ const ExamMode: React.FC<ExamModeProps> = ({
       <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Quiz Title */}
-          <div className="text-sm text-gray-500 font-medium">
-            {quizTitle}
-          </div>
+          <div className="text-sm text-gray-500 font-medium">{quizTitle}</div>
 
           {/* Timer */}
           <div className="flex items-center space-x-2">
-            <Clock 
+            <Clock
               className={`w-5 h-5 ${
-                isTimeCritical 
-                  ? 'text-red-600 animate-pulse' 
-                  : isTimeWarning 
-                  ? 'text-orange-500' 
-                  : 'text-gray-600'
-              }`} 
+                isTimeCritical
+                  ? 'text-red-600 animate-pulse'
+                  : isTimeWarning
+                    ? 'text-orange-500'
+                    : 'text-gray-600'
+              }`}
             />
-            <span 
+            <span
               className={`font-bold text-lg ${
-                isTimeCritical 
-                  ? 'text-red-600 animate-pulse' 
-                  : isTimeWarning 
-                  ? 'text-orange-600' 
-                  : 'text-gray-900'
+                isTimeCritical
+                  ? 'text-red-600 animate-pulse'
+                  : isTimeWarning
+                    ? 'text-orange-600'
+                    : 'text-gray-900'
               }`}
             >
               {formatTime(timeRemaining)}
@@ -250,11 +252,12 @@ const ExamMode: React.FC<ExamModeProps> = ({
                   disabled={examSubmitted}
                   className={`
                     w-10 h-10 rounded-lg text-sm font-medium transition-all duration-200
-                    ${currentQuestionIndex === index 
-                      ? 'bg-blue-600 text-white shadow-lg transform scale-105' 
-                      : answers[mockQuestions[index].id] !== undefined
-                      ? 'bg-green-500 text-white'
-                      : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                    ${
+                      currentQuestionIndex === index
+                        ? 'bg-blue-600 text-white shadow-lg transform scale-105'
+                        : answers[mockQuestions[index].id] !== undefined
+                          ? 'bg-green-500 text-white'
+                          : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                     }
                     ${examSubmitted ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
                   `}
@@ -270,23 +273,17 @@ const ExamMode: React.FC<ExamModeProps> = ({
             {/* Question Number */}
             <div className="text-sm text-gray-500 mb-4">
               Question {currentQuestionIndex + 1} of {totalQuestions}
-              {currentQuestion.required && (
-                <span className="text-red-500 ml-1">*</span>
-              )}
+              {currentQuestion.required && <span className="text-red-500 ml-1">*</span>}
             </div>
 
             {/* Question Text */}
-            <h2 className="text-xl font-bold text-gray-900 mb-6">
-              {currentQuestion.text}
-            </h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6">{currentQuestion.text}</h2>
 
             {/* Passage (if applicable) */}
             {currentQuestion.passage && (
               <div className="bg-gray-50 p-6 rounded-lg mb-6 border-l-4 border-blue-500">
                 <div className="text-sm text-gray-600 mb-2 font-medium">Reading Passage:</div>
-                <div className="text-gray-800 leading-relaxed">
-                  {currentQuestion.passage}
-                </div>
+                <div className="text-gray-800 leading-relaxed">{currentQuestion.passage}</div>
               </div>
             )}
 
@@ -309,7 +306,7 @@ const ExamMode: React.FC<ExamModeProps> = ({
               {currentQuestion.options.map((option, index) => {
                 const optionLetter = String.fromCharCode(65 + index); // A, B, C, D
                 const isSelected = answers[currentQuestion.id] === index;
-                
+
                 return (
                   <button
                     key={index}
@@ -317,29 +314,25 @@ const ExamMode: React.FC<ExamModeProps> = ({
                     disabled={examSubmitted}
                     className={`
                       w-full p-4 rounded-lg border-2 text-left transition-all duration-200
-                      ${isSelected 
-                        ? selectedOptionColors[index]
-                        : optionColors[index]
-                      }
-                      ${examSubmitted 
-                        ? 'cursor-not-allowed opacity-75' 
-                        : 'cursor-pointer hover:shadow-md'
+                      ${isSelected ? selectedOptionColors[index] : optionColors[index]}
+                      ${
+                        examSubmitted
+                          ? 'cursor-not-allowed opacity-75'
+                          : 'cursor-pointer hover:shadow-md'
                       }
                     `}
                   >
                     <div className="flex items-center space-x-4">
-                      <div className={`
+                      <div
+                        className={`
                         w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
                         ${isSelected ? 'bg-white text-gray-800' : 'bg-gray-200 text-gray-600'}
-                      `}>
+                      `}
+                      >
                         {optionLetter}
                       </div>
-                      <span className="text-gray-800 font-medium flex-1">
-                        {option}
-                      </span>
-                      {isSelected && (
-                        <CheckCircle className="w-5 h-5 text-green-600" />
-                      )}
+                      <span className="text-gray-800 font-medium flex-1">{option}</span>
+                      {isSelected && <CheckCircle className="w-5 h-5 text-green-600" />}
                     </div>
                   </button>
                 );
@@ -381,9 +374,10 @@ const ExamMode: React.FC<ExamModeProps> = ({
             disabled={!canSubmit && timeRemaining > 0}
             className={`
               px-8 py-3 text-lg font-semibold
-              ${canSubmit || timeRemaining <= 0
-                ? 'bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              ${
+                canSubmit || timeRemaining <= 0
+                  ? 'bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }
             `}
           >
@@ -396,11 +390,10 @@ const ExamMode: React.FC<ExamModeProps> = ({
       {showSubmitConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">
-              Submit Exam
-            </h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Submit Exam</h3>
             <p className="text-gray-600 mb-6">
-              Are you sure you want to submit your exam? You have answered {answeredQuestions} out of {totalQuestions} questions.
+              Are you sure you want to submit your exam? You have answered {answeredQuestions} out
+              of {totalQuestions} questions.
               {timeRemaining > 0 && (
                 <span className="block mt-2 text-orange-600">
                   You still have {formatTime(timeRemaining)} remaining.

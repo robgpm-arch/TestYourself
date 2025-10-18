@@ -17,7 +17,7 @@ async function requestPresignedUpload(filename: string, contentType?: string) {
   const response = await fetch(`${BACKEND_BASE_URL}/api/uploads/presign`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filename, contentType })
+    body: JSON.stringify({ filename, contentType }),
   });
 
   if (!response.ok) {
@@ -31,7 +31,7 @@ async function markUploadComplete(payload: CompleteUploadPayload) {
   const response = await fetch(`${BACKEND_BASE_URL}/api/uploads/complete`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
@@ -45,7 +45,7 @@ async function getDownloadUrl(fileKey: string) {
   const response = await fetch(`${BACKEND_BASE_URL}/api/uploads/download`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fileKey })
+    body: JSON.stringify({ fileKey }),
   });
 
   if (!response.ok) {
@@ -69,7 +69,7 @@ async function uploadToPresignedUrl(
 
   const xhr = new XMLHttpRequest();
   const progressPromise = new Promise<void>((resolve, reject) => {
-    xhr.upload.onprogress = (event) => {
+    xhr.upload.onprogress = event => {
       if (onProgress && event.lengthComputable) {
         const progress = (event.loaded / totalBytes) * 100;
         onProgress(progress);
@@ -105,7 +105,11 @@ async function uploadToPresignedUrl(
 
 export async function uploadFile(
   file: File,
-  options?: { contentType?: string; metadata?: Record<string, unknown>; onProgress?: (progress: number) => void }
+  options?: {
+    contentType?: string;
+    metadata?: Record<string, unknown>;
+    onProgress?: (progress: number) => void;
+  }
 ) {
   const presign = await requestPresignedUpload(file.name, options?.contentType ?? file.type);
 
@@ -114,12 +118,12 @@ export async function uploadFile(
   await markUploadComplete({
     fileKey: presign.fileKey,
     size: file.size,
-    metadata: options?.metadata
+    metadata: options?.metadata,
   });
 
   return {
     fileKey: presign.fileKey,
-    expiresAt: presign.expiresAt
+    expiresAt: presign.expiresAt,
   };
 }
 
@@ -127,7 +131,7 @@ export async function uploadFromUrl(sourceUrl: string, filename: string, content
   const response = await fetch(`${BACKEND_BASE_URL}/api/uploads/from-url`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sourceUrl, filename, contentType })
+    body: JSON.stringify({ sourceUrl, filename, contentType }),
   });
 
   if (!response.ok) {

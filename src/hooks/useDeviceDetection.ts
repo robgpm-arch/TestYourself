@@ -31,7 +31,7 @@ export const useDeviceDetection = (): DeviceInfo => {
     isTouchDevice: false,
     screenSize: { width: 1920, height: 1080 },
     orientation: 'landscape',
-    devicePixelRatio: 1
+    devicePixelRatio: 1,
   });
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export const useDeviceDetection = (): DeviceInfo => {
         isTouchDevice,
         screenSize: { width, height },
         orientation,
-        devicePixelRatio
+        devicePixelRatio,
       });
     };
 
@@ -111,10 +111,17 @@ export const useBreakpoint = () => {
     isLg: width >= 1024 && width < 1280,
     isXl: width >= 1280 && width < 1536,
     is2Xl: width >= 1536,
-    current: width < 480 ? 'xs' : 
-             width < 768 ? 'sm' :
-             width < 1024 ? 'md' :
-             width < 1280 ? 'lg' :
-             width < 1536 ? 'xl' : '2xl'
+    current:
+      width < 480
+        ? 'xs'
+        : width < 768
+          ? 'sm'
+          : width < 1024
+            ? 'md'
+            : width < 1280
+              ? 'lg'
+              : width < 1536
+                ? 'xl'
+                : '2xl',
   };
 };

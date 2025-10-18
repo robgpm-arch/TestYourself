@@ -42,10 +42,10 @@ interface QuizState {
 const QuizPlayerComprehension: React.FC = () => {
   const navigate = useNavigate();
   const passageRef = useRef<HTMLDivElement>(null);
-  
+
   // Sample comprehension data
   const comprehensionData = {
-    title: "UPSC – Reading Comprehension",
+    title: 'UPSC – Reading Comprehension',
     totalQuestions: 5,
     timeLimit: 60 * 60, // 60 minutes in seconds
     passage: {
@@ -70,9 +70,9 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
             { id: 'a', text: '5-15%', letter: 'A' as const },
             { id: 'b', text: '10-25%', letter: 'B' as const },
             { id: 'c', text: '15-30%', letter: 'C' as const },
-            { id: 'd', text: '20-35%', letter: 'D' as const }
+            { id: 'd', text: '20-35%', letter: 'D' as const },
           ],
-          correctAnswer: 'b'
+          correctAnswer: 'b',
         },
         {
           id: 'q2',
@@ -81,45 +81,57 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
             { id: 'a', text: 'Wheat, rice, and barley', letter: 'A' as const },
             { id: 'b', text: 'Rice, maize, and soybeans', letter: 'B' as const },
             { id: 'c', text: 'Wheat, rice, and maize', letter: 'C' as const },
-            { id: 'd', text: 'Maize, barley, and oats', letter: 'D' as const }
+            { id: 'd', text: 'Maize, barley, and oats', letter: 'D' as const },
           ],
-          correctAnswer: 'c'
+          correctAnswer: 'c',
         },
         {
           id: 'q3',
           text: 'What does the passage suggest about the regional impact of climate change on agriculture?',
           options: [
             { id: 'a', text: 'All regions will be equally affected', letter: 'A' as const },
-            { id: 'b', text: 'Northern latitudes may benefit while tropical regions suffer', letter: 'B' as const },
+            {
+              id: 'b',
+              text: 'Northern latitudes may benefit while tropical regions suffer',
+              letter: 'B' as const,
+            },
             { id: 'c', text: 'Only developing countries will be affected', letter: 'C' as const },
-            { id: 'd', text: 'Coastal regions will be most impacted', letter: 'D' as const }
+            { id: 'd', text: 'Coastal regions will be most impacted', letter: 'D' as const },
           ],
-          correctAnswer: 'b'
+          correctAnswer: 'b',
         },
         {
           id: 'q4',
           text: 'Which of the following is NOT mentioned as an adaptation strategy in the passage?',
           options: [
             { id: 'a', text: 'Developing climate-resilient crop varieties', letter: 'A' as const },
-            { id: 'b', text: 'Implementing precision agriculture technologies', letter: 'B' as const },
+            {
+              id: 'b',
+              text: 'Implementing precision agriculture technologies',
+              letter: 'B' as const,
+            },
             { id: 'c', text: 'Increasing use of chemical fertilizers', letter: 'C' as const },
-            { id: 'd', text: 'Improving water management systems', letter: 'D' as const }
+            { id: 'd', text: 'Improving water management systems', letter: 'D' as const },
           ],
-          correctAnswer: 'c'
+          correctAnswer: 'c',
         },
         {
           id: 'q5',
           text: 'According to the passage, why is international cooperation important for agricultural adaptation?',
           options: [
             { id: 'a', text: 'To reduce global trade barriers', letter: 'A' as const },
-            { id: 'b', text: 'To ensure adaptation measures reach smallholder farmers', letter: 'B' as const },
+            {
+              id: 'b',
+              text: 'To ensure adaptation measures reach smallholder farmers',
+              letter: 'B' as const,
+            },
             { id: 'c', text: 'To standardize farming practices globally', letter: 'C' as const },
-            { id: 'd', text: 'To create uniform climate policies', letter: 'D' as const }
+            { id: 'd', text: 'To create uniform climate policies', letter: 'D' as const },
           ],
-          correctAnswer: 'b'
-        }
-      ]
-    }
+          correctAnswer: 'b',
+        },
+      ],
+    },
   };
 
   const [quizState, setQuizState] = useState<QuizState>({
@@ -127,7 +139,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
     answers: [],
     timeRemaining: comprehensionData.timeLimit,
     isCompleted: false,
-    highlightedText: []
+    highlightedText: [],
   });
 
   // Timer countdown
@@ -136,7 +148,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
       const timer = setTimeout(() => {
         setQuizState(prev => ({
           ...prev,
-          timeRemaining: prev.timeRemaining - 1
+          timeRemaining: prev.timeRemaining - 1,
         }));
       }, 1000);
       return () => clearTimeout(timer);
@@ -163,7 +175,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
       A: 'bg-blue-500 hover:bg-blue-600',
       B: 'bg-green-500 hover:bg-green-600',
       C: 'bg-orange-500 hover:bg-orange-600',
-      D: 'bg-purple-500 hover:bg-purple-600'
+      D: 'bg-purple-500 hover:bg-purple-600',
     };
     return colors[letter];
   };
@@ -173,7 +185,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
       A: 'shadow-blue-500/50',
       B: 'shadow-green-500/50',
       C: 'shadow-orange-500/50',
-      D: 'shadow-purple-500/50'
+      D: 'shadow-purple-500/50',
     };
     return colors[letter];
   };
@@ -185,12 +197,12 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
         questionId: currentQuestion.id,
         selectedOption: optionId,
         isMarkedForReview: currentAnswer?.isMarkedForReview || false,
-        timeSpent: 0
+        timeSpent: 0,
       });
-      
+
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
@@ -200,13 +212,13 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
     if (selection && selection.toString().trim() && passageRef.current) {
       const range = selection.getRangeAt(0);
       const passageElement = passageRef.current;
-      
+
       // Check if selection is within the passage
       if (passageElement.contains(range.commonAncestorContainer)) {
         const passageText = passageElement.textContent || '';
         const selectedText = selection.toString();
         const startIndex = passageText.indexOf(selectedText);
-        
+
         if (startIndex !== -1) {
           const highlightId = `highlight-${Date.now()}`;
           setQuizState(prev => ({
@@ -216,12 +228,12 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
               {
                 start: startIndex,
                 end: startIndex + selectedText.length,
-                id: highlightId
-              }
-            ]
+                id: highlightId,
+              },
+            ],
           }));
         }
-        
+
         selection.removeAllRanges();
       }
     }
@@ -241,18 +253,14 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
       if (highlight.start > lastIndex) {
         elements.push(text.slice(lastIndex, highlight.start));
       }
-      
+
       // Add highlighted text
       elements.push(
-        <span
-          key={highlight.id}
-          className="bg-yellow-200 px-1 rounded"
-          title="Highlighted text"
-        >
+        <span key={highlight.id} className="bg-yellow-200 px-1 rounded" title="Highlighted text">
           {text.slice(highlight.start, highlight.end)}
         </span>
       );
-      
+
       lastIndex = highlight.end;
     });
 
@@ -268,7 +276,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
     setQuizState(prev => {
       const newAnswers = [...prev.answers];
       const existingIndex = newAnswers.findIndex(a => a.questionId === currentQuestion.id);
-      
+
       if (existingIndex >= 0) {
         newAnswers[existingIndex].isMarkedForReview = !newAnswers[existingIndex].isMarkedForReview;
       } else {
@@ -276,13 +284,13 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
           questionId: currentQuestion.id,
           selectedOption: '',
           isMarkedForReview: true,
-          timeSpent: 0
+          timeSpent: 0,
         });
       }
-      
+
       return {
         ...prev,
-        answers: newAnswers
+        answers: newAnswers,
       };
     });
   };
@@ -291,7 +299,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
     if (quizState.currentQuestion > 0) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion - 1
+        currentQuestion: prev.currentQuestion - 1,
       }));
     }
   };
@@ -300,7 +308,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
     if (quizState.currentQuestion < comprehensionData.passage.questions.length - 1) {
       setQuizState(prev => ({
         ...prev,
-        currentQuestion: prev.currentQuestion + 1
+        currentQuestion: prev.currentQuestion + 1,
       }));
     } else {
       handleQuizComplete();
@@ -319,11 +327,11 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-white relative overflow-hidden">
       {/* Background book and paragraph pattern */}
-      <div 
+      <div
         className="absolute inset-0 opacity-20 text-2xl"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23374151' fill-opacity='0.15'%3E%3Ctext x='15' y='25' font-size='16'%3E📖%3C/text%3E%3Ctext x='45' y='55' font-size='12'%3E¶%3C/text%3E%3Ctext x='25' y='70' font-size='10'%3E▬▬▬%3C/text%3E%3Ctext x='55' y='20' font-size='10'%3E▬▬%3C/text%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '80px 80px'
+          backgroundSize: '80px 80px',
         }}
       />
 
@@ -345,14 +353,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
               <div className="flex items-center space-x-2">
                 <div className="relative w-12 h-12">
                   <svg className="w-12 h-12 transform -rotate-90">
-                    <circle
-                      cx="24"
-                      cy="24"
-                      r="20"
-                      stroke="#fee2e2"
-                      strokeWidth="3"
-                      fill="none"
-                    />
+                    <circle cx="24" cy="24" r="20" stroke="#fee2e2" strokeWidth="3" fill="none" />
                     <motion.circle
                       cx="24"
                       cy="24"
@@ -363,8 +364,12 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
                       strokeLinecap="round"
                       strokeDasharray={`${2 * Math.PI * 20}`}
                       initial={{ strokeDashoffset: 0 }}
-                      animate={{ 
-                        strokeDashoffset: (1 - quizState.timeRemaining / comprehensionData.timeLimit) * 2 * Math.PI * 20
+                      animate={{
+                        strokeDashoffset:
+                          (1 - quizState.timeRemaining / comprehensionData.timeLimit) *
+                          2 *
+                          Math.PI *
+                          20,
                       }}
                       transition={{ duration: 0.5 }}
                     />
@@ -401,7 +406,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
                       <span>Select text to highlight</span>
                     </div>
                   </div>
-                  
+
                   <div
                     ref={passageRef}
                     className="prose prose-gray max-w-none leading-relaxed text-gray-700 max-h-64 overflow-y-auto border rounded-lg p-4 bg-gray-50"
@@ -411,7 +416,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
                   >
                     {renderPassageWithHighlights(comprehensionData.passage.content)}
                   </div>
-                  
+
                   {quizState.highlightedText.length > 0 && (
                     <div className="mt-3 flex items-center space-x-2">
                       <span className="text-sm text-yellow-600">
@@ -453,7 +458,7 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
 
                     {/* Options */}
                     <div className="grid gap-3 md:grid-cols-1">
-                      {currentQuestion?.options.map((option) => {
+                      {currentQuestion?.options.map(option => {
                         const isSelected = currentAnswer?.selectedOption === option.id;
                         return (
                           <motion.div
@@ -464,13 +469,15 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
                             <Card
                               variant="default"
                               className={`cursor-pointer transition-all duration-200 ${
-                                isSelected 
-                                  ? `ring-4 ring-white ring-opacity-75 shadow-2xl ${getGlowColor(option.letter)}` 
+                                isSelected
+                                  ? `ring-4 ring-white ring-opacity-75 shadow-2xl ${getGlowColor(option.letter)}`
                                   : 'hover:shadow-lg'
                               }`}
                               onClick={() => handleOptionSelect(option.id)}
                             >
-                              <div className={`${getOptionColor(option.letter)} text-white font-semibold p-4 rounded-xl transition-all duration-200`}>
+                              <div
+                                className={`${getOptionColor(option.letter)} text-white font-semibold p-4 rounded-xl transition-all duration-200`}
+                              >
                                 <div className="flex items-center space-x-3">
                                   <span className="text-lg font-bold bg-white/20 w-8 h-8 rounded-full flex items-center justify-center">
                                     {option.letter}
@@ -519,8 +526,8 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
               onClick={handleMarkForReview}
               variant="secondary"
               className={`${
-                currentAnswer?.isMarkedForReview 
-                  ? 'bg-orange-600 text-white hover:bg-orange-700' 
+                currentAnswer?.isMarkedForReview
+                  ? 'bg-orange-600 text-white hover:bg-orange-700'
                   : 'bg-orange-100 text-orange-700 hover:bg-orange-200'
               } rounded-full px-6`}
             >
@@ -532,7 +539,9 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
               variant="primary"
               className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white"
             >
-              {quizState.currentQuestion === comprehensionData.passage.questions.length - 1 ? 'Finish Quiz' : 'Next →'}
+              {quizState.currentQuestion === comprehensionData.passage.questions.length - 1
+                ? 'Finish Quiz'
+                : 'Next →'}
             </Button>
           </div>
 
@@ -540,7 +549,9 @@ The role of technology in agricultural adaptation cannot be overstated. Innovati
           <div className="mt-3 max-w-6xl mx-auto">
             <div className="flex justify-between text-xs text-gray-600 mb-1">
               <span>Progress</span>
-              <span>{answeredQuestions}/{comprehensionData.totalQuestions} answered</span>
+              <span>
+                {answeredQuestions}/{comprehensionData.totalQuestions} answered
+              </span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <motion.div

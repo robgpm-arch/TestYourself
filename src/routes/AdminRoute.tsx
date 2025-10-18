@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAdminClaim } from "@/hooks/useAdminClaim";
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAdminClaim } from '@/hooks/useAdminClaim';
 
 export default function AdminRoute() {
   const { user, isAdmin, loading } = useAdminClaim();

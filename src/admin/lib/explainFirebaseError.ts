@@ -2,7 +2,7 @@ export type Explained = {
   title: string;
   message: string;
   actionLabel?: string;
-  actionHref?: string;   // e.g., "Create index" link
+  actionHref?: string; // e.g., "Create index" link
   raw?: string;
 };
 
@@ -12,8 +12,8 @@ type ConsoleMethodName = 'debug' | 'info' | 'warn' | 'error' | 'log';
 
 const ConsoleMethod: Record<LogType, ConsoleMethodName> = {
   debug: 'debug',
-  info:  'info',
-  warn:  'warn',
+  info: 'info',
+  warn: 'warn',
   error: 'error',
 };
 
@@ -34,95 +34,96 @@ const safeConsoleLog = (logType: LogType, ...args: unknown[]) => {
     Function.prototype.apply.call(console.log, console, args as any[]);
   } catch {
     // Final fallback: swallow logger errors so they never mask the real error
-    try { console.log(...(args as any[])); } catch {}
+    try {
+      console.log(...(args as any[]));
+    } catch {}
   }
 };
 
 // Exported logger facade
 export const logger = {
   debug: (...args: unknown[]) => safeConsoleLog('debug', ...args),
-  info:  (...args: unknown[]) => safeConsoleLog('info',  ...args),
-  warn:  (...args: unknown[]) => safeConsoleLog('warn',  ...args),
+  info: (...args: unknown[]) => safeConsoleLog('info', ...args),
+  warn: (...args: unknown[]) => safeConsoleLog('warn', ...args),
   error: (...args: unknown[]) => safeConsoleLog('error', ...args),
 };
 
 export function explainFirebaseError(err: any): Explained {
-  const raw = (err?.message || "").toString();
-  const code = (err?.code || "").toString();          // e.g. "permission-denied"
+  const raw = (err?.message || '').toString();
+  const code = (err?.code || '').toString(); // e.g. "permission-denied"
 
   // Detect "create index" link (Firestore failed-precondition)
   const idxMatch = raw.match(/(https:\/\/console\.firebase\.google\.com\/[^\s)]+)/i);
 
   // Common mappings
   switch (code) {
-    case "permission-denied":
+    case 'permission-denied':
       return {
-        title: "Permission denied",
+        title: 'Permission denied',
         message:
           "You don't have access to write this data. Make sure you're signed in as an admin and your Firestore rules allow /courses writes.",
         raw,
       };
-    case "failed-precondition":
+    case 'failed-precondition':
       if (idxMatch) {
         return {
-          title: "Missing Firestore index",
+          title: 'Missing Firestore index',
           message:
-            "This query requires a composite index. Open the Firebase Console link below and click \"Create index\", then retry once it finishes building.",
-          actionLabel: "Create index",
+            'This query requires a composite index. Open the Firebase Console link below and click "Create index", then retry once it finishes building.',
+          actionLabel: 'Create index',
           actionHref: idxMatch[1],
           raw,
         };
       }
       return {
-        title: "Precondition failed",
-        message: "A Firestore precondition failed. Check query/orderBy fields or indexes.",
+        title: 'Precondition failed',
+        message: 'A Firestore precondition failed. Check query/orderBy fields or indexes.',
         raw,
       };
-    case "already-exists":
+    case 'already-exists':
       return {
-        title: "Duplicate",
+        title: 'Duplicate',
+        message: 'A course with this slug already exists. Choose a different slug.',
+        raw,
+      };
+    case 'invalid-argument':
+      return {
+        title: 'Invalid data',
         message:
-          "A course with this slug already exists. Choose a different slug.",
+          'Some field values are invalid (e.g., wrong type or format). Check required fields and try again.',
         raw,
       };
-    case "invalid-argument":
+    case 'unauthenticated':
       return {
-        title: "Invalid data",
-        message:
-          "Some field values are invalid (e.g., wrong type or format). Check required fields and try again.",
+        title: 'Not signed in',
+        message: 'Please sign in again and ensure you have admin access.',
         raw,
       };
-    case "unauthenticated":
+    case 'unavailable':
       return {
-        title: "Not signed in",
-        message: "Please sign in again and ensure you have admin access.",
+        title: 'Network/server issue',
+        message: 'Firestore is temporarily unavailable or you are offline. Try again.',
         raw,
       };
-    case "unavailable":
+    case 'resource-exhausted':
       return {
-        title: "Network/server issue",
-        message: "Firestore is temporarily unavailable or you are offline. Try again.",
-        raw,
-      };
-    case "resource-exhausted":
-      return {
-        title: "Quota exceeded",
-        message: "Write quota or rate limit exceeded. Please wait and retry.",
+        title: 'Quota exceeded',
+        message: 'Write quota or rate limit exceeded. Please wait and retry.',
         raw,
       };
     default:
       // Sometimes Firestore uses only the message text ("Missing or insufficient permissions.")
       if (/insufficient permissions/i.test(raw)) {
         return {
-          title: "Permission denied",
+          title: 'Permission denied',
           message:
-            "Firestore rules blocked this write. Confirm admin claims and rules for /courses.",
+            'Firestore rules blocked this write. Confirm admin claims and rules for /courses.',
           raw,
         };
       }
       return {
-        title: "Save failed",
-        message: "An unexpected error occurred.",
+        title: 'Save failed',
+        message: 'An unexpected error occurred.',
         raw,
       };
   }

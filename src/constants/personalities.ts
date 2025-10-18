@@ -30,21 +30,21 @@ export const motivationPersonalities: MotivationPersonality[] = [
         gif: '/assets/personalities/apj/low.gif',
         audio: '/assets/personalities/apj/low.mp3',
         headline: 'Every challenge is a new lesson.',
-        subcopy: 'Let us take this as fuel for the next launch, my friend.'
+        subcopy: 'Let us take this as fuel for the next launch, my friend.',
       },
       average: {
         gif: '/assets/personalities/apj/average.gif',
         audio: '/assets/personalities/apj/average.mp3',
         headline: 'You are travelling steadily toward success.',
-        subcopy: 'Small consistent progress builds great missions.'
+        subcopy: 'Small consistent progress builds great missions.',
       },
       high: {
         gif: '/assets/personalities/apj/high.gif',
         audio: '/assets/personalities/apj/high.mp3',
         headline: 'Mission accomplished with brilliance!',
-        subcopy: 'Your dedication is rocket fuel—keep soaring higher.'
-      }
-    }
+        subcopy: 'Your dedication is rocket fuel—keep soaring higher.',
+      },
+    },
   },
   {
     id: 'virat-kohli',
@@ -58,21 +58,21 @@ export const motivationPersonalities: MotivationPersonality[] = [
         gif: '/assets/personalities/kohli/low.gif',
         audio: '/assets/personalities/kohli/low.mp3',
         headline: 'Heads up, champ!',
-        subcopy: 'We bounce back harder. Next quiz is ours!'
+        subcopy: 'We bounce back harder. Next quiz is ours!',
       },
       average: {
         gif: '/assets/personalities/kohli/average.gif',
         audio: '/assets/personalities/kohli/average.mp3',
         headline: 'Solid knock in the middle overs!',
-        subcopy: 'Couple more boundary shots and we win big.'
+        subcopy: 'Couple more boundary shots and we win big.',
       },
       high: {
         gif: '/assets/personalities/kohli/high.gif',
         audio: '/assets/personalities/kohli/high.mp3',
         headline: 'What a match-winning performance!',
-        subcopy: 'Take a bow, legend. This is champion mindset.'
-      }
-    }
+        subcopy: 'Take a bow, legend. This is champion mindset.',
+      },
+    },
   },
   {
     id: 'dora-the-explorer',
@@ -86,22 +86,22 @@ export const motivationPersonalities: MotivationPersonality[] = [
         gif: '/assets/personalities/dora/low.gif',
         audio: '/assets/personalities/dora/low.mp3',
         headline: 'We can try again, ¡vámonos!',
-        subcopy: 'Let’s pack our backpack and explore one more time!'
+        subcopy: 'Let’s pack our backpack and explore one more time!',
       },
       average: {
         gif: '/assets/personalities/dora/average.gif',
         audio: '/assets/personalities/dora/average.mp3',
         headline: 'You did it, explorer! 🧭',
-        subcopy: 'High five! Ready for the next adventure?'
+        subcopy: 'High five! Ready for the next adventure?',
       },
       high: {
         gif: '/assets/personalities/dora/high.gif',
         audio: '/assets/personalities/dora/high.mp3',
         headline: 'Fantástico! You found every clue!',
-        subcopy: 'Boots and I are so proud of you. Let’s celebrate!'
-      }
-    }
-  }
+        subcopy: 'Boots and I are so proud of you. Let’s celebrate!',
+      },
+    },
+  },
 ];
 
 export const PERSONALITY_STORAGE_KEY = 'preferred_motivation_personality';

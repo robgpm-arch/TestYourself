@@ -1,8 +1,9 @@
-import React from "react";
-import { COLOR_PALETTE } from "./options";
+import React from 'react';
+import { COLOR_PALETTE } from './options';
 
 export function ColorSelect({
-  id, onChange
+  id,
+  onChange,
 }: {
   id: string | null;
   onChange: (id: string | null, hex: string | null) => void;
@@ -15,8 +16,8 @@ export function ColorSelect({
       <div className="flex items-center gap-3">
         <select
           className="border rounded px-3 py-2"
-          value={id || ""}
-          onChange={(e) => {
+          value={id || ''}
+          onChange={e => {
             const next = COLOR_PALETTE.find(c => c.id === e.target.value) || null;
             onChange(next?.id || null, next?.hex || null);
           }}
@@ -29,8 +30,14 @@ export function ColorSelect({
           ))}
         </select>
         <div
-          title={current?.hex || "—"}
-          style={{ width: 28, height: 28, borderRadius: 6, background: current?.hex || "transparent", border: "1px solid #e5e7eb" }}
+          title={current?.hex || '—'}
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: 6,
+            background: current?.hex || 'transparent',
+            border: '1px solid #e5e7eb',
+          }}
         />
       </div>
       <p className="mt-1 text-xs text-slate-500">Stores color id and hex; easy to theme later.</p>

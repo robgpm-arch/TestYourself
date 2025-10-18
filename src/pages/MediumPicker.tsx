@@ -15,43 +15,43 @@ const mediumOptions: MediumOption[] = [
     name: 'English',
     englishName: 'English',
     flag: '🇬🇧',
-    color: 'from-blue-500 to-blue-600'
+    color: 'from-blue-500 to-blue-600',
   },
   {
     id: 'telugu',
     name: 'తెలుగు',
     englishName: 'Telugu',
     flag: '🇮🇳',
-    color: 'from-orange-500 to-red-500'
+    color: 'from-orange-500 to-red-500',
   },
   {
     id: 'hindi',
     name: 'हिंदी',
     englishName: 'Hindi',
     flag: '🇮🇳',
-    color: 'from-green-500 to-green-600'
+    color: 'from-green-500 to-green-600',
   },
   {
     id: 'tamil',
     name: 'தமிழ்',
     englishName: 'Tamil',
     flag: '🇮🇳',
-    color: 'from-purple-500 to-purple-600'
+    color: 'from-purple-500 to-purple-600',
   },
   {
     id: 'kannada',
     name: 'ಕನ್ನಡ',
     englishName: 'Kannada',
     flag: '🇮🇳',
-    color: 'from-yellow-500 to-orange-500'
+    color: 'from-yellow-500 to-orange-500',
   },
   {
     id: 'malayalam',
     name: 'മലയാളം',
     englishName: 'Malayalam',
     flag: '🇮🇳',
-    color: 'from-teal-500 to-cyan-500'
-  }
+    color: 'from-teal-500 to-cyan-500',
+  },
 ];
 
 interface MediumPickerProps {
@@ -89,12 +89,24 @@ const MediumPicker: React.FC<MediumPickerProps> = ({ onMediumSelect }) => {
     <div className="min-h-screen bg-gradient-to-br from-teal-400 via-teal-300 to-white relative overflow-hidden text-[90%] sm:text-[95%]">
       {/* Decorative background characters */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-20 left-20 text-9xl font-bold text-white transform rotate-12">E</div>
-        <div className="absolute top-40 right-32 text-8xl font-bold text-white transform -rotate-6">క</div>
-        <div className="absolute bottom-32 left-40 text-7xl font-bold text-white transform rotate-45">A</div>
-        <div className="absolute bottom-20 right-20 text-6xl font-bold text-white transform -rotate-12">த</div>
-        <div className="absolute top-1/2 left-1/4 text-5xl font-bold text-white transform rotate-90">ह</div>
-        <div className="absolute top-1/3 right-1/3 text-6xl font-bold text-white transform -rotate-30">ಕ</div>
+        <div className="absolute top-20 left-20 text-9xl font-bold text-white transform rotate-12">
+          E
+        </div>
+        <div className="absolute top-40 right-32 text-8xl font-bold text-white transform -rotate-6">
+          క
+        </div>
+        <div className="absolute bottom-32 left-40 text-7xl font-bold text-white transform rotate-45">
+          A
+        </div>
+        <div className="absolute bottom-20 right-20 text-6xl font-bold text-white transform -rotate-12">
+          த
+        </div>
+        <div className="absolute top-1/2 left-1/4 text-5xl font-bold text-white transform rotate-90">
+          ह
+        </div>
+        <div className="absolute top-1/3 right-1/3 text-6xl font-bold text-white transform -rotate-30">
+          ಕ
+        </div>
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 sm:p-6">
@@ -132,9 +144,10 @@ const MediumPicker: React.FC<MediumPickerProps> = ({ onMediumSelect }) => {
               className={`
                 relative cursor-pointer rounded-2xl p-4 bg-white/90 backdrop-blur-sm
                 shadow-lg hover:shadow-2xl transition-all duration-300
-                ${selectedMedium === medium.id 
-                  ? 'ring-4 ring-teal-300 shadow-2xl bg-white' 
-                  : 'hover:bg-white'
+                ${
+                  selectedMedium === medium.id
+                    ? 'ring-4 ring-teal-300 shadow-2xl bg-white'
+                    : 'hover:bg-white'
                 }
               `}
             >
@@ -149,17 +162,15 @@ const MediumPicker: React.FC<MediumPickerProps> = ({ onMediumSelect }) => {
 
               <div className="relative z-10 text-center">
                 {/* Flag/Icon */}
-                <div className={`inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br ${medium.color} mb-3 text-xl`}>
-                  <span className="text-white font-bold">
-                    {medium.flag}
-                  </span>
+                <div
+                  className={`inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br ${medium.color} mb-3 text-xl`}
+                >
+                  <span className="text-white font-bold">{medium.flag}</span>
                 </div>
 
                 {/* Medium Name */}
                 <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-gray-800">
-                    {medium.name}
-                  </h3>
+                  <h3 className="text-lg font-bold text-gray-800">{medium.name}</h3>
                   <p className="text-xs sm:text-sm text-gray-600 font-medium">
                     {medium.englishName}
                   </p>
@@ -173,16 +184,18 @@ const MediumPicker: React.FC<MediumPickerProps> = ({ onMediumSelect }) => {
                     className="absolute -top-2 -right-2 w-7 h-7 bg-teal-500 rounded-full flex items-center justify-center"
                   >
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </motion.div>
                 )}
               </div>
 
               {/* Card hover effect */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-              />
+              <motion.div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </motion.div>
           ))}
         </motion.div>

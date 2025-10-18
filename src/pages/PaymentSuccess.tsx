@@ -15,7 +15,7 @@ const PaymentSuccess: React.FC = () => {
     originalPrice: '₹199',
     period: '/month',
     validTill: '30 Oct 2025',
-    transactionId: 'TXN123456789'
+    transactionId: 'TXN123456789',
   };
 
   // Start animations on mount
@@ -63,11 +63,11 @@ const PaymentSuccess: React.FC = () => {
             left: `${Math.random() * 100}%`,
             top: '-10%',
           }}
-          initial={{ 
-            opacity: 0, 
-            scale: 0, 
+          initial={{
+            opacity: 0,
+            scale: 0,
             rotate: 0,
-            y: -100
+            y: -100,
           }}
           animate={{
             opacity: [0, 1, 1, 0],
@@ -79,7 +79,7 @@ const PaymentSuccess: React.FC = () => {
           transition={{
             duration: 4,
             delay: Math.random() * 2,
-            ease: "easeOut"
+            ease: 'easeOut',
           }}
         >
           {['🎉', '🎊', '✨', '🌟', '💚', '🎈'][Math.floor(Math.random() * 6)]}
@@ -92,15 +92,19 @@ const PaymentSuccess: React.FC = () => {
   const CheckmarkIcon: React.FC = () => (
     <motion.div
       initial={{ scale: 0 }}
-      animate={checkmarkVisible ? { 
-        scale: [0, 1.3, 1],
-        rotate: [0, 10, -10, 0]
-      } : {}}
-      transition={{ 
-        duration: 0.8, 
-        type: "spring", 
+      animate={
+        checkmarkVisible
+          ? {
+              scale: [0, 1.3, 1],
+              rotate: [0, 10, -10, 0],
+            }
+          : {}
+      }
+      transition={{
+        duration: 0.8,
+        type: 'spring',
         stiffness: 200,
-        damping: 10
+        damping: 10,
       }}
       className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-6 mx-auto relative overflow-hidden"
     >
@@ -109,15 +113,15 @@ const PaymentSuccess: React.FC = () => {
         className="absolute inset-0 bg-green-400 rounded-full opacity-30"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.3, 0.1, 0.3]
+          opacity: [0.3, 0.1, 0.3],
         }}
         transition={{
           duration: 2,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: 'easeInOut',
         }}
       />
-      
+
       {/* Checkmark SVG with drawing animation */}
       <motion.svg
         className="w-10 h-10 text-white relative z-10"
@@ -143,30 +147,28 @@ const PaymentSuccess: React.FC = () => {
       {/* Animated Background */}
       <div className="min-h-screen bg-gradient-to-br from-green-100 via-teal-50 to-green-50 relative overflow-hidden">
         {/* Confetti Animation */}
-        <AnimatePresence>
-          {showConfetti && <Confetti />}
-        </AnimatePresence>
-        
+        <AnimatePresence>{showConfetti && <Confetti />}</AnimatePresence>
+
         <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex items-center justify-center min-h-screen">
           {/* Success Card */}
           <motion.div
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ 
-              duration: 0.8, 
-              type: "spring", 
+            transition={{
+              duration: 0.8,
+              type: 'spring',
               stiffness: 100,
-              delay: 0.2
+              delay: 0.2,
             }}
             className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20 text-center relative overflow-hidden"
           >
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 w-16 h-16 bg-green-200/30 rounded-full blur-xl" />
             <div className="absolute bottom-4 left-4 w-12 h-12 bg-teal-200/20 rounded-full blur-lg" />
-            
+
             {/* Animated Checkmark */}
             <CheckmarkIcon />
-            
+
             {/* Success Message */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -176,9 +178,7 @@ const PaymentSuccess: React.FC = () => {
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
                 Payment Successful! 🎉
               </h1>
-              <p className="text-lg text-gray-600 mb-8">
-                Your Pro plan is now active.
-              </p>
+              <p className="text-lg text-gray-600 mb-8">Your Pro plan is now active.</p>
             </motion.div>
 
             {/* Plan Summary */}
@@ -194,7 +194,7 @@ const PaymentSuccess: React.FC = () => {
                   ACTIVE
                 </span>
               </div>
-              
+
               <div className="space-y-2 text-gray-700">
                 <div className="flex items-center justify-center gap-2">
                   <span className="line-through text-gray-400">{paymentDetails.originalPrice}</span>
@@ -219,14 +219,18 @@ const PaymentSuccess: React.FC = () => {
             >
               {/* Dashboard Button with Glow */}
               <motion.div
-                animate={dashboardButtonGlow ? {
-                  boxShadow: [
-                    "0 4px 20px rgba(20, 184, 166, 0.3)",
-                    "0 8px 30px rgba(20, 184, 166, 0.5)",
-                    "0 4px 20px rgba(20, 184, 166, 0.3)"
-                  ]
-                } : {}}
-                transition={{ duration: 2, ease: "easeInOut" }}
+                animate={
+                  dashboardButtonGlow
+                    ? {
+                        boxShadow: [
+                          '0 4px 20px rgba(20, 184, 166, 0.3)',
+                          '0 8px 30px rgba(20, 184, 166, 0.5)',
+                          '0 4px 20px rgba(20, 184, 166, 0.3)',
+                        ],
+                      }
+                    : {}
+                }
+                transition={{ duration: 2, ease: 'easeInOut' }}
               >
                 <Button
                   variant="default"
@@ -237,7 +241,7 @@ const PaymentSuccess: React.FC = () => {
                   Go to Dashboard
                 </Button>
               </motion.div>
-              
+
               <Button
                 variant="outline"
                 size="large"
@@ -277,7 +281,8 @@ const PaymentSuccess: React.FC = () => {
               className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100"
             >
               <p className="text-sm text-gray-700">
-                🚀 <span className="font-semibold">Welcome to Pro!</span> Start your enhanced learning journey with unlimited access to all features.
+                🚀 <span className="font-semibold">Welcome to Pro!</span> Start your enhanced
+                learning journey with unlimited access to all features.
               </p>
             </motion.div>
           </motion.div>
@@ -293,12 +298,12 @@ const PaymentSuccess: React.FC = () => {
           transition={{
             duration: 3,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         >
           🎊
         </motion.div>
-        
+
         <motion.div
           className="absolute top-32 right-16 text-3xl"
           animate={{
@@ -308,13 +313,13 @@ const PaymentSuccess: React.FC = () => {
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
+            ease: 'easeInOut',
+            delay: 1,
           }}
         >
           ✨
         </motion.div>
-        
+
         <motion.div
           className="absolute bottom-20 left-20 text-3xl"
           animate={{
@@ -324,13 +329,13 @@ const PaymentSuccess: React.FC = () => {
           transition={{
             duration: 3.5,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.5
+            ease: 'easeInOut',
+            delay: 0.5,
           }}
         >
           🌟
         </motion.div>
-        
+
         <motion.div
           className="absolute bottom-32 right-12 text-4xl"
           animate={{
@@ -340,8 +345,8 @@ const PaymentSuccess: React.FC = () => {
           transition={{
             duration: 3.2,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5
+            ease: 'easeInOut',
+            delay: 1.5,
           }}
         >
           🎉

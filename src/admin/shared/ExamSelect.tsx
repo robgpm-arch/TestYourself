@@ -1,8 +1,11 @@
-import * as React from "react";
-import { useExamsByMedium } from "./useExamsByMedium";
+import * as React from 'react';
+import { useExamsByMedium } from './useExamsByMedium';
 
 export function ExamSelect({
-  medium, value, onChange, disabled
+  medium,
+  value,
+  onChange,
+  disabled,
 }: {
   medium?: string;
   value: string;
@@ -17,12 +20,16 @@ export function ExamSelect({
       <select
         className="border rounded px-3 py-2 w-full"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         disabled={disabled || !medium}
       >
-        <option value="">{exams.length ? "Select an option" : "— No exams for this medium —"}</option>
+        <option value="">
+          {exams.length ? 'Select an option' : '— No exams for this medium —'}
+        </option>
         {exams.map(ex => (
-          <option key={ex.id} value={ex.id}>{ex.name ?? ex.id}</option>
+          <option key={ex.id} value={ex.id}>
+            {ex.name ?? ex.id}
+          </option>
         ))}
       </select>
     </label>

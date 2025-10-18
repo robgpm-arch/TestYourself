@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { doc, onSnapshot, setDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import React, { useState, useEffect } from 'react';
+import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface SeoSettings {
   title?: string;
@@ -14,12 +14,13 @@ interface SeoSettings {
 }
 
 const DEFAULT_SEO: SeoSettings = {
-  title: "TestYourself – Practice MCQs, Mock Exams & Analytics",
-  description: "Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.",
-  ogImage: "/og-image-1200x630.png",
-  twitterHandle: "@testyourselfapp",
-  canonical: "https://testyourself.app/",
-  robots: "index,follow",
+  title: 'TestYourself – Practice MCQs, Mock Exams & Analytics',
+  description:
+    'Chapter-wise MCQs and mock exams across boards and subjects. Instant explanations, smart analytics, streaks, and leaderboards.',
+  ogImage: '/og-image-1200x630.png',
+  twitterHandle: '@testyourselfapp',
+  canonical: 'https://testyourself.app/',
+  robots: 'index,follow',
   sitemapEnabled: true,
 };
 
@@ -28,7 +29,7 @@ export default function SeoCard() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "app_settings", "seo"), (snap) => {
+    const unsub = onSnapshot(doc(db, 'app_settings', 'seo'), snap => {
       if (snap.exists()) {
         setSeo({ ...DEFAULT_SEO, ...snap.data() });
       }
@@ -39,10 +40,14 @@ export default function SeoCard() {
   async function save() {
     setSaving(true);
     try {
-      await setDoc(doc(db, "app_settings", "seo"), {
-        ...seo,
-        updatedAt: serverTimestamp()
-      }, { merge: true });
+      await setDoc(
+        doc(db, 'app_settings', 'seo'),
+        {
+          ...seo,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
     } finally {
       setSaving(false);
     }
@@ -58,7 +63,9 @@ export default function SeoCard() {
     <div className="rounded-xl border p-6 bg-white">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900">SEO & Discovery</h3>
-        <p className="text-sm text-gray-600">Manage meta titles, descriptions, social images, and search engine settings</p>
+        <p className="text-sm text-gray-600">
+          Manage meta titles, descriptions, social images, and search engine settings
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -68,8 +75,8 @@ export default function SeoCard() {
             <label className="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
             <input
               type="text"
-              value={seo.title || ""}
-              onChange={(e) => setSeo(prev => ({ ...prev, title: e.target.value }))}
+              value={seo.title || ''}
+              onChange={e => setSeo(prev => ({ ...prev, title: e.target.value }))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter page title..."
             />
@@ -78,8 +85,8 @@ export default function SeoCard() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
             <textarea
-              value={seo.description || ""}
-              onChange={(e) => setSeo(prev => ({ ...prev, description: e.target.value }))}
+              value={seo.description || ''}
+              onChange={e => setSeo(prev => ({ ...prev, description: e.target.value }))}
               rows={3}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter meta description..."
@@ -87,11 +94,13 @@ export default function SeoCard() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">OG/Twitter Image URL</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              OG/Twitter Image URL
+            </label>
             <input
               type="text"
-              value={seo.ogImage || ""}
-              onChange={(e) => setSeo(prev => ({ ...prev, ogImage: e.target.value }))}
+              value={seo.ogImage || ''}
+              onChange={e => setSeo(prev => ({ ...prev, ogImage: e.target.value }))}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="e.g., /og-image-1200x630.png"
             />
@@ -102,8 +111,8 @@ export default function SeoCard() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Twitter Handle</label>
               <input
                 type="text"
-                value={seo.twitterHandle || ""}
-                onChange={(e) => setSeo(prev => ({ ...prev, twitterHandle: e.target.value }))}
+                value={seo.twitterHandle || ''}
+                onChange={e => setSeo(prev => ({ ...prev, twitterHandle: e.target.value }))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="@username"
               />
@@ -113,8 +122,8 @@ export default function SeoCard() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Canonical URL</label>
               <input
                 type="text"
-                value={seo.canonical || ""}
-                onChange={(e) => setSeo(prev => ({ ...prev, canonical: e.target.value }))}
+                value={seo.canonical || ''}
+                onChange={e => setSeo(prev => ({ ...prev, canonical: e.target.value }))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="https://..."
               />
@@ -123,10 +132,12 @@ export default function SeoCard() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Robots Directive</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Robots Directive
+              </label>
               <select
-                value={seo.robots || "index,follow"}
-                onChange={(e) => setSeo(prev => ({ ...prev, robots: e.target.value }))}
+                value={seo.robots || 'index,follow'}
+                onChange={e => setSeo(prev => ({ ...prev, robots: e.target.value }))}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="index,follow">Index & Follow</option>
@@ -141,7 +152,7 @@ export default function SeoCard() {
                 <input
                   type="checkbox"
                   checked={seo.sitemapEnabled !== false}
-                  onChange={(e) => setSeo(prev => ({ ...prev, sitemapEnabled: e.target.checked }))}
+                  onChange={e => setSeo(prev => ({ ...prev, sitemapEnabled: e.target.checked }))}
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
                 <span className="ml-2 text-sm font-medium text-gray-700">Enable Sitemap</span>
@@ -154,7 +165,7 @@ export default function SeoCard() {
             disabled={saving}
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
           >
-            {saving ? "Saving..." : "Save SEO Settings"}
+            {saving ? 'Saving...' : 'Save SEO Settings'}
           </button>
         </div>
 
@@ -165,12 +176,8 @@ export default function SeoCard() {
             <div className="text-blue-600 text-lg hover:underline cursor-pointer mb-1">
               {serpPreview.title}
             </div>
-            <div className="text-green-700 text-sm mb-2">
-              {serpPreview.url}
-            </div>
-            <div className="text-gray-600 text-sm leading-relaxed">
-              {serpPreview.description}
-            </div>
+            <div className="text-green-700 text-sm mb-2">{serpPreview.url}</div>
+            <div className="text-gray-600 text-sm leading-relaxed">{serpPreview.description}</div>
           </div>
 
           {seo.ogImage && (
@@ -181,13 +188,11 @@ export default function SeoCard() {
                   src={seo.ogImage}
                   alt="Social preview"
                   className="w-full h-32 object-cover rounded"
-                  onError={(e) => {
+                  onError={e => {
                     e.currentTarget.style.display = 'none';
                   }}
                 />
-                <div className="mt-2 text-xs text-gray-500">
-                  {seo.ogImage}
-                </div>
+                <div className="mt-2 text-xs text-gray-500">{seo.ogImage}</div>
               </div>
             </div>
           )}

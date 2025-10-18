@@ -1,11 +1,24 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, EmailAuthProvider, linkWithCredential } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPhoneNumber,
+  RecaptchaVerifier,
+  EmailAuthProvider,
+  linkWithCredential,
+} from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
 import { db, auth } from '@/lib/firebase';
 import { bindActiveDevice } from '@/lib/sessionBinding';
-import { CASTE_OPTIONS, GENDER_OPTIONS, STATE_OPTIONS, STATE_ZONE_OPTIONS, CENTRAL_ZONE_OPTIONS, districtsForState } from '@/constants/options';
+import {
+  CASTE_OPTIONS,
+  GENDER_OPTIONS,
+  STATE_OPTIONS,
+  STATE_ZONE_OPTIONS,
+  CENTRAL_ZONE_OPTIONS,
+  districtsForState,
+} from '@/constants/options';
 import '../../styles/forms.css';
 
 /**
@@ -96,7 +109,8 @@ const Register: React.FC = () => {
 
   const strongPwd = (pwd: string) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/.test(pwd);
   const canVerify = phone.length === 10 && otp.length === 6;
-  const canRegister = !!firstName.trim() && (!password || (password === confirmPassword && strongPwd(password)));
+  const canRegister =
+    !!firstName.trim() && (!password || (password === confirmPassword && strongPwd(password)));
 
   // Reset district when state changes
   useEffect(() => {
@@ -105,7 +119,9 @@ const Register: React.FC = () => {
 
   // Suppress global auth redirects while on this screen
   useEffect(() => {
-    try { localStorage.setItem('auth_intent', 'register'); } catch {}
+    try {
+      localStorage.setItem('auth_intent', 'register');
+    } catch {}
     return () => {
       try {
         if (localStorage.getItem('auth_intent') === 'register') {
@@ -117,7 +133,7 @@ const Register: React.FC = () => {
 
   // Check if user is already authenticated and redirect accordingly
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async user => {
       if (user) {
         // Check if user has completed onboarding
         try {
@@ -140,7 +156,7 @@ const Register: React.FC = () => {
     let interval: any = null;
     if (resendTimer > 0) {
       interval = setInterval(() => {
-        setResendTimer((prev) => {
+        setResendTimer(prev => {
           if (prev <= 1) {
             setIsResendActive(true);
             return 0;
@@ -216,13 +232,17 @@ const Register: React.FC = () => {
     try {
       await confirmationResultRef.current.confirm(otp);
       // Ensure fresh token for subsequent Firestore writes
-      try { await auth.currentUser?.getIdToken(true); } catch {}
+      try {
+        await auth.currentUser?.getIdToken(true);
+      } catch {}
       setOtpVerified(true);
       setSuccess('Phone verified successfully!');
     } catch (err: any) {
       setError(err?.message || 'Failed to verify OTP');
       // Allow resend
-      try { recaptchaRef.current?.clear(); } catch {}
+      try {
+        recaptchaRef.current?.clear();
+      } catch {}
       recaptchaRef.current = null;
       confirmationResultRef.current = null;
     } finally {
@@ -242,27 +262,35 @@ const Register: React.FC = () => {
       const user = cred?.user;
       if (!user) throw new Error('No user after OTP confirmation');
 
-      try { await user.getIdToken(true); } catch {}
+      try {
+        await user.getIdToken(true);
+      } catch {}
 
-      await setDoc(doc(db, 'users', user.uid), {
-        uid: user.uid,
-        phoneNumber: user.phoneNumber ?? `+91${phone}`,
-        onboarded: false,
-        onboarding: {
-          completed: false,
-          mediumId: null,
-          boardId: null,
-          examId: null,
-          courseId: null,
-          subjectId: null,
+      await setDoc(
+        doc(db, 'users', user.uid),
+        {
+          uid: user.uid,
+          phoneNumber: user.phoneNumber ?? `+91${phone}`,
+          onboarded: false,
+          onboarding: {
+            completed: false,
+            mediumId: null,
+            boardId: null,
+            examId: null,
+            courseId: null,
+            subjectId: null,
+          },
+          updatedAt: serverTimestamp(),
+          createdAt: serverTimestamp(),
         },
-        updatedAt: serverTimestamp(),
-        createdAt: serverTimestamp(),
-      }, { merge: true });
+        { merge: true }
+      );
 
       await bindActiveDevice().catch(() => {});
 
-      try { localStorage.removeItem('auth_intent'); } catch {}
+      try {
+        localStorage.removeItem('auth_intent');
+      } catch {}
       await navigateAfterAuth(navigate);
     } catch (err) {
       console.error('Verify & Register failed:', err);
@@ -278,36 +306,47 @@ const Register: React.FC = () => {
       if (!user) throw new Error('User not authenticated');
       if (!otpVerified) throw new Error('Please verify your phone first.');
 
-      await setDoc(doc(db, 'users', user.uid), {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        fullName: `${firstName} ${lastName}`.trim(),
-        fullNameLc: `${firstName} ${lastName}`.trim().toLowerCase(),
-        gender: gender || null,
-        caste: caste || null,
-        phc: !!phc,
-        exService: !!exService,
-        dob: dob || null,
-        age: age || null,
-        state: state || null,
-        district: district || null,
-        stateZone: stateZone || null,
-        centralZone: centralZone || null,
-        phone: `+91${phone}`,
-        onboarded: false,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      }, { merge: true });
+      await setDoc(
+        doc(db, 'users', user.uid),
+        {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          fullName: `${firstName} ${lastName}`.trim(),
+          fullNameLc: `${firstName} ${lastName}`.trim().toLowerCase(),
+          gender: gender || null,
+          caste: caste || null,
+          phc: !!phc,
+          exService: !!exService,
+          dob: dob || null,
+          age: age || null,
+          state: state || null,
+          district: district || null,
+          stateZone: stateZone || null,
+          centralZone: centralZone || null,
+          phone: `+91${phone}`,
+          onboarded: false,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
 
       if (password && password === confirmPassword && strongPwd(password)) {
-        const digits = (`+91${phone}`).replace(/\D/g, '');
+        const digits = `+91${phone}`.replace(/\D/g, '');
         const synthEmail = `ph-${digits}@testyourself.app`;
         try {
           const cred = EmailAuthProvider.credential(synthEmail, password);
           await linkWithCredential(user, cred);
-          await setDoc(doc(db, 'users', user.uid), { credentials: { hasPassword: true }, updatedAt: serverTimestamp() }, { merge: true });
+          await setDoc(
+            doc(db, 'users', user.uid),
+            { credentials: { hasPassword: true }, updatedAt: serverTimestamp() },
+            { merge: true }
+          );
         } catch (e: any) {
-          if (e?.code !== 'auth/credential-already-in-use' && e?.code !== 'auth/provider-already-linked') {
+          if (
+            e?.code !== 'auth/credential-already-in-use' &&
+            e?.code !== 'auth/provider-already-linked'
+          ) {
             console.warn('Link email/password failed:', e);
           }
         }
@@ -315,7 +354,9 @@ const Register: React.FC = () => {
 
       await bindActiveDevice();
       // release the lock and proceed
-      try { localStorage.removeItem('auth_intent'); } catch {}
+      try {
+        localStorage.removeItem('auth_intent');
+      } catch {}
       navigate('/onboarding', { replace: true });
     } catch (e: any) {
       setError(e?.message || 'Failed to register');
@@ -362,18 +403,20 @@ const Register: React.FC = () => {
                         <input
                           type="text"
                           value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
+                          onChange={e => setFirstName(e.target.value)}
                           className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                           placeholder="Enter your first name"
                           required
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Surname</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Surname
+                        </label>
                         <input
                           type="text"
                           value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
+                          onChange={e => setLastName(e.target.value)}
                           className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                           placeholder="Enter your surname"
                         />
@@ -383,12 +426,14 @@ const Register: React.FC = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
                       <select
                         value={gender}
-                        onChange={(e) => setGender(e.target.value)}
+                        onChange={e => setGender(e.target.value)}
                         className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                       >
                         <option value="">Select gender</option>
                         {GENDER_OPTIONS.map(option => (
-                          <option key={option} value={option}>{option}</option>
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -400,15 +445,19 @@ const Register: React.FC = () => {
                   <h3 className="form-section-title mb-4">Social & Eligibility</h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Caste Category</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Caste Category
+                      </label>
                       <select
                         value={caste}
-                        onChange={(e) => setCaste(e.target.value)}
+                        onChange={e => setCaste(e.target.value)}
                         className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                       >
                         <option value="">Select caste category</option>
                         {CASTE_OPTIONS.map(option => (
-                          <option key={option} value={option}>{option}</option>
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -417,16 +466,18 @@ const Register: React.FC = () => {
                         <input
                           type="checkbox"
                           checked={phc}
-                          onChange={(e) => setPhc(e.target.checked)}
+                          onChange={e => setPhc(e.target.checked)}
                           className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700">Persons with Disabilities (PHC)</span>
+                        <span className="ml-2 text-sm text-gray-700">
+                          Persons with Disabilities (PHC)
+                        </span>
                       </label>
                       <label className="flex items-center">
                         <input
                           type="checkbox"
                           checked={exService}
-                          onChange={(e) => setExService(e.target.checked)}
+                          onChange={e => setExService(e.target.checked)}
                           className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                         />
                         <span className="ml-2 text-sm text-gray-700">Ex-Service Personnel</span>
@@ -446,53 +497,67 @@ const Register: React.FC = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
                       <select
                         value={state}
-                        onChange={(e) => setState(e.target.value)}
+                        onChange={e => setState(e.target.value)}
                         className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                       >
                         <option value="">Select state</option>
                         {STATE_OPTIONS.map(option => (
-                          <option key={option} value={option}>{option}</option>
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
                         ))}
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">District</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        District
+                      </label>
                       <select
                         value={district}
-                        onChange={(e) => setDistrict(e.target.value)}
+                        onChange={e => setDistrict(e.target.value)}
                         disabled={!districts.length}
                         className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3 disabled:opacity-50"
                       >
                         <option value="">Select district</option>
                         {districts.map(option => (
-                          <option key={option} value={option}>{option}</option>
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
                         ))}
                       </select>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">State Zone</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          State Zone
+                        </label>
                         <select
                           value={stateZone}
-                          onChange={(e) => setStateZone(e.target.value)}
+                          onChange={e => setStateZone(e.target.value)}
                           className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                         >
                           <option value="">Select zone</option>
                           {STATE_ZONE_OPTIONS.map(option => (
-                            <option key={option} value={option}>{option}</option>
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
                           ))}
                         </select>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Central Zone</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Central Zone
+                        </label>
                         <select
                           value={centralZone}
-                          onChange={(e) => setCentralZone(e.target.value)}
+                          onChange={e => setCentralZone(e.target.value)}
                           className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                         >
                           <option value="">Select zone</option>
                           {CENTRAL_ZONE_OPTIONS.map(option => (
-                            <option key={option} value={option}>{option}</option>
+                            <option key={option} value={option}>
+                              {option}
+                            </option>
                           ))}
                         </select>
                       </div>
@@ -505,11 +570,13 @@ const Register: React.FC = () => {
                   <h3 className="form-section-title mb-4">Date of Birth</h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Date of Birth
+                      </label>
                       <input
                         type="date"
                         value={dob}
-                        onChange={(e) => setDob(e.target.value)}
+                        onChange={e => setDob(e.target.value)}
                         className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                       />
                     </div>
@@ -522,7 +589,9 @@ const Register: React.FC = () => {
                         className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 cursor-not-allowed"
                         placeholder="Auto-calculated"
                       />
-                      <p className="helper mt-1">Age is automatically calculated from date of birth</p>
+                      <p className="helper mt-1">
+                        Age is automatically calculated from date of birth
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -544,7 +613,11 @@ const Register: React.FC = () => {
                     <input
                       type="tel"
                       value={phone}
-                      onChange={(e) => { setPhone(e.target.value.replace(/[^0-9]/g, '').slice(0, 10)); setOtpVerified(false); setOtp(''); }}
+                      onChange={e => {
+                        setPhone(e.target.value.replace(/[^0-9]/g, '').slice(0, 10));
+                        setOtpVerified(false);
+                        setOtp('');
+                      }}
                       className="flex-1 rounded-r-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                       placeholder="1234567890"
                       maxLength={10}
@@ -568,7 +641,7 @@ const Register: React.FC = () => {
                   <input
                     type="text"
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                    onChange={e => setOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
                     className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                     placeholder="123456"
                     maxLength={6}
@@ -579,7 +652,10 @@ const Register: React.FC = () => {
               {/* Resend OTP controls */}
               <div className="mt-3">
                 {resendTimer > 0 ? (
-                  <p className="text-sm text-gray-600">Didn’t receive? Resend OTP in <span className="font-semibold text-indigo-600">{resendTimer}s</span></p>
+                  <p className="text-sm text-gray-600">
+                    Didn’t receive? Resend OTP in{' '}
+                    <span className="font-semibold text-indigo-600">{resendTimer}s</span>
+                  </p>
                 ) : (
                   <button
                     type="button"
@@ -591,28 +667,34 @@ const Register: React.FC = () => {
                   </button>
                 )}
               </div>
-              
+
               {/* Optional password to enable future login without OTP */}
               <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Set Password (optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Set Password (optional)
+                  </label>
                   <input
                     type="password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                     className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                     placeholder="Min 8 chars, Aa1@"
                   />
                   {password && !strongPwd(password) && (
-                    <p className="text-xs text-red-500 mt-1">Use at least 8 characters with uppercase, lowercase, number and symbol.</p>
+                    <p className="text-xs text-red-500 mt-1">
+                      Use at least 8 characters with uppercase, lowercase, number and symbol.
+                    </p>
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Confirm Password
+                  </label>
                   <input
                     type="password"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={e => setConfirmPassword(e.target.value)}
                     className="w-full rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 bg-white/90 px-4 py-3"
                     placeholder="Re-enter password"
                   />
@@ -641,7 +723,9 @@ const Register: React.FC = () => {
               </div>
               {otpVerified && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
-                  <p className="text-green-700 text-sm font-medium">✓ Phone verified successfully!</p>
+                  <p className="text-green-700 text-sm font-medium">
+                    ✓ Phone verified successfully!
+                  </p>
                 </div>
               )}
             </div>

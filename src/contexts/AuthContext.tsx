@@ -1,10 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import {
-  User as FirebaseUser,
-  onIdTokenChanged,
-  signOut,
-  getIdToken,
-} from 'firebase/auth';
+import { User as FirebaseUser, onIdTokenChanged, signOut, getIdToken } from 'firebase/auth';
 import AuthService from '../services/authService';
 import { auth, db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -99,7 +94,7 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    const unsub = onIdTokenChanged(auth, async (nextUser) => {
+    const unsub = onIdTokenChanged(auth, async nextUser => {
       setLoading(true);
       if (!nextUser) {
         setFirebaseUser(null);
@@ -131,21 +126,20 @@ export const AuthProvider = ({ children }: Props) => {
     setIsAdmin(false);
   };
 
-  const value = useMemo<AuthContextValue>(() => ({
-    user,
-    firebaseUser,
-    loading,
-    isAdmin,
-    token,
-    refreshUser,
-    logout,
-  }), [user, firebaseUser, loading, isAdmin, token]);
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      user,
+      firebaseUser,
+      loading,
+      isAdmin,
+      token,
+      refreshUser,
+      logout,
+    }),
+    [user, firebaseUser, loading, isAdmin, token]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

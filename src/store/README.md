@@ -1,3 +1,3 @@
 # Pages Directory
 
-This is a store reserved directory. 
+This is a store reserved directory.

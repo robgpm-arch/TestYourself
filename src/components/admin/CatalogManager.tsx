@@ -15,7 +15,7 @@ import {
   deleteSubject,
   deleteChapter,
   deleteQuizSet,
-  generateId
+  generateId,
 } from '../../services/catalogService';
 import {
   buildAdminRoute,
@@ -30,7 +30,7 @@ import {
   createInitialFilters,
   filtersToRouteParams,
   routeParamsToFilters,
-  CatalogFilters
+  CatalogFilters,
 } from '../../utils/adminRouting';
 import CatalogFiltersComponent from './CatalogFilters';
 import {
@@ -40,7 +40,7 @@ import {
   CatalogCourse,
   CatalogSubject,
   CatalogChapter,
-  CatalogQuizSet
+  CatalogQuizSet,
 } from '../../types/firebase';
 
 // Generic card component for catalog items
@@ -61,7 +61,7 @@ function CatalogCard<T extends { name: string; enabled: boolean }>({
   onDelete,
   onOpen,
   canOpen = false,
-  hasChildren = false
+  hasChildren = false,
 }: CatalogCardProps<T>) {
   return (
     <div className={`p-4 border rounded-lg ${item.enabled ? 'bg-white' : 'bg-gray-50'}`}>
@@ -111,7 +111,6 @@ function CatalogCard<T extends { name: string; enabled: boolean }>({
     </div>
   );
 }
-
 
 // Main catalog manager component with Board/Exam parallel routing
 export default function CatalogManager() {
@@ -189,7 +188,7 @@ export default function CatalogManager() {
         const snap = await getDocs(q);
         const loadedMediums = snap.docs.map(doc => ({
           id: doc.id,
-          ...(doc.data() as Omit<CatalogMedium, 'id'>)
+          ...(doc.data() as Omit<CatalogMedium, 'id'>),
         }));
         console.log('[Mediums] loaded from Firestore:', loadedMediums);
         setMediums(loadedMediums);
@@ -228,7 +227,11 @@ export default function CatalogManager() {
 
   const loadCourses = async () => {
     try {
-      const docs = await listCourses(filters.mediumId, filters.boardId || undefined, filters.examId || undefined);
+      const docs = await listCourses(
+        filters.mediumId,
+        filters.boardId || undefined,
+        filters.examId || undefined
+      );
       setCourses(docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogCourse, 'id'>) })));
     } catch (error) {
       console.error('Error loading courses:', error);
@@ -259,7 +262,11 @@ export default function CatalogManager() {
           docs = await listExams(filters.mediumId);
           break;
         case 'courses':
-          docs = await listCourses(filters.mediumId, filters.boardId || undefined, filters.examId || undefined);
+          docs = await listCourses(
+            filters.mediumId,
+            filters.boardId || undefined,
+            filters.examId || undefined
+          );
           break;
         case 'subjects':
           if (filters.courseId) {
@@ -272,7 +279,8 @@ export default function CatalogManager() {
           }
           break;
         case 'quizsets':
-          if (filters.subjectId) { // Quiz sets are under chapters, but we show them for subjects
+          if (filters.subjectId) {
+            // Quiz sets are under chapters, but we show them for subjects
             // This is simplified - you might need to load chapters first
             docs = [];
           }
@@ -287,7 +295,14 @@ export default function CatalogManager() {
     }
   };
 
-  const getCurrentTab = (): 'mediums' | 'boards' | 'exams' | 'courses' | 'subjects' | 'chapters' | 'quizsets' => {
+  const getCurrentTab = ():
+    | 'mediums'
+    | 'boards'
+    | 'exams'
+    | 'courses'
+    | 'subjects'
+    | 'chapters'
+    | 'quizsets' => {
     if (filters.subjectId) return 'chapters';
     if (filters.courseId) return 'subjects';
     if (filters.boardId || filters.examId) return 'courses';
@@ -381,14 +396,14 @@ export default function CatalogManager() {
       name: '',
       description: '',
       chapterNumber: 1,
-      durationMinutes: 30
+      durationMinutes: 30,
     });
     const [contextFilters, setContextFilters] = useState({
       mediumId: filters.mediumId,
       boardId: filters.boardId,
       examId: filters.examId,
       courseId: filters.courseId,
-      subjectId: filters.subjectId
+      subjectId: filters.subjectId,
     });
     const [saving, setSaving] = useState(false);
 
@@ -409,23 +424,36 @@ export default function CatalogManager() {
         setExams([]);
         return;
       }
-      console.log('[ChapterCreateModal] Loading boards and exams for mediumId:', contextFilters.mediumId);
-      listBoards(contextFilters.mediumId).then(docs => {
-        const boardsData = docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogBoard, 'id'>) }));
-        console.log('[ChapterCreateModal] Loaded boards:', boardsData);
-        setBoards(boardsData);
-      }).catch(error => {
-        console.error('[ChapterCreateModal] Error loading boards:', error);
-        setBoards([]);
-      });
-      listExamsByMedium(contextFilters.mediumId).then(docs => {
-        const examsData = docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogExam, 'id'>) }));
-        console.log('[ChapterCreateModal] Loaded exams:', examsData);
-        setExams(examsData);
-      }).catch(error => {
-        console.error('[ChapterCreateModal] Error loading exams:', error);
-        setExams([]);
-      });
+      console.log(
+        '[ChapterCreateModal] Loading boards and exams for mediumId:',
+        contextFilters.mediumId
+      );
+      listBoards(contextFilters.mediumId)
+        .then(docs => {
+          const boardsData = docs.map(doc => ({
+            id: doc.id,
+            ...(doc.data() as Omit<CatalogBoard, 'id'>),
+          }));
+          console.log('[ChapterCreateModal] Loaded boards:', boardsData);
+          setBoards(boardsData);
+        })
+        .catch(error => {
+          console.error('[ChapterCreateModal] Error loading boards:', error);
+          setBoards([]);
+        });
+      listExamsByMedium(contextFilters.mediumId)
+        .then(docs => {
+          const examsData = docs.map(doc => ({
+            id: doc.id,
+            ...(doc.data() as Omit<CatalogExam, 'id'>),
+          }));
+          console.log('[ChapterCreateModal] Loaded exams:', examsData);
+          setExams(examsData);
+        })
+        .catch(error => {
+          console.error('[ChapterCreateModal] Error loading exams:', error);
+          setExams([]);
+        });
     }, [contextFilters.mediumId]);
 
     // Load courses when board/exam changes
@@ -434,7 +462,11 @@ export default function CatalogManager() {
         setCourses([]);
         return;
       }
-      listCourses(contextFilters.mediumId, contextFilters.boardId || undefined, contextFilters.examId || undefined).then(docs =>
+      listCourses(
+        contextFilters.mediumId,
+        contextFilters.boardId || undefined,
+        contextFilters.examId || undefined
+      ).then(docs =>
         setCourses(docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogCourse, 'id'>) })))
       );
     }, [contextFilters.mediumId, contextFilters.boardId, contextFilters.examId]);
@@ -446,7 +478,9 @@ export default function CatalogManager() {
         return;
       }
       listSubjects(contextFilters.courseId).then(docs =>
-        setSubjects(docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogSubject, 'id'>) })))
+        setSubjects(
+          docs.map(doc => ({ id: doc.id, ...(doc.data() as Omit<CatalogSubject, 'id'>) }))
+        )
       );
     }, [contextFilters.courseId]);
 
@@ -460,7 +494,7 @@ export default function CatalogManager() {
           ...chapterData,
           subjectId: contextFilters.subjectId,
           enabled: true,
-          order: 999 // Will be sorted later
+          order: 999, // Will be sorted later
         });
 
         setShowCreateModal(false);
@@ -470,7 +504,7 @@ export default function CatalogManager() {
           boardId: filters.boardId,
           examId: filters.examId,
           courseId: filters.courseId,
-          subjectId: filters.subjectId
+          subjectId: filters.subjectId,
         });
         await loadItems(); // Refresh the list
       } catch (error) {
@@ -487,7 +521,7 @@ export default function CatalogManager() {
         boardId,
         examId: null, // Clear exam when board is selected
         courseId: null,
-        subjectId: null
+        subjectId: null,
       }));
     };
 
@@ -497,7 +531,7 @@ export default function CatalogManager() {
         examId,
         boardId: null, // Clear board when exam is selected
         courseId: null,
-        subjectId: null
+        subjectId: null,
       }));
     };
 
@@ -518,19 +552,23 @@ export default function CatalogManager() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Medium</label>
                 <select
                   value={contextFilters.mediumId}
-                  onChange={(e) => setContextFilters(prev => ({
-                    ...prev,
-                    mediumId: e.target.value,
-                    boardId: null,
-                    examId: null,
-                    courseId: null,
-                    subjectId: null
-                  }))}
+                  onChange={e =>
+                    setContextFilters(prev => ({
+                      ...prev,
+                      mediumId: e.target.value,
+                      boardId: null,
+                      examId: null,
+                      courseId: null,
+                      subjectId: null,
+                    }))
+                  }
                   className="w-full p-2 border rounded"
                 >
                   <option value="">Select</option>
                   {mediums.map(medium => (
-                    <option key={medium.id} value={medium.id}>{medium.name}</option>
+                    <option key={medium.id} value={medium.id}>
+                      {medium.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -542,13 +580,15 @@ export default function CatalogManager() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Board</label>
                   <select
                     value={contextFilters.boardId || ''}
-                    onChange={(e) => pickBoard(e.target.value || null)}
+                    onChange={e => pickBoard(e.target.value || null)}
                     disabled={!contextFilters.mediumId || !!contextFilters.examId}
                     className="w-full p-2 border rounded disabled:bg-gray-100"
                   >
-                    <option value="">{boards.length ? "Select" : "No Boards"}</option>
+                    <option value="">{boards.length ? 'Select' : 'No Boards'}</option>
                     {boards.map(board => (
-                      <option key={board.id} value={board.id}>{board.name}</option>
+                      <option key={board.id} value={board.id}>
+                        {board.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -558,13 +598,15 @@ export default function CatalogManager() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Exam</label>
                   <select
                     value={contextFilters.examId || ''}
-                    onChange={(e) => pickExam(e.target.value || null)}
+                    onChange={e => pickExam(e.target.value || null)}
                     disabled={!contextFilters.mediumId || !!contextFilters.boardId}
                     className="w-full p-2 border rounded disabled:bg-gray-100"
                   >
-                    <option value="">{exams.length ? "Select" : "No Exams"}</option>
+                    <option value="">{exams.length ? 'Select' : 'No Exams'}</option>
                     {exams.map(exam => (
-                      <option key={exam.id} value={exam.id}>{exam.name}</option>
+                      <option key={exam.id} value={exam.id}>
+                        {exam.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -575,17 +617,23 @@ export default function CatalogManager() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Course</label>
                 <select
                   value={contextFilters.courseId || ''}
-                  onChange={(e) => setContextFilters(prev => ({
-                    ...prev,
-                    courseId: e.target.value || null,
-                    subjectId: null
-                  }))}
-                  disabled={!contextFilters.mediumId || (!contextFilters.boardId && !contextFilters.examId)}
+                  onChange={e =>
+                    setContextFilters(prev => ({
+                      ...prev,
+                      courseId: e.target.value || null,
+                      subjectId: null,
+                    }))
+                  }
+                  disabled={
+                    !contextFilters.mediumId || (!contextFilters.boardId && !contextFilters.examId)
+                  }
                   className="w-full p-2 border rounded disabled:bg-gray-100"
                 >
-                  <option value="">{courses.length ? "Select" : "No Courses"}</option>
+                  <option value="">{courses.length ? 'Select' : 'No Courses'}</option>
                   {courses.map(course => (
-                    <option key={course.id} value={course.id}>{course.name}</option>
+                    <option key={course.id} value={course.id}>
+                      {course.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -595,16 +643,20 @@ export default function CatalogManager() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
                 <select
                   value={contextFilters.subjectId || ''}
-                  onChange={(e) => setContextFilters(prev => ({
-                    ...prev,
-                    subjectId: e.target.value || null
-                  }))}
+                  onChange={e =>
+                    setContextFilters(prev => ({
+                      ...prev,
+                      subjectId: e.target.value || null,
+                    }))
+                  }
                   disabled={!contextFilters.courseId}
                   className="w-full p-2 border rounded disabled:bg-gray-100"
                 >
-                  <option value="">{subjects.length ? "Select" : "No Subjects"}</option>
+                  <option value="">{subjects.length ? 'Select' : 'No Subjects'}</option>
                   {subjects.map(subject => (
-                    <option key={subject.id} value={subject.id}>{subject.name}</option>
+                    <option key={subject.id} value={subject.id}>
+                      {subject.name}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -614,25 +666,21 @@ export default function CatalogManager() {
           {/* Chapter Details */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Chapter Name *
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Chapter Name *</label>
               <input
                 type="text"
                 value={chapterData.name}
-                onChange={(e) => setChapterData(prev => ({ ...prev, name: e.target.value }))}
+                onChange={e => setChapterData(prev => ({ ...prev, name: e.target.value }))}
                 className="w-full p-2 border rounded"
                 placeholder="Enter chapter name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Description
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
               <textarea
                 value={chapterData.description}
-                onChange={(e) => setChapterData(prev => ({ ...prev, description: e.target.value }))}
+                onChange={e => setChapterData(prev => ({ ...prev, description: e.target.value }))}
                 className="w-full p-2 border rounded"
                 rows={3}
                 placeholder="Enter chapter description"
@@ -647,7 +695,12 @@ export default function CatalogManager() {
                 <input
                   type="number"
                   value={chapterData.chapterNumber}
-                  onChange={(e) => setChapterData(prev => ({ ...prev, chapterNumber: parseInt(e.target.value) || 1 }))}
+                  onChange={e =>
+                    setChapterData(prev => ({
+                      ...prev,
+                      chapterNumber: parseInt(e.target.value) || 1,
+                    }))
+                  }
                   className="w-full p-2 border rounded"
                   min="1"
                 />
@@ -660,7 +713,12 @@ export default function CatalogManager() {
                 <input
                   type="number"
                   value={chapterData.durationMinutes}
-                  onChange={(e) => setChapterData(prev => ({ ...prev, durationMinutes: parseInt(e.target.value) || 30 }))}
+                  onChange={e =>
+                    setChapterData(prev => ({
+                      ...prev,
+                      durationMinutes: parseInt(e.target.value) || 30,
+                    }))
+                  }
                   className="w-full p-2 border rounded"
                   min="1"
                 />
@@ -718,12 +776,17 @@ export default function CatalogManager() {
         />
 
         <div className="mt-2 text-sm text-gray-600">
-          Pick either Board or Exam (mutually exclusive). Selections cascade and reset deeper levels when changed.
+          Pick either Board or Exam (mutually exclusive). Selections cascade and reset deeper levels
+          when changed.
         </div>
       </div>
 
       {/* Catalog Display */}
-      {(filters.mediumId || filters.boardId || filters.examId || filters.courseId || filters.subjectId) && (
+      {(filters.mediumId ||
+        filters.boardId ||
+        filters.examId ||
+        filters.courseId ||
+        filters.subjectId) && (
         <div className="bg-white border rounded-lg p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Catalog Overview</h2>
 
@@ -732,7 +795,9 @@ export default function CatalogManager() {
             {filters.mediumId && mediums.find(m => m.id === filters.mediumId) && (
               <div className="bg-blue-50 p-3 rounded border">
                 <div className="text-sm font-medium text-blue-800">Medium</div>
-                <div className="text-blue-600">{mediums.find(m => m.id === filters.mediumId)?.name}</div>
+                <div className="text-blue-600">
+                  {mediums.find(m => m.id === filters.mediumId)?.name}
+                </div>
               </div>
             )}
 
@@ -740,7 +805,9 @@ export default function CatalogManager() {
             {filters.boardId && boards.find(b => b.id === filters.boardId) && (
               <div className="bg-green-50 p-3 rounded border">
                 <div className="text-sm font-medium text-green-800">Board</div>
-                <div className="text-green-600">{boards.find(b => b.id === filters.boardId)?.name}</div>
+                <div className="text-green-600">
+                  {boards.find(b => b.id === filters.boardId)?.name}
+                </div>
               </div>
             )}
 
@@ -748,7 +815,9 @@ export default function CatalogManager() {
             {filters.examId && exams.find(e => e.id === filters.examId) && (
               <div className="bg-purple-50 p-3 rounded border">
                 <div className="text-sm font-medium text-purple-800">Exam</div>
-                <div className="text-purple-600">{exams.find(e => e.id === filters.examId)?.name}</div>
+                <div className="text-purple-600">
+                  {exams.find(e => e.id === filters.examId)?.name}
+                </div>
               </div>
             )}
 
@@ -756,7 +825,9 @@ export default function CatalogManager() {
             {filters.courseId && courses.find(c => c.id === filters.courseId) && (
               <div className="bg-orange-50 p-3 rounded border">
                 <div className="text-sm font-medium text-orange-800">Course</div>
-                <div className="text-orange-600">{courses.find(c => c.id === filters.courseId)?.name}</div>
+                <div className="text-orange-600">
+                  {courses.find(c => c.id === filters.courseId)?.name}
+                </div>
               </div>
             )}
 
@@ -764,7 +835,9 @@ export default function CatalogManager() {
             {filters.subjectId && subjects.find(s => s.id === filters.subjectId) && (
               <div className="bg-red-50 p-3 rounded border">
                 <div className="text-sm font-medium text-red-800">Subject</div>
-                <div className="text-red-600">{subjects.find(s => s.id === filters.subjectId)?.name}</div>
+                <div className="text-red-600">
+                  {subjects.find(s => s.id === filters.subjectId)?.name}
+                </div>
               </div>
             )}
 
@@ -772,10 +845,15 @@ export default function CatalogManager() {
             <div className="bg-gray-50 p-3 rounded border">
               <div className="text-sm font-medium text-gray-800">Current Level</div>
               <div className="text-gray-600 capitalize">
-                {filters.subjectId ? 'Chapters & Quiz Sets' :
-                 filters.courseId ? 'Subjects' :
-                 (filters.boardId || filters.examId) ? 'Courses' :
-                 filters.mediumId ? 'Boards/Exams' : 'Mediums'}
+                {filters.subjectId
+                  ? 'Chapters & Quiz Sets'
+                  : filters.courseId
+                    ? 'Subjects'
+                    : filters.boardId || filters.examId
+                      ? 'Courses'
+                      : filters.mediumId
+                        ? 'Boards/Exams'
+                        : 'Mediums'}
               </div>
             </div>
           </div>
@@ -817,7 +895,7 @@ export default function CatalogManager() {
 
       {/* Items Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((item) => (
+        {items.map(item => (
           <CatalogCard
             key={item.id}
             item={item}

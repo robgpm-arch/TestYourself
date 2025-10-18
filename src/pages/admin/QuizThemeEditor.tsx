@@ -30,9 +30,9 @@ const DEFAULT_THEME: ThemeDoc = {
     correct: '#16a34a',
     wrong: '#ef4444',
     'timer.track': '#c7d2fe',
-    'timer.progress': '#4f46e5'
+    'timer.progress': '#4f46e5',
   },
-  images: {}
+  images: {},
 };
 
 const QuizThemeEditor: React.FC = () => {
@@ -46,14 +46,16 @@ const QuizThemeEditor: React.FC = () => {
 
   useEffect(() => {
     if (!isNew && id) {
-      getTheme(id).then((existingTheme) => {
-        if (existingTheme) {
-          setTheme(existingTheme as ThemeDoc);
-        }
-        setLoading(false);
-      }).catch(() => {
-        setLoading(false);
-      });
+      getTheme(id)
+        .then(existingTheme => {
+          if (existingTheme) {
+            setTheme(existingTheme as ThemeDoc);
+          }
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
     } else {
       setLoading(false);
     }
@@ -90,7 +92,7 @@ const QuizThemeEditor: React.FC = () => {
   const updateToken = (key: string, value: string) => {
     setTheme(prev => ({
       ...prev,
-      tokens: { ...prev.tokens, [key]: value }
+      tokens: { ...prev.tokens, [key]: value },
     }));
   };
 
@@ -138,7 +140,7 @@ const QuizThemeEditor: React.FC = () => {
                   <Input
                     label="Theme Name"
                     value={theme.name}
-                    onChange={(e) => setTheme(prev => ({ ...prev, name: e.target.value }))}
+                    onChange={e => setTheme(prev => ({ ...prev, name: e.target.value }))}
                     required
                   />
                 </div>
@@ -150,37 +152,37 @@ const QuizThemeEditor: React.FC = () => {
                   <Input
                     label="Background"
                     value={theme.tokens.bg}
-                    onChange={(e) => updateToken('bg', e.target.value)}
+                    onChange={e => updateToken('bg', e.target.value)}
                     placeholder="#F3F8FF"
                   />
                   <Input
                     label="Accent"
                     value={theme.tokens.accent}
-                    onChange={(e) => updateToken('accent', e.target.value)}
+                    onChange={e => updateToken('accent', e.target.value)}
                     placeholder="#2563eb"
                   />
                   <Input
                     label="Text"
                     value={theme.tokens.text}
-                    onChange={(e) => updateToken('text', e.target.value)}
+                    onChange={e => updateToken('text', e.target.value)}
                     placeholder="#0f172a"
                   />
                   <Input
                     label="Muted Text"
                     value={theme.tokens.muted}
-                    onChange={(e) => updateToken('muted', e.target.value)}
+                    onChange={e => updateToken('muted', e.target.value)}
                     placeholder="#475569"
                   />
                   <Input
                     label="Correct Answer"
                     value={theme.tokens.correct}
-                    onChange={(e) => updateToken('correct', e.target.value)}
+                    onChange={e => updateToken('correct', e.target.value)}
                     placeholder="#16a34a"
                   />
                   <Input
                     label="Wrong Answer"
                     value={theme.tokens.wrong}
-                    onChange={(e) => updateToken('wrong', e.target.value)}
+                    onChange={e => updateToken('wrong', e.target.value)}
                     placeholder="#ef4444"
                   />
                 </div>
@@ -192,7 +194,7 @@ const QuizThemeEditor: React.FC = () => {
                   <Input
                     label="Gradient CSS"
                     value={theme.tokens.gradient}
-                    onChange={(e) => updateToken('gradient', e.target.value)}
+                    onChange={e => updateToken('gradient', e.target.value)}
                     placeholder="linear-gradient(...)"
                   />
                 </div>
@@ -214,7 +216,7 @@ const QuizThemeEditor: React.FC = () => {
                       style={{
                         background: theme.tokens['card.bg'],
                         borderRadius: theme.tokens['card.radius'],
-                        boxShadow: theme.tokens['card.shadow']
+                        boxShadow: theme.tokens['card.shadow'],
                       }}
                     >
                       <h4 style={{ color: theme.tokens.text }}>Sample Question</h4>
@@ -229,7 +231,7 @@ const QuizThemeEditor: React.FC = () => {
                           style={{
                             background: theme.tokens['option.bg'],
                             borderColor: theme.tokens['option.border'],
-                            color: theme.tokens.text
+                            color: theme.tokens.text,
                           }}
                         >
                           {option}

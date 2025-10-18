@@ -1,12 +1,24 @@
-import { collection, addDoc, doc, getDoc, setDoc, deleteDoc, onSnapshot, serverTimestamp, writeBatch, query, orderBy } from "firebase/firestore";
-import app from "../../../config/firebase";
+import {
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+  onSnapshot,
+  serverTimestamp,
+  writeBatch,
+  query,
+  orderBy,
+} from 'firebase/firestore';
+import app from '../../../config/firebase';
 
-const db = (await import("../../../config/firebase")).db;
+const db = (await import('../../../config/firebase')).db;
 
-const COLL = "quiz_themes";
+const COLL = 'quiz_themes';
 
 export function listenThemes(cb: (rows: any[]) => void) {
-  return onSnapshot(query(collection(db, COLL), orderBy("name")), snap => {
+  return onSnapshot(query(collection(db, COLL), orderBy('name')), snap => {
     cb(snap.docs.map(d => ({ id: d.id, ...d.data() })));
   });
 }
@@ -30,5 +42,9 @@ export async function removeTheme(id: string) {
 }
 
 export async function setGlobalDefault(themeId: string) {
-  await setDoc(doc(db, "app_settings", "ui"), { defaultQuizThemeId: themeId, updatedAt: serverTimestamp() }, { merge: true });
+  await setDoc(
+    doc(db, 'app_settings', 'ui'),
+    { defaultQuizThemeId: themeId, updatedAt: serverTimestamp() },
+    { merge: true }
+  );
 }
