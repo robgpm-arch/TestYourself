@@ -73,3 +73,12 @@ temp/
 
 # OS
 *.orig
+# secrets
+*.key.json
+*.serviceaccount.json
+serviceAccount*.json
+.env.*
+.firebase/*
+.firebase/*.json
+functions/.runtimeconfig.json
+
