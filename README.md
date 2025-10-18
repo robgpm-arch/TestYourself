@@ -1,3 +1,5 @@
+![Secret Scan](https://github.com/robgpm-arch/TestYourself/actions/workflows/secret-scan.yml/badge.svg)
+
 # TestYourself - Cross-Platform Quiz Application
 
 A comprehensive cross-platform quiz application built with React, TypeScript, and Capacitor. Deploy seamlessly across Web, Android, and iOS platforms with a unified codebase.
