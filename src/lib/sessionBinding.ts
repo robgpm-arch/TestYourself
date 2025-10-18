@@ -8,7 +8,7 @@ import { getDeviceId } from '@/utils/deviceId';
  * - Always rely on Firebase SDK to mint/refresh tokens.
  * - Never fetch securetoken or identitytoolkit directly.
  */
-export async function bindActiveDevice(): Promise<void> {
+export async function bindActiveDevice(force?: boolean): Promise<void> {
   const auth = getAuth();
   const user = auth.currentUser;
   if (!user) return;
@@ -37,7 +37,7 @@ export async function bindActiveDevice(): Promise<void> {
     const deviceId = await getDeviceId();
     const fn = httpsCallable(getFunctions(), 'bindDevice');
     try {
-      await fn({ deviceId });
+      await fn({ deviceId, force: !!force });
     } catch (callErr: any) {
       // Retry once if auth has just rotated and callable sees stale auth
       if (
@@ -45,7 +45,7 @@ export async function bindActiveDevice(): Promise<void> {
         callErr?.message?.includes('Unauthenticated')
       ) {
         await refreshIdToken();
-        await fn({ deviceId });
+        await fn({ deviceId, force: !!force });
       } else {
         throw callErr;
       }

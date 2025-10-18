@@ -11,7 +11,7 @@ import {
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
 import { db, auth } from '@/lib/firebase';
-import { bindActiveDevice } from '@/lib/sessionBinding';
+ { confirmMoveSession } from '@/components/ConfirmMoveSession';
 import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
 import {
   CASTE_OPTIONS,
@@ -305,7 +305,7 @@ const Register: React.FC = () => {
         { merge: true }
       );
 
-      await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired }).catch(() => {});
+      try {\r\n        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });\r\n      } catch (e: any) {\r\n        if (e?.code === 'functions/failed-precondition' || String(e?.message || '').includes('ACTIVE_ON_ANOTHER_DEVICE')) {\r\n          const ok = await confirmMoveSession();\r\n          if (ok) { try { await withBackoff(() => bindActiveDevice(true), { onBeforeRetry: refreshIfExpired }); } catch {} }\r\n        }\r\n      }
 
       try {
         localStorage.removeItem('auth_intent');
@@ -768,6 +768,7 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
 
 
 
