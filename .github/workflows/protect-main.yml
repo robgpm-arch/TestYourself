@@ -1,0 +1,65 @@
+name: Enforce branch protection (main)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/**"
+  schedule:
+    - cron: "17 3 * * *"  # daily at 03:17 UTC
+
+jobs:
+  protect:
+    runs-on: ubuntu-latest
+    env:
+      OWNER: robgpm-arch
+      REPO: TestYourself
+      GH_PAT: ${{ secrets.GH_PAT }}
+    steps:
+      - name: Enforce core branch protection on main
+        run: |
+          set -euo pipefail
+          curl -sS -X PUT \
+            -H "Authorization: Bearer ${GH_PAT}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/branches/main/protection" \
+            -d @- <<'JSON'
+          {
+            "required_status_checks": {
+              "strict": true,
+              "contexts": ["Secret Scan (detect-secrets)"]
+            },
+            "enforce_admins": true,
+            "required_pull_request_reviews": {
+              "required_approving_review_count": 1,
+              "require_last_push_approval": false
+            },
+            "restrictions": null,
+            "required_linear_history": true,
+            "allow_force_pushes": false,
+            "allow_deletions": false,
+            "required_conversation_resolution": true,
+            "lock_branch": false
+          }
+          JSON
+
+      - name: Enable signed commits requirement (separate endpoint)
+        run: |
+          set -euo pipefail
+          curl -sS -X POST \
+            -H "Authorization: Bearer ${GH_PAT}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/branches/main/protection/required_signatures" \
+            -o /dev/null -w "%{http_code}\n"
+
+      - name: Show current protection state
+        run: |
+          curl -sS \
+            -H "Authorization: Bearer ${GH_PAT}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${OWNER}/${REPO}/branches/main/protection" | jq '.'
+
