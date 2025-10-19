@@ -406,8 +406,7 @@ const Register: React.FC = () => {
         localStorage.removeItem('auth_intent');
       } catch {}
       // explicit redirect to tutorials (requested)
-      try { setTimeout(() => navigate('/onboardingtutorials', { replace: true }), 50);
-      setTimeout(() => { try { (window as any).location?.assign?.('/onboardingtutorials'); } catch {} }, 150); } catch {}
+      try { setTimeout(() => navigate('/onboardingtutorials', { replace: true }), 50); } catch {}
       // fallback navigation based on user doc (kept for safety)
       await navigateAfterAuth(navigate);
     } catch (e: any) {
@@ -792,6 +791,7 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
 
 
 
