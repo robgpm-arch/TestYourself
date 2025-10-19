@@ -11,7 +11,8 @@ import {
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
 import { db, auth } from '@/lib/firebase';
- { confirmMoveSession } from '@/components/ConfirmMoveSession';
+import { confirmMoveSession } from '@/components/ConfirmMoveSession';
+import { saveUserProfile } from '@/lib/saveProfile';
 import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
 import {
   CASTE_OPTIONS,
@@ -305,7 +306,14 @@ const Register: React.FC = () => {
         { merge: true }
       );
 
-      try {\r\n        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });\r\n      } catch (e: any) {\r\n        if (e?.code === 'functions/failed-precondition' || String(e?.message || '').includes('ACTIVE_ON_ANOTHER_DEVICE')) {\r\n          const ok = await confirmMoveSession();\r\n          if (ok) { try { await withBackoff(() => bindActiveDevice(true), { onBeforeRetry: refreshIfExpired }); } catch {} }\r\n        }\r\n      }
+      try {
+        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
+      } catch (e: any) {
+        if (e?.code === 'functions/failed-precondition' || String(e?.message || '').includes('ACTIVE_ON_ANOTHER_DEVICE')) {
+          const ok = await confirmMoveSession();
+          if (ok) { try { await withBackoff(() => bindActiveDevice(true), { onBeforeRetry: refreshIfExpired }); } catch {} }
+        }
+      }
 
       try {
         localStorage.removeItem('auth_intent');
@@ -318,7 +326,8 @@ const Register: React.FC = () => {
     }
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (e?: any) => {
+    try { e?.preventDefault?.(); e?.stopPropagation?.(); } catch {}
     try {
       setError(null);
       const user = auth.currentUser;
@@ -381,11 +390,25 @@ const Register: React.FC = () => {
       } catch {
         // best-effort only
       }
+      // Persist profile snapshot (redundant-safe merge) and proceed
+      try {
+        await saveUserProfile({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          dob: dob || null,
+          age: age ?? null,
+          onboarded: true,
+        });
+      } catch {}
+
       // release the lock and proceed
       try {
         localStorage.removeItem('auth_intent');
       } catch {}
-      navigate('/onboarding', { replace: true });
+      // explicit redirect to tutorials (requested)
+      try { setTimeout(() => navigate('/onboardingtutorials', { replace: true }), 50); } catch {}
+      // fallback navigation based on user doc (kept for safety)
+      await navigateAfterAuth(navigate);
     } catch (e: any) {
       setError(e?.message || 'Failed to register');
     }
@@ -768,6 +791,7 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
 
 
 
