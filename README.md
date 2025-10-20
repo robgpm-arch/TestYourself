@@ -4,6 +4,18 @@
 
 A comprehensive cross-platform quiz application built with React, TypeScript, and Capacitor. Deploy seamlessly across Web, Android, and iOS platforms with a unified codebase.
 
+## Windows commits: skipping detect-secrets locally (CI enforces)
+
+detect-secrets pre-commit can intermittently fail on Windows with “Unable to read baseline.” Use this helper for local commits; CI still runs the Linux Secret Scan workflow and blocks leaks.
+
+```powershell
+pwsh tools/commit.ps1 -m "feat: your message"
+# or include other flags:
+pwsh tools/commit.ps1 -m "chore: update" --signoff
+```
+
+The helper sets `SKIP=detect-secrets` only for the commit process. Secret scanning will still run in GitHub Actions.
+
 ## 🚀 Quick Start
 
 ### Prerequisites

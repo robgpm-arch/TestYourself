@@ -1,4 +1,6 @@
 ﻿import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+// Fallback if tsconfig paths not set:
+// import { bindActiveDevice } from '../../lib/sessionBinding';
 import '@/lib/auth/bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -387,7 +389,7 @@ const Register: React.FC = () => {
       // Bind device, but donâ€™t block registration if it hiccups
       try {
         await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
-      } catch (e) {\n        console.warn('[register] bindActiveDevice best-effort error:', e);\n      }
+      } catch (e) { console.warn('[register] bindActiveDevice best-effort error:', e); }
       // Persist profile snapshot (redundant-safe merge) and proceed
       try {
         await saveUserProfile({
@@ -789,6 +791,8 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
+
 
 
 
