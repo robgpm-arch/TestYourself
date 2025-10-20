@@ -387,9 +387,7 @@ const Register: React.FC = () => {
       // Bind device, but donâ€™t block registration if it hiccups
       try {
         await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
-      } catch {
-        // best-effort only
-      }
+      } catch (e) {\n        console.warn('[register] bindActiveDevice best-effort error:', e);\n      }
       // Persist profile snapshot (redundant-safe merge) and proceed
       try {
         await saveUserProfile({
@@ -406,7 +404,7 @@ const Register: React.FC = () => {
         localStorage.removeItem('auth_intent');
       } catch {}
       // explicit redirect to tutorials (requested)
-      try { setTimeout(() => navigate('/onboardingtutorials', { replace: true }), 50); } catch {}
+      try { setTimeout(() => { console.info('[register] → navigate(/onboardingtutorials)'); navigate('/onboardingtutorials', { replace: true }); }, 50); } catch {}
       // fallback navigation based on user doc (kept for safety)
       await navigateAfterAuth(navigate);
     } catch (e: any) {
@@ -791,6 +789,7 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
 
 
 
