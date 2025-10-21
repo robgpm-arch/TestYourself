@@ -1,7 +1,13 @@
-repos:
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
+﻿repos:
+  - repo: local
     hooks:
       - id: detect-secrets
+        name: detect-secrets
+        entry: C:/Users/Mgopi/AppData/Roaming/Python/Python313/Scripts/detect-secrets-hook.exe
+        language: system
         pass_filenames: false
-        args: ["--baseline", ".secrets.baseline"]
+        args:
+          - -C
+          - C:/Users/Mgopi/TestYourself
+          - --baseline
+          - C:/Users/Mgopi/TestYourself/.secrets.baseline

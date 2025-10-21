@@ -1,8 +1,7 @@
 import React from 'react';
-import { app, db } from '@/lib/firebase';
+import { getApp, getDb, getAuth } from '@/lib/firebaseClient';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { collection, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { getAuth, getIdTokenResult } from 'firebase/auth';
 
 const TASKS: Record<string, string> = {
   screens: 'Screens',
@@ -16,11 +15,11 @@ const TASKS: Record<string, string> = {
   searchBackfill: 'Backfill search tokens',
 };
 
-const auth = getAuth();
-
 async function assertAdmin() {
+  const auth = await getAuth();
   const user = auth.currentUser;
   if (!user) throw new Error('Not signed in.');
+  const { getIdTokenResult } = await import('firebase/auth');
   const t = await getIdTokenResult(user, true);
   if (!t.claims.admin) throw new Error('You are not an admin.');
 }
@@ -35,27 +34,46 @@ export default function SyncCenterCard() {
   const [err, setErr] = React.useState<string | null>(null);
 
   const region = import.meta.env.VITE_FUNCTIONS_REGION?.trim();
-  const fnClient = React.useMemo(() => getFunctions(app, region || undefined), [region]);
 
   // Listen to job document (status)
   React.useEffect(() => {
     if (!jobId) return;
-    return onSnapshot(
-      doc(db, 'sync_jobs', jobId),
-      s => setJob({ id: s.id, ...s.data() }),
-      e => setErr(`job listener: ${e.code} — ${e.message}`)
-    );
+    let stop: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        stop = onSnapshot(
+          doc(db, 'sync_jobs', jobId),
+          (s: any) => setJob({ id: s.id, ...s.data() }),
+          (e: any) => setErr(`job listener: ${e.code} — ${e.message}`)
+        );
+      } catch (e) {
+        console.error('job listener failed', e);
+        setErr(String(e));
+      }
+    })();
+    return () => stop?.();
   }, [jobId]);
 
   // Listen to job logs
   React.useEffect(() => {
     if (!jobId) return;
-    const qy = query(collection(db, 'sync_jobs', jobId, 'logs'), orderBy('ts', 'asc'));
-    return onSnapshot(
-      qy,
-      s => setLogs(s.docs.map(d => ({ id: d.id, ...d.data() }))),
-      e => setErr(`logs listener: ${e.code} — ${e.message}`)
-    );
+    let stop: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        const qy = query(collection(db, 'sync_jobs', jobId, 'logs'), orderBy('ts', 'asc'));
+        stop = onSnapshot(
+          qy,
+          (s: any) => setLogs(s.docs.map((d: any) => ({ id: d.id, ...d.data() }))),
+          (e: any) => setErr(`logs listener: ${e.code} — ${e.message}`)
+        );
+      } catch (e) {
+        console.error('logs listener failed', e);
+        setErr(String(e));
+      }
+    })();
+    return () => stop?.();
   }, [jobId]);
 
   const toggle = (k: string) =>
@@ -69,6 +87,8 @@ export default function SyncCenterCard() {
     setJob(null);
     try {
       await assertAdmin();
+      const app = await getApp();
+      const fnClient = getFunctions(app, region || undefined);
       const call = httpsCallable(fnClient, 'runSync');
       const res: any = await call({ tasks: selected, dryRun });
       if (!res?.data?.jobId) {

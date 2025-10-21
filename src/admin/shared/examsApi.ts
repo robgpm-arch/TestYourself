@@ -1,4 +1,4 @@
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 
 export type Exam = {
@@ -11,9 +11,18 @@ export type Exam = {
 };
 
 export function listenExams(cb: (rows: Exam[]) => void) {
-  return onSnapshot(query(collection(db, 'exams'), orderBy('order')), snap =>
-    cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) })))
-  );
+  let realUnsub: (() => void) | null = null;
+  (async () => {
+    try {
+      const db = await getDb();
+      realUnsub = onSnapshot(query(collection(db, 'exams'), orderBy('order')), (snap: any) =>
+        cb(snap.docs.map((d: any) => ({ id: d.id, ...(d.data() as any) })))
+      );
+    } catch {
+      // swallow
+    }
+  })();
+  return () => { try { realUnsub?.(); } catch {} };
 }
 
 export function listenExamsForMedium(
@@ -26,14 +35,23 @@ export function listenExamsForMedium(
     return () => {};
   }
 
-  const q = query(collection(db, 'exams'), where('mediumId', '==', medium), orderBy('order'));
-  return onSnapshot(
-    q,
-    snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))),
-    err => {
-      console.error('[exams] query error:', err);
-      onErr?.(err);
-      cb([]);
+  let realUnsub: (() => void) | null = null;
+  (async () => {
+    try {
+      const db = await getDb();
+      const q = query(collection(db, 'exams'), where('mediumId', '==', medium), orderBy('order'));
+      realUnsub = onSnapshot(
+        q,
+        (snap: any) => cb(snap.docs.map((d: any) => ({ id: d.id, ...(d.data() as any) }))),
+        (err: any) => {
+          console.error('[exams] query error:', err);
+          onErr?.(err);
+          cb([]);
+        }
+      );
+    } catch (e) {
+      onErr?.(e);
     }
-  );
+  })();
+  return () => { try { realUnsub?.(); } catch {} };
 }

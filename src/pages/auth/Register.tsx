@@ -1,7 +1,9 @@
-import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+﻿import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+// Fallback if tsconfig paths not set:
+// import { bindActiveDevice } from '../../lib/sessionBinding';
+import '@/lib/auth/bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {
-  getAuth,
   signInWithPhoneNumber,
   RecaptchaVerifier,
   EmailAuthProvider,
@@ -9,8 +11,13 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
-import { db, auth } from '@/lib/firebase';
+import { navigateSafe } from '@/lib/nav';
+import { getDb, getAuth } from '@/lib/firebaseClient';
+import { normalizeToE164, phoneToSynthEmail } from '@/lib/phoneId';
+import { confirmMoveSession } from '@/components/ConfirmMoveSession';
 import { bindActiveDevice } from '@/lib/sessionBinding';
+import { saveUserProfile } from '@/lib/saveProfile';
+import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
 import {
   CASTE_OPTIONS,
   GENDER_OPTIONS,
@@ -39,7 +46,8 @@ const Register: React.FC = () => {
 
   const ensureRecaptcha = useCallback(() => {
     if (recaptchaRef.current) return recaptchaRef.current;
-    // Ensure container exists in DOM
+    // Ensure container exists in DOM; actual RecaptchaVerifier will be
+    // constructed and attached to the auth instance at send time.
     try {
       if (typeof document !== 'undefined') {
         let el = document.getElementById('recaptcha-container');
@@ -51,11 +59,7 @@ const Register: React.FC = () => {
         }
       }
     } catch {}
-
-    recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'invisible',
-    });
-    return recaptchaRef.current;
+    return null;
   }, []);
 
   const clearRecaptcha = useCallback(() => {
@@ -63,6 +67,28 @@ const Register: React.FC = () => {
       recaptchaRef.current?.clear();
     } catch {}
     recaptchaRef.current = null;
+  }, []);
+
+  // Robust token refresh: try immediate refresh, then reload+retry with small backoff
+  const refreshUserToken = useCallback(async () => {
+    const auth = await getAuth();
+    const u = auth.currentUser;
+    if (!u) return;
+    try {
+      await u.getIdToken(true);
+      return;
+    } catch (e: any) {
+      if (e?.code === 'auth/user-token-expired' || e?.code === 'auth/id-token-expired') {
+        try {
+          await u.reload();
+          await new Promise(r => setTimeout(r, 250));
+          await u.getIdToken(true);
+          return;
+        } catch (e2) {
+          // swallow to keep UX flowing; subsequent calls will retry
+        }
+      }
+    }
   }, []);
 
   // Form state
@@ -133,22 +159,34 @@ const Register: React.FC = () => {
 
   // Check if user is already authenticated and redirect accordingly
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async user => {
-      if (user) {
-        // Check if user has completed onboarding
-        try {
-          const userDoc = await getDoc(doc(db, 'users', user.uid));
-          if (userDoc.exists() && userDoc.data()?.onboarded === true) {
-            navigate('/home');
-          } else {
-            navigate('/onboarding');
+    let unsub: any = null;
+    (async () => {
+      try {
+        const auth = await getAuth();
+        const db = await getDb();
+  unsub = auth.onAuthStateChanged(async (user: any) => {
+          if (user) {
+            try {
+              const userDoc = await getDoc(doc(db, 'users', user.uid));
+              if (userDoc.exists() && userDoc.data()?.onboarded === true) {
+                navigate('/home');
+              } else {
+                navigate('/onboarding');
+              }
+            } catch (err) {
+              console.error('Error checking user onboarding status:', err);
+            }
           }
-        } catch (err) {
-          console.error('Error checking user onboarding status:', err);
-        }
+        });
+      } catch (e) {
+        // ignore init errors
       }
-    });
-    return unsubscribe;
+    })();
+    return () => {
+      try {
+        unsub?.();
+      } catch {}
+    };
   }, [navigate]);
 
   // Resend OTP countdown timer
@@ -175,7 +213,17 @@ const Register: React.FC = () => {
     setSendingOtp(true);
 
     try {
-      const appVerifier = ensureRecaptcha();
+      const auth = await getAuth();
+      const db = await getDb(); // ensure SDK is loaded; recaptcha uses auth
+      // ensure recaptcha container exists
+      ensureRecaptcha();
+      // create verifier attached to auth
+      try {
+        recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+      } catch (e) {
+        // some environments may restrict Recaptcha; continue without it
+      }
+      const appVerifier = recaptchaRef.current as any;
       const sendPromise = signInWithPhoneNumber(auth, `+91${phone}`, appVerifier);
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('Timed out sending OTP. Please try again.')), 20000)
@@ -202,7 +250,12 @@ const Register: React.FC = () => {
     try {
       clearRecaptcha();
       confirmationResultRef.current = null;
-      const appVerifier = ensureRecaptcha();
+      const auth = await getAuth();
+      ensureRecaptcha();
+      try {
+        recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+      } catch {}
+      const appVerifier = recaptchaRef.current as any;
       const sendPromise = signInWithPhoneNumber(auth, `+91${phone}`, appVerifier);
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('Timed out sending OTP. Please try again.')), 20000)
@@ -230,11 +283,9 @@ const Register: React.FC = () => {
     setVerifyingOtp(true);
 
     try {
-      await confirmationResultRef.current.confirm(otp);
-      // Ensure fresh token for subsequent Firestore writes
-      try {
-        await auth.currentUser?.getIdToken(true);
-      } catch {}
+  await confirmationResultRef.current.confirm(otp);
+  // Ensure fresh token for subsequent Firestore writes
+  await refreshUserToken();
       setOtpVerified(true);
       setSuccess('Phone verified successfully!');
     } catch (err: any) {
@@ -262,10 +313,8 @@ const Register: React.FC = () => {
       const user = cred?.user;
       if (!user) throw new Error('No user after OTP confirmation');
 
-      try {
-        await user.getIdToken(true);
-      } catch {}
-
+      await refreshUserToken();
+      const db = await getDb();
       await setDoc(
         doc(db, 'users', user.uid),
         {
@@ -286,7 +335,14 @@ const Register: React.FC = () => {
         { merge: true }
       );
 
-      await bindActiveDevice().catch(() => {});
+      try {
+        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
+      } catch (e: any) {
+        if (e?.code === 'functions/failed-precondition' || String(e?.message || '').includes('ACTIVE_ON_ANOTHER_DEVICE')) {
+          const ok = await confirmMoveSession();
+          if (ok) { try { await withBackoff(() => bindActiveDevice(true), { onBeforeRetry: refreshIfExpired }); } catch {} }
+        }
+      }
 
       try {
         localStorage.removeItem('auth_intent');
@@ -299,13 +355,16 @@ const Register: React.FC = () => {
     }
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (e?: any) => {
+    try { e?.preventDefault?.(); e?.stopPropagation?.(); } catch {}
     try {
       setError(null);
+      const auth = await getAuth();
       const user = auth.currentUser;
       if (!user) throw new Error('User not authenticated');
       if (!otpVerified) throw new Error('Please verify your phone first.');
 
+      const db = await getDb();
       await setDoc(
         doc(db, 'users', user.uid),
         {
@@ -323,7 +382,7 @@ const Register: React.FC = () => {
           district: district || null,
           stateZone: stateZone || null,
           centralZone: centralZone || null,
-          phone: `+91${phone}`,
+          phone: normalizeToE164(`+91${phone}`, '+91'),
           onboarded: false,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -332,11 +391,12 @@ const Register: React.FC = () => {
       );
 
       if (password && password === confirmPassword && strongPwd(password)) {
-        const digits = `+91${phone}`.replace(/\D/g, '');
-        const synthEmail = `ph-${digits}@testyourself.app`;
+        const synthEmail = phoneToSynthEmail(normalizeToE164(`+91${phone}`, '+91'));
         try {
+          await refreshUserToken();
           const cred = EmailAuthProvider.credential(synthEmail, password);
           await linkWithCredential(user, cred);
+          await refreshUserToken();
           await setDoc(
             doc(db, 'users', user.uid),
             { credentials: { hasPassword: true }, updatedAt: serverTimestamp() },
@@ -352,12 +412,33 @@ const Register: React.FC = () => {
         }
       }
 
-      await bindActiveDevice();
+      // Ensure a fresh token before bind; phone OTP/linking can rotate tokens
+      await refreshUserToken();
+      // Bind device, but donâ€™t block registration if it hiccups
+      try {
+        await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
+      } catch (e) { console.warn('[register] bindActiveDevice best-effort error:', e); }
+      // Persist profile snapshot (redundant-safe merge) and proceed
+      try {
+        await saveUserProfile({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          dob: dob || null,
+          age: age ?? null,
+          onboarded: true,
+        });
+      } catch {}
+
       // release the lock and proceed
       try {
         localStorage.removeItem('auth_intent');
       } catch {}
-      navigate('/onboarding', { replace: true });
+      // explicit redirect to tutorials (requested)
+      navigateSafe(navigate, '/onboardingtutorials', { replace: true });
+      return;
+      try { setTimeout(() => { console.info('[register] → navigate(/onboardingtutorials)'); navigate('/onboardingtutorials', { replace: true }); }, 50); } catch {}
+      // fallback navigation based on user doc (kept for safety)
+      await navigateAfterAuth(navigate);
     } catch (e: any) {
       setError(e?.message || 'Failed to register');
     }
@@ -653,7 +734,7 @@ const Register: React.FC = () => {
               <div className="mt-3">
                 {resendTimer > 0 ? (
                   <p className="text-sm text-gray-600">
-                    Didn’t receive? Resend OTP in{' '}
+                    Didnâ€™t receive? Resend OTP in{' '}
                     <span className="font-semibold text-indigo-600">{resendTimer}s</span>
                   </p>
                 ) : (
@@ -663,7 +744,7 @@ const Register: React.FC = () => {
                     disabled={!isResendActive || sendingOtp}
                     className="text-sm underline text-indigo-600 hover:text-indigo-700 disabled:text-gray-400"
                   >
-                    {sendingOtp ? 'Resending…' : 'Resend OTP'}
+                    {sendingOtp ? 'Resendingâ€¦' : 'Resend OTP'}
                   </button>
                 )}
               </div>
@@ -724,7 +805,7 @@ const Register: React.FC = () => {
               {otpVerified && (
                 <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
                   <p className="text-green-700 text-sm font-medium">
-                    ✓ Phone verified successfully!
+                    âœ“ Phone verified successfully!
                   </p>
                 </div>
               )}
@@ -740,3 +821,13 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
+
+
+
+
+
+
+
+
+

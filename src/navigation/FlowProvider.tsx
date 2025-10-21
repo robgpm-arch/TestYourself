@@ -3,7 +3,7 @@ import { FALLBACK_FLOWS, FlowKey } from './flows';
 
 // OPTIONAL Firestore loading
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 
 type FlowMap = Partial<Record<FlowKey, string[]>>;
 
@@ -24,6 +24,7 @@ export function FlowProvider({ children }: { children: React.ReactNode }) {
         const keys: FlowKey[] = ['onboarding', 'quiz', 'profile'];
         const loaded: FlowMap = {};
         for (const fk of keys) {
+          const db = await getDb();
           const qy = query(
             collection(db, 'screens'),
             where('flow', '==', fk),

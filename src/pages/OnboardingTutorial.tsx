@@ -139,6 +139,8 @@ const OnboardingTutorial: React.FC<OnboardingTutorialProps> = ({ onComplete }) =
 
   const getStarted = async () => {
     try {
+      const auth = await import('../lib/firebaseClient').then(m => m.getAuth());
+      const db = await import('../lib/firebaseClient').then(m => m.getDb());
       const uid = auth.currentUser?.uid;
       if (uid) {
         await setDoc(

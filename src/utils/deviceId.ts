@@ -1,10 +1,11 @@
 import { getInstallations, getId } from 'firebase/installations';
-import { app } from '@/lib/firebase';
+import { getApp } from '@/lib/firebaseClient';
 
 const FALLBACK_KEY = 'ty_device_id_v1';
 
 export async function getDeviceId(): Promise<string> {
   try {
+    const app = await getApp();
     const inst = getInstallations(app);
     const fid = await getId(inst); // stable per browser profile
     if (fid) return `fid:${fid}`;

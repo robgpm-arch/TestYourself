@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { bindActiveDevice } from '@/lib/sessionBinding';
+import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
+import { confirmMoveSession } from '@/components/ConfirmMoveSession';
 import LoginSignup from '../pages/LoginSignup';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
 
@@ -36,7 +38,21 @@ export default function Login() {
     <LoginSignup
       initialTab="login"
       onSuccess={async () => {
-        await bindActiveDevice().catch(() => {});
+        try {
+          await withBackoff(() => bindActiveDevice(), { onBeforeRetry: refreshIfExpired });
+        } catch (e: any) {
+          if (
+            e?.code === 'functions/failed-precondition' ||
+            String(e?.message || '').includes('ACTIVE_ON_ANOTHER_DEVICE')
+          ) {
+            const ok = await confirmMoveSession();
+            if (ok) {
+              try {
+                await withBackoff(() => bindActiveDevice(true), { onBeforeRetry: refreshIfExpired });
+              } catch {}
+            }
+          }
+        }
         // clear the lock before redirecting
         localStorage.removeItem('auth_intent');
         await navigateAfterAuth(navigate);

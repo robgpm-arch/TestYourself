@@ -1,14 +1,16 @@
-import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { getAuth, getDb } from '../lib/firebaseClient';
 
 export async function getUserState() {
-  const user = getAuth().currentUser;
+  const auth = await getAuth();
+  const user = auth.currentUser;
   if (!user) return { signedIn: false };
 
-  const token = await user.getIdTokenResult(true);
+  const { getIdTokenResult } = await import('firebase/auth');
+  const token = await getIdTokenResult(user, true);
   const isAdmin = !!token.claims?.admin;
 
+  const db = await getDb();
   const snap = await getDoc(doc(db, 'users', user.uid));
   const hasUserDoc = snap.exists();
   const onboarded = hasUserDoc && snap.data()?.onboarded === true;

@@ -14,7 +14,7 @@ import {
   onSnapshot,
   orderBy,
 } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { getDb } from '../lib/firebaseClient';
 
 export type CatalogEntity = {
   id: string;
@@ -34,11 +34,13 @@ export default class AdminCatalogService {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
+    const db = await getDb();
     const ref = await addDoc(collection(db, collectionName), payload);
     return ref.id;
   }
 
   static async updateItem(collectionName: string, id: string, data: any, userId?: string) {
+    const db = await getDb();
     await updateDoc(doc(db, collectionName, id), {
       ...data,
       updatedBy: userId,
@@ -47,6 +49,7 @@ export default class AdminCatalogService {
   }
 
   static async deleteItem(collectionName: string, id: string) {
+    const db = await getDb();
     await deleteDoc(doc(db, collectionName, id));
   }
 
@@ -60,11 +63,13 @@ export default class AdminCatalogService {
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
+    const db = await getDb();
     const ref = await addDoc(collection(db, collectionName), payload);
     return ref.id;
   }
 
   static async toggleVisibility(collectionName: string, id: string, isVisible: boolean) {
+    const db = await getDb();
     await updateDoc(doc(db, collectionName, id), {
       isVisible,
       updatedAt: serverTimestamp(),
@@ -75,14 +80,24 @@ export default class AdminCatalogService {
     collectionName: string,
     callback: (items: T[]) => void
   ) {
-    const q = query(collection(db, collectionName), orderBy('order', 'asc'));
-    return onSnapshot(q, snapshot => {
-      const items = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as T[];
-      callback(items);
-    });
+    let stop: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        const q = query(collection(db, collectionName), orderBy('order', 'asc'));
+        stop = onSnapshot(q, snapshot => {
+          const items = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as T[];
+          callback(items);
+        });
+      } catch (e) {
+        console.error('subscribeToCollection failed', e);
+        callback([] as unknown as T[]);
+      }
+    })();
+    return () => stop?.();
   }
 }
 
@@ -108,12 +123,14 @@ export async function createSubject(input: SubjectInput) {
     updatedAt: serverTimestamp(),
   };
   // Use deterministic id if you prefer: const ref = doc(db, SUBJECTS_COLL, slug)
+  const db = await getDb();
   const ref = doc(collection(db, SUBJECTS_COLL));
   await setDoc(ref, payload);
   return { id: ref.id, ...payload };
 }
 
 export async function updateSubject(id: string, patch: Partial<SubjectInput>) {
+  const db = await getDb();
   await updateDoc(doc(db, SUBJECTS_COLL, id), {
     ...patch,
     updatedAt: serverTimestamp(),
@@ -121,10 +138,12 @@ export async function updateSubject(id: string, patch: Partial<SubjectInput>) {
 }
 
 export async function deleteSubject(id: string) {
+  const db = await getDb();
   await deleteDoc(doc(db, SUBJECTS_COLL, id));
 }
 
 export async function duplicateSubject(id: string) {
+  const db = await getDb();
   const snap = await getDoc(doc(db, SUBJECTS_COLL, id));
   if (!snap.exists()) throw new Error('Subject not found');
   const src = snap.data();
@@ -139,5 +158,6 @@ export async function duplicateSubject(id: string) {
 }
 
 export async function toggleSubjectEnabled(id: string, enabled: boolean) {
+  const db = await getDb();
   await updateDoc(doc(db, SUBJECTS_COLL, id), { enabled, updatedAt: serverTimestamp() });
 }

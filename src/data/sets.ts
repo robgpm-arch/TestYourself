@@ -1,7 +1,8 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 
 export async function getSets(courseId: string, subjectId: string, chapterId: string) {
+  const db = await getDb();
   const ref = collection(
     db,
     `courses/${courseId}/subjects/${subjectId}/chapters/${chapterId}/sets`
@@ -12,6 +13,7 @@ export async function getSets(courseId: string, subjectId: string, chapterId: st
 
 export async function getQuestions(path: string) {
   // path = courses/..../sets/{setId}
+  const db = await getDb();
   const ref = collection(db, `${path}/questions`);
   const snap = await getDocs(query(ref, orderBy('id', 'asc')));
   return snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));

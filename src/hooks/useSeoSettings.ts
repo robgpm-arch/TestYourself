@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { getDb } from '../lib/firebaseClient';
 
 interface SeoSettings {
   title?: string;
@@ -27,12 +27,20 @@ export function useSeoSettings() {
   const [seo, setSeo] = useState<SeoSettings>(DEFAULT_SEO);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'app_settings', 'seo'), snap => {
-      if (snap.exists()) {
-        setSeo({ ...DEFAULT_SEO, ...snap.data() });
+    let unsub: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        unsub = onSnapshot(doc(db, 'app_settings', 'seo'), (snap: any) => {
+          if (snap.exists()) {
+            setSeo({ ...DEFAULT_SEO, ...snap.data() });
+          }
+        });
+      } catch (e) {
+        console.error('useSeoSettings subscription failed', e);
       }
-    });
-    return unsub;
+    })();
+    return () => unsub?.();
   }, []);
 
   return seo;

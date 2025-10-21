@@ -1,4 +1,4 @@
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 
 export type Board = {
@@ -19,14 +19,33 @@ export function listenBoardsForMedium(
     return () => {};
   }
 
-  const q = query(collection(db, 'boards'), where('mediumId', '==', medium), orderBy('order'));
-  return onSnapshot(
-    q,
-    snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))),
-    err => {
-      console.error('[boards] query error:', err);
-      onErr?.(err);
-      cb([]);
+  let realUnsub: (() => void) | null = null;
+  let cancelled = false;
+
+  (async () => {
+    try {
+      const db = await getDb();
+      if (cancelled) return;
+      const q = query(collection(db, 'boards'), where('mediumId', '==', medium), orderBy('order'));
+      realUnsub = onSnapshot(
+        q,
+        (snap: any) => cb(snap.docs.map((d: any) => ({ id: d.id, ...(d.data() as any) }))),
+        (err: any) => {
+          console.error('[boards] query error:', err);
+          onErr?.(err);
+          cb([]);
+        }
+      );
+    } catch (e) {
+      // ignore
+      onErr?.(e);
     }
-  );
+  })();
+
+  return () => {
+    cancelled = true;
+    try {
+      realUnsub?.();
+    } catch {}
+  };
 }

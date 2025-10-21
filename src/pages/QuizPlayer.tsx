@@ -2,8 +2,9 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { db } from '../lib/firebase';
+import { getDb, getAuth } from '@/lib/firebaseClient';
+import { DatabaseService } from '../services/databaseService';
+import { saveUserProfile } from '@/lib/saveProfile';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import { ChapterInfo, MCQQuestion, QuizSet } from './ChapterSets';
@@ -79,8 +80,10 @@ async function recordQuizResult(result: {
   state?: string | null;
   district?: string | null;
 }) {
-  const uid = getAuth().currentUser?.uid;
+  const auth = await getAuth();
+  const uid = auth.currentUser?.uid;
   if (!uid) return;
+  const db = await getDb();
   await addDoc(collection(db, 'quiz_results'), {
     uid,
     ...result,
@@ -276,6 +279,47 @@ const QuizPlayer: React.FC<QuizPlayerProps> = ({ session, onExit, onComplete, th
       subjectId: session.chapterInfo.chapter.toLowerCase(),
       chapterId: session.set.name.toLowerCase(),
     }).catch(err => console.error('Failed to record quiz result:', err));
+
+    // Update aggregated user stats and per-course progress (best-effort)
+    try {
+      (async () => {
+        try {
+          const auth = await getAuth();
+          const uid = auth.currentUser?.uid;
+          if (!uid) return;
+
+          DatabaseService.updateUserStats(uid, {
+            score: scorePercentage,
+            totalQuestions: quizData.totalQuestions,
+            correctAnswers: correctCount,
+            timeSpent,
+            subject: session.chapterInfo.subject,
+          }).catch((err: any) => console.error('Failed to update user stats:', err));
+
+          // persist a lightweight progress snapshot on the user document
+          saveUserProfile({
+            lastQuiz: {
+              title: quizData.title,
+              score: scorePercentage,
+              correct: correctCount,
+              total: quizData.totalQuestions,
+              timeSpent,
+              course: session.chapterInfo.subject,
+              subject: session.chapterInfo.chapter,
+              chapter: session.set.name,
+              completedAt: new Date().toISOString(),
+            },
+            // ensure selected course is stored for profile display
+            selectedCourse: session.chapterInfo.subject,
+            selectedSubject: session.chapterInfo.chapter,
+          }).catch((err: any) => console.error('Failed to save profile progress:', err));
+        } catch (err) {
+          console.error('Error persisting quiz completion data', err);
+        }
+      })();
+    } catch (e) {
+      console.error('Error launching persistence task', e);
+    }
 
     const completionHandler = onCompleteRef.current;
 

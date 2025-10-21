@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from './lib/firebase';
+import { getDb, getAuth } from './lib/firebaseClient';
+import { navigateSafe } from '@/lib/nav';
 import SplashScreen from './pages/SplashScreen';
 import OnboardingTutorial from './pages/OnboardingTutorial';
 import Login from './screens/Login';
@@ -18,22 +19,21 @@ import LoginSignup from './pages/LoginSignup';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import AdminPanel from './pages/AdminPanel';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminFileManager from './pages/AdminFileManager';
-import AdminLogin from './pages/AdminLogin';
+const AdminPanel = React.lazy(() => import('./pages/AdminPanel'));
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+const AdminFileManager = React.lazy(() => import('./pages/AdminFileManager'));
+const AdminLogin = React.lazy(() => import('./pages/AdminLogin'));
 import { RequireAdmin, Guarded } from './routes/guards.tsx';
 import { getUserState, routeAfterLoginOrRegister } from './routes/guards.ts';
 
 // put near the top of App.tsx
 async function routeAfterUserAuth(navigate: ReturnType<typeof useNavigate>) {
-  const auth = getAuth();
+  const auth = await getAuth();
   const user = auth.currentUser;
   if (!user) return; // caller decides what to do if not signed in
-
+  const db = await getDb();
   const snap = await getDoc(doc(db, 'users', user.uid));
   const onboarded = snap.exists() && snap.data()?.onboarded === true;
-
   navigate(onboarded ? '/profile' : '/onboarding', { replace: true });
 }
 import QuizThemesList from './pages/admin/QuizThemesList';
@@ -57,12 +57,14 @@ import QuizPlayerNumerical from './pages/QuizPlayerNumerical';
 import QuizPlayerComprehension from './pages/QuizPlayerComprehension';
 import ExamMode from './pages/ExamMode';
 import ResultsCelebration from './pages/ResultsCelebration';
-import DetailedAnalytics, { AnalyticsData } from './pages/DetailedAnalytics';
-import Leaderboards from './pages/Leaderboards';
+const DetailedAnalytics = React.lazy(() => import('./pages/DetailedAnalytics'));
+type AnalyticsData = import('./pages/DetailedAnalytics').AnalyticsData;
+const Leaderboards = React.lazy(() => import('./pages/Leaderboards'));
 import ChapterSets, { ChapterInfo, QuizSet, MCQQuestion } from './pages/ChapterSets';
 import AchievementCelebration from './pages/AchievementCelebration';
 import ChangeCourse from './pages/ChangeCourse';
 import SeoHead from './components/SeoHead';
+import { saveUserProfile } from '@/lib/saveProfile';
 import { watchDeviceClaim } from './lib/sessionBinding';
 
 const DEFAULT_THEME = 'classic';
@@ -374,7 +376,7 @@ function App() {
   );
 
   // Control whether to show splash or app shell
-  const showShell = flowStage !== 'splash';
+  const showShell = true;
 
   useEffect(() => {
     if (flowStage === 'splash') {
@@ -391,48 +393,59 @@ function App() {
   useEffect(() => {
     if (!hasShownSplash || !userInteracted) return;
 
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async user => {
-      if (!user) return; // don't auto-redirect when signed out
-      if (flowStage === 'splash') return; // don't redirect while splash is visible
+    let unsub: any = null;
+    (async () => {
+      try {
+        const auth = await getAuth();
+        unsub = onAuthStateChanged(auth, async (user: any) => {
+          if (!user) return; // don't auto-redirect when signed out
+          if (flowStage === 'splash') return; // don't redirect while splash is visible
 
-      // --- AUTH INTENT LOCK: do not auto-redirect while on /register or /login or in flow mode ---
-      const path = location?.pathname || '';
-      const intent = localStorage.getItem('auth_intent'); // 'register' | 'login' | null
-      const inFlowMode = flowStage === 'register' || flowStage === 'login';
-      if (
-        inFlowMode ||
-        (path === '/register' && intent === 'register') ||
-        (path === '/login' && intent === 'login')
-      ) {
-        // stay on the page until the screen completes the flow
-        return;
-      }
-
-      // If user came from the Admin button and they ARE admin -> push to admin
-      if (postAuthRedirect) {
-        try {
-          const tokenResult = await user.getIdTokenResult(true);
-          const isAdmin = !!tokenResult.claims?.admin;
-          if (isAdmin) {
-            setIsAuthenticated(true);
-            setFlowStage('none');
-            navigate(postAuthRedirect, { replace: true });
+          // --- AUTH INTENT LOCK: do not auto-redirect while on /register or /login or in flow mode ---
+          const path = location?.pathname || '';
+          const intent = localStorage.getItem('auth_intent'); // 'register' | 'login' | null
+          const inFlowMode = flowStage === 'register' || flowStage === 'login';
+          if (
+            inFlowMode ||
+            (path === '/register' && intent === 'register') ||
+            (path === '/login' && intent === 'login')
+          ) {
+            // stay on the page until the screen completes the flow
             return;
           }
-        } catch (e) {
-          // fallback -> onboard
-          navigate('/onboarding', { replace: true });
-        }
+
+          // If user came from the Admin button and they ARE admin -> push to admin
+          if (postAuthRedirect) {
+            try {
+              const tokenResult = await user.getIdTokenResult(true);
+              const isAdmin = !!tokenResult.claims?.admin;
+              if (isAdmin) {
+                setIsAuthenticated(true);
+                setFlowStage('none');
+                navigate(postAuthRedirect, { replace: true });
+                return;
+              }
+            } catch (e) {
+              // fallback -> onboard
+              navigate('/onboarding', { replace: true });
+            }
+          }
+
+          // Normal user flow (and admins who did NOT use the admin button)
+          await routeAfterUserAuth(navigate);
+          setIsAuthenticated(true);
+          setFlowStage('none');
+        });
+      } catch (e) {
+        // ignore
       }
+    })();
 
-      // Normal user flow (and admins who did NOT use the admin button)
-      await routeAfterUserAuth(navigate);
-      setIsAuthenticated(true);
-      setFlowStage('none');
-    });
-
-    return unsubscribe;
+    return () => {
+      try {
+        unsub?.();
+      } catch {}
+    };
   }, [hasShownSplash, userInteracted, navigate, postAuthRedirect, flowStage, location]);
   const [selectedMedium, setSelectedMedium] = useState('');
   const [selectedBoardExam, setSelectedBoardExam] = useState('');
@@ -632,26 +645,28 @@ function App() {
   // Admin button -> navigate to admin login
   const handleAdminFromSplash = () => {
     setUserInteracted(true);
-    navigate('/admin/login');
+    navigateSafe(navigate, '/admin/login', { replace: false });
   };
 
   // Register -> show register screen
   const handleRegisterFromSplash = () => {
     setUserInteracted(true);
     localStorage.setItem('auth_intent', 'register');
+    // Keep flow stage for auth-intent lock, but also navigate to route
     setFlowStage('register');
+    navigateSafe(navigate, '/register', { replace: false });
   };
 
   // Login -> if signed-in -> profile, else login screen
   const handleLoginFromSplash = async () => {
     setUserInteracted(true);
-    const auth = getAuth();
+    const auth = await getAuth();
     if (auth.currentUser) {
       await routeAfterUserAuth(navigate);
       return;
     }
     localStorage.setItem('auth_intent', 'login');
-    navigate('/login');
+    navigateSafe(navigate, '/login', { replace: false });
   };
 
   const handleSignIn = () => {
@@ -673,18 +688,28 @@ function App() {
     setSelectedMedium(medium);
     localStorage.setItem('medium_selected', 'true');
     setFlowStage('boardExamSelector');
+    try {
+      // best-effort persist selection to the user's profile
+      saveUserProfile({ selectedMedium: medium }).catch(() => {});
+    } catch {}
   };
 
   const handleBoardExamSelect = (selection: string) => {
     setSelectedBoardExam(selection);
     localStorage.setItem('board_exam_selected', 'true');
     setFlowStage('classCourseSelector');
+    try {
+      saveUserProfile({ selectedBoardExam: selection }).catch(() => {});
+    } catch {}
   };
 
   const handleClassCourseSelect = (selection: string) => {
     setSelectedClassCourse(selection);
     localStorage.setItem('class_course_selected', 'true');
     setFlowStage('subjectSelector');
+    try {
+      saveUserProfile({ selectedClassCourse: selection }).catch(() => {});
+    } catch {}
   };
 
   const handleSubjectSelect = (subject: string) => {
@@ -692,6 +717,9 @@ function App() {
     setSelectedChapterInfo(null);
     localStorage.setItem('subject_selected', 'true');
     setFlowStage('chapterSelection');
+    try {
+      saveUserProfile({ selectedSubject: subject }).catch(() => {});
+    } catch {}
   };
 
   const handleSubjectComingSoon = (subjectId: string) => {
@@ -716,302 +744,63 @@ function App() {
   return (
     <>
       <SeoHead />
-
-      {flowStage === 'splash' && (
-        <SplashScreen
-          onAdmin={handleAdminFromSplash}
-          onRegister={handleRegisterFromSplash}
-          onLogin={handleLoginFromSplash}
-          onUserInteracted={() => setUserInteracted(true)}
+      {/* Always mount routes */}
+      <Routes>
+        <Route path="/" element={<SplashScreen onAdmin={handleAdminFromSplash} onRegister={handleRegisterFromSplash} onLogin={handleLoginFromSplash} onUserInteracted={() => setUserInteracted(true)} />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/onboardingtutorials" element={<OnboardingTutorial />} />
+        <Route
+          path="/flow/mediumPicker"
+          element={<MediumPicker onMediumSelect={handleMediumSelect} />}
         />
-      )}
-
-      {/* APP SHELL ONLY (routes) */}
-      {showShell && (
-        <>
-          {flowStage === 'login' && (
-            <LoginSignup
-              initialTab="login"
-              onSuccess={() => routeAfterUserAuth(navigate)}
-              onSkip={() => {
-                localStorage.removeItem('test_show_login');
-                setFlowStage('splash');
-              }}
-            />
-          )}
-
-          {flowStage === 'register' && <Register onSuccess={() => setFlowStage('onboarding')} />}
-
-          {flowStage === 'onboarding' && (
-            <OnboardingTutorial onComplete={handleOnboardingComplete} />
-          )}
-
-          {flowStage === 'mediumPicker' && <MediumPicker onMediumSelect={handleMediumSelect} />}
-
-          {flowStage === 'boardExamSelector' && (
-            <BoardExamSelector onSelection={handleBoardExamSelect} />
-          )}
-
-          {flowStage === 'classCourseSelector' && (
+        <Route
+          path="/flow/boardExamSelector"
+          element={<BoardExamSelector onSelection={handleBoardExamSelect} />}
+        />
+        <Route
+          path="/flow/subjectSelector"
+          element={<SubjectSelector onSubjectSelect={handleSubjectSelect} />}
+        />
+        <Route
+          path="/flow/classCourse"
+          element={
             <ClassCourseSelector
               selectedBoardExam={selectedBoardExam}
               onSelection={handleClassCourseSelect}
             />
-          )}
-
-          {flowStage === 'subjectSelector' && (
-            <SubjectSelector
-              onSubjectSelect={handleSubjectSelect}
-              comingSoonSubjects={Object.keys(COMING_SOON_SUBJECTS)}
-              onSubjectComingSoon={handleSubjectComingSoon}
-            />
-          )}
-
-          {flowStage === 'comingSoon' && comingSoonSubject && (
-            <ComingSoon
-              initialState={comingSoonSubject}
-              onBack={() => {
-                setComingSoonSubject(null);
-                setSelectedSubject('');
-                setFlowStage('subjectSelector');
-              }}
-              onBackToCourses={() => {
-                setComingSoonSubject(null);
-                setSelectedSubject('');
-                setFlowStage('classCourseSelector');
-              }}
-              onSuggestTopics={() => {
-                window.location.href = '/settings?tab=feedback';
-              }}
-              onNotify={() => new Promise<void>(resolve => setTimeout(resolve, 500))}
-            />
-          )}
-
-          {flowStage === 'chapterSelection' && selectedSubject && (
+          }
+        />
+        <Route
+          path="/flow/chapters"
+          element={
             <ChapterSelection
               subjectId={selectedSubject}
               subjectName={formatSubjectName(selectedSubject)}
               chapters={SUBJECT_CHAPTERS[selectedSubject] ?? fallbackChapters}
-              onSelect={chapter => {
-                const chapterInfo: ChapterInfo = {
+              onSelect={(item: ChapterSelectionItem) => {
+                setSelectedChapterInfo({
                   subject: formatSubjectName(selectedSubject),
-                  chapter: chapter.title,
-                  chapterNumber: chapter.number,
-                };
-                setSelectedChapterInfo(chapterInfo);
+                  chapter: item.title,
+                  chapterNumber: item.number ?? 1,
+                });
                 setFlowStage('chapterSets');
               }}
-              onBack={() => {
-                setSelectedSubject('');
-                setSelectedChapterInfo(null);
-                setFlowStage('subjectSelector');
-              }}
+              onBack={() => setFlowStage('subjectSelector')}
             />
-          )}
-
-          {flowStage === 'chapterSets' && (
-            <ChapterSets
-              initialChapterInfo={selectedChapterInfo ?? getInitialChapterInfo(selectedSubject)}
-              onBack={() => {
-                setFlowStage('chapterSelection');
-              }}
-              onSetStart={({ set, questions, chapterInfo }) => {
-                setQuizResult(null);
-                setActiveQuizSession({ set, questions, chapterInfo });
-                setFlowStage('quizInstructions');
-              }}
-              onContinueToTheme={() => setFlowStage('themePickerFlow')}
-            />
-          )}
-
-          {flowStage === 'quizInstructions' && activeQuizSession && (
-            <QuizInstructions
-              session={activeQuizSession}
-              isSubscriber={isSubscriber}
-              onBack={() => setFlowStage('chapterSets')}
-              onStartQuiz={() => {
-                setResultsSubView('results');
-                setFlowStage('themePickerFlow');
-              }}
-              onAutoRun={() => {
-                setResultsSubView('results');
-                setFlowStage('autoRun');
-              }}
-              onUnlockSubscriber={() => {
-                if (process.env.NODE_ENV !== 'production') {
-                  localStorage.setItem('demo_subscriber', 'true');
-                }
-                setIsSubscriber(process.env.NODE_ENV !== 'production');
-              }}
-            />
-          )}
-
-          {flowStage === 'autoRun' && activeQuizSession && (
-            <QuizAutoRun
-              session={activeQuizSession}
-              onExit={() => setFlowStage('quizInstructions')}
-              onContinueToQuiz={() => setFlowStage('themePickerFlow')}
-              onReplay={() => {
-                // no-op placeholder for analytics hook later
-              }}
-            />
-          )}
-
-          {flowStage === 'themePickerFlow' && (
-            <ThemePicker
-              initialTheme={selectedTheme}
-              onBack={() => {
-                if (activeQuizSession) {
-                  setFlowStage('chapterSets');
-                } else {
-                  setFlowStage('chapterSets');
-                }
-              }}
-              onApply={themeId => {
-                setSelectedTheme(themeId);
-                localStorage.setItem('quiz_theme', themeId);
-                if (activeQuizSession) {
-                  setQuizResult(null);
-                  setResultsSubView('results');
-                  setQuizRunId(prev => prev + 1);
-                  setFlowStage('quizPlayer');
-                } else {
-                  setFlowStage('chapterSets');
-                }
-              }}
-            />
-          )}
-
-          {flowStage === 'quizPlayer' && activeQuizSession && (
-            <QuizPlayer
-              key={quizRunId}
-              session={activeQuizSession}
-              themeId={selectedTheme}
-              onExit={() => {
-                setQuizResult(null);
-                setResultsSubView('results');
-                setActiveQuizSession(null);
-                setFlowStage('chapterSets');
-              }}
-              onComplete={result => {
-                setQuizResult(result);
-                setResultsSubView('results');
-                setFlowStage('results');
-              }}
-            />
-          )}
-
-          {flowStage === 'results' && quizResult && resultsSubView === 'results' && (
-            <ResultsCelebration
-              score={quizResult.scorePercentage}
-              totalQuestions={quizResult.totalQuestions}
-              correctAnswers={quizResult.correctCount}
-              timeSpent={quizResult.timeSpent}
-              onReviewAnswers={() => {
-                setQuizRunId(prev => prev + 1);
-                setResultsSubView('results');
-                setFlowStage('quizPlayer');
-              }}
-              onPlayAgain={() => {
-                setQuizRunId(prev => prev + 1);
-                setResultsSubView('results');
-                setFlowStage('quizPlayer');
-              }}
-              onBackToHome={() => {
-                setQuizResult(null);
-                setActiveQuizSession(null);
-                setResultsSubView('results');
-                setFlowStage('chapterSets');
-              }}
-              onViewAnalytics={() => setResultsSubView('analytics')}
-              onViewLeaderboard={() => setResultsSubView('leaderboard')}
-            />
-          )}
-
-          {flowStage === 'results' && quizResult && resultsSubView === 'analytics' && (
-            <DetailedAnalytics
-              analyticsData={analyticsData}
-              onBack={() => setResultsSubView('results')}
-              onContinue={() => setResultsSubView('leaderboard')}
-            />
-          )}
-
-          {flowStage === 'results' && quizResult && resultsSubView === 'leaderboard' && (
-            <Leaderboards
-              onBack={() => setResultsSubView('results')}
-              onContinue={() => {
-                setFlowStage('none');
-                navigate('/profile');
-              }}
-            />
-          )}
-
-          {flowStage === 'none' && (
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/onboarding" element={<OnboardingTutorial />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/change-course" element={<ChangeCourse />} />
-              <Route
-                path="/home"
-                element={
-                  <Guarded>
-                    <Home />
-                  </Guarded>
-                }
-              />
-              <Route
-                path="/syllabus"
-                element={
-                  <Guarded>
-                    <SyllabusBrowser />
-                  </Guarded>
-                }
-              />
-              <Route
-                path="/chapters"
-                element={
-                  <Guarded>
-                    <div>Chapters - Coming Soon</div>
-                  </Guarded>
-                }
-              />
-              <Route
-                path="/sets"
-                element={
-                  <Guarded>
-                    <ChapterSets />
-                  </Guarded>
-                }
-              />
-              <Route
-                path="/theme"
-                element={
-                  <Guarded>
-                    <ThemePicker />
-                  </Guarded>
-                }
-              />
-              <Route
-                path="/quiz"
-                element={
-                  <Guarded>
-                    <div>Quiz - Coming Soon</div>
-                  </Guarded>
-                }
-              />
-              <Route path="/results" element={<ResultsCelebration />} />
-              <Route path="/leaderboard" element={<Leaderboards />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route element={<RequireAdmin />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              </Route>
-              <Route path="*" element={<Home />} />
-            </Routes>
-          )}
-        </>
-      )}
+          }
+        />
+  <Route path="/home" element={<Guarded><Home /></Guarded>} />
+  <Route path="/profile" element={<Profile />} />
+  <Route path="/settings" element={<Settings />} />
+  <Route path="/admin/login" element={<Suspense><AdminLogin /></Suspense>} />
+  <Route element={<RequireAdmin />}><Route path="/admin" element={<Suspense><AdminPanel /></Suspense>} /></Route>
+  <Route element={<RequireAdmin />}><Route path="/admin/dashboard" element={<Suspense><AdminDashboard /></Suspense>} /></Route>
+  <Route element={<RequireAdmin />}><Route path="/admin/files" element={<Suspense><AdminFileManager /></Suspense>} /></Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
       {/* Hidden anchor for Firebase reCAPTCHA */}
       <div id="send-otp-anchor" style={{ display: 'none' }} />

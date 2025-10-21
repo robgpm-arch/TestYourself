@@ -10,7 +10,7 @@ import {
   User as FirebaseUser,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db, googleProvider, facebookProvider } from '../lib/firebase';
+import { getAuth, getDb } from '../lib/firebaseClient';
 import { User, UserProfile, UserPreferences, UserStats, COLLECTIONS } from '../types/firebase';
 
 export class AuthService {
@@ -20,6 +20,7 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<{ user: User | null; firebaseUser: FirebaseUser }> {
+    const auth = await getAuth();
     const { user } = await signInWithEmailAndPassword(auth, email, password);
     const userData = await this.ensureUserDocument(user);
     await this.updateLastLogin(user.uid); // upsert-safe
@@ -31,6 +32,7 @@ export class AuthService {
     password: string,
     displayName: string
   ): Promise<{ user: User; firebaseUser: FirebaseUser }> {
+    const auth = await getAuth();
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
     if (displayName) await updateProfile(user, { displayName });
     const userData = await this.createUserDocument(user, { displayName });
@@ -39,58 +41,81 @@ export class AuthService {
   }
 
   static async signInWithGoogle(): Promise<User> {
-    const { user } = await signInWithPopup(auth, googleProvider);
+    const auth = await getAuth();
+    const { GoogleAuthProvider } = await import('firebase/auth');
+    const provider = new GoogleAuthProvider();
+    provider.addScope('profile');
+    provider.addScope('email');
+    const { user } = await signInWithPopup(auth, provider as any);
     const userData = await this.ensureUserDocument(user);
     await this.updateLastLogin(user.uid);
     return userData!;
   }
 
   static async signInWithFacebook(): Promise<User> {
-    const { user } = await signInWithPopup(auth, facebookProvider);
+    const auth = await getAuth();
+    const { FacebookAuthProvider } = await import('firebase/auth');
+    const provider = new FacebookAuthProvider();
+    provider.addScope('email');
+    const { user } = await signInWithPopup(auth, provider as any);
     const userData = await this.ensureUserDocument(user);
     await this.updateLastLogin(user.uid);
     return userData!;
   }
 
   static async signOutUser(): Promise<void> {
+    const auth = await getAuth();
     await signOut(auth);
   }
 
   static async resetPassword(email: string): Promise<void> {
+    const auth = await getAuth();
     await sendPasswordResetEmail(auth, email);
   }
 
   static async sendVerificationEmail(): Promise<void> {
+    const auth = await getAuth();
     const user = auth.currentUser;
     if (!user) throw new Error('No authenticated user');
     await sendEmailVerification(user);
   }
 
-  static getCurrentUser(): FirebaseUser | null {
+  static async getCurrentUser(): Promise<FirebaseUser | null> {
+    const auth = await getAuth();
     return auth.currentUser;
   }
 
   static onAuthStateChange(
     callback: (firebaseUser: FirebaseUser | null, user: User | null) => void
   ): () => void {
-    return onAuthStateChanged(auth, async firebaseUser => {
-      if (!firebaseUser) return callback(null, null);
+    let unsub: (() => void) | null = null;
+    (async () => {
       try {
-        const data = await this.ensureUserDocument(firebaseUser);
-        callback(firebaseUser, data);
+        const auth = await getAuth();
+        unsub = onAuthStateChanged(auth, async firebaseUser => {
+          if (!firebaseUser) return callback(null, null);
+          try {
+            const data = await this.ensureUserDocument(firebaseUser);
+            callback(firebaseUser, data);
+          } catch (e) {
+            console.error('Auth state handler error:', e);
+            callback(firebaseUser, null);
+          }
+        });
       } catch (e) {
-        console.error('Auth state handler error:', e);
-        callback(firebaseUser, null);
+        console.error('Failed to attach auth listener', e);
       }
-    });
+    })();
+    return () => unsub?.();
   }
 
   // ---------- USER DOC HELPERS ----------
 
   /** Create or patch the user document if it doesn't exist. */
   private static async ensureUserDocument(firebaseUser: FirebaseUser): Promise<User | null> {
-    const ref = doc(db, COLLECTIONS.USERS, firebaseUser.uid);
-    const snap = await getDoc(ref);
+  const db = await getDb();
+  const ref = doc(db, COLLECTIONS.USERS, firebaseUser.uid);
+  const snap = await getDoc(ref);
     if (snap.exists()) {
       // Keep profile basics in sync without clobbering nested structures
       await setDoc(
@@ -180,17 +205,20 @@ export class AuthService {
       ...additionalData,
     } as User;
 
+    const db = await getDb();
     await setDoc(doc(db, COLLECTIONS.USERS, firebaseUser.uid), userData, { merge: true });
     return userData;
   }
 
   static async getUserData(uid: string): Promise<User | null> {
+    const db = await getDb();
     const snap = await getDoc(doc(db, COLLECTIONS.USERS, uid));
     return snap.exists() ? (snap.data() as User) : null;
   }
 
   /** Upsert-safe last-login update (avoids "No document to update"). */
   static async updateLastLogin(uid: string): Promise<void> {
+    const db = await getDb();
     await setDoc(
       doc(db, COLLECTIONS.USERS, uid),
       { lastLoginAt: serverTimestamp(), updatedAt: serverTimestamp() },
@@ -199,6 +227,7 @@ export class AuthService {
   }
 
   static async updateUserProfile(uid: string, profileData: Partial<UserProfile>): Promise<void> {
+    const db = await getDb();
     await setDoc(
       doc(db, COLLECTIONS.USERS, uid),
       { profile: profileData, updatedAt: serverTimestamp() },
@@ -210,6 +239,7 @@ export class AuthService {
     uid: string,
     preferences: Partial<UserPreferences>
   ): Promise<void> {
+    const db = await getDb();
     await setDoc(
       doc(db, COLLECTIONS.USERS, uid),
       { preferences, updatedAt: serverTimestamp() },
