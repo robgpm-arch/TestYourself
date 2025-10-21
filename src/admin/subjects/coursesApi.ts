@@ -1,5 +1,5 @@
-import { db } from '@/lib/firebase';
 import { collection, onSnapshot, orderBy, query, where, QueryConstraint } from 'firebase/firestore';
+import { getDb } from '@/lib/firebaseClient';
 
 export type Course = {
   id: string;
@@ -22,6 +22,16 @@ export function listenCoursesForContext(
   else if (ctx.examId && ctx.examId !== 'All Exams' && ctx.examId !== '')
     cs.push(where('examId', '==', ctx.examId));
 
-  const q = query(collection(db, 'courses'), ...cs);
-  return onSnapshot(q, snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))));
+  let stop: any = null;
+  (async () => {
+    try {
+      const db = await getDb();
+      const q = query(collection(db, 'courses'), ...cs);
+      stop = onSnapshot(q, snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))));
+    } catch (e) {
+      console.error('listenCoursesForContext failed', e);
+      cb([]);
+    }
+  })();
+  return () => stop?.();
 }

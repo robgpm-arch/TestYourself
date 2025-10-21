@@ -13,7 +13,7 @@ import {
   orderBy,
   QueryConstraint,
 } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 import type { CourseCatalog, CourseInstance } from './model';
 import { CourseFilters, normBoard, normExam } from './filterUtils';
 
@@ -33,7 +33,8 @@ export async function createCatalogCourse(
     updatedAt: serverTimestamp(),
     createdAt: serverTimestamp(),
   };
-  const ref = await addDoc(collection(db, 'course_catalog'), payload);
+  const dbClient = await getDb();
+  const ref = await addDoc(collection(dbClient, 'course_catalog'), payload);
   return ref.id;
 }
 
@@ -62,7 +63,8 @@ export async function ensureCourseInstance(opts: {
 }) {
   if (!contextValid(opts)) throw new Error('Medium and either Board or Exam are required.');
 
-  const ref = collection(db, 'courses');
+  const dbClient = await getDb();
+  const ref = collection(dbClient, 'courses');
   const cs = [where('catalogId', '==', opts.catalogId), where('medium', '==', opts.medium)];
   if (opts.board && opts.board !== 'All Boards') cs.push(where('board', '==', opts.board));
   if (opts.examId && opts.examId !== 'All Exams') cs.push(where('examId', '==', opts.examId));
@@ -72,6 +74,7 @@ export async function ensureCourseInstance(opts: {
   if (!snap.empty) return snap.docs[0].id; // reuse
 
   // Need catalog name for denormalized instance
+  const db = await getDb();
   const cat = await getDoc(doc(db, 'course_catalog', opts.catalogId));
   if (!cat.exists()) throw new Error('Catalog course not found');
   const name = (cat.data() as CourseCatalog).name;
@@ -101,6 +104,15 @@ export function listenCourses(filters: CourseFilters, cb: (rows: any[]) => void)
 
   cs.push(orderBy('order'));
 
-  const q = query(collection(db, 'courses'), ...cs);
-  return onSnapshot(q, snap => cb(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))));
+  let realUnsub: (() => void) | null = null;
+  (async () => {
+    try {
+      const db = await getDb();
+      const q = query(collection(db, 'courses'), ...cs);
+      realUnsub = onSnapshot(q, (snap: any) => cb(snap.docs.map((d: any) => ({ id: d.id, ...(d.data() as any) }))));
+    } catch {
+      // swallow
+    }
+  })();
+  return () => { try { realUnsub?.(); } catch {} };
 }

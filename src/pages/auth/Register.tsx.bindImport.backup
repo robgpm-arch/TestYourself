@@ -1,9 +1,8 @@
 ﻿import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-// Fallback if tsconfig paths not set:
-// import { bindActiveDevice } from '../../lib/sessionBinding';
 import '@/lib/auth/bootstrap';
 import { useNavigate } from 'react-router-dom';
 import {
+  getAuth,
   signInWithPhoneNumber,
   RecaptchaVerifier,
   EmailAuthProvider,
@@ -11,11 +10,8 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { navigateAfterAuth } from '@/utils/onboardingRouter';
-import { navigateSafe } from '@/lib/nav';
-import { getDb, getAuth } from '@/lib/firebaseClient';
-import { normalizeToE164, phoneToSynthEmail } from '@/lib/phoneId';
+import { db, auth } from '@/lib/firebase';
 import { confirmMoveSession } from '@/components/ConfirmMoveSession';
-import { bindActiveDevice } from '@/lib/sessionBinding';
 import { saveUserProfile } from '@/lib/saveProfile';
 import { withBackoff, refreshIfExpired } from '@/lib/auth/retry';
 import {
@@ -46,8 +42,7 @@ const Register: React.FC = () => {
 
   const ensureRecaptcha = useCallback(() => {
     if (recaptchaRef.current) return recaptchaRef.current;
-    // Ensure container exists in DOM; actual RecaptchaVerifier will be
-    // constructed and attached to the auth instance at send time.
+    // Ensure container exists in DOM
     try {
       if (typeof document !== 'undefined') {
         let el = document.getElementById('recaptcha-container');
@@ -59,7 +54,11 @@ const Register: React.FC = () => {
         }
       }
     } catch {}
-    return null;
+
+    recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', {
+      size: 'invisible',
+    });
+    return recaptchaRef.current;
   }, []);
 
   const clearRecaptcha = useCallback(() => {
@@ -71,7 +70,6 @@ const Register: React.FC = () => {
 
   // Robust token refresh: try immediate refresh, then reload+retry with small backoff
   const refreshUserToken = useCallback(async () => {
-    const auth = await getAuth();
     const u = auth.currentUser;
     if (!u) return;
     try {
@@ -159,34 +157,22 @@ const Register: React.FC = () => {
 
   // Check if user is already authenticated and redirect accordingly
   useEffect(() => {
-    let unsub: any = null;
-    (async () => {
-      try {
-        const auth = await getAuth();
-        const db = await getDb();
-  unsub = auth.onAuthStateChanged(async (user: any) => {
-          if (user) {
-            try {
-              const userDoc = await getDoc(doc(db, 'users', user.uid));
-              if (userDoc.exists() && userDoc.data()?.onboarded === true) {
-                navigate('/home');
-              } else {
-                navigate('/onboarding');
-              }
-            } catch (err) {
-              console.error('Error checking user onboarding status:', err);
-            }
+    const unsubscribe = auth.onAuthStateChanged(async user => {
+      if (user) {
+        // Check if user has completed onboarding
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists() && userDoc.data()?.onboarded === true) {
+            navigate('/home');
+          } else {
+            navigate('/onboarding');
           }
-        });
-      } catch (e) {
-        // ignore init errors
+        } catch (err) {
+          console.error('Error checking user onboarding status:', err);
+        }
       }
-    })();
-    return () => {
-      try {
-        unsub?.();
-      } catch {}
-    };
+    });
+    return unsubscribe;
   }, [navigate]);
 
   // Resend OTP countdown timer
@@ -213,17 +199,7 @@ const Register: React.FC = () => {
     setSendingOtp(true);
 
     try {
-      const auth = await getAuth();
-      const db = await getDb(); // ensure SDK is loaded; recaptcha uses auth
-      // ensure recaptcha container exists
-      ensureRecaptcha();
-      // create verifier attached to auth
-      try {
-        recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-      } catch (e) {
-        // some environments may restrict Recaptcha; continue without it
-      }
-      const appVerifier = recaptchaRef.current as any;
+      const appVerifier = ensureRecaptcha();
       const sendPromise = signInWithPhoneNumber(auth, `+91${phone}`, appVerifier);
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('Timed out sending OTP. Please try again.')), 20000)
@@ -250,12 +226,7 @@ const Register: React.FC = () => {
     try {
       clearRecaptcha();
       confirmationResultRef.current = null;
-      const auth = await getAuth();
-      ensureRecaptcha();
-      try {
-        recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-      } catch {}
-      const appVerifier = recaptchaRef.current as any;
+      const appVerifier = ensureRecaptcha();
       const sendPromise = signInWithPhoneNumber(auth, `+91${phone}`, appVerifier);
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('Timed out sending OTP. Please try again.')), 20000)
@@ -283,9 +254,9 @@ const Register: React.FC = () => {
     setVerifyingOtp(true);
 
     try {
-  await confirmationResultRef.current.confirm(otp);
-  // Ensure fresh token for subsequent Firestore writes
-  await refreshUserToken();
+      await confirmationResultRef.current.confirm(otp);
+      // Ensure fresh token for subsequent Firestore writes
+      await refreshUserToken();
       setOtpVerified(true);
       setSuccess('Phone verified successfully!');
     } catch (err: any) {
@@ -314,7 +285,7 @@ const Register: React.FC = () => {
       if (!user) throw new Error('No user after OTP confirmation');
 
       await refreshUserToken();
-      const db = await getDb();
+
       await setDoc(
         doc(db, 'users', user.uid),
         {
@@ -359,12 +330,10 @@ const Register: React.FC = () => {
     try { e?.preventDefault?.(); e?.stopPropagation?.(); } catch {}
     try {
       setError(null);
-      const auth = await getAuth();
       const user = auth.currentUser;
       if (!user) throw new Error('User not authenticated');
       if (!otpVerified) throw new Error('Please verify your phone first.');
 
-      const db = await getDb();
       await setDoc(
         doc(db, 'users', user.uid),
         {
@@ -382,7 +351,7 @@ const Register: React.FC = () => {
           district: district || null,
           stateZone: stateZone || null,
           centralZone: centralZone || null,
-          phone: normalizeToE164(`+91${phone}`, '+91'),
+          phone: `+91${phone}`,
           onboarded: false,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -391,7 +360,8 @@ const Register: React.FC = () => {
       );
 
       if (password && password === confirmPassword && strongPwd(password)) {
-        const synthEmail = phoneToSynthEmail(normalizeToE164(`+91${phone}`, '+91'));
+        const digits = `+91${phone}`.replace(/\D/g, '');
+        const synthEmail = `ph-${digits}@testyourself.app`;
         try {
           await refreshUserToken();
           const cred = EmailAuthProvider.credential(synthEmail, password);
@@ -434,8 +404,6 @@ const Register: React.FC = () => {
         localStorage.removeItem('auth_intent');
       } catch {}
       // explicit redirect to tutorials (requested)
-      navigateSafe(navigate, '/onboardingtutorials', { replace: true });
-      return;
       try { setTimeout(() => { console.info('[register] → navigate(/onboardingtutorials)'); navigate('/onboardingtutorials', { replace: true }); }, 50); } catch {}
       // fallback navigation based on user doc (kept for safety)
       await navigateAfterAuth(navigate);
@@ -821,7 +789,6 @@ const Register: React.FC = () => {
 };
 
 export default Register;
-
 
 
 

@@ -31,3 +31,7 @@ This repository currently contains a committed Firebase service account key (`se
 If you want, I can:
 - Prepare the exact `git filter-repo` or BFG commands tailored to this repo and a safe push plan.
 - Create a GitHub Actions workflow to refuse commits that include common secret filenames.
+
+Helper script
+
+- There is a helper at `scripts/purge-history.sh` that wraps `git filter-repo` usage. Review it locally and run from a safe machine after backing up.

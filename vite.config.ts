@@ -24,5 +24,17 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (id.includes('node_modules')) {
+            if (id.includes('firebase') || id.includes('firebase-admin')) {
+              return 'vendor_firebase';
+            }
+            return 'vendor';
+          }
+        },
+      },
+    },
   },
 });

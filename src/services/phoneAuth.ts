@@ -1,5 +1,5 @@
 import { RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { getAuth } from '../lib/firebaseClient';
 
 // Extend window for debug flag
 declare global {
@@ -16,7 +16,7 @@ let confirmation: ConfirmationResult | null = null;
  * Ensures exactly one RecaptchaVerifier instance exists per page.
  * Creates new instance if expired or missing.
  */
-function ensureRecaptcha(anchorId: string): RecaptchaVerifier {
+function ensureRecaptcha(auth: any, anchorId: string): RecaptchaVerifier {
   if (!recaptcha) {
     // Ensure an anchor element exists in DOM; create a hidden one if missing
     let container: string | HTMLElement = anchorId;
@@ -35,7 +35,7 @@ function ensureRecaptcha(anchorId: string): RecaptchaVerifier {
       }
     } catch {}
 
-    recaptcha = new RecaptchaVerifier(auth, container as any, {
+    recaptcha = new RecaptchaVerifier(auth, container, {
       size: 'invisible',
       callback: () => {
         if (window.__DEBUG) console.log('[PhoneAuth] reCAPTCHA solved');
@@ -60,7 +60,8 @@ export async function sendOtp(e164Number: string): Promise<void> {
   }
 
   try {
-    const appVerifier = ensureRecaptcha('send-otp-anchor');
+    const auth = await getAuth();
+    const appVerifier = ensureRecaptcha(auth, 'send-otp-anchor');
     confirmation = await signInWithPhoneNumber(auth, e164Number, appVerifier);
     if (window.__DEBUG) console.log('[PhoneAuth] sendOtp success - OTP sent');
   } catch (error: any) {
@@ -89,6 +90,7 @@ export async function confirmOtp(code: string): Promise<void> {
 
   try {
     await confirmation.confirm(code);
+    const auth = await getAuth();
     await auth.currentUser?.getIdToken(true); // Refresh claims
     if (window.__DEBUG) console.log('[PhoneAuth] confirmOtp success - user authenticated');
   } catch (error: any) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { mobileToAuthEmail, normalizeToE164 } from '@/lib/phoneId';
 import {
   sendOtp,
   confirmOtp,
@@ -40,18 +41,13 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
     onSuccess();
   }
 
-  const buildEmailFromPhone = (code: string, number: string) => {
-    const digits = `${code}${number}`.replace(/\D/g, '');
-    return `ph-${digits}@testyourself.app`;
-  };
-
   const handlePasswordSignIn = async () => {
     if (mobileNumber.length < 10 || passwordLogin.length < 1) return;
     setError(null);
     setInfoMsg(null);
     setIsLoading(true);
     try {
-      const email = buildEmailFromPhone(countryCode, mobileNumber);
+      const email = mobileToAuthEmail(`${countryCode}${mobileNumber}`);
       await signInWithEmailAndPassword(getAuth(), email, passwordLogin);
       await handleAuthDone();
     } catch (e: any) {
@@ -69,7 +65,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
     setError(null);
     setInfoMsg(null);
     try {
-      const email = buildEmailFromPhone(countryCode, mobileNumber);
+      const email = mobileToAuthEmail(`${countryCode}${mobileNumber}`);
       await sendPasswordResetEmail(getAuth(), email);
       setInfoMsg('If an account exists, a reset link has been sent to the email on file.');
     } catch (e: any) {
@@ -104,7 +100,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
     setIsLoading(true);
 
     try {
-      const e164Number = `${countryCode}${mobileNumber}`;
+      const e164Number = normalizeToE164(`${countryCode}${mobileNumber}`, countryCode);
       await sendOtp(e164Number);
       setStep('otp');
       setResendTimer(28);
@@ -164,7 +160,7 @@ const LoginSignup: React.FC<LoginSignupProps> = ({ initialTab = 'login', onSucce
 
     try {
       resetOtpFlow();
-      const e164Number = `${countryCode}${mobileNumber}`;
+      const e164Number = normalizeToE164(`${countryCode}${mobileNumber}`, countryCode);
       await sendOtp(e164Number);
       setResendTimer(28);
       setIsResendActive(false);

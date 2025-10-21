@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 
 interface SeoSettings {
   title?: string;
@@ -29,17 +29,26 @@ export default function SeoCard() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'app_settings', 'seo'), snap => {
-      if (snap.exists()) {
-        setSeo({ ...DEFAULT_SEO, ...snap.data() });
+    let unsub: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        unsub = onSnapshot(doc(db, 'app_settings', 'seo'), (snap: any) => {
+          if (snap.exists()) {
+            setSeo({ ...DEFAULT_SEO, ...snap.data() });
+          }
+        });
+      } catch (e) {
+        console.error('seo subscription failed', e);
       }
-    });
-    return unsub;
+    })();
+    return () => unsub?.();
   }, []);
 
   async function save() {
     setSaving(true);
     try {
+      const db = await getDb();
       await setDoc(
         doc(db, 'app_settings', 'seo'),
         {

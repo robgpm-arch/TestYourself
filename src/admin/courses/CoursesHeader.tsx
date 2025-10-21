@@ -3,7 +3,7 @@ import { loadBoardsForMedium } from '@/admin/shared/smartBoardsExams';
 import { ExamSelect } from '@/admin/shared/ExamSelect';
 import { filtersReady } from './filterUtils';
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 
 type AnyDoc = { id: string; [k: string]: any };
 
@@ -18,10 +18,18 @@ export function CoursesHeader({
   const [boards, setBoards] = React.useState<AnyDoc[]>([]);
 
   React.useEffect(() => {
-    const stop = onSnapshot(query(collection(db, 'mediums'), orderBy('order')), snap => {
-      setMediums(snap.docs.map(d => ({ id: d.id, ...d.data() })));
-    });
-    return stop;
+    let stop: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        stop = onSnapshot(query(collection(db, 'mediums'), orderBy('order')), (snap: any) => {
+          setMediums(snap.docs.map((d: any) => ({ id: d.id, ...d.data() })));
+        });
+      } catch (e) {
+        console.error('load mediums failed', e);
+      }
+    })();
+    return () => stop?.();
   }, []);
 
   React.useEffect(() => {

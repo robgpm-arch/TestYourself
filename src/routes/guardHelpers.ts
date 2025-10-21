@@ -1,7 +1,6 @@
 // src/routes/guardHelpers.ts
-import { getAuth } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { getAuth, getDb } from '../lib/firebaseClient';
 
 export type UserGate = {
   signedIn: boolean;
@@ -11,12 +10,15 @@ export type UserGate = {
 };
 
 export async function getUserGate(): Promise<UserGate> {
-  const user = getAuth().currentUser;
+  const auth = await getAuth();
+  const user = auth.currentUser;
   if (!user) return { signedIn: false, onboarded: false, isAdmin: false, courseChosen: false };
 
-  const token = await user.getIdTokenResult();
+  const { getIdTokenResult } = await import('firebase/auth');
+  const token = await getIdTokenResult(user);
   const isAdmin = !!token.claims?.admin;
 
+  const db = await getDb();
   const uref = doc(db, 'users', user.uid);
   const snap = await getDoc(uref);
   const data = snap.exists() ? (snap.data() as any) : {};

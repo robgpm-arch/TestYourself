@@ -1,6 +1,6 @@
 import React from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
+import { getDb } from '../../lib/firebaseClient';
 
 // Some sensible defaults; extend as you like
 const SUBJECT_PRESETS = [
@@ -34,12 +34,20 @@ export function SubjectNameSelect({
 
   React.useEffect(() => {
     // merge unique names already present in /subjects (case-insensitive)
-    const stop = onSnapshot(collection(db, 'subjects'), snap => {
-      const names = snap.docs.map(d => (d.data() as any).name).filter(Boolean) as string[];
-      const set = new Set([...SUBJECT_PRESETS, ...names].map(s => s.trim()));
-      setOptions(Array.from(set).sort((a, b) => a.localeCompare(b)));
-    });
-    return stop;
+    let stop: any = null;
+    (async () => {
+      try {
+        const db = await getDb();
+        stop = onSnapshot(collection(db, 'subjects'), (snap: any) => {
+          const names = snap.docs.map((d: any) => (d.data() as any).name).filter(Boolean) as string[];
+          const set = new Set([...SUBJECT_PRESETS, ...names].map(s => s.trim()));
+          setOptions(Array.from(set).sort((a, b) => a.localeCompare(b)));
+        });
+      } catch (e) {
+        console.error('subjectlist failed', e);
+      }
+    })();
+    return () => stop?.();
   }, []);
 
   return (

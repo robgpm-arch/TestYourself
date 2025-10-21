@@ -248,13 +248,25 @@ const SplashScreen: React.FC<SplashScreenProps> = ({
         <div className="flex gap-3">
           <button
             className="rounded-xl bg-blue-600 px-6 py-3 font-medium text-white shadow hover:shadow-md"
-            onClick={onRegister}
+            onClick={() => {
+              try {
+                console.debug('[SplashScreen] Register clicked');
+                onUserInteracted?.();
+              } catch {}
+              onRegister();
+            }}
           >
             Register
           </button>
 
           <button
-            onClick={onLogin}
+            onClick={() => {
+              try {
+                console.debug('[SplashScreen] Login clicked');
+                onUserInteracted?.();
+              } catch {}
+              onLogin();
+            }}
             className="rounded-xl bg-gray-100 px-6 py-3 font-medium text-gray-900 hover:bg-gray-200"
           >
             Login

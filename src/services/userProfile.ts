@@ -1,6 +1,5 @@
-import { getAuth } from 'firebase/auth';
 import { Timestamp, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { getAuth, getDb } from '@/lib/firebaseClient';
 
 export type UserProfileForm = {
   fullName: string;
@@ -17,8 +16,10 @@ export type UserProfileForm = {
 };
 
 export async function saveUserProfile(form: UserProfileForm) {
-  const uid = getAuth().currentUser?.uid;
+  const auth = await getAuth();
+  const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('Not signed in');
+  const db = await getDb();
 
   await setDoc(
     doc(db, 'users', uid),

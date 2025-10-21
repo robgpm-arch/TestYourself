@@ -1,0 +1,61 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "source": "functions",
+    "predeploy": [
+      "npm --prefix functions ci",
+      "npm --prefix functions run build"
+    ]
+  },
+  "hosting": {
+    "site": "testyourself-80a10",
+    "public": "dist",
+    "cleanUrls": true,
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      { "source": "/admin", "destination": "/admin/dashboard" },
+      { "source": "**", "destination": "/index.html" }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.google.com https://www.recaptcha.net https://www.googletagmanager.com https://apis.google.com https://accounts.google.com; script-src-elem 'self' 'unsafe-inline' https://www.gstatic.com https://www.google.com https://www.recaptcha.net https://www.googletagmanager.com https://apis.google.com https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://www.googleapis.com https://firebasestorage.googleapis.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com https://*.cloudfunctions.net https://www.google.com https://www.recaptcha.net; frame-src 'self' https://accounts.google.com/ https://www.google.com/ https://www.recaptcha.net/ https://*.firebaseapp.com; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self';"
+          }
+        ]
+      },
+      { "source": "/assets/**", "headers": [{ "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }] },
+      { "source": "/static/**", "headers": [{ "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }] },
+      { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }] },
+      { "source": "/sw-*.js", "headers": [{ "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }] },
+      { "source": "/manifest.webmanifest", "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }] },
+      { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }] },
+      { "source": "/", "headers": [{ "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }] },
+      { "source": "/(favicon-16.png|favicon-32.png|apple-touch-icon.png|icon-192.png|icon-512.png|logo.svg)", "headers": [{ "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }] },
+      { "source": "/site.webmanifest", "headers": [{ "key": "Cache-Control", "value": "public,max-age=3600" }] }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules",
+    "target": "storage"
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "firestore": { "port": 8080 },
+    "functions": { "port": 5001 },
+    "hosting": { "port": 5000 },
+    "storage": { "port": 9199 },
+    "ui": { "enabled": true, "port": 4000 },
+    "singleProjectMode": true
+  }
+}
+

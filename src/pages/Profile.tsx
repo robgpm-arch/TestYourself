@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db, auth } from '../lib/firebase';
+import { doc, getDoc, setDoc, serverTimestamp, onSnapshot } from 'firebase/firestore';
+import { getDb as getDbLazy, getAuth as getAuthLazy } from '@/lib/firebaseClient';
 import {
   EmailAuthProvider,
   linkWithCredential,
@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
   const strongPwd = (pwd: string) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/.test(pwd);
 
   // User data with gamification elements
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<any>({
     name: 'Priya Sharma',
     tagline: 'Preparing for NEET 2025',
     avatar:
@@ -43,26 +43,50 @@ const Profile: React.FC = () => {
     status: 'Bronze', // Bronze, Silver, Gold
   });
 
-  // Load real user profile details from Firestore (first/last name, state/district)
+  // Subscribe to real-time user profile updates so Profile stays dynamic
   useEffect(() => {
     (async () => {
+      const auth = await getAuthLazy();
+      const db = await getDbLazy();
+      const uid = auth.currentUser?.uid;
+      if (!uid) return;
+      let unsub: (() => void) | null = null;
       try {
-        const uid = auth.currentUser?.uid;
-        if (!uid) return;
-        const snap = await getDoc(doc(db, 'users', uid));
+        unsub = onSnapshot(doc(db, 'users', uid), snap => {
         if (!snap.exists()) return;
-        const d: any = snap.data();
-        const composedName = [d?.firstName, d?.lastName].filter(Boolean).join(' ').trim();
-        const tagline = [d?.state, d?.district].filter(Boolean).join(' • ');
-        setUser(prev => ({
+        const d = snap.data() as import('@/types/user').UserProfile;
+        const composedName = [d?.firstName, (d as any)?.lastName].filter(Boolean).join(' ').trim();
+        const tagline = [ (d as any)?.state, (d as any)?.district].filter(Boolean).join(' • ');
+
+        setUser((prev: any) => ({
           ...prev,
           name: composedName || prev.name,
           tagline: tagline || prev.tagline,
+          level: d?.stats?.level ?? prev.level,
+          levelProgress: d?.stats?.experiencePoints ? Math.min(100, Math.round((d!.stats!.experiencePoints! % 100))) : prev.levelProgress,
+          streakDays: d?.stats?.streakCurrent ?? prev.streakDays,
+          totalCoins: d?.coins ?? prev.totalCoins,
+          totalQuizzes: d?.stats?.totalQuizzesCompleted ?? prev.totalQuizzes,
+          accuracy: d?.stats?.accuracy ?? prev.accuracy,
+          hoursSpent: Math.round(((d?.stats?.totalTimeSpent ?? prev.hoursSpent) as number) / 3600),
+          selectedCourse: d?.selectedCourse ?? prev['selectedCourse'],
+          selectedSubject: d?.selectedSubject ?? prev['selectedSubject'],
+          lastQuiz: d?.lastQuiz ?? prev['lastQuiz'],
         }));
+
         setHasPassword(Boolean(d?.credentials?.hasPassword));
+      }, err => {
+        console.warn('Profile subscription error:', err);
+      });
       } catch (e) {
-        // ignore – keep defaults
+        console.warn('Failed to subscribe to user profile', e);
       }
+
+      return () => {
+        try {
+          if (unsub) unsub();
+        } catch {}
+      };
     })();
   }, []);
 
@@ -70,6 +94,8 @@ const Profile: React.FC = () => {
     setPwdErr(null);
     setPwdMsg(null);
     try {
+      const auth = await getAuthLazy();
+      const db = await getDbLazy();
       if (!auth.currentUser) throw new Error('Not authenticated');
       const digits = (auth.currentUser.phoneNumber || '').replace(/\D/g, '');
       const email = `ph-${digits}@testyourself.app`;
@@ -755,7 +781,7 @@ const Profile: React.FC = () => {
               Settings
             </Button>
             <Button
-              variant="default"
+              variant="primary"
               size="large"
               className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700"
             >

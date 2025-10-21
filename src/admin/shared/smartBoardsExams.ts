@@ -1,4 +1,4 @@
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebaseClient';
 import { collection, getDocs, orderBy, query, where, limit } from 'firebase/firestore';
 
 type AnyDoc = { id: string; [k: string]: any };
@@ -8,6 +8,7 @@ async function tryQueries(
   medium: string,
   nameKeys = ['name', 'title', 'label']
 ): Promise<AnyDoc[]> {
+  const db = await getDb();
   const ref = collection(db, coll);
 
   // For exams, always include fallback since they're typically not medium-specific

@@ -11,7 +11,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { db } from '@/lib/firebase';
+import { getDb, getAuth as getAuthLazy } from '@/lib/firebaseClient';
 import { createCatalogCourse, ensureCourseInstance, contextValid } from './api';
 
 type Props = {
@@ -33,7 +33,8 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
       try {
         // Load all course catalog items (simple list without complex filtering)
         // The course_catalog collection only has name, slug, createdAt, updatedAt fields
-        const snap = await getDocs(query(collection(db, 'course_catalog'), orderBy('name')));
+  const db = await getDb();
+  const snap = await getDocs(query(collection(db, 'course_catalog'), orderBy('name')));
 
         const items = snap.docs.map(d => ({
           id: d.id,
@@ -50,10 +51,19 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
 
   React.useEffect(() => {
     if (allowExamSelection) {
-      const stop = onSnapshot(query(collection(db, 'exams'), orderBy('name')), snap => {
-        setExams(snap.docs.map(d => ({ id: d.id, name: (d.data() as any).name })));
-      });
-      return stop;
+      let stop: any = null;
+      (async () => {
+        try {
+          const db = await getDb();
+          stop = onSnapshot(query(collection(db, 'exams'), orderBy('name')), snap => {
+            setExams(snap.docs.map(d => ({ id: d.id, name: (d.data() as any).name })));
+          });
+        } catch (e) {
+          console.error('load exams failed', e);
+          setExams([]);
+        }
+      })();
+      return () => stop?.();
     }
   }, [allowExamSelection]);
 
@@ -71,7 +81,8 @@ export function CoursePicker({ ctx, onAttached, allowExamSelection = false }: Pr
 
     try {
       // Ensure fresh claims for admin
-      await getAuth().currentUser?.getIdToken(true);
+      const auth = await getAuthLazy();
+      await auth.currentUser?.getIdToken(true);
 
       const catalogId =
         mode === 'existing' ? selectedCatalogId : await createCatalogCourse({ name: newName });

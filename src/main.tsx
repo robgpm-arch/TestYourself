@@ -1,7 +1,19 @@
+// Keep messaging SW behavior, but register a lightweight app SW to ensure fresh loads
 if ('serviceWorker' in navigator) {
+  // Unregister old stray workers (best-effort)
   navigator.serviceWorker
     .getRegistrations()
     .then(rs => rs.forEach(r => r.unregister()))
+    .catch(() => {});
+
+  // Register cache-busting SW that immediately takes control
+  navigator.serviceWorker
+    .register('/sw-v3.js', { scope: '/' })
+    .then(reg => {
+      if (reg.waiting) {
+        try { reg.waiting.postMessage({ type: 'SKIP_WAITING' }); } catch {}
+      }
+    })
     .catch(() => {});
 }
 
