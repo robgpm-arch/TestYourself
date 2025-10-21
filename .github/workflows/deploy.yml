@@ -16,6 +16,14 @@ jobs:
     concurrency:
       group: deploy-${{ github.ref }}
       cancel-in-progress: true
+    env:
+      # Firebase web config (populated from repo secrets when available)
+      VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+      VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+      VITE_FIREBASE_PROJECT_ID: testyourself-80a10
+      VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+      VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+      VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
 
     steps:
       - name: Checkout repo
@@ -30,6 +38,7 @@ jobs:
           cache: 'npm'
 
       - name: Authenticate to Google Cloud (no key)
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && secrets.GCP_WIF_PROVIDER != '')
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
@@ -44,6 +53,17 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      - name: Prepare .env for build (fallbacks if secrets missing)
+        run: |
+          cat > .env <<EOF
+          VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY:-dummy}
+          VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN:-testyourself-80a10.firebaseapp.com}
+          VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID}
+          VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET:-testyourself-80a10.appspot.com}
+          VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID:-000000000000}
+          VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID:-1:000000000000:web:placeholder}
+          EOF
 
       - name: Detect changes
         id: changes
@@ -73,20 +93,25 @@ jobs:
 
       - name: Deploy preview (PR)
         id: preview
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && secrets.GCP_WIF_PROVIDER != ''
         run: |
           npx firebase-tools hosting:channel:deploy pr-${{ github.event.number }} \
             --project testyourself-80a10 --json > preview.json
           echo "url=$(jq -r '.result[]?.url // .result?.url' preview.json)" >> $GITHUB_OUTPUT
 
       - name: Comment preview URL
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && steps.preview.outputs.url != ''
         uses: marocchino/sticky-pull-request-comment@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           message: |
             🚀 Firebase Preview: ${{ steps.preview.outputs.url }}
+
+      - name: Note: preview deploy skipped
+        if: github.event_name == 'pull_request' && (secrets.GCP_WIF_PROVIDER == '')
+        run: |
+          echo "Skipping preview deploy: GCP_WIF_PROVIDER not available in PR context (e.g., forks). Build completed successfully."
 
       - name: Deploy to Staging (staging branch)
         if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
