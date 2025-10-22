@@ -117,3 +117,9 @@ jobs:
         if: github.ref == 'refs/heads/staging' && github.event_name == 'push'
         run: |
           npx firebase-tools hosting:channel:deploy staging-$(date +%s) --project testyourself-80a10
+
+      - name: Print & warm production URL
+        if: github.event_name == 'push'
+        run: |
+          echo "Production URL: https://testyourself.app"
+          curl -sS -I https://testyourself.app || true

@@ -3,9 +3,6 @@ name: ci
 on:
   push:
     branches: [ main ]
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -20,7 +17,7 @@ env:
 
 jobs:
   # ================================================================
-  # 🔧 Shared Build Job
+  # 🔧 Build Job
   # ================================================================
   build:
     runs-on: ubuntu-latest
@@ -86,80 +83,4 @@ jobs:
           echo "🌐 Production URL: https://testyourself.app"
           curl -I https://testyourself.app || true
 
-  # ================================================================
-  # 🔄 PR Preview Deploy
-  # ================================================================
-  preview:
-    if: ${{ github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Auth to Google (WIF)
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.DEPLOYER_SA }}
-
-      - name: Install Firebase CLI
-        run: npm i -g firebase-tools
-
-      - name: Deploy preview channel
-        id: preview
-        run: |
-          CHANNEL="pr-${{ github.event.number }}"
-          firebase hosting:channel:deploy "$CHANNEL" \
-            --project "$FIREBASE_PROJECT_ID" \
-            --site "$FIREBASE_SITE_ID" \
-            --expires 7d \
-            --json > preview.json
-          URL=$(node -e "console.log(JSON.parse(require('fs').readFileSync('preview.json','utf8')).result?.url || '')")
-          echo "url=$URL" >> "$GITHUB_OUTPUT"
-
-      - name: Comment preview URL
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const url = `${{ steps.preview.outputs.url }}`;
-            if (!url) return;
-            const body = [
-              `✅ Preview deployed: **${url}**`,
-              ``,
-              `> Auto-expires in 7 days. Re-deploys on each new commit.`,
-            ].join("\n");
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body
-            });
-
-      - name: Add Preview URL to job summary
-        if: ${{ steps.preview.outputs.url != '' }}
-        run: |
-          echo "### ✅ [Preview deployed here](${{ steps.preview.outputs.url }})" >> $GITHUB_STEP_SUMMARY
-
-  # ================================================================
-  # 🧹 Auto Cleanup when PR Closed or Merged
-  # ================================================================
-  cleanup:
-    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Auth to Google (WIF)
-        uses: google-github-actions/auth@v2
-        with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.DEPLOYER_SA }}
-
-      - name: Install Firebase CLI
-        run: npm i -g firebase-tools
-
-      - name: Delete preview channel
-        run: |
-          CHANNEL="pr-${{ github.event.number }}"
-          firebase hosting:channel:delete "$CHANNEL" \
-            --project "$FIREBASE_PROJECT_ID" \
-            --site "$FIREBASE_SITE_ID" \
-            --force || true
+  # (No PR preview/cleanup — push to main only)
