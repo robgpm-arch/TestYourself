@@ -34,7 +34,7 @@ async function routeAfterUserAuth(navigate: ReturnType<typeof useNavigate>) {
   const db = await getDb();
   const snap = await getDoc(doc(db, 'users', user.uid));
   const onboarded = snap.exists() && snap.data()?.onboarded === true;
-  navigate(onboarded ? '/profile' : '/onboarding', { replace: true });
+  navigate(onboarded ? '/profile' : '/onboardingtutorials', { replace: true });
 }
 import QuizThemesList from './pages/admin/QuizThemesList';
 import QuizThemeEditor from './pages/admin/QuizThemeEditor';
@@ -57,6 +57,7 @@ import QuizPlayerNumerical from './pages/QuizPlayerNumerical';
 import QuizPlayerComprehension from './pages/QuizPlayerComprehension';
 import ExamMode from './pages/ExamMode';
 import ResultsCelebration from './pages/ResultsCelebration';
+import NoAccess from './screens/NoAccess';
 const DetailedAnalytics = React.lazy(() => import('./pages/DetailedAnalytics'));
 type AnalyticsData = import('./pages/DetailedAnalytics').AnalyticsData;
 const Leaderboards = React.lazy(() => import('./pages/Leaderboards'));
@@ -427,7 +428,7 @@ function App() {
               }
             } catch (e) {
               // fallback -> onboard
-              navigate('/onboarding', { replace: true });
+              navigate('/onboardingtutorials', { replace: true });
             }
           }
 
@@ -635,10 +636,7 @@ function App() {
     setFlowStage('login');
   };
 
-  const handleGetStarted = () => {
-    setUserInteracted(true);
-    navigate('/welcome', { replace: true });
-  };
+  // (Removed) Get Started handler was unused and is not desired.
 
   // ==== Splash button handlers ====
 
@@ -751,7 +749,9 @@ function App() {
         <Route path="/auth/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        {/* Onboarding aliases */}
         <Route path="/onboardingtutorials" element={<OnboardingTutorial />} />
+        <Route path="/onboarding" element={<OnboardingTutorial />} />
         <Route
           path="/flow/mediumPicker"
           element={<MediumPicker onMediumSelect={handleMediumSelect} />}
@@ -793,6 +793,10 @@ function App() {
           }
         />
   <Route path="/home" element={<Guarded><Home /></Guarded>} />
+  {/* Guards reference /change-course; wire it to ChangeCourse */}
+  <Route path="/change-course" element={<ChangeCourse />} />
+  {/* AdminGuard variant references /no-access; add route */}
+  <Route path="/no-access" element={<NoAccess />} />
   <Route path="/profile" element={<Profile />} />
   <Route path="/settings" element={<Settings />} />
   <Route path="/admin/login" element={<Suspense><AdminLogin /></Suspense>} />

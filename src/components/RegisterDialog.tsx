@@ -68,7 +68,7 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
       await ensureUserProfile();
 
       // Go to onboarding to collect medium/board|exam/course/subjects
-      window.location.href = '/onboarding';
+      window.location.href = '/onboardingtutorials';
       onClose();
     } catch (e: any) {
       setError(e?.message || 'Registration failed');
@@ -102,7 +102,7 @@ export default function RegisterDialog({ open, onClose }: { open: boolean; onClo
       await cred.user.getIdToken(true);
       // If you want to collect name after OTP, do it on onboarding; set displayName later.
       await ensureUserProfile();
-      window.location.href = '/onboarding';
+      window.location.href = '/onboardingtutorials';
       onClose();
     } catch (e: any) {
       setError(e?.message || 'Invalid code');

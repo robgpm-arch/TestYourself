@@ -14,7 +14,7 @@ async function routeAfterUserAuth(navigate: (path: string, options?: any) => voi
   const snap = await getDoc(doc(db, 'users', user.uid));
   const onboarded = snap.exists() && snap.data()?.onboarded === true;
 
-  navigate(onboarded ? '/profile' : '/onboarding', { replace: true });
+  navigate(onboarded ? '/profile' : '/onboardingtutorials', { replace: true });
 }
 
 export default function Register() {

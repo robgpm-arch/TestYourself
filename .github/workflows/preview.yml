@@ -4,23 +4,21 @@ on:
     types: [opened, synchronize, reopened]
     branches: [ main ]
 
-concurrency:
-  group: preview-${{ github.ref }}
-  cancel-in-progress: true
-
+# ⛔ Skip secret-scan and run only for internal PRs
 permissions:
   contents: read
   id-token: write
   pull-requests: write
 
-env:
-  NODE_VERSION: "20"
-  FIREBASE_SITE_ID: "testyourself-80a10"
-  FIREBASE_PROJECT_ID: "testyourself-80a10"
+defaults:
+  run:
+    shell: bash
 
 jobs:
   build-and-preview:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+
 
     steps:
       - uses: actions/checkout@v4

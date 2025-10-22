@@ -15,9 +15,9 @@ export const navigateAfterAuth = async (navigate: NavigateFunction) => {
     const db = await getDb();
     const snap = await getDoc(doc(db, 'users', user.uid));
     const onboarded = snap.exists() && snap.data()?.onboarded === true;
-    navigate(onboarded ? '/profile' : '/onboarding', { replace: true });
+    navigate(onboarded ? '/profile' : '/onboardingtutorials', { replace: true });
   } catch {
     // Safe fallback
-    navigate('/onboarding', { replace: true });
+    navigate('/onboardingtutorials', { replace: true });
   }
 };

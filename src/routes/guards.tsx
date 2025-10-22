@@ -41,7 +41,7 @@ export function Guarded({ children }: { children: React.ReactNode }) {
   if (state === 'loading') return null;
 
   if (!gate.signedIn) return <Navigate to="/" replace />;
-  if (!gate.onboarded) return <Navigate to="/onboarding" replace />;
+  if (!gate.onboarded) return <Navigate to="/onboardingtutorials" replace />;
 
   if (routeNeedsCourse(location.pathname) && !gate.courseChosen) {
     return <Navigate to="/change-course" replace />;

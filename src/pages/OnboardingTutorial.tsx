@@ -125,7 +125,7 @@ const OnboardingTutorial: React.FC<OnboardingTutorialProps> = ({ onComplete }) =
     if (onComplete) {
       onComplete();
     } else {
-      navigate('/');
+      navigate('/flow/mediumPicker', { replace: true });
     }
   };
 
@@ -148,14 +148,14 @@ const OnboardingTutorial: React.FC<OnboardingTutorialProps> = ({ onComplete }) =
           { onboarded: true, updatedAt: serverTimestamp() },
           { merge: true }
         );
-        navigate('/profile', { replace: true });
+        navigate('/flow/mediumPicker', { replace: true });
         return;
       }
     } catch (e) {
       // non‑blocking; fall through
     }
     if (onComplete) return onComplete();
-    navigate('/');
+    navigate('/flow/mediumPicker', { replace: true });
   };
 
   const goToSlide = (index: number) => {

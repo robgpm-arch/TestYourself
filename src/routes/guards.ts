@@ -27,7 +27,7 @@ export async function routeForSplash(navigate: (path: string, options?: any) => 
 export async function routeAfterLoginOrRegister(navigate: (path: string, options?: any) => void) {
   const s = await getUserState();
   if (!s.signedIn) return navigate('/login', { replace: true });
-  if (!s.onboarded) return navigate('/onboarding', { replace: true });
+  if (!s.onboarded) return navigate('/onboardingtutorials', { replace: true });
   return navigate('/profile', { replace: true });
 }
 
@@ -39,7 +39,7 @@ export async function guardAdmin(navigate: (path: string, options?: any) => void
 export async function guardApp(navigate: (path: string, options?: any) => void) {
   const s = await getUserState();
   if (!s.signedIn) return navigate('/login', { replace: true });
-  if (!s.onboarded) return navigate('/onboarding', { replace: true });
+  if (!s.onboarded) return navigate('/onboardingtutorials', { replace: true });
   if (!s.courseChosen) return navigate('/change-course', { replace: true });
   // else allow
 }
