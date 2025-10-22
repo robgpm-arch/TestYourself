@@ -1,0 +1,84 @@
+name: preview
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+env:
+  NODE_VERSION: "20"
+  FIREBASE_SITE_ID: "testyourself-80a10"
+  FIREBASE_PROJECT_ID: "testyourself-80a10"
+
+jobs:
+  build-and-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck & Lint
+        run: |
+          pnpm typecheck || true
+          pnpm lint || true
+
+      - name: Build
+        run: pnpm build
+
+      - name: Auth to Google (WIF)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.DEPLOYER_SA }}
+
+      - name: Install Firebase CLI
+        run: npm i -g firebase-tools
+
+      - name: Deploy preview channel
+        id: preview
+        run: |
+          CHANNEL="pr-${{ github.event.number }}"
+          firebase hosting:channel:deploy "" \
+            --project "" \
+            --site "" \
+            --expires 7d \
+            --json > preview.json
+          URL=
+          echo "url=" >> ""
+
+      - name: Comment preview URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = ${{ steps.preview.outputs.url }};
+            if (!url) return;
+            const body = [
+              ? Preview deployed: ****,
+              `,
+              > Auto-expires in 7 days. Re-deploys on each new commit.,
+            ].join("\n");
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
