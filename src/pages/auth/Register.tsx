@@ -44,6 +44,23 @@ const Register: React.FC = () => {
   const confirmationResultRef = useRef<any>(null);
   const recaptchaRef = useRef<RecaptchaVerifier | null>(null);
 
+  // Keep an auth-intent lock while on the register page so App-level
+  // auth redirects do not interrupt the registration flow.
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('auth_intent') !== 'register') {
+        localStorage.setItem('auth_intent', 'register');
+      }
+    } catch {}
+    return () => {
+      try {
+        if (localStorage.getItem('auth_intent') === 'register') {
+          localStorage.removeItem('auth_intent');
+        }
+      } catch {}
+    };
+  }, []);
+
   const ensureRecaptcha = useCallback(() => {
     if (recaptchaRef.current) return recaptchaRef.current;
     // Ensure container exists in DOM; actual RecaptchaVerifier will be
@@ -425,7 +442,7 @@ const Register: React.FC = () => {
           lastName: lastName.trim(),
           dob: dob || null,
           age: age ?? null,
-          onboarded: true,
+          // Keep user as not onboarded until tutorials complete
         });
       } catch {}
 
